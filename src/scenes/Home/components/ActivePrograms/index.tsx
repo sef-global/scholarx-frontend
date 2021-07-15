@@ -197,6 +197,11 @@ function ActivePrograms() {
                       Mentor Confirmation Period
                     </Tag>
                   ) : null}
+                  {program.state === 'ONGOING' && !isUserAdmin && (
+                    <Tag className={styles.tag} color="green">
+                      Ongoing
+                    </Tag>
+                  )}
                   <Paragraph>{program.headline}</Paragraph>
                 </Card>
               </Col>
