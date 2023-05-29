@@ -3,7 +3,6 @@
     "extends":  [
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier/@typescript-eslint",
     "plugin:prettier/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
@@ -147,7 +146,7 @@
         "no-empty": 2,
         // Disallow the use of empty character classes in regular expressions.
         "no-empty-character-class": 2,
-        // Disallow use of labels for anything other then loops and switches.
+        // Disallow use of labels for anything other than loops and switches.
         "no-labels": 2,
         // Disallow use of eval(). We have other APIs to evaluate code in content.
         "no-eval": 2,
@@ -207,7 +206,7 @@
         // Disallow use of comma operator.
         "no-sequences": 2,
         // Warn about declaration of variables already declared in the outer scope.
-        // This isn't an error because it sometimes is useful to use the same name
+        // This isn't an error because it is sometimes useful to use the same name
         // in a small helper function rather than having to come up with another
         // random name.
         // Still, making this a warning can help people avoid being confused.
@@ -240,7 +239,7 @@
         "no-unreachable": 2,
         // Allow using variables before they are defined.
         "no-unused-vars": [2, {"vars": "all", "args": "none"}],
-        // Disallow global and local variables that arent used, but allow unused function arguments.
+        // Disallow global and local variables that aren't used, but allow unused function arguments.
         "no-use-before-define": 0,
         // We use var-only-at-top-level instead of no-var as we allow top level
         // vars.
@@ -259,7 +258,7 @@
         "quotes": [2, "single", "avoid-escape"],
         // Require use of the second argument for parseInt().
         "radix": 2,
-        // Dont require to sort variables within the same declaration block.
+        // Don't require to sort variables within the same declaration block.
         // Anyway, one-var is disabled.
         "sort-vars": 0,
         "space-after-function-name": 0,
@@ -287,7 +286,7 @@
         "valid-typeof": 2,
         // Allow vars to be declared anywhere in the scope.
         "vars-on-top": 0,
-        // Dont require immediate function invocation to be wrapped in parentheses.
+        // Don't require immediate function invocation to be wrapped in parentheses.
         "wrap-iife": 0,
         // Don't require regex literals to be wrapped in parentheses (which
         // supposedly prevent them from being mistaken for division operators).
