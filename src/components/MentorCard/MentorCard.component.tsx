@@ -32,6 +32,8 @@ const MentorCard: React.FC<MentorCardProps> = ({ mentor }) => (
         {mentor.profile.first_name} {mentor.profile.last_name}
       </Title>
       <Text>{mentor.application.designation}</Text>
+      <br />
+      <Text type="secondary">Google Inc</Text>
     </div>
   </Card>
 );

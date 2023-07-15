@@ -12,13 +12,14 @@ export type Mentor = {
 export type Application = {
   designation: string,
   country: string,
-  areasOfExpertise: string,
-  expectationsFromMentees: string,
-  mentoringPhilosophy: string,
-  commitmentToProgram: boolean,
-  previousExperienceAsMentor: boolean,
-  reasonForBeingMentor: string,
-  cvLink: string,
+  company_or_institution: string,
+  areas_of_expertise: string,
+  expectations_from_mentees: string,
+  mentoring_philosophy: string,
+  commitment_to_program: boolean,
+  previous_experience_as_mentor: boolean,
+  reason_for_being_mentor: string,
+  cv_link: string,
 };
 
 export type Profile = {
