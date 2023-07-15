@@ -35,6 +35,7 @@
     "@swc/cli": "^0.1.62",
     "@swc/core": "^1.3.60",
     "@testing-library/react": "^14.0.0",
+    "@types/css-modules": "^1.0.2",
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
     "@types/react-router-dom": "^5.3.3",

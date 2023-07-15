@@ -1,44 +1,24 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { MentorList } from "./MentorList";
+import type { Meta, StoryObj } from '@storybook/react';
 
-const data = [
-  {
-    name: 'John Doe',
-    designation:"SE at Google Inc",
-    avatar:"https://xsgames.co/randomusers/avatar.php?g=pixel&key=0"
-  },
-  {
-    name: 'Jane Doe',
-    designation:"SE at Google Inc",
-    avatar: "https://xsgames.co/randomusers/avatar.php?g=pixel&key=1"
-  },
-  {
-    name: 'Luke Skywalker',
-    designation:"SE at Google Inc",
-    avatar: "https://xsgames.co/randomusers/avatar.php?g=pixel&key=1"
-  },
-  {
-    name: 'Obiwan Kenobi',
-    designation:"SE at Google Inc",
-    avatar: "https://xsgames.co/randomusers/avatar.php?g=pixel&key=1"
-  },
-];
+import { MentorList } from './MentorList.component';
+import { mentors } from '../../__mocks__/mentors';
 
-const meta = {
+const meta: Meta<typeof MentorList> = {
   title: 'Mentor List',
   component: MentorList,
   tags: ['autodocs'],
   parameters: {
-    layout: 'fullscreen'
+    layout: 'fullscreen',
   },
-} satisfies Meta<typeof MentorList>;
+};
 
 export default meta;
+
 type Story = StoryObj<typeof meta>;
 
 export const ListWithData: Story = {
   args: {
-    data: data
-  }
+    mentors: [...mentors, ...mentors],
+  },
 };
 export const EmptyList: Story = {};
