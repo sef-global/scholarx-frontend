@@ -23,7 +23,7 @@ export const defaultCard: Story = {
     const canvas = within(canvasElement);
 
     const mentorName = canvas.getByText(
-      mentors[0].profile.first_name + ' ' + mentors[0].profile.last_name
+      `${mentors[0].profile.first_name} ${mentors[0].profile.last_name}`
     );
 
     const mentorDesignation = canvas.getByText(
