@@ -30,8 +30,13 @@ export const defaultCard: Story = {
       mentors[0].application.designation
     );
 
+    const companyOrInstitution = canvas.getByText(
+      mentors[0].application.company_or_institution
+    );
+
     expect(mentorName).toBeInTheDocument();
     expect(mentorDesignation).toBeInTheDocument();
+    expect(companyOrInstitution).toBeInTheDocument();
   },
 };
 

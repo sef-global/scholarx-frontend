@@ -33,7 +33,7 @@ const MentorCard: React.FC<MentorCardProps> = ({ mentor }) => (
       </Title>
       <Text>{mentor.application.designation}</Text>
       <br />
-      <Text type="secondary">Google Inc</Text>
+      <Text type="secondary">{mentor.application.company_or_institution}</Text>
     </div>
   </Card>
 );
