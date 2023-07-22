@@ -4,7 +4,6 @@ import findMentor from '../assets/new-findmentor.png'
 import success from '../assets/success.png'
 import scholarXArchive from '../assets/scholarX-archive.png'
 import TestimonialCard from "./TestimonialCard";
-import styles from './Home.css'
 import FAQCollapse from "./FAQCollapse";
 
 const style: React.CSSProperties = {
@@ -17,9 +16,9 @@ const style: React.CSSProperties = {
 function Home(){
     return(
         <>
-            <Row style={{padding:'8%'}}>
-                <Col span={12}>
-                    <p style={style}>
+            <Row style={{padding:'5% 10%'}} align={"middle"} justify={"center"}>
+                <Col xs={24} md={24} lg={24} xl={12}>
+                    <p className="home-page-main-title" style={style}>
                         Lorem ipsum dolor sit amet, consectetur
                     </p>
                     <Button type={"primary"}
@@ -31,12 +30,13 @@ function Home(){
                         See more
                     </Button>
                 </Col>
-                <Col span={12}>
-                    <img src={findMentor} alt='find-mentor' width={600}/>
+                <Col xs={24} md={24} xl={12}>
+                    <img src={findMentor} alt='find-mentor' width={600} style={{display:'flex', marginRight:'auto', marginLeft:'auto'}}/>
                 </Col>
             </Row>
-            <Row  style={{backgroundColor:'#F7F8FA', textAlign:"center", height:'185px'}} align={"middle"} justify={"center"}>
-                <Col span={5}>
+
+            <Row style={{backgroundColor:'#F7F8FA', textAlign:"center"}} align={"middle"} justify={"center"}>
+                <Col xs={24} xl={5}>
                     <p style={{fontFamily:'-apple-system, SanFranciscoText, sans-serif', fontSize:'30px',
                         color:'#1D1D1F', fontWeight:'bold'}}>
                         100,000+
@@ -46,7 +46,7 @@ function Home(){
                         Mentees
                     </p>
                 </Col>
-                <Col span={5}>
+                <Col xs={24} xl={5}>
                     <p style={{fontFamily:'-apple-system, SanFranciscoText, sans-serif', fontSize:'30px',
                         color:'#1D1D1F', fontWeight:'bold'}}>
                         500+
@@ -56,7 +56,7 @@ function Home(){
                         Mentors
                     </p>
                 </Col>
-                <Col span={5}>
+                <Col xs={24} xl={5}>
                     <p style={{fontFamily:'-apple-system, SanFranciscoText, sans-serif', fontSize:'30px',
                         color:'#1D1D1F', fontWeight:'bold'}}>
                         70%
@@ -67,7 +67,7 @@ function Home(){
                     </p>
                 </Col>
             </Row>
-            <Row align={"middle"} justify={"center"}>
+            <Row style={{paddingTop:'3%', paddingBottom:'5%'}} align={"middle"} justify={"center"}>
                 <Col span={24}>
                     <p style={{textAlign:'center', fontFamily:'-apple-system, SanFranciscoText, sans-serif', fontSize:'36px',
                         color:'#3D317C', fontWeight:'bold'}}>
@@ -79,31 +79,31 @@ function Home(){
                     </p>
                 </Col>
                 <Col span={24}>
-                    <Carousel style={{height:'400px'}} autoplay>
+                    <Carousel style={{height:'auto', paddingBottom:'68px'}} autoplay>
                         <div>
                             <Row align={"middle"} justify={"center"}>
-                                <Col span={4} style={{margin:'10px'}}><TestimonialCard/></Col>
-                                <Col span={4} style={{margin:'10px'}}><TestimonialCard/></Col>
-                                <Col span={4} style={{margin:'10px'}}><TestimonialCard/></Col>
-                                <Col span={4} style={{margin:'10px'}}><TestimonialCard/></Col>
+                                <Col xs={24} md={8} lg={6} xl={5}><TestimonialCard/></Col>
+                                <Col xs={24} md={8} lg={6} xl={5}><TestimonialCard/></Col>
+                                <Col xs={24} md={8} lg={6} xl={5}><TestimonialCard/></Col>
+                                <Col xs={24} md={8} lg={6} xl={5}><TestimonialCard/></Col>
                             </Row>
                         </div>
                         <div>
                             <Row align={"middle"} justify={"center"}>
-                                <Col span={4} style={{margin:'10px'}}><TestimonialCard/></Col>
-                                <Col span={4} style={{margin:'10px'}}><TestimonialCard/></Col>
-                                <Col span={4} style={{margin:'10px'}}><TestimonialCard/></Col>
-                                <Col span={4} style={{margin:'10px'}}><TestimonialCard/></Col>
+                                <Col xs={24} md={8} lg={6} xl={5}><TestimonialCard/></Col>
+                                <Col xs={24} md={8} lg={6} xl={5}><TestimonialCard/></Col>
+                                <Col xs={24} md={8} lg={6} xl={5}><TestimonialCard/></Col>
+                                <Col xs={24} md={8} lg={6} xl={5}><TestimonialCard/></Col>
                             </Row>
                         </div>
                     </Carousel>
                 </Col>
             </Row>
-            <Row style={{padding:'5% 20%', backgroundColor:'#F8FDFF'}}>
-                <Col span={12}>
-                    <img src={success} alt="success-image"/>
+            <Row style={{backgroundColor:'#F8FDFF', paddingTop:'5%', paddingBottom:'5%'}} align={"middle"} justify={"center"}>
+                <Col xs={24} xl={8}>
+                    <img src={success} alt="success-image" style={{display:'flex', marginRight:'auto', marginLeft:'auto'}}/>
                 </Col>
-                <Col span={12}>
+                <Col xs={24} xl={8}>
                     <p style={{textAlign:'center', fontFamily:'-apple-system, SanFranciscoText, sans-serif', fontSize:'30px',
                         color:'#3D317C', fontWeight:'bold'}}>Let's hear it from our<br/> ScholarX Alumni</p>
                     <Button type={"primary"}
@@ -114,8 +114,8 @@ function Home(){
                 </Col>
             </Row>
 
-            <Row style={{padding:'5% 20%'}}>
-                <Col span={12}>
+            <Row style={{paddingTop:'5%', paddingBottom:'5%'}} align={"middle"} justify={"center"}>
+                <Col xs={24} xl={8}>
                     <p style={{textAlign:'center', fontFamily:'-apple-system, SanFranciscoText, sans-serif', fontSize:'30px',
                         color:'#3D317C', fontWeight:'bold'}}>Checkout our past <br/>mentors and mentees</p>
                     <Button type={"primary"}
@@ -124,8 +124,8 @@ function Home(){
                         ScholarX Archive
                     </Button>
                 </Col>
-                <Col span={12}>
-                    <img src={scholarXArchive} alt="scholarX-archive-image"/>
+                <Col xs={24} xl={8}>
+                    <img src={scholarXArchive} alt="scholarX-archive-image" style={{display:'flex', marginRight:'auto', marginLeft:'auto'}}/>
                 </Col>
             </Row>
 

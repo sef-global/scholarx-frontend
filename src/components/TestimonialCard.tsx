@@ -7,12 +7,12 @@ function TestimonialCard(){
     return (
         <>
             <Card
-                style={{ width: '250px', height:'276px'}}
+                style={{ width: '250px', height:'350px', margin:'3%', display:'flex', marginRight:'auto', marginLeft:'auto'}}
             >
                 <img
                     src={testimonialImage}
                     alt="testimonial-image"
-                    width={222}
+                    width={200}
                     style={{display:'flex', marginRight:'auto', marginLeft:'auto'}}
                 />
                 <p style={{fontFamily:'-apple-system, SanFranciscoText, sans-serif', fontSize:'14px', fontWeight:'bold'}}>
