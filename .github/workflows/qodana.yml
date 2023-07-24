@@ -18,4 +18,4 @@ jobs:
         with:
           use-caches: false
         env:
-          QODANA_TOKEN: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmdhbml6YXRpb24iOiJwOVdCUSIsInByb2plY3QiOiJBUjlabiIsInRva2VuIjoiQWJYd0sifQ.eUECCMV4mBz56W6AoNjSi2widnEED-sP10i2-YtkM0g
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
