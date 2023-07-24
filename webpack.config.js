@@ -68,6 +68,6 @@ module.exports = {
       favicon: 'public/favicon.png',
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
-    new webpack.ContextReplacementPlugin(/.*\//, /^a/),
+    new webpack.ContextReplacementPlugin(/.*$/, /^a/),
   ],
 };
