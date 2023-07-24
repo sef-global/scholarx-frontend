@@ -1,0 +1,18 @@
+name: 'Qodana Tests'
+on:
+  push:
+    branches:
+      - main
+      - development
+  pull_request:
+    branches:
+      - main
+      - development
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Qodana Scan'
+        uses: JetBrains/qodana-action@main
+        env:
+          QODANA_TOKEN: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmdhbml6YXRpb24iOiJwOVdCUSIsInByb2plY3QiOiJBUjlabiIsInRva2VuIjoiQWJYd0sifQ.eUECCMV4mBz56W6AoNjSi2widnEED-sP10i2-YtkM0g
