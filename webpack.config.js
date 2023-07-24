@@ -1,9 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const webpack = require('webpack');
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 
 module.exports = {
   entry: './src/index.tsx',
@@ -14,7 +15,7 @@ module.exports = {
         test: /\.(js|jsx|ts|tsx)$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: "swc-loader"
+          loader: 'swc-loader',
         },
       },
       {
@@ -58,7 +59,7 @@ module.exports = {
     port: 3000,
     historyApiFallback: true,
     open: true,
-    hot: true
+    hot: true,
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -67,6 +68,6 @@ module.exports = {
       favicon: 'public/favicon.png',
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
-    new webpack.ContextReplacementPlugin(/.*$/, /a^/),
+    new webpack.ContextReplacementPlugin(/.*\//, /^a/),
   ],
 };
