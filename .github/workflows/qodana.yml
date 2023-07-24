@@ -15,5 +15,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: 'Qodana Scan'
         uses: JetBrains/qodana-action@main
+        with:
+          use-caches: false
         env:
           QODANA_TOKEN: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmdhbml6YXRpb24iOiJwOVdCUSIsInByb2plY3QiOiJBUjlabiIsInRva2VuIjoiQWJYd0sifQ.eUECCMV4mBz56W6AoNjSi2widnEED-sP10i2-YtkM0g
