@@ -92,7 +92,7 @@ function Home(){
             {/* Success stories container*/}
             <Row className={styles.homePageContainer} style={{backgroundColor:'#F8FDFF'}} align={"middle"} justify={"center"}>
                 <Col xs={24} xl={8}>
-                    <img className={styles.homePageImage} src={success} alt="success-image"/>
+                    <img className={styles.homePageImage} src={success} alt="success-image" width={300}/>
                 </Col>
                 <Col xs={24} xl={8}>
                     <p className={styles.homePageSecondaryTitle} style={{textAlign:'center', fontSize:'30px', color:'#3D317C'}}>
@@ -115,7 +115,7 @@ function Home(){
                     </Button>
                 </Col>
                 <Col xs={24} xl={8}>
-                    <img className={styles.homePageImage} src={scholarXArchive} alt="scholarX-archive-image"/>
+                    <img className={styles.homePageImage} src={scholarXArchive} alt="scholarX-archive-image" width={400}/>
                 </Col>
             </Row>
 
