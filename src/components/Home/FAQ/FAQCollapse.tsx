@@ -1,20 +1,21 @@
 import React from 'react'
 import { Collapse } from 'antd';
+import styles from './FAQCollapse.css'
 
 const { Panel } = Collapse;
 
 function FAQCollapse() {
 
     return(
-        <Collapse style={{background:'transparent', fontFamily:'-apple-system, SanFranciscoText, sans-serif', fontSize:'15px', fontWeight:600, color:'#1D1D1F'}}>
+        <Collapse className={styles.faqCollapseContainer}>
             <Panel header="What are the eligibility requirements?" key="1">
-                Answer 1
+                <span className={styles.faqAnswer}>Answer 1</span>
             </Panel>
             <Panel header="What are the eligibility requirements?" key="2">
-                Answer 2
+                <span className={styles.faqAnswer}>Answer 1</span>
             </Panel>
             <Panel header="What are the eligibility requirements?" key="2">
-                Answer 3
+                <span className={styles.faqAnswer}>Answer 1</span>
             </Panel>
         </Collapse>
     )

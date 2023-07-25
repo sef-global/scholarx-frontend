@@ -1,0 +1,26 @@
+.testimonialCardContainer{
+    width: 250px;
+    height: 330px;
+    display: flex;
+    margin-right: auto;
+    margin-left: auto
+}
+
+.testimonialCardImage{
+    width: 200px;
+    display: flex;
+    margin-right: auto;
+    margin-left: auto
+}
+
+.testimonialCardTitle{
+    font-family: -apple-system, SanFranciscoText, sans-serif;
+    font-size: 14px;
+    font-weight: bold
+}
+
+.testimonialCardContent{
+    font-family: -apple-system, SanFranciscoText, sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+}

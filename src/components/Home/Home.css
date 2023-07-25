@@ -1,0 +1,45 @@
+.ant-carousel .slick-slider .slick-dots{
+    background-color: #ff4ef6 !important;
+}
+
+.homePageContainer{
+    padding: 4%
+}
+
+.homePageMainTitle{
+    font-family: -apple-system, SanFranciscoText, sans-serif;
+    color: #32325D;
+    font-size: 43px;
+    font-weight: bold
+}
+
+.homePageSecondaryTitle{
+    font-family: -apple-system, SanFranciscoText, sans-serif;
+    font-size: 30px;
+    color: #1D1D1F;
+    font-weight: bold
+}
+
+.homePageMainButton{
+    width: 160px;
+    height: 37px;
+    font-family: -apple-system, SanFranciscoText, sans-serif;
+    font-weight: bold
+}
+
+.homePageSecondaryButton{
+    display: flex;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: #172B4D;
+    font-family: -apple-system, SanFranciscoText, sans-serif;
+    font-weight: bold;
+    font-size: 13px
+}
+
+.homePageImage{
+    display: flex;
+    margin-right: auto;
+    margin-left: auto
+}
+

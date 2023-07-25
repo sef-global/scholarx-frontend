@@ -1,0 +1,11 @@
+.faqCollapseContainer{
+    background: transparent;
+    font-family: -apple-system, SanFranciscoText, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1D1D1F
+}
+
+.faqAnswer{
+    font-weight: 300;
+}
