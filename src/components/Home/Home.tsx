@@ -4,7 +4,8 @@ import findMentor from '../../assets/new-findmentor.png'
 import success from '../../assets/success.png'
 import scholarXArchive from '../../assets/scholarX-archive.png'
 import TestimonialCard from "./Testimonials/TestimonialCard";
-import FAQCollapse from "./FAQ/FAQCollapse";
+import MentorFAQCollapse from "./FAQ/MentorFAQCollapse";
+import MenteeFAQCollapse from "./FAQ/MenteeFAQCollapse";
 import styles from "./Home.css"
 
 const {Text} = Typography;
@@ -142,7 +143,7 @@ function Home(){
                         </Text>
                 </Col>
                 <Col xs={20} xl={12}>
-                    <FAQCollapse/>
+                    <MentorFAQCollapse/>
                 </Col>
                 <Col span={24} style={{textAlign:'center'}}>
                     <Text className={styles.homePageSecondaryTitle} style={{fontSize:'25px', color:'#3D317C', fontWeight:600}}>
@@ -150,7 +151,7 @@ function Home(){
                     </Text>
                 </Col>
                 <Col xs={20} xl={12}>
-                    <FAQCollapse/>
+                    <MenteeFAQCollapse/>
                 </Col>
             </Row>
         </>
