@@ -17,7 +17,7 @@
     font-family: -apple-system, SanFranciscoText, sans-serif;
     font-size: 30px;
     color: #1D1D1F;
-    font-weight: bold
+    font-weight: bold;
 }
 
 .homePageMainButton{
@@ -31,15 +31,20 @@
     display: flex;
     margin-right: auto;
     margin-left: auto;
+    justify-content: center;
     background-color: #172B4D;
     font-family: -apple-system, SanFranciscoText, sans-serif;
     font-weight: bold;
-    font-size: 13px
+    font-size: 13px;
+    width: 214px;
+    height: 34px;
 }
 
 .homePageImage{
+    width: 100%;
     display: flex;
     margin-right: auto;
     margin-left: auto;
 }
+
 
