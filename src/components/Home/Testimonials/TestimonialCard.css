@@ -3,7 +3,8 @@
     height: 330px;
     display: flex;
     margin-right: auto;
-    margin-left: auto
+    margin-left: auto;
+    margin-bottom: 10px;
 }
 
 .testimonialCardImage{

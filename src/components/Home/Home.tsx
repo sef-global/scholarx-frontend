@@ -80,7 +80,7 @@ function Home(){
                     </Space>
                 </Col>
                 <Col span={24}>
-                    <Carousel className={styles.slickSlider} style={{height:'auto', paddingBottom:'65px'}} autoplay>
+                    <Carousel className={styles.slickDotsBottom} style={{height:'auto', paddingBottom:'65px'}} autoplay>
                         <div>
                             <Row align={"middle"} justify={"center"}>
                                 <Col xs={24} md={10} lg={6} xl={5}><TestimonialCard/></Col>
