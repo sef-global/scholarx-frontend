@@ -8,5 +8,6 @@
 }
 
 .faqAnswer{
+    text-align: justify;
     font-weight: 300;
 }
