@@ -36,5 +36,4 @@ function MentorFAQCollapse() {
         </Collapse>
     )
 }
-
 export default MentorFAQCollapse;

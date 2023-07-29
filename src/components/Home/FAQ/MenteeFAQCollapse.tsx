@@ -45,5 +45,4 @@ function MenteeFAQCollapse() {
         </Collapse>
     )
 }
-
 export default MenteeFAQCollapse;
