@@ -138,9 +138,9 @@ function Home(){
             {/* FAQs container*/}
             <Row className={styles.homePageContainer} align={"middle"} justify={"center"}>
                 <Col span={24} style={{textAlign:'center'}}>
-                        <Text className={styles.homePageSecondaryTitle} style={{fontSize:'25px', color:'#3D317C', fontWeight:600}}>
-                            FAQ for Mentors
-                        </Text>
+                    <Text className={styles.homePageSecondaryTitle} style={{fontSize:'25px', color:'#3D317C', fontWeight:600}}>
+                        FAQ for Mentors
+                    </Text>
                 </Col>
                 <Col xs={20} xl={12}>
                     <MentorFAQCollapse/>
