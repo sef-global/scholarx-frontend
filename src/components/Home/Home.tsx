@@ -11,8 +11,7 @@ import styles from "./Home.css"
 
 const {Text} = Typography;
 
-function Home(){
-    return(
+const Home:React.FC = () => (
         <>
             {/* Main title container*/}
             <Row className={styles.homePageContainer} style={{paddingRight:'10%', paddingLeft:'10%'}} align={"middle"} justify={"center"}>
@@ -156,6 +155,5 @@ function Home(){
                 </Col>
             </Row>
         </>
-    );
-}
+);
 export default Home
