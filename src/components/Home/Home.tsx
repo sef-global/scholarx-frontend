@@ -3,10 +3,10 @@ import {Button, Col, Row, Carousel, Typography, Space} from 'antd';
 import findMentor from '../../../public/assets/new-findmentor.png'
 import success from '../../../public/assets/success.png'
 import scholarXArchive from '../../../public/assets/scholarX-archive.png'
-import TestimonialCard from "./Testimonials/TestimonialCard";
-import FAQCollapse from "./FAQ/FAQCollapse";
-import mentorFAQs from "./FAQ/MentorFAQs.json"
-import menteeFAQs from "./FAQ/MenteeFAQs.json"
+import TestimonialCard from "../Testimonials/TestimonialCard";
+import FAQCollapse from "../FAQ/FAQCollapse";
+import mentorFAQs from "../FAQ/MentorFAQs.json"
+import menteeFAQs from "../FAQ/MenteeFAQs.json"
 import styles from "./Home.css"
 
 const {Text} = Typography;

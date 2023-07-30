@@ -1,6 +1,6 @@
 import React from 'react'
 import {Card, Space, Typography} from "antd";
-import testimonialImage from '../../../../public/assets/testimonial-image.png'
+import testimonialImage from '../../../public/assets/testimonial-image.png'
 import styles from "./TestimonialCard.css"
 
 const {Text} = Typography;
