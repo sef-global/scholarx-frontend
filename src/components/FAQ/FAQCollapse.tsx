@@ -7,16 +7,16 @@ import styles from './FAQCollapse.css';
 const { Panel } = Collapse;
 const { Paragraph } = Typography;
 
-interface FAQProps{
+interface FAQProps {
   faqs: FAQ[];
 }
 
-export interface FAQ{
+export interface FAQ {
   question: string;
   answer: Answer;
 }
 
-export interface Answer{
+export interface Answer {
   paragraph: string[];
   list: string[];
 }
@@ -26,7 +26,9 @@ const FAQCollapse: React.FC<FAQProps> = ({ faqs }) => (
     {faqs.map((faq, index) => (
       <Panel key={index} header={faq.question}>
         {faq.answer.paragraph.map((paragraphItem, paragraphIndex) => (
-          <Paragraph key={paragraphIndex} className={styles.antTypography}>{paragraphItem}</Paragraph>
+          <Paragraph key={paragraphIndex} className={styles.antTypography}>
+            {paragraphItem}
+          </Paragraph>
         ))}
         {faq.answer.list.length > 0 && (
           <ul className={styles.faqAnswer}>
@@ -39,4 +41,4 @@ const FAQCollapse: React.FC<FAQProps> = ({ faqs }) => (
     ))}
   </Collapse>
 );
-export default FAQCollapse
+export default FAQCollapse;
