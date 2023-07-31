@@ -1,11 +1,27 @@
-import React from 'react'
+import React from 'react';
+
 import { Collapse, Typography } from 'antd';
-import styles from './FAQCollapse.css'
+
+import styles from './FAQCollapse.css';
 
 const { Panel } = Collapse;
-const {Paragraph} = Typography;
+const { Paragraph } = Typography;
 
-const FAQCollapse: React.FC = ({ faqs }) => (
+interface FAQProps{
+  faqs: FAQ[];
+}
+
+export interface FAQ{
+  question: string;
+  answer: Answer;
+}
+
+export interface Answer{
+  paragraph: string[];
+  list: string[];
+}
+
+const FAQCollapse: React.FC<FAQProps> = ({ faqs }) => (
   <Collapse className={styles.faqCollapseContainer}>
     {faqs.map((faq, index) => (
       <Panel key={index} header={faq.question}>
