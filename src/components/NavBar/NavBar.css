@@ -1,5 +1,6 @@
 .navbarLogoContainer{
     width: 154px;
+    margin-top: 15px;
 }
 
 .antTypography{
@@ -17,4 +18,11 @@
 .antIcon{
     color: #525F7F;
     font-size: 20px;
+}
+
+.loginButton{
+    font-family: -apple-system, SanFranciscoText, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    height: 37px;
 }
