@@ -16,10 +16,18 @@ const NavBar: React.FC = () => (
     <Col span={15}>
       <Space size={80} direction="horizontal">
         <img className={styles.navbarLogoContainer} src="./scholarx-logo.png" />
-        <Text className={styles.antTypography}>Home</Text>
-        <Text className={styles.antTypography}>About</Text>
-        <Text className={styles.antTypography}>Initiatives</Text>
-        <Text className={styles.antTypography}>Join Us</Text>
+        <a href="https://sefglobal.org/">
+          <Text className={styles.antTypography}>Home</Text>
+        </a>
+        <a href="" target="_blank" rel="noreferrer">
+          <Text className={styles.antTypography}>About</Text>
+        </a>
+        <a href="" target="_blank" rel="noreferrer">
+          <Text className={styles.antTypography}>Initiatives</Text>
+        </a>
+        <a href="" target="_blank" rel="noreferrer">
+          <Text className={styles.antTypography}>Join Us</Text>
+        </a>
       </Space>
     </Col>
     <Col span={4} offset={5}>

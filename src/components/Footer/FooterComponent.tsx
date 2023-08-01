@@ -124,12 +124,28 @@ const FooterComponent: React.FC = () => (
     </Col>
     <Col span={8} offset={6}>
       <Space direction="horizontal" size={25} style={{ paddingTop: '15px' }}>
-        <Text className={styles.antTypography}>Home</Text>
-        <Text className={styles.antTypography}>Projects</Text>
-        <Text className={styles.antTypography}>Team</Text>
-        <Text className={styles.antTypography}>Blog</Text>
-        <Text className={styles.antTypography}>Join Us</Text>
-        <Text className={styles.antTypography}>Handbook</Text>
+        <a href="https://sefglobal.org/">
+          <Text className={styles.antTypography}>Home</Text>
+        </a>
+        <a href="https://sefglobal.org/index.html#projects">
+          <Text className={styles.antTypography}>Projects</Text>
+        </a>
+        <a href="https://sefglobal.org/team.html">
+          <Text className={styles.antTypography}>Team</Text>
+        </a>
+        <a href="https://sefglobal.medium.com/">
+          <Text className={styles.antTypography}>Blog</Text>
+        </a>
+        <a href="https://sefglobal.org/join-us.html">
+          <Text className={styles.antTypography}>Join Us</Text>
+        </a>
+        <a
+          href="https://handbook.sefglobal.org/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <Text className={styles.antTypography}>Handbook</Text>
+        </a>
       </Space>
     </Col>
     <Col span={24} style={{ textAlign: 'center', marginTop: '8%' }}>
