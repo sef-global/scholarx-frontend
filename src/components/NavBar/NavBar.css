@@ -1,0 +1,20 @@
+.navbarLogoContainer{
+    width: 154px;
+}
+
+.antTypography{
+    font-family: -apple-system, SanFranciscoText, sans-serif;
+    color: #6D7893;
+    font-size: 14px;
+    font-weight: 300
+}
+
+.antButton{
+    width: 20px;
+    border: none;
+}
+
+.antIcon{
+    color: #525F7F;
+    font-size: 20px;
+}
