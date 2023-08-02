@@ -16,14 +16,14 @@ import styles from './FooterComponent.css';
 const { Text } = Typography;
 
 const FooterComponent: React.FC = () => (
-  <Row justify={'center'}>
-    <Col span={8}>
+  <Row justify={'end'} style={{ padding: '4px' }}>
+    <Col xs={24} md={24} lg={24} xl={10}>
       <Space direction="vertical">
         <Text className={styles.footerMainTitle}>Let`s Rethink Education!</Text>
         <Text className={styles.footerSecondaryTitle}>
           Get in touch with using any of these platforms.
         </Text>
-        <Space direction="horizontal" size={10}>
+        <Space direction="horizontal">
           <a
             href="https://twitter.com/goasksef"
             target="_blank"
@@ -122,8 +122,8 @@ const FooterComponent: React.FC = () => (
         </Space>
       </Space>
     </Col>
-    <Col span={8} offset={6}>
-      <Space direction="horizontal" size={25} style={{ paddingTop: '15px' }}>
+    <Col xs={24} md={24} lg={24} xl={{ span: 10, offset: 2 }}>
+      <Space direction="horizontal" style={{ paddingTop: '15px' }}>
         <a href="https://sefglobal.org/">
           <Text className={styles.antTypography}>Home</Text>
         </a>
