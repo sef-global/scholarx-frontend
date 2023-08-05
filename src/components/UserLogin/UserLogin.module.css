@@ -1,0 +1,100 @@
+.formContainer{
+    width: 70%;
+    margin: 10% auto 5% auto;
+}
+
+.formContainer input{
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+.link{
+    width: 110%;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 5px;
+    cursor: pointer;
+}
+.loginButton{
+    display: flex;
+    width: 110%;
+    border-radius: 10px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardContainer{
+    width: 35%;
+    margin: auto;
+    padding:2%;
+    border-radius: 10px;
+}
+
+.socialContainer{
+    width: 100%;
+    padding: 10px;
+}
+
+.signinText{
+    position: relative;
+    margin: 0 0 10% 0;
+    text-align: center;
+}
+
+.signinText:after{
+    content:" ";
+    height: 1px;
+    width: 20%;
+    background: #b5b5b5;
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 15%;
+  }
+
+  .signinText:before{
+    content:" ";
+    display: block;
+    height: 1px;
+    width: 20%;
+    position: absolute;
+    top: 50%;
+    left: 15%;
+    background: #b5b5b5;
+  }
+
+  .socialButtons{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 15%;
+  }
+
+.socialButtons button{
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+.registerText{
+    display: flex;
+    justify-content: center;
+    margin: 10% 0 0 0;
+    text-decoration: none;
+}
+
+.closeButton{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 2%;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.imageContainer{
+    width: 60%;
+    margin: 0 auto;
+}
