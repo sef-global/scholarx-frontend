@@ -16,6 +16,12 @@
 
 @media (max-width:396px){
     .menuIcon{
+        margin-left: 9%;
+    }
+}
+
+@media (max-width:336px){
+    .menuIcon{
         margin-left: 0%;
     }
 }
