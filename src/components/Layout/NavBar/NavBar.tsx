@@ -6,9 +6,10 @@ import {
   LinkedinFilled,
   InstagramOutlined,
 } from '@ant-design/icons';
-import { Button, Col, Drawer, Row, Space, Typography } from 'antd';
+import { Button, Col, Row, Space, Typography } from 'antd';
 
 import styles from './NavBar.css';
+import MenuDrawer from '../MenuDrawer/MenuDrawer';
 
 const { Text } = Typography;
 
@@ -92,35 +93,7 @@ const NavBar: React.FC = () => {
           </Space>
         </Col>
       </Row>
-      <Drawer
-        open={openMenu}
-        placement="right"
-        onClose={() => {
-          setOpenMenu(false);
-        }}
-        title={
-          <img
-            src="./scholarx-logo.png"
-            className={styles.drawerLogoContainer}
-          />
-        }
-        closable
-      >
-        <Space direction="vertical">
-          <a href="https://sefglobal.org/">
-            <Text className={styles.antTypography}>Home</Text>
-          </a>
-          <a href="" target="_blank" rel="noreferrer">
-            <Text className={styles.antTypography}>About</Text>
-          </a>
-          <a href="" target="_blank" rel="noreferrer">
-            <Text className={styles.antTypography}>Initiatives</Text>
-          </a>
-          <a href="" target="_blank" rel="noreferrer">
-            <Text className={styles.antTypography}>Join Us</Text>
-          </a>
-        </Space>
-      </Drawer>
+      <MenuDrawer openMenu={openMenu} setOpenMenu={setOpenMenu} />
     </>
   );
 };
