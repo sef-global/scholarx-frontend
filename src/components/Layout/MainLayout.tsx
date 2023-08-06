@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 import { Layout } from 'antd';
 
 import FooterComponent from './Footer/FooterComponent';
-import styles from './LayoutComponent.css';
+import styles from './MainLayout.css';
 import NavBar from './NavBar/NavBar';
 
 const { Header, Footer, Content } = Layout;
@@ -12,7 +12,7 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-const LayoutComponent: React.FC<LayoutProps> = ({ children }) => (
+const MainLayout: React.FC<LayoutProps> = ({ children }) => (
   <Layout>
     <Header className={styles.antLayoutHeader}>
       <NavBar />
@@ -23,4 +23,4 @@ const LayoutComponent: React.FC<LayoutProps> = ({ children }) => (
     </Footer>
   </Layout>
 );
-export default LayoutComponent;
+export default MainLayout;

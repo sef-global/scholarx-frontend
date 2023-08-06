@@ -3,11 +3,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Home from './components/Home/Home';
-import LayoutComponent from './components/Layout/LayoutComponent';
+import MainLayout from './components/Layout/MainLayout';
 
 const App: React.FC = () => (
-  <LayoutComponent>
+  <MainLayout>
     <Home />
-  </LayoutComponent>
+  </MainLayout>
 );
 ReactDOM.render(<App />, document.getElementById('root'));
