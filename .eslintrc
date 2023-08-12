@@ -272,7 +272,7 @@
         // Deprecated, will be removed in 1.0.
         "space-unary-word-ops": 0,
         // Require a space immediately following the // in a line comment.
-        "spaced-comment": [2, "always"],
+        "spaced-comment": [2, "always", { "markers": ["/"] }],
         // Require "use strict" to be defined globally in the script.
         "strict": [2, "global"],
         // Disallow comparisons with the value NaN.

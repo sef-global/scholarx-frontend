@@ -13,7 +13,7 @@ import MenuDrawer from '../MenuDrawer/MenuDrawer';
 
 const { Text } = Typography;
 
-const NavBar: React.FC = () => {
+const Navbar: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
 
   return (
@@ -97,4 +97,5 @@ const NavBar: React.FC = () => {
     </>
   );
 };
-export default NavBar;
+
+export default Navbar;

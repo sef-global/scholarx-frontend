@@ -4,7 +4,7 @@ import { Layout } from 'antd';
 
 import FooterComponent from './Footer/Footer';
 import styles from './MainLayout.module.css';
-import NavBar from './Navbar/Navbar';
+import Navbar from './Navbar/Navbar';
 
 const { Header, Footer, Content } = Layout;
 
@@ -15,7 +15,7 @@ interface LayoutProps {
 const MainLayout: React.FC<LayoutProps> = ({ children }) => (
   <Layout>
     <Header className={styles.antLayoutHeader}>
-      <NavBar />
+      <Navbar />
     </Header>
     <Content className={styles.antLayoutContent}>{children}</Content>
     <Footer className={styles.antLayoutFooter}>
