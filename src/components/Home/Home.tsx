@@ -12,7 +12,7 @@ const { Text } = Typography;
 
 const Home: React.FC = () => (
   <>
-    {/* Main title container*/}
+    {/* Main title container */}
     <Row
       className={styles.homePageContainer}
       style={{ paddingRight: '10%', paddingLeft: '10%' }}
@@ -44,7 +44,7 @@ const Home: React.FC = () => (
       </Col>
     </Row>
 
-    {/* Statistics container*/}
+    {/* Statistics container */}
     <Row
       className={styles.homePageContainer}
       style={{ backgroundColor: '#F7F8FA', textAlign: 'center' }}
@@ -86,7 +86,7 @@ const Home: React.FC = () => (
       </Col>
     </Row>
 
-    {/* Testimonials container*/}
+    {/* Testimonials container */}
     <Row
       className={styles.homePageContainer}
       style={{ textAlign: 'center' }}
@@ -151,7 +151,7 @@ const Home: React.FC = () => (
       </Col>
     </Row>
 
-    {/* Success stories container*/}
+    {/* Success stories container */}
     <Row
       className={styles.homePageContainer}
       style={{ backgroundColor: '#F8FDFF' }}
@@ -182,7 +182,7 @@ const Home: React.FC = () => (
       </Col>
     </Row>
 
-    {/* Archive container*/}
+    {/* Archive container */}
     <Row
       className={styles.homePageContainer}
       align={'middle'}
@@ -212,7 +212,7 @@ const Home: React.FC = () => (
       </Col>
     </Row>
 
-    {/* FAQs container*/}
+    {/* FAQs container */}
     <Row
       className={styles.homePageContainer}
       align={'middle'}

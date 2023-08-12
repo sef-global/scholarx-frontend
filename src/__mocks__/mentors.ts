@@ -1,4 +1,4 @@
-import { Mentor } from '../types';
+import type { Mentor } from '../types';
 
 export const mentors: Mentor[] = [
   {

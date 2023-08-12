@@ -17,13 +17,14 @@ interface MenuDrawerProps {
 }
 
 const MenuDrawer: React.FC<MenuDrawerProps> = ({ openMenu, setOpenMenu }) => {
-  function handleOpenMenu() {
+  const handleOpenMenu = (): boolean => {
     return openMenu;
-  }
+  };
 
-  function handleCloseMenu() {
+  const handleCloseMenu = (): void => {
     setOpenMenu(false);
-  }
+  };
+
   return (
     <Drawer
       open={handleOpenMenu()}

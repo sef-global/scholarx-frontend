@@ -1,4 +1,4 @@
-export type Mentor = {
+export interface Mentor {
   mentor_id: number;
   created_at: string;
   updated_at: string;
@@ -7,9 +7,9 @@ export type Mentor = {
   application: Application;
   availability: boolean;
   profile: Profile;
-};
+}
 
-export type Application = {
+export interface Application {
   designation: string;
   country: string;
   company_or_institution: string;
@@ -20,9 +20,9 @@ export type Application = {
   previous_experience_as_mentor: boolean;
   reason_for_being_mentor: string;
   cv_link: string;
-};
+}
 
-export type Profile = {
+export interface Profile {
   created_at: string;
   updated_at: string;
   primary_email: string;
@@ -33,4 +33,4 @@ export type Profile = {
   linkedin_url: string;
   type: string;
   uuid: string;
-};
+}
