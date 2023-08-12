@@ -1,6 +1,4 @@
-import { StorybookConfig } from '@storybook/react-webpack5';
-
-const config: StorybookConfig = {
+export default {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
     '@storybook/addon-links',
@@ -9,11 +7,10 @@ const config: StorybookConfig = {
     'storybook-addon-swc',
   ],
   framework: {
-    name: '@storybook/react-webpack5',
+    name: '@storybook/react-vite',
     options: {},
   },
   docs: {
-    autodocs: 'tag',
+    autodocs: true,
   },
 };
-export default config;

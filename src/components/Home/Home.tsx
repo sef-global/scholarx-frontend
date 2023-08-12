@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Button, Col, Row, Carousel, Typography, Space } from 'antd';
 
-import styles from './Home.css';
+import styles from './Home.module.css';
 import FAQCollapse from '../FAQ/FAQCollapse';
 import menteeFAQs from '../FAQ/MenteeFAQs.json';
 import mentorFAQs from '../FAQ/MentorFAQs.json';

@@ -11,7 +11,7 @@ import {
 } from '@ant-design/icons';
 import { Button, Col, Row, Space, Typography } from 'antd';
 
-import styles from './FooterComponent.css';
+import styles from './Footer.module.css';
 
 const { Text } = Typography;
 

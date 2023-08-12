@@ -2,9 +2,9 @@ import React, { ReactNode } from 'react';
 
 import { Layout } from 'antd';
 
-import FooterComponent from './Footer/FooterComponent';
-import styles from './MainLayout.css';
-import NavBar from './NavBar/NavBar';
+import FooterComponent from './Footer/Footer';
+import styles from './MainLayout.module.css';
+import NavBar from './Navbar/Navbar';
 
 const { Header, Footer, Content } = Layout;
 

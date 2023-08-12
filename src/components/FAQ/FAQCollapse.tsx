@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Collapse, Typography } from 'antd';
 
-import styles from './FAQCollapse.css';
+import styles from './FAQCollapse.module.css';
 
 const { Panel } = Collapse;
 const { Paragraph } = Typography;

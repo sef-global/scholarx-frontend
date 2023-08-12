@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 import { Avatar, Button, Drawer, Space, Typography } from 'antd';
 
-import styles from './MenuDrawer.css';
+import styles from './MenuDrawer.module.css';
 
 const { Text } = Typography;
 
