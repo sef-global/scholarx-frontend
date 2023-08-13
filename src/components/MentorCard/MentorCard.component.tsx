@@ -4,7 +4,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { Typography, Avatar, Card } from 'antd';
 
 import styles from './MentorCard.module.css';
-import { Mentor } from '../../types';
+import { type Mentor } from '../../types';
 
 const { Title, Text } = Typography;
 
@@ -14,7 +14,7 @@ interface MentorCardProps {
 
 const MentorCard: React.FC<MentorCardProps> = ({ mentor }) => (
   <Card className={styles.cardContainer}>
-    {mentor.profile.image_url ? (
+    {mentor.profile.image_url !== null ? (
       <Avatar
         src={mentor.profile.image_url}
         size={100}

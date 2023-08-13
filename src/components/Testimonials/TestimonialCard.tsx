@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Card, Space, Typography } from 'antd';
 
-import styles from './TestimonialCard.css';
+import styles from './TestimonialCard.module.css';
 
 const { Text } = Typography;
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Row, Col } from 'antd';
 
-import { Mentor } from '../../types';
+import { type Mentor } from '../../types';
 import MentorCard from '../MentorCard/MentorCard.component';
 
 interface ListProps {

@@ -8,12 +8,12 @@ import {
 } from '@ant-design/icons';
 import { Button, Col, Row, Space, Typography } from 'antd';
 
-import styles from './NavBar.css';
+import styles from './Navbar.module.css';
 import MenuDrawer from '../MenuDrawer/MenuDrawer';
 
 const { Text } = Typography;
 
-const NavBar: React.FC = () => {
+const Navbar: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
 
   return (
@@ -97,4 +97,5 @@ const NavBar: React.FC = () => {
     </>
   );
 };
-export default NavBar;
+
+export default Navbar;
