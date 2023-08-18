@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form,Image,Button,Card,Typography, Anchor} from 'antd';
+import {Form,Image,Button,Card,Typography, Anchor,Modal} from 'antd';
 import { LinkedinFilled, GoogleOutlined, CloseCircleFilled} from '@ant-design/icons';
 import styles from './UserLogin.module.css';
 
