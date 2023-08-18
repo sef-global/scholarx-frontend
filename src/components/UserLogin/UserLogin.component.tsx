@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form,Image,Button,Card,Typography, Anchor,Modal} from 'antd';
+import {Form,Image,Button, Typography, Anchor,Modal} from 'antd';
 import { LinkedinFilled, GoogleOutlined, CloseCircleFilled} from '@ant-design/icons';
 import styles from './UserLogin.module.css';
 
@@ -7,7 +7,7 @@ const { Text } = Typography;
 const { Link } = Anchor;
 
 const UserLogin : React.FC = () => (
-        <Card className={styles.cardContainer}>
+        <Modal className={styles.cardContainer}>
             <Button type='text' icon={<CloseCircleFilled />} className={styles.closeButton}/>
             <div className={styles.imageContainer}>
             <Image src='https://sefglobal.org/assets/img/brand/scholarx.png' preview={false}/>
@@ -37,6 +37,6 @@ const UserLogin : React.FC = () => (
         <Text>Don't have an account?</Text>
         <Link href='' title='Register'/>
         </div>
-    </Card>);
+    </Modal>);
 
 export default UserLogin;

@@ -4,10 +4,9 @@ import MainLayout from './components/Layout/MainLayout';
 import UserLogin from './components/UserLogin/UserLogin.component';
 
 const App: React.FC = () => (
-  // <MainLayout>
-  //   <Home />
-  // </MainLayout>
-  <UserLogin />
+  <MainLayout>
+    <Home />
+  </MainLayout>
 );
 
 export default App;
