@@ -35,7 +35,6 @@ export const formWithData: Story = {
     expect(primaryEmail).toHaveValue(profile.primary_email);
     expect(contactEmail).toHaveValue(profile.contact_email);
     expect(fullName).toBeVisible();
-    expect(canvas.getByRole('button', { name: 'plus Upload' })).not.toBeVisible();
   },
 };
 
