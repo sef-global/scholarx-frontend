@@ -34,3 +34,18 @@ export interface Profile {
   type: string;
   uuid: string;
 }
+
+export interface Mentee {
+  mentee_id: number;
+  created_at: string;
+  updated_at: string;
+  state: string;
+  answers: Answer[];
+  profile: Profile;
+  mentor: Mentor;
+}
+
+export interface Answer {
+  question: string;
+  answer: string;
+}
