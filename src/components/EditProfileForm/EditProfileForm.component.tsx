@@ -1,4 +1,4 @@
-import React, { type FormEventHandler, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { type Profile } from '../../types';
 import {
   Button,
@@ -173,7 +173,17 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
             name="basic"
             layout="vertical"
             initialValues={{ remember: true }}
-            // onFinish={handleSubmit}
+            onFinish={() => {
+              onSubmit(
+                formValues as {
+                  first_name: string;
+                  last_name: string;
+                  contact_email: string;
+                  linkedin_url: string;
+                  image_url?: string;
+                }
+              );
+            }}
             autoComplete="off"
           >
             <Form.Item<string>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input, message } from 'antd';
+import { Button, Form, Input } from 'antd';
 
 interface ChangePasswordFormProps {
   onSubmit: (props: {
@@ -9,9 +9,7 @@ interface ChangePasswordFormProps {
   }) => void;
 }
 
-const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
-  onSubmit,
-}) => {
+const ChangePasswordForm: React.FC<ChangePasswordFormProps> = () => {
   return (
     <Form
       name="change_password"
