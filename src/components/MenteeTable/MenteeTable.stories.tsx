@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import MenteeTable from './MenteeTable.component.tsx';
+import { mentees } from '../../__mocks__/mentees.ts';
 
 const meta: Meta<typeof MenteeTable> = {
   title: 'Mentee Table',
@@ -15,5 +16,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  args: {},
+  args: {
+    mentees,
+  },
 };

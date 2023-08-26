@@ -1,13 +1,40 @@
-import React from 'react';
-import { Avatar, Col, Row, Table, Typography } from 'antd';
+import React, { useState } from 'react';
+import {
+  Avatar,
+  Col,
+  Row,
+  Table,
+  type TablePaginationConfig,
+  Typography,
+  Input,
+  Radio,
+  type RadioChangeEvent,
+  Button,
+} from 'antd';
 import { type ColumnsType } from 'antd/es/table';
 import { type Mentee, type Profile } from '../../types.ts';
-import { mentees } from '../../__mocks__/mentees.ts';
 import { LinkOutlined } from '@ant-design/icons';
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
-const MenteeTableComponent: React.FC = () => {
+interface MenteeTableProps {
+  mentees: Mentee[];
+}
+
+const MenteeTableComponent: React.FC<MenteeTableProps> = ({
+  mentees,
+}: MenteeTableProps) => {
+  const [paginationConfigs, setPaginationConfigs] =
+    useState<TablePaginationConfig>({
+      current: 1,
+      pageSize: 10,
+      showSizeChanger: true,
+      total: mentees.length,
+    });
+  const [selectedFilterType, setSelectedFilterType] = useState<
+    'All' | 'Approved' | 'Rejected'
+  >('All');
+
   const columns: ColumnsType<Mentee> = [
     {
       title: 'Name',
@@ -18,15 +45,19 @@ const MenteeTableComponent: React.FC = () => {
             <Avatar size="large" src={profile.image_url} />
           </Col>
           <Col>
-            <Title level={5}>
-              {`${profile.first_name} ${profile.last_name}`}
-            </Title>
+            <Text strong>{`${profile.first_name} ${profile.last_name}`}</Text>
+            <br />
             <Text type="secondary">{profile.contact_email}</Text>
           </Col>
           <Col>
-            <Title level={3} type="secondary">
-              <LinkOutlined size={64} />
-            </Title>
+            <Button
+              type="text"
+              onClick={() => {
+                void navigator.clipboard.writeText(profile.contact_email);
+              }}
+            >
+              <LinkOutlined />
+            </Button>
           </Col>
         </Row>
       ),
@@ -39,9 +70,41 @@ const MenteeTableComponent: React.FC = () => {
       ),
     },
   ];
+
+  const handleTableChange = (pagination: TablePaginationConfig): void => {
+    setPaginationConfigs(pagination);
+  };
+
   return (
-    <div>
-      <Table columns={columns} dataSource={mentees} />
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <Radio.Group
+        options={[
+          { label: `All (${mentees.length})`, value: 'All' },
+          { label: 'Approved (0)', value: 'Approved' },
+          { label: 'Rejected (0)', value: 'Rejected' },
+        ]}
+        value={selectedFilterType}
+        optionType="button"
+        onChange={({ target }: RadioChangeEvent) => {
+          setSelectedFilterType(target.value);
+        }}
+      />
+      <Input.Search
+        placeholder="Type the keyword here to search"
+        onSearch={(value: string) => {
+          console.log(value);
+        }}
+        style={{ width: 500 }}
+        enterButton
+        allowClear
+      />
+      <Table
+        columns={columns}
+        dataSource={mentees}
+        pagination={paginationConfigs}
+        rowSelection={{ type: 'checkbox' }}
+        onChange={handleTableChange}
+      />
     </div>
   );
 };
