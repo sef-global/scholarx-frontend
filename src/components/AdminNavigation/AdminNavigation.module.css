@@ -1,0 +1,38 @@
+.antAdminNavigation {
+  display: flex;
+  margin: 25px 5px 25px 5px;
+  font-family: -apple-system, SanFranciscoText, sans-serif;
+  color: #32325d;
+  font-size: 43px;
+}
+
+.antAdminNavigationSidebar {
+  flex: 1;
+}
+
+.verticalLine {
+  width: 1px;
+  background-color: #d9d9d9;
+  margin: 10px 0;
+}
+
+.antAdminNavigationItem {
+  transition: background-color 0.3s, color 0.3s;
+  color: #1d1d1f;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: capitalize;
+  margin-top: 8px;
+  margin-right: 8px;
+  border-bottom: none !important;
+}
+
+.antAdminNavigationItem:hover {
+  background-color: #e6f4ff;
+  cursor: pointer;
+  color: #1677ff;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: capitalize;
+  border-radius: 7px;
+}
