@@ -23,14 +23,14 @@ export interface Application {
 }
 
 export interface Profile {
-  created_at: string;
-  updated_at: string;
+  created_at: Date;
+  updated_at: Date;
   primary_email: string;
   contact_email: string;
   first_name: string;
   last_name: string;
   image_url?: string;
   linkedin_url: string;
-  type: string;
+  type: 'DEFAULT' | 'ADMIN';
   uuid: string;
 }
