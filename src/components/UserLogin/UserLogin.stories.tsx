@@ -1,9 +1,15 @@
-import { Meta } from '@storybook/react';
+import {Meta, StoryObj} from '@storybook/react';
 import UserLogin from './UserLogin.component';
 
-export default {
+const meta: Meta<typeof UserLogin> = {
   title: 'Components/UserLogin',
   component: UserLogin,
-} as Meta;
+};
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const EmptyList: Story = {};
 
 
