@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react';
+import { type Meta } from '@storybook/react';
 import UserLogin from './UserLogin.component';
 
 const meta: Meta<typeof UserLogin> = {
@@ -7,7 +7,3 @@ const meta: Meta<typeof UserLogin> = {
 };
 
 export default meta;
-
-type Story = StoryObj<typeof meta>;
-
-export const EmptyList: Story = {};
