@@ -1,100 +1,75 @@
-import React, { useState } from 'react';
-
-import {
-  AlignRightOutlined,
-  TwitterOutlined,
-  LinkedinFilled,
-  InstagramOutlined,
-} from '@ant-design/icons';
-import { Button, Col, Row, Space, Typography } from 'antd';
+import React from 'react';
 
 import styles from './Navbar.module.css';
-import MenuDrawer from '../MenuDrawer/MenuDrawer';
 
-const { Text } = Typography;
 
 const Navbar: React.FC = () => {
-  const [openMenu, setOpenMenu] = useState(false);
 
   return (
-    <>
-      <Row align={'middle'} justify={'start'}>
-        <Col xs={20} md={2} lg={4} xl={4} xxl={4}>
-          <img
-            className={styles.navbarLogoContainer}
-            src="./scholarx-logo.png"
-          />
-        </Col>
-        <AlignRightOutlined
-          className={styles.menuIcon}
-          onClick={() => {
-            setOpenMenu(true);
-          }}
-        />
-        <Col md={16} lg={14} xl={15} xxl={16}>
-          <Space direction="horizontal">
-            <div className={styles.navbarItemContainer}>
-              <a href="https://sefglobal.org/">
-                <Text className={styles.antTypography}>Home</Text>
-              </a>
-              <a href="" target="_blank" rel="noreferrer">
-                <Text className={styles.antTypography}>About</Text>
-              </a>
-              <a href="" target="_blank" rel="noreferrer">
-                <Text className={styles.antTypography}>Initiatives</Text>
-              </a>
-              <a href="" target="_blank" rel="noreferrer">
-                <Text className={styles.antTypography}>Join Us</Text>
-              </a>
-            </div>
-          </Space>
-        </Col>
-        <Col md={4} lg={4} xl={3} className={styles.socialMediaContainer}>
-          <Space direction="horizontal">
+    <header>
+      <div className='border-b flex item-center justify-between px-8 py-2'>
+        <div className='flex items-center'>
+          <div className='w-40 mr-16'>
+            <img
+              className=''
+              src="./scholarx-logo.png"
+            />
+          </div>
+          <nav>
+            <ul className='flex items-center text-sm gap-16 text-navbar_font_colour'>
+              <li>
+                <a href="https://sefglobal.org/">Home</a>
+              </li>
+              <li>
+                <a href="" target="_blank" rel="noreferrer">About</a>
+              </li>
+              <li>
+                <a href="" target="_blank" rel="noreferrer">Initiatives</a>
+              </li>
+              <li>
+                <a href="" target="_blank" rel="noreferrer">Join Us</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        <div className='flex items-center gap-4'>
             <a
               href="https://www.facebook.com/sustainableeducationfoundation/"
               target="_blank"
               rel="noreferrer"
+              className='w-5'
             >
-              <Button
-                className={styles.antButton}
-                shape="circle"
-                icon={<img src="/facebook-icon.png" width={20} />}
-              />
+              <img src="/facebook-icon.png" alt='facebook'/>
             </a>
             <a
               href="https://twitter.com/goasksef"
               target="_blank"
               rel="noreferrer"
+              className='w-5'
             >
-              <Button className={styles.antButton} shape="circle">
-                <TwitterOutlined className={styles.antIcon} />
-              </Button>
+              <img src='/twitter-icon.png' alt='twitter'/>
             </a>
             <a
               href="https://www.linkedin.com/company/sefglobal/"
               target="_blank"
               rel="noreferrer"
+              className='w-5'
             >
-              <Button className={styles.antButton} shape="circle">
-                <LinkedinFilled className={styles.antIcon} />
-              </Button>
+              <img src='/linkedin-icon.png' alt='linkedin'/>
             </a>
             <a
               href="https://www.instagram.com/sefglobal/"
               target="_blank"
               rel="noreferrer"
+              className='w-5'
             >
-              <Button className={styles.antButton} shape="circle">
-                <InstagramOutlined className={styles.antIcon} />
-              </Button>
+              <img src='/instagram-icon.png' alt='instagram'/>
             </a>
-            <Button className={styles.loginButton}>Join Us</Button>
-          </Space>
-        </Col>
-      </Row>
-      <MenuDrawer openMenu={openMenu} setOpenMenu={setOpenMenu} />
-    </>
+            <div className='border-2 px-4 py-1 rounded-md text-sm font-medium text-navbar_font_colour'>Join Us</div>
+          </div>
+      </div>
+    </header>
   );
 };
 
