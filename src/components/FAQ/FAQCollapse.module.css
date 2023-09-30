@@ -1,14 +1,4 @@
-.faqCollapseContainer{
-    margin: 25px 0;
-    background: transparent;
-    font-family: -apple-system, SanFranciscoText, sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    color: #1D1D1F;
-    text-align: justify;
-}
-
-.antTypography{
+/* .antTypography{
     font-family: -apple-system, SanFranciscoText, sans-serif;
     font-size: 15px !important;
     font-weight: 300 !important;
@@ -17,4 +7,4 @@
 .faqAnswer{
     text-align: justify;
     font-weight: 300;
-}
+} */

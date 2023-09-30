@@ -1,11 +1,6 @@
 import React from 'react';
 
-import { Collapse, Typography } from 'antd';
-
 import styles from './FAQCollapse.module.css';
-
-const { Panel } = Collapse;
-const { Paragraph } = Typography;
 
 interface FAQProps {
   faqs: FAQ[];
@@ -21,24 +16,48 @@ export interface Answer {
   list: string[];
 }
 
-const FAQCollapse: React.FC<FAQProps> = ({ faqs }) => (
-  <Collapse className={styles.faqCollapseContainer}>
+const FAQCollapse: React.FC<FAQProps> = ({ faqs }) => (  
+  <div className='flex flex-col gap-4 w-full'>
     {faqs.map((faq, index) => (
-      <Panel key={index} header={faq.question}>
-        {faq.answer.paragraph.map((paragraphItem, paragraphIndex) => (
-          <Paragraph key={paragraphIndex} className={styles.antTypography}>
+      <details className="group [&_summary::-webkit-details-marker]:hidden border rounded-lg" open key={index}>
+      <summary
+        className="flex cursor-pointer items-center gap-1.5 rounded-lg p-3"
+      >
+        <svg
+          className="h-5 w-5 shrink-0 transition duration-300 group-open:-rotate-180"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+        <h2 className="font-medium">
+          {faq.question}
+        </h2>
+      </summary>
+
+      <p className="mb-4 px-4 leading-relaxed text-gray-700">
+      {faq.answer.paragraph.map((paragraphItem, paragraphIndex) => (
+          <div key={paragraphIndex} className='text-sm'>
             {paragraphItem}
-          </Paragraph>
-        ))}
-        {faq.answer.list.length > 0 && (
-          <ul className={styles.faqAnswer}>
-            {faq.answer.list.map((listItem, listIndex) => (
-              <li key={listIndex}>{listItem}</li>
-            ))}
-          </ul>
-        )}
-      </Panel>
+          </div>
+          ))}
+          {faq.answer.list.length > 0 && (
+            <ul className='text-sm'>
+              {faq.answer.list.map((listItem, listIndex) => (
+                <li key={listIndex}>{listItem}</li>
+              ))}
+            </ul>
+          )}
+      </p>
+    </details>
     ))}
-  </Collapse>
+  </div>
 );
 export default FAQCollapse;
