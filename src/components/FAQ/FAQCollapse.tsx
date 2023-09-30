@@ -17,7 +17,7 @@ export interface Answer {
 }
 
 const FAQCollapse: React.FC<FAQProps> = ({ faqs }) => (  
-  <div className='flex flex-col gap-4 w-full'>
+  <div className='flex flex-col gap-4 max-w-lg'>
     {faqs.map((faq, index) => (
       <details className="group [&_summary::-webkit-details-marker]:hidden border rounded-lg" open key={index}>
       <summary
