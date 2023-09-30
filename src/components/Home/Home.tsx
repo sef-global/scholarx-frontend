@@ -1,246 +1,185 @@
 import React from 'react';
 
-import { Button, Col, Row, Carousel, Typography, Space } from 'antd';
-
 import styles from './Home.module.css';
 import FAQCollapse from '../FAQ/FAQCollapse';
 import menteeFAQs from '../FAQ/MenteeFAQs.json';
 import mentorFAQs from '../FAQ/MentorFAQs.json';
 import TestimonialCard from '../Testimonials/TestimonialCard';
 
-const { Text } = Typography;
-
 const Home: React.FC = () => (
-  <>
+  <div>
     {/* Main title container */}
-    <Row
-      className={styles.homePageContainer}
-      style={{ paddingRight: '10%', paddingLeft: '10%' }}
-      align={'middle'}
-      justify={'center'}
-    >
-      <Col xs={24} md={24} lg={24} xl={12}>
-        <Text className={styles.homePageMainTitle}>
+    <div className='grid grid-cols-2 px-36 py-16'>
+      <div className='flex flex-col justify-center'>
+        <p className='text-primary_font_colour font-bold text-4xl'>
           Unlock Mentorship Opportunities with ScholarX
-        </Text>
-        <div style={{ marginTop: '40px' }}>
-          <Button
-            className={styles.homePageMainButton}
-            type={'primary'}
-            style={{ marginRight: '20px', marginBottom: '20px' }}
-          >
+        </p>
+        <div className='flex flex-row mt-10 gap-4'>
+          <div className='bg-primary_btn_colour px-10 py-1 text-white font-bold rounded-lg'>
             Apply
-          </Button>
-          <Button className={styles.homePageMainButton}>See more</Button>
+          </div>
+          <div className='border-2 rounded-lg text-sm font-bold px-10 py-1'>See more</div>
         </div>
-      </Col>
-      <Col xs={24} md={24} xl={12} style={{ marginTop: '40px' }}>
+      </div>
+      <div>
         <img
           className={styles.homePageImage}
           src="/new-findmentor.png"
           alt="find-mentor"
           style={{ maxWidth: '600px' }}
         />
-      </Col>
-    </Row>
+      </div>
+    </div>
 
     {/* Statistics container */}
-    <Row
-      className={styles.homePageContainer}
-      style={{ backgroundColor: '#F7F8FA', textAlign: 'center' }}
-      align={'middle'}
-      justify={'center'}
-    >
-      <Col xs={24} md={5} xl={5}>
-        <Space direction={'vertical'}>
-          <Text className={styles.homePageSecondaryTitle}>100,000+</Text>
-          <Text
-            className={styles.homePageSecondaryTitle}
-            style={{ fontSize: '20px', fontWeight: 300 }}
-          >
-            Mentees
-          </Text>
-        </Space>
-      </Col>
-      <Col xs={24} md={5} xl={5}>
-        <Space direction={'vertical'}>
-          <Text className={styles.homePageSecondaryTitle}>500+</Text>
-          <Text
-            className={styles.homePageSecondaryTitle}
-            style={{ fontSize: '20px', fontWeight: 300 }}
-          >
-            Mentors
-          </Text>
-        </Space>
-      </Col>
-      <Col xs={24} md={5} xl={5}>
-        <Space direction={'vertical'}>
-          <Text className={styles.homePageSecondaryTitle}>70%</Text>
-          <Text
-            className={styles.homePageSecondaryTitle}
-            style={{ fontSize: '20px', fontWeight: 300 }}
-          >
-            Growth
-          </Text>
-        </Space>
-      </Col>
-    </Row>
+    <div className='bg-stat_container_colour flex justify-center gap-48 px-0 py-10 text-center'>
+      <div className='flex flex-col gap-2'>
+        <p className='text-secondary_font_colour text-3xl font-bold'>100,000+</p>
+        <p className='text-secondary_font_colour text-md'>
+          Mentees
+        </p>
+      </div>
+      <div className='flex flex-col gap-2'>
+        <p className='text-secondary_font_colour text-3xl font-bold'>500+</p>
+        <p className='text-secondary_font_colour text-md'>
+          Mentors
+        </p>
+      </div>
+      <div className='flex flex-col gap-2'>
+        <p className='text-secondary_font_colour text-3xl font-bold'>70%</p>
+        <p className='text-secondary_font_colour text-md'>
+          Growth
+        </p>
+      </div>
+    </div>
 
     {/* Testimonials container */}
-    <Row
-      className={styles.homePageContainer}
-      style={{ textAlign: 'center' }}
-      align={'middle'}
-      justify={'center'}
-    >
-      <Col xs={24} xl={6} style={{ marginBottom: '30px' }}>
-        <Space direction={'vertical'}>
-          <Text
+    <div>
+      <div style={{ marginBottom: '30px' }}>
+        <div>
+          <p
             className={styles.homePageSecondaryTitle}
             style={{ fontSize: '36px', color: '#3D317C' }}
           >
             Testimonials
-          </Text>
-          <Text
+          </p>
+          <p
             className={styles.homePageSecondaryTitle}
             style={{ fontSize: '15px', color: 'black', fontWeight: 300 }}
           >
             Have a look what our past <br /> mentees say about ScholarX
-          </Text>
-        </Space>
-      </Col>
-      <Col span={24}>
-        <Carousel
+          </p>
+        </div>
+      </div>
+      <div>
+        <div
           className={styles.slickDotsBottom}
           style={{ height: 'auto', paddingBottom: '65px' }}
-          autoplay
         >
           <div>
-            <Row align={'middle'} justify={'center'}>
-              <Col xs={24} md={10} lg={6} xl={5}>
+            <div>
+              <div>
                 <TestimonialCard />
-              </Col>
-              <Col xs={24} md={10} lg={6} xl={5}>
+              </div>
+              <div>
                 <TestimonialCard />
-              </Col>
-              <Col xs={24} md={10} lg={6} xl={5}>
+              </div>
+              <div>
                 <TestimonialCard />
-              </Col>
-              <Col xs={24} md={10} lg={6} xl={5}>
+              </div>
+              <div>
                 <TestimonialCard />
-              </Col>
-            </Row>
+              </div>
+            </div>
           </div>
-          <div>
-            <Row align={'middle'} justify={'center'}>
-              <Col xs={24} md={10} lg={6} xl={5}>
-                <TestimonialCard />
-              </Col>
-              <Col xs={24} md={10} lg={6} xl={5}>
-                <TestimonialCard />
-              </Col>
-              <Col xs={24} md={10} lg={6} xl={5}>
-                <TestimonialCard />
-              </Col>
-              <Col xs={24} md={10} lg={6} xl={5}>
-                <TestimonialCard />
-              </Col>
-            </Row>
-          </div>
-        </Carousel>
-      </Col>
-    </Row>
+        </div>
+      </div>
+    </div>
 
     {/* Success stories container */}
-    <Row
+    <div
       className={styles.homePageContainer}
       style={{ backgroundColor: '#F8FDFF' }}
-      align={'middle'}
-      justify={'center'}
     >
-      <Col xs={24} md={10} xl={8} style={{ marginBottom: '10px' }}>
+      <div style={{ marginBottom: '10px' }}>
         <img
           className={styles.homePageImage}
           src="/success.png"
           alt="success-image"
           style={{ maxWidth: '300px' }}
         />
-      </Col>
-      <Col xs={24} md={12} xl={8} style={{ textAlign: 'center' }}>
-        <Space direction={'vertical'}>
-          <Text
+      </div>
+      <div style={{ textAlign: 'center' }}>
+        <div>
+          <p
             className={styles.homePageSecondaryTitle}
             style={{ textAlign: 'center', fontSize: '30px', color: '#3D317C' }}
           >
             Let`s hear it from our
             <br /> ScholarX Alumni
-          </Text>
-          <Button className={styles.homePageSecondaryButton} type={'primary'}>
+          </p>
+          <div className={styles.homePageSecondaryButton}>
             ScholarX Success Stories
-          </Button>
-        </Space>
-      </Col>
-    </Row>
+          </div>
+        </div>
+      </div>
+    </div>
 
     {/* Archive container */}
-    <Row
+    <div
       className={styles.homePageContainer}
-      align={'middle'}
-      justify={'center'}
     >
-      <Col xs={24} md={12} xl={8} style={{ textAlign: 'center' }}>
-        <Space direction={'vertical'}>
-          <Text
+      <div style={{ textAlign: 'center' }}>
+        <div>
+          <p
             className={styles.homePageSecondaryTitle}
             style={{ fontSize: '30px', color: '#3D317C' }}
           >
             Checkout our past
             <br /> mentors and mentees
-          </Text>
-          <Button className={styles.homePageSecondaryButton} type={'primary'}>
+          </p>
+          <div className={styles.homePageSecondaryButton}>
             ScholarX Archive
-          </Button>
-        </Space>
-      </Col>
-      <Col xs={24} md={12} xl={8}>
+          </div>
+        </div>
+      </div>
+      <div>
         <img
           className={styles.homePageImage}
           src="/scholarX-archive.png"
           alt="scholarX-archive-image"
           style={{ maxWidth: '360px' }}
         />
-      </Col>
-    </Row>
+      </div>
+    </div>
 
     {/* FAQs container */}
-    <Row
+    <div
       className={styles.homePageContainer}
-      align={'middle'}
-      justify={'center'}
     >
-      <Col span={24} style={{ textAlign: 'center' }}>
-        <Text
+      <div style={{ textAlign: 'center' }}>
+        <p
           className={styles.homePageSecondaryTitle}
           style={{ fontSize: '25px', color: '#3D317C', fontWeight: 600 }}
         >
           FAQ for Mentors
-        </Text>
-      </Col>
-      <Col xs={20} xl={12}>
+        </p>
+      </div>
+      <div>
         <FAQCollapse faqs={mentorFAQs} />
-      </Col>
-      <Col span={24} style={{ textAlign: 'center' }}>
-        <Text
+      </div>
+      <div style={{ textAlign: 'center' }}>
+        <p
           className={styles.homePageSecondaryTitle}
           style={{ fontSize: '25px', color: '#3D317C', fontWeight: 600 }}
         >
           FAQ for Mentees
-        </Text>
-      </Col>
-      <Col xs={20} xl={12}>
+        </p>
+      </div>
+      <div>
         <FAQCollapse faqs={menteeFAQs} />
-      </Col>
-    </Row>
-  </>
+      </div>
+    </div>
+  </div>
 );
 export default Home;

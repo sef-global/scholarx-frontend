@@ -2,24 +2,6 @@
     background-color: black !important;
 }
 
-.homePageContainer{
-    padding: 4%
-}
-
-.homePageMainTitle{
-    font-family: -apple-system, SanFranciscoText, sans-serif;
-    color: #32325D;
-    font-size: 43px;
-    font-weight: bold
-}
-
-.homePageSecondaryTitle{
-    font-family: -apple-system, SanFranciscoText, sans-serif;
-    font-size: 30px;
-    color: #1D1D1F;
-    font-weight: bold;
-}
-
 .homePageMainButton{
     width: 160px;
     height: 37px;
