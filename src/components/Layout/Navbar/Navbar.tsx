@@ -7,7 +7,7 @@ const Navbar: React.FC = () => {
 
   return (
     <header>
-      <div className='border-b flex item-center justify-between px-8 py-2'>
+      <div className='border-b flex item-center justify-between px-36 py-2'>
         <div className='flex items-center'>
           <div className='w-40 mr-16'>
             <img
