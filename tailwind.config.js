@@ -10,7 +10,8 @@ export const theme = {
       stat_container_colour: "#F7F8FA",
       testimonial_title_colour: "#3D317C",
       success_stories_container_colour: "#F8FDFF",
-      secondary_btn_colour: "#172B4D"
+      secondary_btn_colour: "#172B4D",
+      footer_container_colour: "#F8FDFF"
     }
   },
 };

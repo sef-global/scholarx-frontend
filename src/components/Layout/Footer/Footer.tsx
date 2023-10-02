@@ -1,41 +1,23 @@
 import React from 'react';
 
-import {
-  FacebookFilled,
-  GithubOutlined,
-  InstagramFilled,
-  LinkedinFilled,
-  SlackOutlined,
-  TwitterOutlined,
-  YoutubeFilled,
-} from '@ant-design/icons';
-import { Button, Col, Row, Space, Typography } from 'antd';
-
 import styles from './Footer.module.css';
 
-const { Text } = Typography;
-
 const FooterComponent: React.FC = () => (
-  <Row justify={'end'}>
-    <Col
-      xs={{ span: 24, order: 1 }}
-      md={{ span: 24, order: 1 }}
-      lg={12}
-      xl={10}
-    >
-      <Space direction="vertical" size={30}>
-        <Text className={styles.footerMainTitle}>Let`s Rethink Education!</Text>
-        <Text className={styles.footerSecondaryTitle}>
+  <div>
+    <div className='flex flex-row px-36 py-16 justify-between bg-success_stories_container_colour'>
+    <div className='flex flex-col'>
+      <div>
+        <p className='text-4xl font-bold text-testimonial_title_colour'>Let`s Rethink Education!</p>
+        <p className='text-sm font-medium text-testimonial_title_colour mt-10'>
           Get in touch with using any of these platforms.
-        </Text>
-      </Space>
+        </p>
+      </div>
       {/* SEF Social Media Links */}
-      <div style={{ marginTop: '10px' }}>
+      <div className='flex flex-row gap-2 mt-2'>
         <a href="https://twitter.com/goasksef" target="_blank" rel="noreferrer">
-          <Button
-            className={styles.antButton}
-            style={{ backgroundColor: '#1DA1F2' }}
-            icon={<TwitterOutlined className={styles.antIcon} />}
+          <img
+            src = '/footer-twitter-icon.svg'
+            alt='twitter-icon'
           />
         </a>
         <a
@@ -43,10 +25,9 @@ const FooterComponent: React.FC = () => (
           target="_blank"
           rel="noreferrer"
         >
-          <Button
-            className={styles.antButton}
-            style={{ backgroundColor: '#3B5999' }}
-            icon={<FacebookFilled className={styles.antIcon} />}
+          <img
+            src = '/footer-fb-icon.svg'
+            alt='facebook-icon'
           />
         </a>
         <a
@@ -54,10 +35,9 @@ const FooterComponent: React.FC = () => (
           target="_blank"
           rel="noreferrer"
         >
-          <Button
-            className={styles.antButton}
-            style={{ backgroundColor: '#0077B5' }}
-            icon={<LinkedinFilled className={styles.antIcon} />}
+          <img
+            src = '/footer-linkedin-icon.svg'
+            alt='linkedin-icon'
           />
         </a>
         <a
@@ -65,10 +45,9 @@ const FooterComponent: React.FC = () => (
           target="_blank"
           rel="noreferrer"
         >
-          <Button
-            className={styles.antButton}
-            style={{ backgroundColor: '#E4405F' }}
-            icon={<InstagramFilled className={styles.antIcon} />}
+          <img
+            src = '/footer-insta-icon.svg'
+            alt='instagram-icon'
           />
         </a>
         <a
@@ -76,10 +55,9 @@ const FooterComponent: React.FC = () => (
           target="_blank"
           rel="noreferrer"
         >
-          <Button
-            className={styles.antButton}
-            style={{ backgroundColor: '#222222' }}
-            icon={<GithubOutlined className={styles.antIcon} />}
+          <img
+            src = '/footer-github-icon.svg'
+            alt='github-icon'
           />
         </a>
         <a
@@ -87,10 +65,9 @@ const FooterComponent: React.FC = () => (
           target="_blank"
           rel="noreferrer"
         >
-          <Button
-            className={styles.antButton}
-            style={{ backgroundColor: '#CD201F' }}
-            icon={<YoutubeFilled className={styles.antIcon} />}
+          <img
+            src = '/footer-yt-icon.svg'
+            alt='youtube-icon'
           />
         </a>
         <a
@@ -98,70 +75,58 @@ const FooterComponent: React.FC = () => (
           target="_blank"
           rel="noreferrer"
         >
-          <Button
-            className={styles.antButton}
-            type="primary"
-            style={{ backgroundColor: '#3AAF85' }}
-            icon={<SlackOutlined className={styles.antIcon} />}
+          <img
+            src = '/footer-slack-icon.svg'
+            alt='slack-icon'
           />
         </a>
         <a href="https://sef.discourse.group/" target="_blank" rel="noreferrer">
-          <Button
-            className={styles.antButton}
-            style={{ backgroundColor: '#5E72E4' }}
-            icon={
-              <img src="/discourse-icon.png" alt="discourse-icon" width={15} />
-            }
+        <img
+            src = '/footer-discourse-icon.svg'
+            alt='discourse-icon'
           />
         </a>
       </div>
-    </Col>
+    </div>
 
     {/* SEF Site Links */}
-    <Col
-      xs={{ span: 24, order: 3 }}
-      md={{ span: 24, order: 1 }}
-      lg={12}
-      xl={{ span: 10, offset: 2 }}
-      style={{ paddingTop: '15px' }}
-    >
+    <div className='flex flex-row gap-8'>
       <a href="https://sefglobal.org/">
-        <Text className={styles.antTypography}>Home</Text>
+        <p className='text-sm text-navbar_font_colour font-medium'>Home</p>
       </a>
       <a href="https://sefglobal.org/index.html#projects">
-        <Text className={styles.antTypography}>Projects</Text>
+        <p className='text-sm text-navbar_font_colour font-medium'>Projects</p>
       </a>
       <a href="https://sefglobal.org/team.html">
-        <Text className={styles.antTypography}>Team</Text>
+        <p className='text-sm text-navbar_font_colour font-medium'>Team</p>
       </a>
       <a href="https://sefglobal.medium.com/">
-        <Text className={styles.antTypography}>Blog</Text>
+        <p className='text-sm text-navbar_font_colour font-medium'>Blog</p>
       </a>
       <a href="https://sefglobal.org/join-us.html">
-        <Text className={styles.antTypography}>Join Us</Text>
+        <p className='text-sm text-navbar_font_colour font-medium'>Join Us</p>
       </a>
       <a
         href="https://handbook.sefglobal.org/"
         target="_blank"
         rel="noreferrer"
       >
-        <Text className={styles.antTypography}>Handbook</Text>
+        <p className='text-sm text-navbar_font_colour font-medium'>Handbook</p>
       </a>
-    </Col>
-
+    </div>
+</div>
     {/* Footer Link */}
-    <Col
-      xs={{ span: 24, order: 4 }}
-      style={{ textAlign: 'center', marginTop: '8%' }}
-    >
-      <Text className={styles.footerLink}>
+    <div className='text-center mb-4'>
+      <p className='text-sm text-testimonial_title_colour font-medium'>
         © 2023
-        <a href="https://sefglobal.org/" className={styles.sefLink}>
+        <a href="https://sefglobal.org/">
           {' '}
           Sustainable Education Foundation - SEF.
         </a>
-      </Text>
-    </Col>
-  </Row>
+      </p>
+    </div>
+  </div>
+  
+
 );
 export default FooterComponent;
