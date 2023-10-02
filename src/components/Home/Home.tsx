@@ -1,6 +1,5 @@
 import React from 'react';
 
-import styles from './Home.module.css';
 import FAQCollapse from '../FAQ/FAQCollapse';
 import menteeFAQs from '../FAQ/MenteeFAQs.json';
 import mentorFAQs from '../FAQ/MentorFAQs.json';
@@ -23,10 +22,8 @@ const Home: React.FC = () => (
       </div>
       <div>
         <img
-          className={styles.homePageImage}
           src="/new-findmentor.png"
           alt="find-mentor"
-          style={{ maxWidth: '600px' }}
         />
       </div>
     </div>

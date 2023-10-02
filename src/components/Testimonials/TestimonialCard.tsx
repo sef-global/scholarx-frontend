@@ -1,7 +1,5 @@
 import React from 'react';
 
-import styles from './TestimonialCard.module.css';
-
 const TestimonialCard: React.FC = () => (
   <div className='flex flex-col border w-60 rounded-lg p-3'>
     <img

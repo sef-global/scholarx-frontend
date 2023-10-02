@@ -1,9 +1,7 @@
 import React, { type ReactNode } from 'react';
 
 import FooterComponent from './Footer/Footer';
-import styles from './MainLayout.module.css';
 import Navbar from './Navbar/Navbar';
-
 
 interface LayoutProps {
   children: ReactNode;
@@ -14,8 +12,8 @@ const MainLayout: React.FC<LayoutProps> = ({ children }) => (
     <div>
       <Navbar />
     </div>
-    <div className={styles.antLayoutContent}>{children}</div>
-    <div className={styles.antLayoutFooter}>
+    <div>{children}</div>
+    <div>
       <FooterComponent />
     </div>
   </div>

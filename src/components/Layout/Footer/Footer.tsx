@@ -1,7 +1,5 @@
 import React from 'react';
 
-import styles from './Footer.module.css';
-
 const FooterComponent: React.FC = () => (
   <div>
     <div className='flex flex-row px-36 py-16 justify-between bg-white_2'>

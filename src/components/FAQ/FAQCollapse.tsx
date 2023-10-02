@@ -1,7 +1,5 @@
 import React from 'react';
 
-import styles from './FAQCollapse.module.css';
-
 interface FAQProps {
   faqs: FAQ[];
 }
