@@ -16,7 +16,7 @@ const Navbar: React.FC = () => {
             />
           </div>
           <nav>
-            <ul className='flex items-center text-sm gap-16 text-navbar_font_colour'>
+            <ul className='flex items-center text-sm gap-16 text-gray_1'>
               <li>
                 <a href="https://sefglobal.org/">Home</a>
               </li>
@@ -66,7 +66,7 @@ const Navbar: React.FC = () => {
             >
               <img src='/instagram-icon.png' alt='instagram'/>
             </a>
-            <div className='border-2 px-4 py-1 rounded-md text-sm font-medium text-navbar_font_colour'>Join Us</div>
+            <div className='border-2 px-4 py-1 rounded-md text-sm font-medium text-gray_1'>Join Us</div>
           </div>
       </div>
     </header>

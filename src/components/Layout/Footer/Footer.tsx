@@ -4,11 +4,11 @@ import styles from './Footer.module.css';
 
 const FooterComponent: React.FC = () => (
   <div>
-    <div className='flex flex-row px-36 py-16 justify-between bg-success_stories_container_colour'>
+    <div className='flex flex-row px-36 py-16 justify-between bg-white_2'>
     <div className='flex flex-col'>
       <div>
-        <p className='text-4xl font-bold text-testimonial_title_colour'>Let`s Rethink Education!</p>
-        <p className='text-sm font-medium text-testimonial_title_colour mt-10'>
+        <p className='text-4xl font-bold text-purple'>Let`s Rethink Education!</p>
+        <p className='text-sm font-medium text-purple mt-10'>
           Get in touch with using any of these platforms.
         </p>
       </div>
@@ -92,32 +92,32 @@ const FooterComponent: React.FC = () => (
     {/* SEF Site Links */}
     <div className='flex flex-row gap-8'>
       <a href="https://sefglobal.org/">
-        <p className='text-sm text-navbar_font_colour font-medium'>Home</p>
+        <p className='text-sm text-gray_1 font-medium'>Home</p>
       </a>
       <a href="https://sefglobal.org/index.html#projects">
-        <p className='text-sm text-navbar_font_colour font-medium'>Projects</p>
+        <p className='text-sm text-gray_1 font-medium'>Projects</p>
       </a>
       <a href="https://sefglobal.org/team.html">
-        <p className='text-sm text-navbar_font_colour font-medium'>Team</p>
+        <p className='text-sm text-gray_1 font-medium'>Team</p>
       </a>
       <a href="https://sefglobal.medium.com/">
-        <p className='text-sm text-navbar_font_colour font-medium'>Blog</p>
+        <p className='text-sm text-gray_1 font-medium'>Blog</p>
       </a>
       <a href="https://sefglobal.org/join-us.html">
-        <p className='text-sm text-navbar_font_colour font-medium'>Join Us</p>
+        <p className='text-sm text-gray_1 font-medium'>Join Us</p>
       </a>
       <a
         href="https://handbook.sefglobal.org/"
         target="_blank"
         rel="noreferrer"
       >
-        <p className='text-sm text-navbar_font_colour font-medium'>Handbook</p>
+        <p className='text-sm text-gray_1 font-medium'>Handbook</p>
       </a>
     </div>
 </div>
     {/* Footer Link */}
     <div className='text-center mb-4'>
-      <p className='text-sm text-testimonial_title_colour font-medium'>
+      <p className='text-sm text-purple font-medium'>
         © 2023
         <a href="https://sefglobal.org/">
           {' '}

@@ -11,11 +11,11 @@ const Home: React.FC = () => (
     {/* Main title container */}
     <div className='grid grid-cols-2 px-36 py-16'>
       <div className='flex flex-col justify-center'>
-        <p className='text-primary_font_colour font-bold text-4xl'>
+        <p className='text-dark_blue_1 font-bold text-4xl'>
           Unlock Mentorship Opportunities with ScholarX
         </p>
         <div className='flex flex-row mt-10 gap-4'>
-          <div className='bg-primary_btn_colour px-10 py-1 text-white font-bold rounded-lg'>
+          <div className='bg-blue px-10 py-1 text-white font-bold rounded-lg'>
             Apply
           </div>
           <div className='border-2 rounded-lg text-sm font-bold px-10 py-1'>See more</div>
@@ -32,151 +32,112 @@ const Home: React.FC = () => (
     </div>
 
     {/* Statistics container */}
-    <div className='bg-stat_container_colour flex justify-center gap-48 px-0 py-10 text-center'>
+    <div className='bg-white_1 flex justify-center gap-48 px-0 py-10 text-center'>
       <div className='flex flex-col gap-2'>
-        <p className='text-secondary_font_colour text-3xl font-bold'>100,000+</p>
-        <p className='text-secondary_font_colour text-md'>
+        <p className='text-black text-3xl font-bold'>100,000+</p>
+        <p className='text-black text-md'>
           Mentees
         </p>
       </div>
       <div className='flex flex-col gap-2'>
-        <p className='text-secondary_font_colour text-3xl font-bold'>500+</p>
-        <p className='text-secondary_font_colour text-md'>
+        <p className='text-black text-3xl font-bold'>500+</p>
+        <p className='text-black text-md'>
           Mentors
         </p>
       </div>
       <div className='flex flex-col gap-2'>
-        <p className='text-secondary_font_colour text-3xl font-bold'>70%</p>
-        <p className='text-secondary_font_colour text-md'>
+        <p className='text-black text-3xl font-bold'>70%</p>
+        <p className='text-black text-md'>
           Growth
         </p>
       </div>
     </div>
 
     {/* Testimonials container */}
-    <div>
-      <div style={{ marginBottom: '30px' }}>
-        <div>
-          <p
-            className={styles.homePageSecondaryTitle}
-            style={{ fontSize: '36px', color: '#3D317C' }}
-          >
-            Testimonials
-          </p>
-          <p
-            className={styles.homePageSecondaryTitle}
-            style={{ fontSize: '15px', color: 'black', fontWeight: 300 }}
-          >
-            Have a look what our past <br /> mentees say about ScholarX
-          </p>
-        </div>
-      </div>
-      <div>
-        <div
-          className={styles.slickDotsBottom}
-          style={{ height: 'auto', paddingBottom: '65px' }}
+    <div className='px-36 py-16'>
+      <div className='flex flex-col justify-center text-center gap-2'>
+        <p className='text-4xl text-purple font-semibold'>Testimonials</p>
+        <p className='text-sm'
         >
-          <div>
-            <div>
-              <div>
-                <TestimonialCard />
-              </div>
-              <div>
-                <TestimonialCard />
-              </div>
-              <div>
-                <TestimonialCard />
-              </div>
-              <div>
-                <TestimonialCard />
-              </div>
-            </div>
-          </div>
+          Have a look what our past <br /> mentees say about ScholarX
+        </p>
+      </div>
+      <div className='flex flex-row justify-center gap-6 mt-6'>
+        <div>
+          <TestimonialCard />
+        </div>
+        <div>
+          <TestimonialCard />
+        </div>
+        <div>
+          <TestimonialCard />
+        </div>
+        <div>
+          <TestimonialCard />
         </div>
       </div>
     </div>
 
     {/* Success stories container */}
-    <div
-      className={styles.homePageContainer}
-      style={{ backgroundColor: '#F8FDFF' }}
-    >
-      <div style={{ marginBottom: '10px' }}>
+    <div className='bg-white_2 flex justify-center items-center gap-52'>
+      <div>
         <img
-          className={styles.homePageImage}
+          className='w-72'
           src="/success.png"
           alt="success-image"
-          style={{ maxWidth: '300px' }}
         />
       </div>
-      <div style={{ textAlign: 'center' }}>
-        <div>
-          <p
-            className={styles.homePageSecondaryTitle}
-            style={{ textAlign: 'center', fontSize: '30px', color: '#3D317C' }}
-          >
-            Let`s hear it from our
-            <br /> ScholarX Alumni
-          </p>
-          <div className={styles.homePageSecondaryButton}>
-            ScholarX Success Stories
-          </div>
-        </div>
+      <div className='flex flex-col items-center gap-3'>
+        <p className='text-purple text-3xl font-semibold text-center'>
+          Let`s hear it from our
+          <br /> ScholarX Alumni
+        </p>
+        <button className='bg-dark_blue_2 text-white text-sm font-semibold w-52 py-2 rounded-lg'>
+          ScholarX Success Stories
+        </button>
       </div>
     </div>
 
     {/* Archive container */}
-    <div
-      className={styles.homePageContainer}
-    >
-      <div style={{ textAlign: 'center' }}>
-        <div>
-          <p
-            className={styles.homePageSecondaryTitle}
-            style={{ fontSize: '30px', color: '#3D317C' }}
-          >
-            Checkout our past
-            <br /> mentors and mentees
-          </p>
-          <div className={styles.homePageSecondaryButton}>
-            ScholarX Archive
-          </div>
-        </div>
+    <div className='bg-white_2 flex justify-center items-center gap-52 mt-10'>
+      <div className='flex flex-col items-center gap-3'>
+        <p className='text-purple text-3xl font-semibold text-center'>
+          Checkout our past
+          <br /> mentors and mentees
+        </p>
+        <button className='bg-dark_blue_2 text-white text-sm font-semibold w-52 py-2 rounded-lg'>
+          ScholarX Archive
+        </button>
       </div>
       <div>
         <img
-          className={styles.homePageImage}
+          className='w-96'
           src="/scholarX-archive.png"
           alt="scholarX-archive-image"
-          style={{ maxWidth: '360px' }}
         />
       </div>
     </div>
 
     {/* FAQs container */}
-    <div
-      className={styles.homePageContainer}
-    >
-      <div style={{ textAlign: 'center' }}>
+    <div className='px-36 py-16'>
+      <div className='flex justify-center mb-4'>
         <p
-          className={styles.homePageSecondaryTitle}
-          style={{ fontSize: '25px', color: '#3D317C', fontWeight: 600 }}
+          className='text-purple font-semibold text-2xl'
         >
           FAQ for Mentors
         </p>
       </div>
-      <div>
+      <div className='flex justify-center mb-10'>
         <FAQCollapse faqs={mentorFAQs} />
       </div>
-      <div style={{ textAlign: 'center' }}>
+      <div className='flex justify-center mb-4'>
         <p
-          className={styles.homePageSecondaryTitle}
-          style={{ fontSize: '25px', color: '#3D317C', fontWeight: 600 }}
+          className='text-purple font-semibold text-2xl'
         >
           FAQ for Mentees
         </p>
       </div>
-      <div>
+      <div className='flex justify-center'>
         <FAQCollapse faqs={menteeFAQs} />
       </div>
     </div>

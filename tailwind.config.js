@@ -3,15 +3,14 @@ export const content = ['./index.html', './src/**/*.{js,ts,jsx,tsx}'];
 export const theme = {
   extend: {
     colors:{
-      navbar_font_colour: "#6D7893",
-      primary_font_colour: "#32325D",
-      secondary_font_colour: "#1D1D1F",
-      primary_btn_colour: "#1677FF",
-      stat_container_colour: "#F7F8FA",
-      testimonial_title_colour: "#3D317C",
-      success_stories_container_colour: "#F8FDFF",
-      secondary_btn_colour: "#172B4D",
-      footer_container_colour: "#F8FDFF"
+      gray_1: "#6D7893",
+      dark_blue_1: "#32325D",
+      black: "#1D1D1F",
+      blue: "#1677FF",
+      white_1: "#F7F8FA",
+      purple: "#3D317C",
+      white_2: "#F8FDFF",
+      dark_blue_2: "#172B4D"
     }
   },
 };
