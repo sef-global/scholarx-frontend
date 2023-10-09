@@ -10,11 +10,13 @@ import { Button, Col, Row, Space, Typography } from 'antd';
 
 import styles from './Navbar.module.css';
 import MenuDrawer from '../MenuDrawer/MenuDrawer';
+import JoinUsDialog from '../../JoinUsDialog/JoinUsDialog';
 
 const { Text } = Typography;
 
 const Navbar: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
+  const [isJoinUsDialogOpen, setJoinUsDialogOpen] = useState(false);
 
   return (
     <>
@@ -89,11 +91,24 @@ const Navbar: React.FC = () => {
                 <InstagramOutlined className={styles.antIcon} />
               </Button>
             </a>
-            <Button className={styles.loginButton}>Join Us</Button>
+            <Button
+              className={styles.loginButton}
+              onClick={() => {
+                setJoinUsDialogOpen(true);
+              }}
+            >
+              Join Us
+            </Button>
           </Space>
         </Col>
       </Row>
       <MenuDrawer openMenu={openMenu} setOpenMenu={setOpenMenu} />
+      <JoinUsDialog
+        isOpen={isJoinUsDialogOpen}
+        onClose={() => {
+          setJoinUsDialogOpen(false);
+        }}
+      />
     </>
   );
 };

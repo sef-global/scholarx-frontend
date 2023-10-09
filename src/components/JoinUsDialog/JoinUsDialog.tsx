@@ -1,9 +1,50 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
+import axios, { type AxiosResponse } from 'axios';
+import { API_URL } from '../../constants';
+import { type Profile } from '../../types';
+import UserContext from '../../contexts/UserContext';
 
 const JoinUsDialog: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   isOpen,
   onClose,
 }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { user, setUser } = useContext(UserContext);
+
+  const handleLogin = async (e: React.FormEvent): Promise<void> => {
+    e.preventDefault();
+    try {
+      axios
+        .post(
+          `${API_URL}/auth/login`,
+          {
+            email,
+            password,
+          },
+          {
+            withCredentials: true,
+          }
+        )
+        .then((response: AxiosResponse<Profile>) => {
+          setUser(response.data);
+          onClose();
+        })
+        .catch((error) => {
+          if (error.response.status !== 401) {
+            console.error({
+              message: 'Something went wrong when fetching the user',
+              description: error.toString(),
+            });
+          } else {
+            setUser(null);
+          }
+        });
+    } catch (error) {
+      console.error('Login error:', error);
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -44,7 +85,7 @@ const JoinUsDialog: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
             <h2 className="text-2xl font-bold text-gray-900 text-center">
               Log in to ScholarX
             </h2>
-            <form className="mt-8 space-y-6" action="#">
+            <form className="mt-8 space-y-6" onSubmit={handleLogin}>
               <div>
                 <label
                   htmlFor="email"
@@ -53,11 +94,15 @@ const JoinUsDialog: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                   Your email
                 </label>
                 <input
-                  type="email"
+                  // type="email"
                   name="email"
                   id="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="name@company.com"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
                   required
                 />
               </div>
@@ -74,6 +119,10 @@ const JoinUsDialog: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                   id="password"
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                   required
                 />
               </div>
@@ -85,7 +134,7 @@ const JoinUsDialog: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                     name="remember"
                     type="checkbox"
                     className="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
-                    required
+                    // required
                   />
                 </div>
                 <div className="ml-3 text-sm">
