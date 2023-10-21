@@ -5,6 +5,7 @@ export default {
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
     'storybook-addon-swc',
+    '@storybook/addon-styling-webpack'
   ],
   framework: {
     name: '@storybook/react-vite',
