@@ -2,17 +2,17 @@ import React, { useState, useContext } from 'react';
 import axios, { type AxiosResponse } from 'axios';
 import { API_URL } from '../../constants';
 import { type Profile } from '../../types';
-import UserContext from '../../contexts/UserContext';
+import { UserContext, type UserContextType } from '../../contexts/UserContext';
 
-const LoginModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
-  isOpen,
-  onClose,
-}) => {
+const LoginModal: React.FC<{
+  isLoginModalVisible: boolean;
+  onClose: () => void;
+}> = ({ isLoginModalVisible, onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { user, setUser } = useContext(UserContext);
+  const { setUserContext } = useContext(UserContext) as UserContextType;
 
-  const handleLogin = async (e: React.FormEvent): Promise<void> => {
+  const handleLogin = (e: React.FormEvent): void => {
     e.preventDefault();
     try {
       axios
@@ -27,7 +27,7 @@ const LoginModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
           }
         )
         .then((response: AxiosResponse<Profile>) => {
-          setUser(response.data);
+          setUserContext(response.data);
           onClose();
         })
         .catch((error) => {
@@ -37,7 +37,7 @@ const LoginModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
               description: error.toString(),
             });
           } else {
-            setUser(null);
+            setUserContext(null);
           }
         });
     } catch (error) {
@@ -45,9 +45,9 @@ const LoginModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
     }
   };
 
-  if (!isOpen) return null;
+  if (!isLoginModalVisible) return null;
 
-  return (
+  return isLoginModalVisible ? (
     <div className="fixed z-10 inset-0 overflow-y-auto">
       <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div className="fixed inset-0 transition-opacity">
@@ -167,7 +167,7 @@ const LoginModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
         </div>
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default LoginModal;

@@ -1,13 +1,14 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import axios, { type AxiosResponse } from 'axios';
 import type { Profile } from '../types';
 import { API_URL } from './../constants';
+
 export interface UserContextType {
-  user: any;
-  setUser: any;
+  user: Profile | null;
+  setUserContext: (user: Profile | null) => void;
 }
 
-export const UserContext = createContext({} as UserContextType);
+export const UserContext = createContext<UserContextType | null>(null);
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -17,6 +18,10 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     getUser();
   }, []);
+
+  const setUserContext = (user: Profile | null): void => {
+    setUser(user);
+  };
 
   const getUser = (): void => {
     axios
@@ -31,16 +36,18 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
             description: error.toString(),
           });
         } else {
+          console.error({
+            message: 'User not authenticated',
+            description: error.toString(),
+          });
           setUser(null);
         }
       });
   };
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUserContext }}>
       {children}
     </UserContext.Provider>
   );
 };
-
-export default UserContext;

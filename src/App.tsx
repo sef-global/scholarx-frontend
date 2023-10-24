@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 
 import Home from './components/Home/Home';
 import MainLayout from './components/Layout/MainLayout';
-import { UserContext } from './contexts/UserContext';
+import { UserContext, type UserContextType } from './contexts/UserContext';
 
 const App: React.FC = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext) as UserContextType;
 
   user !== null && console.log('user is authenticated');
 
