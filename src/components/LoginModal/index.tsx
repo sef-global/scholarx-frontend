@@ -4,10 +4,15 @@ import { API_URL } from '../../constants';
 import { type Profile } from '../../types';
 import { UserContext, type UserContextType } from '../../contexts/UserContext';
 
-const LoginModal: React.FC<{
+interface LoginModalProps {
   isLoginModalVisible: boolean;
   onClose: () => void;
-}> = ({ isLoginModalVisible, onClose }) => {
+}
+
+const LoginModal: React.FC<LoginModalProps> = ({
+  isLoginModalVisible,
+  onClose,
+}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { setUserContext } = useContext(UserContext) as UserContextType;
@@ -44,8 +49,6 @@ const LoginModal: React.FC<{
       console.error('Login error:', error);
     }
   };
-
-  if (!isLoginModalVisible) return null;
 
   return isLoginModalVisible ? (
     <div className="fixed z-10 inset-0 overflow-y-auto">

@@ -7,7 +7,8 @@ import { UserContext, type UserContextType } from './contexts/UserContext';
 const App: React.FC = () => {
   const { user } = useContext(UserContext) as UserContextType;
 
-  user !== null && console.log('user is authenticated');
+  user !== null &&
+    console.log(`user is authenticated as ${user.primary_email}`);
 
   return (
     <MainLayout>

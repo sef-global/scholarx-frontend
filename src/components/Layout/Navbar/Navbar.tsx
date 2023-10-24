@@ -16,7 +16,15 @@ const { Text } = Typography;
 
 const Navbar: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
-  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+  const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
+
+  const handleLoginModalClose = (): void => {
+    setIsLoginModalVisible(false);
+  };
+
+  const handleLoginModalOpen = (): void => {
+    setIsLoginModalVisible(true);
+  };
 
   return (
     <>
@@ -93,9 +101,7 @@ const Navbar: React.FC = () => {
             </a>
             <Button
               className={styles.loginButton}
-              onClick={() => {
-                setLoginModalOpen(true);
-              }}
+              onClick={handleLoginModalOpen}
             >
               Join Us
             </Button>
@@ -104,10 +110,8 @@ const Navbar: React.FC = () => {
       </Row>
       <MenuDrawer openMenu={openMenu} setOpenMenu={setOpenMenu} />
       <LoginModal
-        isLoginModalVisible={isLoginModalOpen}
-        onClose={() => {
-          setLoginModalOpen(false);
-        }}
+        isLoginModalVisible={isLoginModalVisible}
+        onClose={handleLoginModalClose}
       />
     </>
   );
