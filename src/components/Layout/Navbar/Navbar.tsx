@@ -10,13 +10,13 @@ import { Button, Col, Row, Space, Typography } from 'antd';
 
 import styles from './Navbar.module.css';
 import MenuDrawer from '../MenuDrawer/MenuDrawer';
-import JoinUsDialog from '../../JoinUsDialog/JoinUsDialog';
+import LoginModal from '../../LoginModal';
 
 const { Text } = Typography;
 
 const Navbar: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
-  const [isJoinUsDialogOpen, setJoinUsDialogOpen] = useState(false);
+  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
 
   return (
     <>
@@ -94,7 +94,7 @@ const Navbar: React.FC = () => {
             <Button
               className={styles.loginButton}
               onClick={() => {
-                setJoinUsDialogOpen(true);
+                setLoginModalOpen(true);
               }}
             >
               Join Us
@@ -103,10 +103,10 @@ const Navbar: React.FC = () => {
         </Col>
       </Row>
       <MenuDrawer openMenu={openMenu} setOpenMenu={setOpenMenu} />
-      <JoinUsDialog
-        isOpen={isJoinUsDialogOpen}
+      <LoginModal
+        isOpen={isLoginModalOpen}
         onClose={() => {
-          setJoinUsDialogOpen(false);
+          setLoginModalOpen(false);
         }}
       />
     </>

@@ -4,7 +4,7 @@ import { API_URL } from '../../constants';
 import { type Profile } from '../../types';
 import UserContext from '../../contexts/UserContext';
 
-const JoinUsDialog: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
+const LoginModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   isOpen,
   onClose,
 }) => {
@@ -170,4 +170,4 @@ const JoinUsDialog: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   );
 };
 
-export default JoinUsDialog;
+export default LoginModal;
