@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState } from 'react';
 import axios, { type AxiosResponse } from 'axios';
 import type { Profile } from '../types';
 import { API_URL } from './../constants';
@@ -6,6 +6,7 @@ import { API_URL } from './../constants';
 export interface UserContextType {
   user: Profile | null;
   setUserContext: (user: Profile | null) => void;
+  getUser: () => void;
 }
 
 export const UserContext = createContext<UserContextType | null>(null);
@@ -14,10 +15,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<Profile | null>(null);
-
-  useEffect(() => {
-    getUser();
-  }, []);
 
   const setUserContext = (user: Profile | null): void => {
     setUser(user);
@@ -46,7 +43,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   return (
-    <UserContext.Provider value={{ user, setUserContext }}>
+    <UserContext.Provider value={{ user, setUserContext, getUser }}>
       {children}
     </UserContext.Provider>
   );
