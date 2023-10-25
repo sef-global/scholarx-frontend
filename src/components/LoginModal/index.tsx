@@ -3,6 +3,7 @@ import axios, { type AxiosResponse } from 'axios';
 import { API_URL } from '../../constants';
 import { type Profile } from '../../types';
 import { UserContext, type UserContextType } from '../../contexts/UserContext';
+import closeIcon from '../../assets/svg/closeIcon.svg';
 
 interface LoginModalProps {
   isLoginModalVisible: boolean;
@@ -68,20 +69,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
             className="absolute top-2 right-2 p-2 text-gray-700 hover:text-gray-900 focus:outline-none"
             onClick={onClose}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-6 h-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+            <img className="w-6 h-6" src={closeIcon} alt="Modal Close Icon" />
           </button>
 
           <div className="bg-white p-6 space-y-8 rounded-lg shadow-xl">
@@ -97,7 +85,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
                   Your email
                 </label>
                 <input
-                  // type="email"
+                  type="email"
                   name="email"
                   id="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -137,7 +125,6 @@ const LoginModal: React.FC<LoginModalProps> = ({
                     name="remember"
                     type="checkbox"
                     className="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
-                    // required
                   />
                 </div>
                 <div className="ml-3 text-sm">
