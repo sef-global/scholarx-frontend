@@ -103,16 +103,18 @@ const Navbar: React.FC = () => {
               className={styles.loginButton}
               onClick={handleLoginModalOpen}
             >
-              Join Us
+              Login
             </Button>
           </Space>
         </Col>
       </Row>
       <MenuDrawer openMenu={openMenu} setOpenMenu={setOpenMenu} />
-      <LoginModal
-        isLoginModalVisible={isLoginModalVisible}
-        onClose={handleLoginModalClose}
-      />
+      {isLoginModalVisible ? (
+        <LoginModal
+          isLoginModalVisible={isLoginModalVisible}
+          onClose={handleLoginModalClose}
+        />
+      ) : null}
     </>
   );
 };
