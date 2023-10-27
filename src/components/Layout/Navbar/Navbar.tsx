@@ -110,10 +110,7 @@ const Navbar: React.FC = () => {
       </Row>
       <MenuDrawer openMenu={openMenu} setOpenMenu={setOpenMenu} />
       {isLoginModalVisible ? (
-        <LoginModal
-          isLoginModalVisible={isLoginModalVisible}
-          onClose={handleLoginModalClose}
-        />
+        <LoginModal onClose={handleLoginModalClose} />
       ) : null}
     </>
   );

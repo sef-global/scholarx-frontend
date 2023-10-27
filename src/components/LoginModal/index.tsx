@@ -6,14 +6,10 @@ import { UserContext, type UserContextType } from '../../contexts/UserContext';
 import closeIcon from '../../assets/svg/closeIcon.svg';
 
 interface LoginModalProps {
-  isLoginModalVisible: boolean;
   onClose: () => void;
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({
-  isLoginModalVisible,
-  onClose,
-}) => {
+const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { setUserContext } = useContext(UserContext) as UserContextType;
