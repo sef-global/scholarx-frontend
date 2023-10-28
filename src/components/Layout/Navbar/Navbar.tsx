@@ -10,11 +10,21 @@ import { Button, Col, Row, Space, Typography } from 'antd';
 
 import styles from './Navbar.module.css';
 import MenuDrawer from '../MenuDrawer/MenuDrawer';
+import LoginModal from '../../LoginModal';
 
 const { Text } = Typography;
 
 const Navbar: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
+  const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
+
+  const handleLoginModalClose = (): void => {
+    setIsLoginModalVisible(false);
+  };
+
+  const handleLoginModalOpen = (): void => {
+    setIsLoginModalVisible(true);
+  };
 
   return (
     <>
@@ -89,11 +99,19 @@ const Navbar: React.FC = () => {
                 <InstagramOutlined className={styles.antIcon} />
               </Button>
             </a>
-            <Button className={styles.loginButton}>Join Us</Button>
+            <Button
+              className={styles.loginButton}
+              onClick={handleLoginModalOpen}
+            >
+              Login
+            </Button>
           </Space>
         </Col>
       </Row>
       <MenuDrawer openMenu={openMenu} setOpenMenu={setOpenMenu} />
+      {isLoginModalVisible ? (
+        <LoginModal onClose={handleLoginModalClose} />
+      ) : null}
     </>
   );
 };
