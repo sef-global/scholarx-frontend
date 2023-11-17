@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 import { UserContext, type UserContextType } from '../../contexts/UserContext';
+import axios from 'axios';
+import { API_URL } from '../../constants';
 
 interface LogoutModalProps {
   onClose: () => void;
@@ -9,8 +11,25 @@ const LogoutModal: React.FC<LogoutModalProps> = ({ onClose }) => {
   const { setUserContext } = useContext(UserContext) as UserContextType;
 
   const handleLogoutConfirm = (): void => {
-    setUserContext(null);
-    onClose();
+    axios
+      .get(`${API_URL}/auth/logout`, {
+        withCredentials: true,
+      })
+      .then(() => {
+        setUserContext(null);
+        onClose();
+      })
+      .catch((error) => {
+        if (error.response.status !== 401) {
+          console.error({
+            message: 'Something went wrong during logout',
+            description: error.toString(),
+          });
+        } else {
+          setUserContext(null);
+          onClose();
+        }
+      });
   };
 
   return (
