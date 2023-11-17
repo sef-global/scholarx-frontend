@@ -14,10 +14,12 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
   const { setUserContext } = useContext(UserContext) as UserContextType;
 
   const handleLogin = (e: React.FormEvent): void => {
     e.preventDefault();
+    setError(null);
     try {
       axios
         .post(
@@ -38,6 +40,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
         })
         .catch((error) => {
           if (error.response.status !== 401) {
+            setError(error.response.data.message);
             console.error({
               message: 'Something went wrong when registering the user',
               description: error.toString(),
@@ -151,6 +154,15 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
                   required
                 />
               </div>
+
+              {error !== null ? (
+                <div
+                  className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:text-red-400"
+                  role="alert"
+                >
+                  {error}
+                </div>
+              ) : null}
 
               <button
                 type="submit"
