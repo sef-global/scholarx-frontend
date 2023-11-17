@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import {
   AlignRightOutlined,
@@ -11,12 +11,23 @@ import { Button, Col, Row, Space, Typography } from 'antd';
 import styles from './Navbar.module.css';
 import MenuDrawer from '../MenuDrawer/MenuDrawer';
 import LoginModal from '../../LoginModal';
+import RegisterModal from '../../RegisterModal';
+
+import {
+  UserContext,
+  type UserContextType,
+} from './../../../contexts/UserContext';
+import LogoutModal from '../../LogoutModal';
 
 const { Text } = Typography;
 
 const Navbar: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
+  const [isRegisterModalVisible, setIsRegisterModalVisible] = useState(false);
+  const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
+
+  const { user } = useContext(UserContext) as UserContextType;
 
   const handleLoginModalClose = (): void => {
     setIsLoginModalVisible(false);
@@ -24,6 +35,22 @@ const Navbar: React.FC = () => {
 
   const handleLoginModalOpen = (): void => {
     setIsLoginModalVisible(true);
+  };
+
+  const handleRegisterModalClose = (): void => {
+    setIsRegisterModalVisible(false);
+  };
+
+  const handleRegisterModalOpen = (): void => {
+    setIsRegisterModalVisible(true);
+  };
+
+  const handleLogoutModalClose = (): void => {
+    setIsLogoutModalVisible(false);
+  };
+
+  const handleLogoutModalOpen = (): void => {
+    setIsLogoutModalVisible(true);
   };
 
   return (
@@ -41,7 +68,7 @@ const Navbar: React.FC = () => {
             setOpenMenu(true);
           }}
         />
-        <Col md={16} lg={14} xl={15} xxl={16}>
+        <Col md={16} lg={12} xl={14} xxl={16}>
           <Space direction="horizontal">
             <div className={styles.navbarItemContainer}>
               <a href="https://sefglobal.org/">
@@ -99,12 +126,29 @@ const Navbar: React.FC = () => {
                 <InstagramOutlined className={styles.antIcon} />
               </Button>
             </a>
-            <Button
-              className={styles.loginButton}
-              onClick={handleLoginModalOpen}
-            >
-              Login
-            </Button>
+            {user === null ? (
+              <>
+                <Button
+                  className={styles.loginButton}
+                  onClick={handleLoginModalOpen}
+                >
+                  Login
+                </Button>
+                <Button
+                  className={styles.loginButton}
+                  onClick={handleRegisterModalOpen}
+                >
+                  Register
+                </Button>
+              </>
+            ) : (
+              <Button
+                className={styles.loginButton}
+                onClick={handleLogoutModalOpen}
+              >
+                Logout
+              </Button>
+            )}
           </Space>
         </Col>
       </Row>
@@ -112,6 +156,10 @@ const Navbar: React.FC = () => {
       {isLoginModalVisible ? (
         <LoginModal onClose={handleLoginModalClose} />
       ) : null}
+      {isRegisterModalVisible ? (
+        <RegisterModal onClose={handleRegisterModalClose} />
+      ) : null}
+      {isLogoutModalVisible && <LogoutModal onClose={handleLogoutModalClose} />}
     </>
   );
 };
