@@ -1,8 +1,6 @@
-import React, { useState, useContext } from 'react';
-import axios, { type AxiosResponse } from 'axios';
+import React, { useState } from 'react';
+import axios from 'axios';
 import { API_URL } from '../../constants';
-import { type Profile } from '../../types';
-import { UserContext, type UserContextType } from '../../contexts/UserContext';
 import closeIcon from '../../assets/svg/closeIcon.svg';
 
 interface RegisterModalProps {
@@ -15,43 +13,38 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ handleClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const { setUserContext } = useContext(UserContext) as UserContextType;
 
-  const handleLogin = (e: React.FormEvent): void => {
+  const handleRegister = (e: React.FormEvent): void => {
     e.preventDefault();
     setError(null);
-    try {
-      axios
-        .post(
-          `${API_URL}/auth/register`,
-          {
-            email,
-            password,
-            first_name: firstName,
-            last_name: lastName,
-          },
-          {
-            withCredentials: true,
-          }
-        )
-        .then((response: AxiosResponse<Profile>) => {
-          setUserContext(response.data);
-          handleClose();
-        })
-        .catch((error) => {
-          if (error.response.status !== 401) {
-            setError(error.response.data.message);
-            console.error({
-              message: 'Something went wrong when registering the user',
-              description: error.toString(),
-            });
-          } else {
-            setUserContext(null);
-          }
-        });
-    } catch (error) {
-      console.error('Registration error:', error);
-    }
+
+    axios
+      .post(
+        `${API_URL}/auth/register`,
+        {
+          email,
+          password,
+          first_name: firstName,
+          last_name: lastName,
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      .then(() => {
+        handleClose();
+      })
+      .catch((error) => {
+        if (error.response.status !== 401) {
+          setError(error.response.data.message);
+          console.error({
+            message: 'Something went wrong when registering the user',
+            description: error,
+          });
+        } else {
+          console.error('Registration error:', error);
+        }
+      });
   };
 
   return (
@@ -79,7 +72,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ handleClose }) => {
             <h2 className="text-2xl font-bold text-gray-900 text-center">
               Register to ScholarX
             </h2>
-            <form className="mt-8 space-y-6" onSubmit={handleLogin}>
+            <form className="mt-8 space-y-6" onSubmit={handleRegister}>
               <div>
                 <label
                   htmlFor="firstname lastname"
