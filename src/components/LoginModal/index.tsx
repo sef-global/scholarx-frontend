@@ -6,10 +6,10 @@ import { UserContext, type UserContextType } from '../../contexts/UserContext';
 import closeIcon from '../../assets/svg/closeIcon.svg';
 
 interface LoginModalProps {
-  onClose: () => void;
+  handleClose: () => void;
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
+const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { setUserContext } = useContext(UserContext) as UserContextType;
@@ -30,7 +30,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
         )
         .then((response: AxiosResponse<Profile>) => {
           setUserContext(response.data);
-          onClose();
+          handleClose();
         })
         .catch((error) => {
           if (error.response.status !== 401) {
@@ -63,7 +63,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
         >
           <button
             className="absolute top-2 right-2 p-2 text-gray-700 hover:text-gray-900 focus:outline-none"
-            onClick={onClose}
+            onClick={handleClose}
           >
             <img className="w-6 h-6" src={closeIcon} alt="Modal Close Icon" />
           </button>

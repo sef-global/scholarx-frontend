@@ -6,10 +6,10 @@ import { UserContext, type UserContextType } from '../../contexts/UserContext';
 import closeIcon from '../../assets/svg/closeIcon.svg';
 
 interface RegisterModalProps {
-  onClose: () => void;
+  handleClose: () => void;
 }
 
-const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
+const RegisterModal: React.FC<RegisterModalProps> = ({ handleClose }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -36,7 +36,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
         )
         .then((response: AxiosResponse<Profile>) => {
           setUserContext(response.data);
-          onClose();
+          handleClose();
         })
         .catch((error) => {
           if (error.response.status !== 401) {
@@ -70,7 +70,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose }) => {
         >
           <button
             className="absolute top-2 right-2 p-2 text-gray-700 hover:text-gray-900 focus:outline-none"
-            onClick={onClose}
+            onClick={handleClose}
           >
             <img className="w-6 h-6" src={closeIcon} alt="Modal Close Icon" />
           </button>
