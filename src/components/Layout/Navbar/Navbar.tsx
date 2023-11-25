@@ -18,6 +18,7 @@ import {
   type UserContextType,
 } from './../../../contexts/UserContext';
 import LogoutModal from '../../LogoutModal';
+import { Link } from 'react-router-dom';
 
 const { Text } = Typography;
 
@@ -84,6 +85,11 @@ const Navbar: React.FC = () => {
                 <Text className={styles.antTypography}>Join Us</Text>
               </a>
             </div>
+            {user !== null ? (
+              <Link to="/mentor-registration">
+                <Button className={styles.loginButton}>Become a Mentor</Button>
+              </Link>
+            ) : null}
           </Space>
         </Col>
         <Col md={4} lg={4} xl={3} className={styles.socialMediaContainer}>
