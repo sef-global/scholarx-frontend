@@ -146,7 +146,7 @@ const MentorRegistrationPage: React.FC = () => {
                   htmlFor="linkedinUrl"
                   className="block text-sm font-medium text-gray-600"
                 >
-                  Linkedin Url
+                  LinkedIn URL
                 </label>
                 <input
                   type="text"
@@ -162,7 +162,7 @@ const MentorRegistrationPage: React.FC = () => {
                   htmlFor="researchGateUrl"
                   className="block text-sm font-medium text-gray-600"
                 >
-                  ResearchGate Url
+                  ResearchGate URL
                 </label>
                 <input
                   type="text"
@@ -178,7 +178,7 @@ const MentorRegistrationPage: React.FC = () => {
                   htmlFor="googleScholarUrl"
                   className="block text-sm font-medium text-gray-600"
                 >
-                  GoogleScholar Url
+                  GoogleScholar URL
                 </label>
                 <input
                   type="text"
