@@ -1,6 +1,5 @@
-import React from 'react';
 import { waitFor, within } from '@storybook/testing-library';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import MentorRegistrationPage from './';
@@ -17,7 +16,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Step1: Story = {
   play: async ({ canvasElement }) => {
-    render(<MentorRegistrationPage />);
     const canvas = within(canvasElement);
 
     const firstNameInput = canvas.getByLabelText('First Name');
@@ -49,7 +47,6 @@ export const Step1: Story = {
 
 export const Step2: Story = {
   play: async ({ canvasElement }) => {
-    render(<MentorRegistrationPage />);
     const canvas = within(canvasElement);
 
     const categorySelect = canvas.getByLabelText('Category');
@@ -82,7 +79,6 @@ export const Step2: Story = {
 
 export const Step3: Story = {
   play: async ({ canvasElement }) => {
-    render(<MentorRegistrationPage />);
     const canvas = within(canvasElement);
 
     const mentoringStrategyTextarea = canvas.getByLabelText(
@@ -102,7 +98,5 @@ export const Step3: Story = {
     });
 
     fireEvent.click(submitButton);
-
-    // You can handle the axios.post mock here to simulate the API response if needed
   },
 };
