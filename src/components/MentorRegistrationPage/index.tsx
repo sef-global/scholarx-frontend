@@ -1,5 +1,4 @@
-// MentorRegistrationPage.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { API_URL } from '../../constants';
 
@@ -17,20 +16,22 @@ const MentorRegistrationPage: React.FC = () => {
     expertise: '',
     mentoringStrategy: '',
   });
+  const [categories, setCategories] = useState([]);
 
   const handleNext = (): void => {
     setCurrentStep((prevStep) => prevStep + 1);
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ): void => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
+  const handleSubmit = (): void => {
     setError(null);
     axios
       .post(
@@ -73,10 +74,27 @@ const MentorRegistrationPage: React.FC = () => {
       });
   };
 
+  useEffect(() => {
+    axios
+      .get(`${API_URL}/categories`)
+      .then((response) => {
+        const categories = response.data.categories;
+        setFormData((prevData) => ({
+          ...prevData,
+          categoryId: categories[0].id,
+        }));
+        setCategories(categories);
+      })
+      .catch((error) => {
+        console.error('Error fetching categories:', error);
+      });
+  }, []);
+
   return (
-    <div className="min-h-screen flex justify-center items-start bg-gray-50 pt-16">
-      <div className="relative max-w-lg w-full p-8 bg-white shadow-md rounded-md">
-        <div className="text-2xl font-semibold mb-6">Become a Mentor</div>
+    <div className="min-h-screen flex justify-center items-start">
+      <div className="relative max-w-lg w-full p-8">
+        <div className="text-2xl font-semibold mb-2">Become a Mentor</div>
+        <hr className="border-t border-gray-300 mb-6" />
         <div className="relative h-2 mb-10">
           <div
             className="absolute top-0 left-0 h-full bg-blue-500 rounded-full"
@@ -86,7 +104,7 @@ const MentorRegistrationPage: React.FC = () => {
             <div className="pt-3">Step {currentStep + 1} of 3</div>
           </div>
         </div>
-        <form className="space-y-4" onSubmit={handleSubmit}>
+        <div className="space-y-4" onSubmit={handleSubmit}>
           {currentStep === 0 && (
             <>
               <div className="flex">
@@ -180,16 +198,23 @@ const MentorRegistrationPage: React.FC = () => {
                   htmlFor="categoryId"
                   className="block text-sm font-medium text-gray-600"
                 >
-                  Category ID
+                  Category
                 </label>
-                <input
-                  type="text"
-                  id="categoryId"
+                <select
+                  className="mt-1 p-2 w-1/2 border rounded-md"
                   name="categoryId"
+                  id="categoryId"
                   value={formData.categoryId}
                   onChange={handleInputChange}
-                  className="mt-1 p-2 w-full border rounded-md"
-                />
+                >
+                  {categories.map(
+                    (category: { id: string; category: string }) => (
+                      <option key={category.id} value={category.id}>
+                        {category.category}
+                      </option>
+                    )
+                  )}
+                </select>
               </div>
               <div className="mb-4">
                 <label
@@ -253,6 +278,7 @@ const MentorRegistrationPage: React.FC = () => {
               {error}
             </div>
           ) : null}
+          <hr className="border-t border-gray-300 my-6" />
           <div className="flex justify-between">
             {currentStep > 0 && (
               <button
@@ -260,22 +286,30 @@ const MentorRegistrationPage: React.FC = () => {
                 onClick={() => {
                   setCurrentStep((prevStep) => prevStep - 1);
                 }}
-                className="btn-blue"
+                className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-1 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-small rounded-md text-sm inline-flex items-center px-3 py-1.5 text-center me-2"
               >
                 Previous
               </button>
             )}
             {currentStep < 2 ? (
-              <button type="button" onClick={handleNext} className="btn-blue">
+              <button
+                type="button"
+                onClick={handleNext}
+                className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-1 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-small rounded-md text-sm inline-flex items-center px-3 py-1.5 text-center me-2"
+              >
                 Next
               </button>
             ) : (
-              <button type="submit" className="btn-blue">
+              <button
+                type="button"
+                onClick={handleSubmit}
+                className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-1 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-small rounded-md text-sm inline-flex items-center px-3 py-1.5 text-center me-2"
+              >
                 Submit
               </button>
             )}
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );
