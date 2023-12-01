@@ -107,8 +107,8 @@ const MentorRegistrationPage: React.FC = () => {
         <div className="space-y-4" onSubmit={handleSubmit}>
           {currentStep === 0 && (
             <>
-              <div className="flex">
-                <div className="block w-1/2 mr-2">
+              <div className="flex flex-wrap">
+                <div className="w-full md:w-1/2 md:pr-1 mb-4 md:mb-0">
                   <label
                     htmlFor="firstName"
                     className="block text-sm font-medium text-gray-600"
@@ -124,7 +124,7 @@ const MentorRegistrationPage: React.FC = () => {
                     className="mt-1 p-2 w-full border rounded-md"
                   />
                 </div>
-                <div className="block w-1/2 mr-2">
+                <div className="w-full md:w-1/2 md:pl-1">
                   <label
                     htmlFor="lastName"
                     className="block text-sm font-medium text-gray-600"
