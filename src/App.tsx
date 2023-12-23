@@ -1,8 +1,10 @@
 import React, { useContext, useEffect } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Home from './components/Home/Home';
 import MainLayout from './components/Layout/MainLayout';
 import { UserContext, type UserContextType } from './contexts/UserContext';
+import MentorRegistrationPage from './components/MentorRegistrationPage';
 
 const App: React.FC = () => {
   const { user, getUser } = useContext(UserContext) as UserContextType;
@@ -15,9 +17,17 @@ const App: React.FC = () => {
     console.log(`user is authenticated as ${user.primary_email}`);
 
   return (
-    <MainLayout>
-      <Home />
-    </MainLayout>
+    <BrowserRouter>
+      <MainLayout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/mentor-registration"
+            element={<MentorRegistrationPage />}
+          />
+        </Routes>
+      </MainLayout>
+    </BrowserRouter>
   );
 };
 

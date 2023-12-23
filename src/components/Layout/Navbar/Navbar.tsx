@@ -18,6 +18,7 @@ import {
   type UserContextType,
 } from './../../../contexts/UserContext';
 import LogoutModal from '../../LogoutModal';
+import { useNavigate } from 'react-router-dom';
 
 const { Text } = Typography;
 
@@ -26,6 +27,8 @@ const Navbar: React.FC = () => {
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const [isRegisterModalVisible, setIsRegisterModalVisible] = useState(false);
   const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
+
+  const navigate = useNavigate();
 
   const { user } = useContext(UserContext) as UserContextType;
 
@@ -51,6 +54,14 @@ const Navbar: React.FC = () => {
 
   const handleLogoutModalOpen = (): void => {
     setIsLogoutModalVisible(true);
+  };
+
+  const handleMentorRegistration = (): void => {
+    if (user === null) {
+      handleLoginModalOpen();
+    } else {
+      navigate('/mentor-registration');
+    }
   };
 
   return (
@@ -84,6 +95,12 @@ const Navbar: React.FC = () => {
                 <Text className={styles.antTypography}>Join Us</Text>
               </a>
             </div>
+            <Button
+              className={styles.loginButton}
+              onClick={handleMentorRegistration}
+            >
+              Become a Mentor
+            </Button>
           </Space>
         </Col>
         <Col md={4} lg={4} xl={3} className={styles.socialMediaContainer}>
