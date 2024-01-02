@@ -14,7 +14,7 @@ Frontend dashboard of the scholarX platform
     ```
 - Start the server with
     ```
-    npm start
+    npm run dev
     ```
 
 - Visit your app at http://localhost:3000
