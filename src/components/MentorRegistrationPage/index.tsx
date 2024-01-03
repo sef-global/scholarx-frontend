@@ -81,7 +81,7 @@ const MentorRegistrationPage: React.FC = () => {
         const categories = response.data.categories;
         setFormData((prevData) => ({
           ...prevData,
-          categoryId: categories[0].id,
+          categoryId: categories[0].uuid,
         }));
         setCategories(categories);
       })
@@ -208,8 +208,8 @@ const MentorRegistrationPage: React.FC = () => {
                   onChange={handleInputChange}
                 >
                   {categories.map(
-                    (category: { id: string; category: string }) => (
-                      <option key={category.id} value={category.id}>
+                    (category: { uuid: string; category: string }) => (
+                      <option key={category.uuid} value={category.uuid}>
                         {category.category}
                       </option>
                     )
