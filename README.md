@@ -17,4 +17,4 @@ Frontend dashboard of the scholarX platform
     npm run dev
     ```
 
-- Visit your app at http://localhost:3000
+- Visit your app at http://localhost:5173
