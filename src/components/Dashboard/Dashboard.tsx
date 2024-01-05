@@ -13,7 +13,6 @@ import Emails from './scenes/Emails/Emails.tsx';
 const { Content, Sider } = Layout;
 
 const Dashboard: React.FC = () => {
-
   return (
     <Layout>
       <Sider breakpoint="lg" collapsedWidth="0" width="250" theme="light">
