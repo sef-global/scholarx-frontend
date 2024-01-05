@@ -5,6 +5,7 @@ import Home from './components/Home/Home';
 import MainLayout from './components/Layout/MainLayout';
 import { UserContext, type UserContextType } from './contexts/UserContext';
 import MentorRegistrationPage from './components/MentorRegistrationPage';
+import Dashboard from './components/Dashboard/Dashboard.tsx';
 
 const App: React.FC = () => {
   const { user, getUser } = useContext(UserContext) as UserContextType;
@@ -25,6 +26,7 @@ const App: React.FC = () => {
             path="/mentor-registration"
             element={<MentorRegistrationPage />}
           />
+          <Route path="/dashboard/*" element={<Dashboard />} />
         </Routes>
       </MainLayout>
     </BrowserRouter>
