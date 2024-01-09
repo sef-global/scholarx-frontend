@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { API_URL } from '../../constants';
 import closeIcon from '../../assets/svg/closeIcon.svg';
+import styles from './RegisterModal.module.css';
 
 interface RegisterModalProps {
   handleClose: () => void;
@@ -69,36 +70,38 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ handleClose }) => {
           </button>
 
           <div className="bg-white p-6 space-y-8 rounded-lg shadow-xl">
-            <h2 className="text-2xl font-bold text-gray-900 text-center">
-              Register to ScholarX
-            </h2>
-            <form className="mt-8 space-y-6" onSubmit={handleRegister}>
-              <div>
-                <label
-                  htmlFor="firstname lastname"
-                  className="block mb-2 text-sm font-medium text-gray-900"
-                >
-                  Name
-                </label>
-                <div className="flex">
+            <div className={styles.modalWrapper}>
+              <h2 className="text-2xl font-bold text-gray-900 text-center">
+                Create your Account
+              </h2>
+              <div className={styles.scholarxLogoWrapper}>
+                <img
+                  src="../../../public/scholarx-logo.png"
+                  alt="scholarx-logo"
+                />
+              </div>
+              <form className="mt-8 space-y-6" onSubmit={handleRegister}>
+                <div>
                   <input
                     type="text"
                     name="firstname"
                     id="firstname"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 mr-2"
-                    placeholder="first name"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mr-2"
+                    placeholder="First Name"
                     value={firstName}
                     onChange={(e) => {
                       setFirstName(e.target.value);
                     }}
                     required
                   />
+                </div>
+                <div>
                   <input
                     type="text"
                     name="lastname"
                     id="lastname"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5"
-                    placeholder="last name"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Last Name"
                     value={lastName}
                     onChange={(e) => {
                       setLastName(e.target.value);
@@ -106,68 +109,58 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ handleClose }) => {
                     required
                   />
                 </div>
-              </div>
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block mb-2 text-sm font-medium text-gray-900"
-                >
-                  Your email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  placeholder="name@company.com"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                  required
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-gray-900"
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
-                  required
-                />
-              </div>
-
-              {error !== null ? (
-                <div
-                  className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:text-red-400"
-                  role="alert"
-                >
-                  {error}
+                <div>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                    required
+                  />
                 </div>
-              ) : null}
+                <div>
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Password"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                    required
+                  />
+                </div>
 
-              <button
-                type="submit"
-                className="w-full px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300"
-              >
-                Register to ScholarX
-              </button>
-              <div className="text-sm font-medium text-gray-900">
-                Already have an account?{' '}
-                <a className="text-blue-600 hover:underline">Login</a>
-              </div>
-            </form>
+                {error !== null ? (
+                  <div
+                    className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:text-red-400"
+                    role="alert"
+                  >
+                    {error}
+                  </div>
+                ) : null}
+
+                <button
+                  type="submit"
+                  className="w-full px-5 py-3 text-base font-medium text-center text-white bg-primary-blue rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300"
+                >
+                  Register
+                </button>
+                <div className="text-sm font-thin text-center text-gray-900">
+                  Already have an account?{' '}
+                  <a className="font-medium text-black hover:underline">
+                    Login
+                  </a>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
