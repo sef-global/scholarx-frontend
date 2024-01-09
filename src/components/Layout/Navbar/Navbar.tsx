@@ -5,6 +5,7 @@ import {
   TwitterOutlined,
   LinkedinFilled,
   InstagramOutlined,
+  FacebookFilled,
 } from '@ant-design/icons';
 import { Button, Col, Row, Space, Typography } from 'antd';
 
@@ -110,11 +111,9 @@ const Navbar: React.FC = () => {
               target="_blank"
               rel="noreferrer"
             >
-              <Button
-                className={styles.antButton}
-                shape="circle"
-                icon={<img src="/facebook-icon.png" width={20} />}
-              />
+              <Button className={styles.antButton} shape="circle">
+                <FacebookFilled className={styles.antIcon} />
+              </Button>
             </a>
             <a
               href="https://twitter.com/goasksef"

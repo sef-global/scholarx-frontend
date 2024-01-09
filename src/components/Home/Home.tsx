@@ -26,8 +26,10 @@ const Home: React.FC = () => (
         <div style={{ marginTop: '40px' }}>
           <Button
             className={styles.homePageMainButton}
-            type={'primary'}
-            style={{ marginRight: '20px', marginBottom: '20px' }}
+            style={{
+              marginRight: '20px',
+              marginBottom: '20px',
+            }}
           >
             Apply
           </Button>

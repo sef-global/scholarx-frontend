@@ -4,6 +4,7 @@ import {
   TwitterOutlined,
   LinkedinFilled,
   InstagramOutlined,
+  FacebookFilled,
 } from '@ant-design/icons';
 import { Avatar, Button, Drawer, Space, Typography } from 'antd';
 
@@ -55,11 +56,9 @@ const MenuDrawer: React.FC<MenuDrawerProps> = ({ openMenu, setOpenMenu }) => {
             target="_blank"
             rel="noreferrer"
           >
-            <Button
-              className={styles.antButton}
-              shape="circle"
-              icon={<img src="/facebook-icon.png" width={20} />}
-            />
+            <Button className={styles.antButton} shape="circle">
+              <FacebookFilled className={styles.antIcon} />
+            </Button>
           </a>
           <a
             href="https://twitter.com/goasksef"
