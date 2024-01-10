@@ -24,16 +24,18 @@ const Home: React.FC = () => (
           Unlock Mentorship Opportunities with ScholarX
         </Text>
         <div style={{ marginTop: '40px' }}>
-          <Button
-            className={styles.homePageMainButton}
-            style={{
-              marginRight: '20px',
-              marginBottom: '20px',
-            }}
-          >
-            Apply
-          </Button>
-          <Button className={styles.homePageMainButton}>See more</Button>
+          <div className="flex mt-10">
+            <Button
+              className={`flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white py-1 px-16 rounded w-40 h-9 font-sans font-bold`}
+            >
+              Apply
+            </Button>
+            <Button
+              className={`flex justify-center items-center mr-5 mb-5 text-black py-1 px-16 rounded w-40 h-9 font-sans font-bold`}
+            >
+              See more
+            </Button>
+          </div>
         </div>
       </Col>
       <Col xs={24} md={24} xl={12} style={{ marginTop: '40px' }}>
