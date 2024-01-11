@@ -25,14 +25,10 @@ const Home: React.FC = () => (
         </Text>
         <div style={{ marginTop: '40px' }}>
           <div className="flex mt-10">
-            <Button
-              className={`flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white py-1 px-16 rounded w-40 h-9 font-sans font-bold`}
-            >
+            <Button className="flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white py-1 px-16 rounded w-40 h-9 font-sans font-bold">
               Apply
             </Button>
-            <Button
-              className={`flex justify-center items-center mr-5 mb-5 text-black py-1 px-16 rounded w-40 h-9 font-sans font-bold`}
-            >
+            <Button className="flex justify-center items-center mr-5 mb-5 text-black py-1 px-16 rounded w-40 h-9 font-sans font-bold">
               See more
             </Button>
           </div>
