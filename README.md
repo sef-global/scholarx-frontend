@@ -3,15 +3,16 @@ Frontend dashboard of the scholarX platform
 
 ## Setup Development Environment
 
-- Clone your forked repository
+1. Clone your forked repository
     ```
     git clone https://github.com/USERNAME/scholarx-frontend
     cd scholarx-frontend
     ```
-- Install all the dependencies
+2. Install all the dependencies
     ```
     npm install
     ```
+
 - Start the server with
     ```
     npm run dev
@@ -20,12 +21,18 @@ Frontend dashboard of the scholarX platform
 - Visit your app at http://localhost:5173
 
 
-## Backend Server Setup
+## Connecting to the Backend API
 
-In order to run the application locally and connect the backend API, you need to set up the backend server URL. 
+The URL for the backend API is stored in an environment variable. To set this up:
 
-1. Open the `constants.ts` file.
-2. You will see a line of code that looks like this: `export const API_URL = 'http://localhost:3000/api';`
-3. Replace `'http://localhost:3000/api'` with the URL of your backend server.
+1. Create a `.env` file in the root of your project.
+2. Add the following line to the `.env` file, replacing `your-api-url` with the actual URL of your backend API:
+
+```env
+VITE_API_URL=your-api-url
+
+3. Save the `.env` file. The application will now use this URL to make requests to the backend API.
+
+Note: The VITE_ prefix is required for Vite to load the variable into import.meta.env. For more information, see the Vite documentation[https://vitejs.dev/guide/env-and-mode.html].
 
 Please note that you should not commit this change to the repository. It's recommended to use environment variables for different environments.
