@@ -26,7 +26,9 @@ The URL for the backend API is stored in an environment variable. To set this up
 
 - Copy the .env file:
 
-```cp .env.example .env```
+    ```
+    cp example.env .env
+    ```
 
 Replace the environment variables in the newly created .env file with your configuration.
 
