@@ -27,7 +27,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         setUser(response.data);
       })
       .catch((error) => {
-        if (error.response.status !== 401) {
+        if (error.response !== undefined && error.response.status !== 401) {
           console.error({
             message: 'Something went wrong when fetching the user',
             description: error.toString(),
