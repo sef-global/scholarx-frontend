@@ -30,9 +30,10 @@ The URL for the backend API is stored in an environment variable. To set this up
 
 ```env
 VITE_API_URL=your-api-url
+```
 
 3. Save the `.env` file. The application will now use this URL to make requests to the backend API.
 
-Note: The VITE_ prefix is required for Vite to load the variable into import.meta.env. For more information, see the Vite documentation[https://vitejs.dev/guide/env-and-mode.html].
+Note: The VITE_ prefix is required for Vite to load the variable into import.meta.env. For more information, see the [Vite documentation](https://vitejs.dev/guide/env-and-mode.html).
 
 Please note that you should not commit this change to the repository. It's recommended to use environment variables for different environments.
