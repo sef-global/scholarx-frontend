@@ -3,15 +3,16 @@ Frontend dashboard of the scholarX platform
 
 ## Setup Development Environment
 
-- Clone your forked repository
+1. Clone your forked repository
     ```
     git clone https://github.com/USERNAME/scholarx-frontend
     cd scholarx-frontend
     ```
-- Install all the dependencies
+2. Install all the dependencies
     ```
     npm install
     ```
+
 - Start the server with
     ```
     npm run dev
@@ -19,13 +20,17 @@ Frontend dashboard of the scholarX platform
 
 - Visit your app at http://localhost:5173
 
+## Connecting to the Backend API
 
-## Backend Server Setup
+The URL for the backend API is stored in an environment variable. To set this up:
 
-In order to run the application locally and connect the backend API, you need to set up the backend server URL. 
+- Copy the .env file:
 
-1. Open the `constants.ts` file.
-2. You will see a line of code that looks like this: `export const API_URL = 'http://localhost:4000/api';`
-3. Replace `'http://localhost:4000/api'` with the URL of your backend server.
+    ```
+    cp example.env .env
+    ```
+
+Replace the environment variables in the newly created .env file with your configuration.
+
 
 Please note that you should not commit this change to the repository. It's recommended to use environment variables for different environments.
