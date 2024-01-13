@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 
 import {
   TwitterOutlined,
@@ -7,6 +7,12 @@ import {
   FacebookFilled,
 } from '@ant-design/icons';
 import { Avatar, Button, Drawer, Space, Typography } from 'antd';
+
+import {
+  UserContext,
+  type UserContextType,
+} from './../../../contexts/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './MenuDrawer.module.css';
 
@@ -18,12 +24,30 @@ interface MenuDrawerProps {
 }
 
 const MenuDrawer: React.FC<MenuDrawerProps> = ({ openMenu, setOpenMenu }) => {
+  const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
+  const navigate = useNavigate();
+
+  const { user } = useContext(UserContext) as UserContextType;
+
   const handleOpenMenu = (): boolean => {
     return openMenu;
   };
 
   const handleCloseMenu = (): void => {
     setOpenMenu(false);
+  };
+
+  const handleLoginModalOpen = (): void => {
+    setIsLoginModalVisible(true);
+  };
+
+  const handleMentorRegistration = (): void => {
+    console.log('Clicked');
+    if (user === null) {
+      handleLoginModalOpen();
+    } else {
+      navigate('/mentor-registration');
+    }
   };
 
   return (
@@ -50,6 +74,12 @@ const MenuDrawer: React.FC<MenuDrawerProps> = ({ openMenu, setOpenMenu }) => {
         <a href="" target="_blank" rel="noreferrer">
           <Text className={styles.antTypography}>Join Us</Text>
         </a>
+        <Button
+          className="mr-5 mb-5 w-40 h-9 font-sans text-black-400 py-1 px-4 rounded"
+          onClick={handleMentorRegistration}
+        >
+          Become a Mentor
+        </Button>
         <Space direction="horizontal" size={20}>
           <a
             href="https://www.facebook.com/sustainableeducationfoundation/"
