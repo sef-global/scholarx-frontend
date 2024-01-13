@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 
 import {
   TwitterOutlined,
@@ -8,12 +8,6 @@ import {
 } from '@ant-design/icons';
 import { Avatar, Button, Drawer, Space, Typography } from 'antd';
 
-import {
-  UserContext,
-  type UserContextType,
-} from './../../../contexts/UserContext';
-import { useNavigate } from 'react-router-dom';
-
 import styles from './MenuDrawer.module.css';
 
 const { Text } = Typography;
@@ -21,33 +15,20 @@ const { Text } = Typography;
 interface MenuDrawerProps {
   openMenu: boolean;
   setOpenMenu: (value: boolean) => void;
+  handleMentorRegistration: () => void;
 }
 
-const MenuDrawer: React.FC<MenuDrawerProps> = ({ openMenu, setOpenMenu }) => {
-  const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
-  const navigate = useNavigate();
-
-  const { user } = useContext(UserContext) as UserContextType;
-
+const MenuDrawer: React.FC<MenuDrawerProps> = ({
+  openMenu,
+  setOpenMenu,
+  handleMentorRegistration,
+}) => {
   const handleOpenMenu = (): boolean => {
     return openMenu;
   };
 
   const handleCloseMenu = (): void => {
     setOpenMenu(false);
-  };
-
-  const handleLoginModalOpen = (): void => {
-    setIsLoginModalVisible(true);
-  };
-
-  const handleMentorRegistration = (): void => {
-    console.log('Clicked');
-    if (user === null) {
-      handleLoginModalOpen();
-    } else {
-      navigate('/mentor-registration');
-    }
   };
 
   return (

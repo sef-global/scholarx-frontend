@@ -63,6 +63,7 @@ const Navbar: React.FC = () => {
     } else {
       navigate('/mentor-registration');
     }
+    setOpenMenu(false);
   };
 
   return (
@@ -168,7 +169,11 @@ const Navbar: React.FC = () => {
           </Space>
         </Col>
       </Row>
-      <MenuDrawer openMenu={openMenu} setOpenMenu={setOpenMenu} />
+      <MenuDrawer
+        openMenu={openMenu}
+        setOpenMenu={setOpenMenu}
+        handleMentorRegistration={handleMentorRegistration}
+      />
       {isLoginModalVisible ? (
         <LoginModal handleClose={handleLoginModalClose} />
       ) : null}
