@@ -63,6 +63,7 @@ const Navbar: React.FC = () => {
     } else {
       navigate('/mentor-registration');
     }
+    setOpenMenu(false);
   };
 
   return (
@@ -95,13 +96,13 @@ const Navbar: React.FC = () => {
               <a href="" target="_blank" rel="noreferrer">
                 <Text className={styles.antTypography}>Join Us</Text>
               </a>
+              <Button
+                className="mr-5 mb-5 w-40 h-9 font-sans text-black-400 py-1 px-4 rounded"
+                onClick={handleMentorRegistration}
+              >
+                Become a Mentor
+              </Button>
             </div>
-            <Button
-              className={styles.loginButton}
-              onClick={handleMentorRegistration}
-            >
-              Become a Mentor
-            </Button>
           </Space>
         </Col>
         <Col md={4} lg={4} xl={3} className={styles.socialMediaContainer}>
@@ -168,7 +169,11 @@ const Navbar: React.FC = () => {
           </Space>
         </Col>
       </Row>
-      <MenuDrawer openMenu={openMenu} setOpenMenu={setOpenMenu} />
+      <MenuDrawer
+        openMenu={openMenu}
+        setOpenMenu={setOpenMenu}
+        handleMentorRegistration={handleMentorRegistration}
+      />
       {isLoginModalVisible ? (
         <LoginModal handleClose={handleLoginModalClose} />
       ) : null}

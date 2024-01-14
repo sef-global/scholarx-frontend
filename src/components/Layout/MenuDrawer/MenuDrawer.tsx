@@ -15,9 +15,14 @@ const { Text } = Typography;
 interface MenuDrawerProps {
   openMenu: boolean;
   setOpenMenu: (value: boolean) => void;
+  handleMentorRegistration: () => void;
 }
 
-const MenuDrawer: React.FC<MenuDrawerProps> = ({ openMenu, setOpenMenu }) => {
+const MenuDrawer: React.FC<MenuDrawerProps> = ({
+  openMenu,
+  setOpenMenu,
+  handleMentorRegistration,
+}) => {
   const handleOpenMenu = (): boolean => {
     return openMenu;
   };
@@ -50,6 +55,12 @@ const MenuDrawer: React.FC<MenuDrawerProps> = ({ openMenu, setOpenMenu }) => {
         <a href="" target="_blank" rel="noreferrer">
           <Text className={styles.antTypography}>Join Us</Text>
         </a>
+        <Button
+          className="mr-5 mb-5 w-40 h-9 font-sans text-black-400 py-1 px-4 rounded"
+          onClick={handleMentorRegistration}
+        >
+          Become a Mentor
+        </Button>
         <Space direction="horizontal" size={20}>
           <a
             href="https://www.facebook.com/sustainableeducationfoundation/"
