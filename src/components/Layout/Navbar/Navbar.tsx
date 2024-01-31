@@ -68,36 +68,34 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <Row align={'middle'} justify={'start'}>
+      <Row align={'middle'} justify={'start'}
+      className='max-w-[1350px] mx-auto flex items-center w-full py-2 px-auto'
+      >
         <Col xs={20} md={2} lg={4} xl={4} xxl={4}>
           <img
-            className={styles.navbarLogoContainer}
+            className=" w-[80px] sm:w-[95px] lg:w-[154px]"
             src="./scholarx-logo.png"
           />
         </Col>
-        <AlignRightOutlined
-          className={styles.menuIcon}
-          onClick={() => {
-            setOpenMenu(true);
-          }}
-        />
+        
         <Col md={16} lg={12} xl={14} xxl={16}>
           <Space direction="horizontal">
-            <div className={styles.navbarItemContainer}>
+            {/* navbarItemContainer */}
+            <div className="hidden xl:flex gap-7">
               <a href="https://sefglobal.org/">
-                <Text className={styles.antTypography}>Home</Text>
+                <Text className="antTypography text-primary text-[14px] font-light">Home</Text>
               </a>
               <a href="" target="_blank" rel="noreferrer">
-                <Text className={styles.antTypography}>About</Text>
+                <Text className="antTypography text-primary text-[14px] font-light">About</Text>
               </a>
               <a href="" target="_blank" rel="noreferrer">
-                <Text className={styles.antTypography}>Initiatives</Text>
+                <Text className="antTypography text-primary text-[14px] font-light">Initiatives</Text>
               </a>
               <a href="" target="_blank" rel="noreferrer">
-                <Text className={styles.antTypography}>Join Us</Text>
+                <Text className="antTypography text-primary text-[14px] font-light">Join Us</Text>
               </a>
               <Button
-                className="mr-5 mb-5 w-40 h-9 font-sans text-black-400 py-1 px-4 rounded"
+                className="w-40 h-9 font-sans text-black-400 rounded mt-3"
                 onClick={handleMentorRegistration}
               >
                 Become a Mentor
@@ -105,15 +103,16 @@ const Navbar: React.FC = () => {
             </div>
           </Space>
         </Col>
-        <Col md={4} lg={4} xl={3} className={styles.socialMediaContainer}>
+        {/* socialMediaContainer */}
+        <Col md={4} lg={4} xl={3} className="hidden xl:flex">
           <Space direction="horizontal">
             <a
               href="https://www.facebook.com/sustainableeducationfoundation/"
               target="_blank"
               rel="noreferrer"
             >
-              <Button className={styles.antButton} shape="circle">
-                <FacebookFilled className={styles.antIcon} />
+              <Button className="antButton"  shape="circle">
+                <FacebookFilled className="text-[20px] text-ant-icon-color" />
               </Button>
             </a>
             <a
@@ -121,8 +120,8 @@ const Navbar: React.FC = () => {
               target="_blank"
               rel="noreferrer"
             >
-              <Button className={styles.antButton} shape="circle">
-                <TwitterOutlined className={styles.antIcon} />
+              <Button className="antButton"  shape="circle">
+                <TwitterOutlined className="text-[20px] text-ant-icon-color" />
               </Button>
             </a>
             <a
@@ -130,8 +129,8 @@ const Navbar: React.FC = () => {
               target="_blank"
               rel="noreferrer"
             >
-              <Button className={styles.antButton} shape="circle">
-                <LinkedinFilled className={styles.antIcon} />
+              <Button className="antButton"  shape="circle">
+                <LinkedinFilled className="text-[20px] text-ant-icon-color" />
               </Button>
             </a>
             <a
@@ -139,20 +138,20 @@ const Navbar: React.FC = () => {
               target="_blank"
               rel="noreferrer"
             >
-              <Button className={styles.antButton} shape="circle">
-                <InstagramOutlined className={styles.antIcon} />
+              <Button className="antButton" shape="circle">
+                <InstagramOutlined className="text-[20px] text-ant-icon-color" />
               </Button>
             </a>
             {user === null ? (
               <>
                 <Button
-                  className={styles.loginButton}
+                  className="antTypography loginButton"
                   onClick={handleLoginModalOpen}
                 >
                   Login
                 </Button>
                 <Button
-                  className={styles.loginButton}
+                  className="antTypography loginButton"
                   onClick={handleRegisterModalOpen}
                 >
                   Register
@@ -160,7 +159,7 @@ const Navbar: React.FC = () => {
               </>
             ) : (
               <Button
-                className={styles.loginButton}
+              className="antTypography loginButton"
                 onClick={handleLogoutModalOpen}
               >
                 Logout
@@ -168,6 +167,13 @@ const Navbar: React.FC = () => {
             )}
           </Space>
         </Col>
+        <AlignRightOutlined
+        // menu icon
+          className=" text-['20px'] flex justify-end xl:hidden mx-auto"
+          onClick={() => {
+            setOpenMenu(true);
+          }}
+        />
       </Row>
       <MenuDrawer
         openMenu={openMenu}

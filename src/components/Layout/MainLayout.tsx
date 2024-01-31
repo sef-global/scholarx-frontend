@@ -3,7 +3,7 @@ import React, { type ReactNode } from 'react';
 import { Layout } from 'antd';
 
 import FooterComponent from './Footer/Footer';
-import styles from './MainLayout.module.css';
+// import styles from './MainLayout.module.css';
 import Navbar from './Navbar/Navbar';
 
 const { Header, Footer, Content } = Layout;
@@ -14,11 +14,11 @@ interface LayoutProps {
 
 const MainLayout: React.FC<LayoutProps> = ({ children }) => (
   <Layout>
-    <Header className={styles.antLayoutHeader}>
+    <Header className="bg-white z-[1000] shadow-sm ">
       <Navbar />
     </Header>
-    <Content className={styles.antLayoutContent}>{children}</Content>
-    <Footer className={styles.antLayoutFooter}>
+    <Content className=" bg-white">{children}</Content>
+    <Footer className=" bg-['#F8FDFF']">
       <FooterComponent />
     </Footer>
   </Layout>
