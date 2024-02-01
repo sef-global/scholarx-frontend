@@ -10,6 +10,11 @@ interface LoginModalProps {
   handleClose: () => void;
 }
 
+const handleLoginGoogle = (e: React.FormEvent): void => {
+  e.preventDefault();
+  window.location.href = `${API_URL}/auth/google`;
+};
+
 const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -147,6 +152,19 @@ const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
                   </a>
                 </div>
               </form>
+              <div>
+                <form className="mt-2 space-y-2" onSubmit={handleLoginGoogle}>
+                  <button className="px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg text-sm text-gray-700 dark:text-gray-200 hover:border-gray-400 dark:hover:border-gray-500 hover:text-gray-900 dark:hover:text-gray-300 hover:shadow transition duration-150 flex items-center gap-2">
+                    <img
+                      className="w-4 h-4"
+                      src="https://www.svgrepo.com/show/475656/google-color.svg"
+                      loading="lazy"
+                      alt="google logo"
+                    />
+                    <span>Google</span>
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
