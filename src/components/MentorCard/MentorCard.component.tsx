@@ -7,7 +7,7 @@ interface MentorCardProps {
 }
 
 const MentorCard: React.FC<MentorCardProps> = ({ mentor }) => (
-  <div className="border border-gray-200 p-4 rounded-md shadow-md">
+  <div className="border border-gray-200 p-4 rounded-md shadow-md w-52">
     {mentor.profile.image_url !== null ? (
       <img
         src={mentor.profile.image_url}
