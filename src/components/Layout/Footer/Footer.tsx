@@ -1,12 +1,12 @@
 import React from 'react';
-import Twittericon from '../../../assets/svg/Icons/Twittericon.tsx';
-import Facebookicon from '../../../assets/svg/Icons/Facebookicon.tsx';
-import Linkedinicon from '../../../assets/svg/Icons/Linkedinicon.tsx';
-import Instagramicon from '../../../assets/svg/Icons/Instagramicon.tsx';
+import Twittericon from '../../../assets/svg/Icons/TwitterIcon.tsx';
+import Facebookicon from '../../../assets/svg/Icons/FacebookIcon.tsx';
+import Linkedinicon from '../../../assets/svg/Icons/LinkedinIcon.tsx';
+import Instagramicon from '../../../assets/svg/Icons/InstagramIcon.tsx';
 import Discourseicon from '../../../assets/svg/Icons/Discourseicon.tsx';
-import Slackicon from '../../../assets/svg/Icons/Slackicon.tsx';
-import Githubicon from '../../../assets/svg/Icons/Githubicon.tsx';
-import Youtubeicon from '../../../assets/svg/Icons/Youtubeicon.tsx';
+import Slackicon from '../../../assets/svg/Icons/SlackIcon.tsx';
+import Githubicon from '../../../assets/svg/Icons/GithubIcon.tsx';
+import Youtubeicon from '../../../assets/svg/Icons/YoutubeIcon.tsx';
 
 const FooterComponent: React.FC = () => (
   <>
