@@ -1,12 +1,12 @@
 import React from 'react';
-import Twittericon from '../../../assets/svg/Icons/TwitterIcon.tsx';
-import Facebookicon from '../../../assets/svg/Icons/FacebookIcon.tsx';
-import Linkedinicon from '../../../assets/svg/Icons/LinkedinIcon.tsx';
-import Instagramicon from '../../../assets/svg/Icons/InstagramIcon.tsx';
-import Discourseicon from '../../../assets/svg/Icons/Discourseicon.tsx';
-import Slackicon from '../../../assets/svg/Icons/SlackIcon.tsx';
-import Githubicon from '../../../assets/svg/Icons/GithubIcon.tsx';
-import Youtubeicon from '../../../assets/svg/Icons/YoutubeIcon.tsx';
+import TwitterIcon from '../../../assets/svg/Icons/TwitterIcon.tsx';
+import FacebookIcon from '../../../assets/svg/Icons/FacebookIcon.tsx';
+import LinkedinIcon from '../../../assets/svg/Icons/LinkedinIcon.tsx';
+import InstagramIcon from '../../../assets/svg/Icons/InstagramIcon.tsx';
+import DiscourseIcon from '../../../assets/svg/Icons/DiscourseIcon.tsx';
+import SlackIcon from '../../../assets/svg/Icons/SlackIcon.tsx';
+import GithubIcon from '../../../assets/svg/Icons/GithubIcon.tsx';
+import YoutubeIcon from '../../../assets/svg/Icons/YoutubeIcon.tsx';
 
 const FooterComponent: React.FC = () => (
   <>
@@ -23,48 +23,48 @@ const FooterComponent: React.FC = () => (
         <div className="flex socialmedia mt-[10px]">
           <div className="twitter w-7 h-7  rounded flex justify-center items-center bg-[#1DA1F2]">
             <a href="https://twitter.com/goasksef">
-              <Twittericon />
+              <TwitterIcon />
             </a>
           </div>
 
           <div className="facebook w-7 h-7 rounded flex justify-center items-center  bg-[#3B5999] ml-2 mb-2">
             <a href="https://www.facebook.com/sustainableeducationfoundation/">
-              <Facebookicon />
+              <FacebookIcon />
             </a>
           </div>
 
           <div className="linkedin  w-7 h-7 rounded flex justify-center items-center p-0.5  bg-[#0077B5] ml-2 mb-2">
             <a href="https://www.linkedin.com/company/sefglobal/">
-              <Linkedinicon />
+              <LinkedinIcon />
             </a>
           </div>
           <div className="instagram  w-7 h-7  rounded flex justify-center items-center  bg-[#E4405F] ml-2 mb-2">
             <a href="https://www.instagram.com/sefglobal/">
-              <Instagramicon />
+              <InstagramIcon />
             </a>
           </div>
 
           <div className="github rounded flex justify-center items-center  w-7 h-7 ml-2 mb-2">
             <a href="https://github.com/sef-global">
-              <Githubicon />
+              <GithubIcon />
             </a>
           </div>
 
           <div className="youtube bg-[#CD201F] rounded flex justify-center items-center w-7 h-7 ml-2 mb-2">
             <a href="https://www.youtube.com/channel/UClw7QbeW_FOJz_fDMvjXsJw">
-              <Youtubeicon />
+              <YoutubeIcon />
             </a>
           </div>
 
           <div className="slack bg-[#3AAF85]  w-7 h-7 ml-2 mb-2 rounded flex justify-center items-center">
             <a href="https://join.slack.com/t/sefheadquarters/shared_invite/zt-1h5zt3go4-wnRDDpecbWiTdpDv1VUoVg">
-              <Slackicon />
+              <SlackIcon />
             </a>
           </div>
 
           <div className="discourse bg-[#5E72E4] rounded flex justify-center items-center w-7 h-7 ml-2 mb-2 ">
             <a href="https://sef.discourse.group/">
-              <Discourseicon />
+              <DiscourseIcon />
             </a>
           </div>
         </div>
