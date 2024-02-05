@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Twittericon: React.FC = () => {
+const TwitterIcon: React.FC = () => {
   return (
     <div>
       <svg
@@ -20,4 +20,4 @@ const Twittericon: React.FC = () => {
   );
 };
 
-export default Twittericon;
+export default TwitterIcon;

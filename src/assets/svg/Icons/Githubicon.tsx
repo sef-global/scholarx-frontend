@@ -1,5 +1,5 @@
 import React from 'react';
-const Githubicon: React.FC = () => {
+const GithubIcon: React.FC = () => {
   return (
     <div>
       <svg
@@ -13,4 +13,4 @@ const Githubicon: React.FC = () => {
   );
 };
 
-export default Githubicon;
+export default GithubIcon;

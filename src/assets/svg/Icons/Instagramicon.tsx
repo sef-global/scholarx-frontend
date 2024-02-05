@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Instagramicon: React.FC = () => {
+const InstagramIcon: React.FC = () => {
   return (
     <div>
       <svg
@@ -57,4 +57,4 @@ const Instagramicon: React.FC = () => {
   );
 };
 
-export default Instagramicon;
+export default InstagramIcon;

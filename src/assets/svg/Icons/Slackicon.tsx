@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Slackicon: React.FC = () => {
+const SlackIcon: React.FC = () => {
   return (
     <div>
       <svg
@@ -17,4 +17,4 @@ const Slackicon: React.FC = () => {
   );
 };
 
-export default Slackicon;
+export default SlackIcon;

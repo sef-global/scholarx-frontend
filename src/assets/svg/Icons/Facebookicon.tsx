@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Facebookicon: React.FC = () => {
+const FacebookIcon: React.FC = () => {
   return (
     <div>
       {' '}
@@ -19,4 +19,4 @@ const Facebookicon: React.FC = () => {
   );
 };
 
-export default Facebookicon;
+export default FacebookIcon;

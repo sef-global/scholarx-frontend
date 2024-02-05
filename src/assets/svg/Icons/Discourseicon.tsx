@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Discourseicon: React.FC = () => {
+const DiscourseIcon: React.FC = () => {
   return (
     <div>
       <svg
@@ -39,4 +39,4 @@ const Discourseicon: React.FC = () => {
   );
 };
 
-export default Discourseicon;
+export default DiscourseIcon;

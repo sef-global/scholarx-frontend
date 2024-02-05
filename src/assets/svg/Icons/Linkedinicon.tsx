@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Linkedinicon: React.FC = () => {
+const LinkedinIcon: React.FC = () => {
   return (
     <div>
       <svg
@@ -17,4 +17,4 @@ const Linkedinicon: React.FC = () => {
   );
 };
 
-export default Linkedinicon;
+export default LinkedinIcon;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Youtubeicon: React.FC = () => {
+const YoutubeIcon: React.FC = () => {
   return (
     <div>
       <svg
@@ -51,4 +51,4 @@ const Youtubeicon: React.FC = () => {
   );
 };
 
-export default Youtubeicon;
+export default YoutubeIcon;
