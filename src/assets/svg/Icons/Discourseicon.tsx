@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Discourseicon = () => {
+const Discourseicon: React.FC = () => {
   return (
     <div>
       <svg

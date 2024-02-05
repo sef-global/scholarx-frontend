@@ -1,12 +1,12 @@
 import React from 'react';
-import Twittericon from '../../../assets/svg/Icons/Twittericon.jsx';
-import Facebookicon from '../../../assets/svg/Icons/Facebookicon.jsx';
-import Linkedinicon from '../../../assets/svg/Icons/Linkedinicon.jsx';
-import Instagramicon from '../../../assets/svg/Icons/Instagramicon.jsx';
-import Discourseicon from '../../../assets/svg/Icons/Discourseicon.jsx';
-import Slackicon from '../../../assets/svg/Icons/Slackicon.jsx';
-import Githubicon from '../../../assets/svg/Icons/Githubicon.jsx';
-import Youtubeicon from '../../../assets/svg/Icons/Youtubeicon.jsx';
+import Twittericon from '../../../assets/svg/Icons/Twittericon.tsx';
+import Facebookicon from '../../../assets/svg/Icons/Facebookicon.tsx';
+import Linkedinicon from '../../../assets/svg/Icons/Linkedinicon.tsx';
+import Instagramicon from '../../../assets/svg/Icons/Instagramicon.tsx';
+import Discourseicon from '../../../assets/svg/Icons/Discourseicon.tsx';
+import Slackicon from '../../../assets/svg/Icons/Slackicon.tsx';
+import Githubicon from '../../../assets/svg/Icons/Githubicon.tsx';
+import Youtubeicon from '../../../assets/svg/Icons/Youtubeicon.tsx';
 
 const FooterComponent: React.FC = () => (
   <>
@@ -16,7 +16,6 @@ const FooterComponent: React.FC = () => (
           Let`s Rethink Education!
         </div>
         <div className="footerSecondaryTitle font-sans text-base text-darkmod-blue font-normal">
-         
           Get in touch with using any of these platforms.
         </div>
 

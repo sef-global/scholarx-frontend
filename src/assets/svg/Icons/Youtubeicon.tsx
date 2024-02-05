@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Youtubeicon = () => {
+const Youtubeicon: React.FC = () => {
   return (
     <div>
       <svg
