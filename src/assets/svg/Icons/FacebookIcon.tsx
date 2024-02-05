@@ -3,7 +3,6 @@ import React from 'react';
 const FacebookIcon: React.FC = () => {
   return (
     <div>
-      {' '}
       <svg
         className="w-7"
         viewBox="0 -6 512 512"
