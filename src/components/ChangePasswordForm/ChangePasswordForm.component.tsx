@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button, Form, Input } from 'antd';
 
 interface ChangePasswordFormProps {
   onSubmit: (props: {
@@ -9,64 +8,82 @@ interface ChangePasswordFormProps {
   }) => void;
 }
 
-const ChangePasswordForm: React.FC<ChangePasswordFormProps> = () => {
+const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
+  onSubmit,
+}) => {
   return (
-    <Form
+    <form
       name="change_password"
-      layout="vertical"
-      initialValues={{ remember: true }}
-      wrapperCol={{ span: 14 }}
+      className="max-w-md mx-auto my-8"
       autoComplete="off"
+      onSubmit={(e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target as HTMLFormElement);
+        const formObject: any = {};
+        formData.forEach((value, key) => {
+          formObject[key] = value;
+        });
+        onSubmit(formObject);
+      }}
     >
-      <Form.Item<string>
-        label="Current Password"
-        name="current_password"
-        rules={[
-          { required: true, message: 'Current Password cannot be empty!' },
-        ]}
-      >
-        <Input.Password />
-      </Form.Item>
+      <div className="mb-6">
+        <label
+          htmlFor="current_password"
+          className="block text-gray-700 font-bold mb-2"
+        >
+          Current Password
+        </label>
+        <input
+          type="password"
+          id="current_password"
+          name="current_password"
+          required
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+      </div>
 
-      <Form.Item<string>
-        label="New Password"
-        name="new_password"
-        rules={[
-          { required: true, message: 'New Password cannot be empty!' },
-          { min: 8, message: 'Password must be at least 8 characters long' },
-        ]}
-      >
-        <Input.Password />
-      </Form.Item>
+      <div className="mb-6">
+        <label
+          htmlFor="new_password"
+          className="block text-gray-700 font-bold mb-2"
+        >
+          New Password
+        </label>
+        <input
+          type="password"
+          id="new_password"
+          name="new_password"
+          required
+          minLength={8}
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+      </div>
 
-      <Form.Item<string>
-        label="Confirm New Password"
-        name="confirm_new_password"
-        dependencies={['new_password']}
-        rules={[
-          { required: true, message: 'Confirm New Password cannot be empty!' },
-          ({ getFieldValue }) => ({
-            async validator(_, value: string) {
-              if (value === '' || getFieldValue('new_password') === value) {
-                await Promise.resolve();
-                return;
-              }
-              return await Promise.reject(
-                new Error("The two passwords don't match")
-              );
-            },
-          }),
-        ]}
-      >
-        <Input.Password />
-      </Form.Item>
+      <div className="mb-6">
+        <label
+          htmlFor="confirm_new_password"
+          className="block text-gray-700 font-bold mb-2"
+        >
+          Confirm New Password
+        </label>
+        <input
+          type="password"
+          id="confirm_new_password"
+          name="confirm_new_password"
+          required
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+      </div>
 
-      <Form.Item>
-        <Button type="primary" htmlType="submit">
+      <div>
+        <button
+          type="submit"
+          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+        >
           Submit
-        </Button>
-      </Form.Item>
-    </Form>
+        </button>
+      </div>
+    </form>
   );
 };
 

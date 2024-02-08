@@ -1,27 +1,20 @@
 import React from 'react';
 
-import { Card, Space, Typography } from 'antd';
-
-import styles from './TestimonialCard.module.css';
-
-const { Text } = Typography;
-
 const TestimonialCard: React.FC = () => (
-  <Card className={styles.testimonialCardContainer}>
+  <div className="border border-gray-200 p-4 rounded-md shadow-md w-52">
     <img
-      className={styles.testimonialCardImage}
+      className="w-full h-40 object-cover rounded-md mb-4"
       src="/testimonial-image.png"
       alt="testimonial-image"
     />
-    <Space direction={'vertical'}>
-      <Text className={styles.testimonialCardTitle}>
-        Adipiscing aliquam scelerisque
-      </Text>
-      <Text className={styles.testimonialCardContent}>
+    <div className="space-y-2">
+      <p className="text-lg font-bold">Adipiscing aliquam scelerisque</p>
+      <p className="text-sm">
         Sit tempor in egestas eget risus fames massa. Morbi vitae ante tortor
         lacinia amet cursus est eget nisi. Est mauris nam a euismod in nibh.
-      </Text>
-    </Space>
-  </Card>
+      </p>
+    </div>
+  </div>
 );
+
 export default TestimonialCard;
