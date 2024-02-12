@@ -8,8 +8,6 @@ import {
   FacebookFilled,
 } from '@ant-design/icons';
 import { Button, Col, Row, Space, Typography } from 'antd';
-
-import styles from './Navbar.module.css';
 import MenuDrawer from '../MenuDrawer/MenuDrawer';
 import LoginModal from '../../LoginModal';
 import RegisterModal from '../../RegisterModal';
@@ -83,16 +81,16 @@ const Navbar: React.FC = () => {
             {/* navbarItemContainer */}
             <div className="hidden xl:flex gap-7">
               <a href="https://sefglobal.org/">
-                <Text className="antTypography text-primary text-[14px] font-light">Home</Text>
+                <Text className="antTypography text-primary text-sm font-light">Home</Text>
               </a>
               <a href="" target="_blank" rel="noreferrer">
-                <Text className="antTypography text-primary text-[14px] font-light">About</Text>
+                <Text className="antTypography text-primary text-sm font-light">About</Text>
               </a>
               <a href="" target="_blank" rel="noreferrer">
-                <Text className="antTypography text-primary text-[14px] font-light">Initiatives</Text>
+                <Text className="antTypography text-primary text-sm font-light">Initiatives</Text>
               </a>
               <a href="" target="_blank" rel="noreferrer">
-                <Text className="antTypography text-primary text-[14px] font-light">Join Us</Text>
+                <Text className="antTypography text-primary text-sm font-light">Join Us</Text>
               </a>
               <Button
                 className="w-40 h-9 font-sans text-black-400 rounded mt-3"
@@ -112,7 +110,7 @@ const Navbar: React.FC = () => {
               rel="noreferrer"
             >
               <Button className="antButton"  shape="circle">
-                <FacebookFilled className="text-[20px] text-ant-icon-color" />
+                <FacebookFilled className="text-base text-ant-icon-color" />
               </Button>
             </a>
             <a
@@ -121,7 +119,7 @@ const Navbar: React.FC = () => {
               rel="noreferrer"
             >
               <Button className="antButton"  shape="circle">
-                <TwitterOutlined className="text-[20px] text-ant-icon-color" />
+                <TwitterOutlined className=" text-base text-ant-icon-color" />
               </Button>
             </a>
             <a
@@ -130,7 +128,7 @@ const Navbar: React.FC = () => {
               rel="noreferrer"
             >
               <Button className="antButton"  shape="circle">
-                <LinkedinFilled className="text-[20px] text-ant-icon-color" />
+                <LinkedinFilled className="text-base text-ant-icon-color" />
               </Button>
             </a>
             <a
@@ -139,7 +137,7 @@ const Navbar: React.FC = () => {
               rel="noreferrer"
             >
               <Button className="antButton" shape="circle">
-                <InstagramOutlined className="text-[20px] text-ant-icon-color" />
+                <InstagramOutlined className="text-base text-ant-icon-color" />
               </Button>
             </a>
             {user === null ? (
@@ -169,7 +167,7 @@ const Navbar: React.FC = () => {
         </Col>
         <AlignRightOutlined
         // menu icon
-          className=" text-['20px'] flex justify-end xl:hidden mx-auto"
+          className=" text-base flex justify-end xl:hidden mx-auto"
           onClick={() => {
             setOpenMenu(true);
           }}

@@ -3,7 +3,6 @@ import React, { type ReactNode } from 'react';
 import { Layout } from 'antd';
 
 import FooterComponent from './Footer/Footer';
-// import styles from './MainLayout.module.css';
 import Navbar from './Navbar/Navbar';
 
 const { Header, Footer, Content } = Layout;
