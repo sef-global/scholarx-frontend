@@ -4,7 +4,7 @@ export const theme = {
   extend: {
     colors: {
       'primary-blue': '#1677FF',
-      'ant-icon-color': '#525F7F',
+      'icon-color': '#525F7F',
       'primary': '#6D7893'
     },
   },

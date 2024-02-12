@@ -110,7 +110,7 @@ const Navbar: React.FC = () => {
               rel="noreferrer"
             >
               <Button className="antButton"  shape="circle">
-                <FacebookFilled className="text-base text-ant-icon-color" />
+                <FacebookFilled className="text-base text-icon-color" />
               </Button>
             </a>
             <a
@@ -119,7 +119,7 @@ const Navbar: React.FC = () => {
               rel="noreferrer"
             >
               <Button className="antButton"  shape="circle">
-                <TwitterOutlined className=" text-base text-ant-icon-color" />
+                <TwitterOutlined className=" text-base text-icon-color" />
               </Button>
             </a>
             <a
@@ -128,7 +128,7 @@ const Navbar: React.FC = () => {
               rel="noreferrer"
             >
               <Button className="antButton"  shape="circle">
-                <LinkedinFilled className="text-base text-ant-icon-color" />
+                <LinkedinFilled className="text-base text-icon-color" />
               </Button>
             </a>
             <a
@@ -137,7 +137,7 @@ const Navbar: React.FC = () => {
               rel="noreferrer"
             >
               <Button className="antButton" shape="circle">
-                <InstagramOutlined className="text-base text-ant-icon-color" />
+                <InstagramOutlined className="text-base text-icon-color" />
               </Button>
             </a>
             {user === null ? (
