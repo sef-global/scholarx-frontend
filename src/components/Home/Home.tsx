@@ -152,65 +152,54 @@ const Home: React.FC = () => (
     </Row>
 
     {/* Success stories container */}
-    <Row
-      className={styles.homePageContainer}
-      style={{ backgroundColor: '#F8FDFF' }}
-      align={'middle'}
-      justify={'center'}
-    >
-      <Col xs={24} md={10} xl={8} style={{ marginBottom: '10px' }}>
+
+    <div className="homePageContainernew p-[4%] bg-[#F8FDFF] flex  flex-col md:flex-row justify-center items-center">
+      <div className="imageCol mb-2.5">
         <img
-          className={styles.homePageImage}
-          src="/success.png"
+          className="max-w-[300px] mx-auto  w-[100%]"
+          src="../../../public/success.png"
           alt="success-image"
-          style={{ maxWidth: '300px' }}
         />
-      </Col>
-      <Col xs={24} md={12} xl={8} style={{ textAlign: 'center' }}>
-        <Space direction={'vertical'}>
-          <Text
-            className={styles.homePageSecondaryTitle}
-            style={{ textAlign: 'center', fontSize: '30px', color: '#3D317C' }}
-          >
-            Let`s hear it from our
-            <br /> ScholarX Alumni
-          </Text>
-          <Button className={styles.homePageSecondaryButton} type={'primary'}>
-            ScholarX Success Stories
-          </Button>
-        </Space>
-      </Col>
-    </Row>
+      </div>
+      <div className="textCol md:ml-16 ">
+        <div className="homepageSecondaryTitlenew font-sans text-3xl font-bold text-darkmod-blue text-center mb-2.5">
+          Let`s hear it from our
+          <br /> ScholarX Alumni
+        </div>
+        <div className="homePageSecondaryButtonnew flex justify-center items-center">
+          <a href="#">
+            <button className=" shadow-[0_2px_0_rgba(5,145,255,0.1)] bg-[#ffffff] hover:bg-[#1677ff] text-[#FFFFFF] font-bold text-sm w-[214px] h-[34px] rounded mx-auto">
+              ScholarX Success Stories
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
 
     {/* Archive container */}
-    <Row
-      className={styles.homePageContainer}
-      align={'middle'}
-      justify={'center'}
-    >
-      <Col xs={24} md={12} xl={8} style={{ textAlign: 'center' }}>
-        <Space direction={'vertical'}>
-          <Text
-            className={styles.homePageSecondaryTitle}
-            style={{ fontSize: '30px', color: '#3D317C' }}
-          >
-            Checkout our past
-            <br /> mentors and mentees
-          </Text>
-          <Button className={styles.homePageSecondaryButton} type={'primary'}>
-            ScholarX Archive
-          </Button>
-        </Space>
-      </Col>
-      <Col xs={24} md={12} xl={8}>
+
+    <div className="homePagecontainernew p-[4%] bg-[#F8FDFF] flex  flex-col md:flex-row justify-center items-center">
+      <div className="textCol md:mr-16 ">
+        <div className="homepageSecondaryTitlenew font-sans text-3xl font-bold text-darkmod-blue text-center mb-2.5">
+          Checkout our past
+          <br /> mentors and mentees
+        </div>
+        <div className="homePageSecondaryButtonnew flex justify-center items-center">
+          <a href="#">
+            <button className=" shadow-[0_2px_0_rgba(5,145,255,0.1)] bg-[#ffffff] hover:bg-[#1677ff] text-[#FFFFFF] font-bold text-sm w-[214px] h-[34px] rounded mx-auto">
+              ScholarX Archive
+            </button>
+          </a>
+        </div>
+      </div>
+      <div className="imageCol mb-2.5">
         <img
-          className={styles.homePageImage}
-          src="/scholarX-archive.png"
+          className="max-w-[360px] mx-auto  w-[100%]"
+          src="../../../public/scholarX-archive.png"
           alt="scholarX-archive-image"
-          style={{ maxWidth: '360px' }}
         />
-      </Col>
-    </Row>
+      </div>
+    </div>
 
     {/* FAQs container */}
     <Row
