@@ -45,46 +45,32 @@ const Home: React.FC = () => (
     </Row>
 
     {/* Statistics container */}
-    <Row
-      className={styles.homePageContainer}
-      style={{ backgroundColor: '#F7F8FA', textAlign: 'center' }}
-      align={'middle'}
-      justify={'center'}
-    >
-      <Col xs={24} md={5} xl={5}>
-        <Space direction={'vertical'}>
-          <Text className={styles.homePageSecondaryTitle}>100,000+</Text>
-          <Text
-            className={styles.homePageSecondaryTitle}
-            style={{ fontSize: '20px', fontWeight: 300 }}
-          >
-            Mentees
-          </Text>
-        </Space>
-      </Col>
-      <Col xs={24} md={5} xl={5}>
-        <Space direction={'vertical'}>
-          <Text className={styles.homePageSecondaryTitle}>500+</Text>
-          <Text
-            className={styles.homePageSecondaryTitle}
-            style={{ fontSize: '20px', fontWeight: 300 }}
-          >
-            Mentors
-          </Text>
-        </Space>
-      </Col>
-      <Col xs={24} md={5} xl={5}>
-        <Space direction={'vertical'}>
-          <Text className={styles.homePageSecondaryTitle}>70%</Text>
-          <Text
-            className={styles.homePageSecondaryTitle}
-            style={{ fontSize: '20px', fontWeight: 300 }}
-          >
-            Growth
-          </Text>
-        </Space>
-      </Col>
-    </Row>
+    <div className="homePageContainerNew flex flex-wrap justify-evenly p-[4%] m-0 items-center flex-col md:flex-row flex-wrap bg-[#F7F8FA] ">
+      <div className="ContainerOne text-center">
+        <div className="homePageSecondaryTitleNew font-sans text-3xl font-bold text-[#1D1D1F]">
+          100,000+
+        </div>
+        <div className="homePageSecondaryTitleNew font-normal font-sans text-[20px] text-[#1D1D1F]">
+          Mentees
+        </div>
+      </div>
+      <div className="ContainerTwo  text-center">
+        <div className="homePageSecondaryTitleNew font-sans text-3xl font-bold text-[#1D1D1F]">
+          500+
+        </div>
+        <div className="homePageSecondaryTitleNew font-normal font-sans text-[20px] text-[#1D1D1F]">
+          Mentors
+        </div>
+      </div>
+      <div className="ContainerThree  text-center">
+        <div className="homePageSecondaryTitleNew font-sans text-3xl font-bold text-[#1D1D1F]">
+          70%
+        </div>
+        <div className="homePageSecondaryTitleNew font-normal font-sans text-[20px] text-[#1D1D1F]">
+          Growth
+        </div>
+      </div>
+    </div>
 
     {/* Testimonials container */}
     <Row
