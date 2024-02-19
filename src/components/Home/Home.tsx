@@ -22,7 +22,7 @@ const Home: React.FC = () => (
             <button className="flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white py-1 px-16 rounded w-40 h-9 font-sans font-bold">
               Apply
             </button>
-            <button className="flex justify-center items-center mr-5 mb-5  font-normal text-black focus:outline-none bg-white w-40 h-9  rounded-lg border border-gray-400 hover:bg-gray-100 hover:text-blue-400 hover:border-blue-400 ">
+            <button className="flex justify-center items-center mr-5 mb-5  font-normal text-black focus:outline-none bg-white w-40 h-9  rounded border border-gray-400 hover:bg-gray-100 hover:text-blue-400 hover:border-blue-400 ">
               See More
             </button>
           </div>
