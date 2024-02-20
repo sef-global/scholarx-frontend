@@ -2,15 +2,18 @@ import React from 'react';
 
 const MentorProfileView: React.FC = () => {
   return (
-    <div className="w-screen px-9">
-      <div className="flex flex-row w- gap-2">
+    <div className="w-screen px-16">
+      {/* Bio Section */}
+      <div className="flex flex-row gap-2 ">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Andrew_Tate_on_%27Anything_Goes_With_James_English%27_in_2021.jpg"
           alt="find-mentor"
-          className="w-36 h-36 rounded-full object-cover"
+          className="w-36 h-36 rounded-full object-cover my-auto"
         />
         <div className="w-full h-1/2 mt-20">
-          <h1 className="text-5xl font-extrabold font-sans mb-2">John Doe</h1>
+          <h1 className="text-5xl font-extrabold font-sans mb-2 tracking-wider">
+            John Doe
+          </h1>
           <div className="flex flex-row place-content-between w-full">
             <p className="text-sm font-sans">
               Software Engineer, <span className="text-gray-500">Google</span>
@@ -25,28 +28,29 @@ const MentorProfileView: React.FC = () => {
       <div className="flex flex-row h-1/3 py-9">
         <div className="grid grid-cols-4 gap-9 w-2/3">
           <div>
-            <h2 className="text-xl font-extrabold font-sans mt-5">Category</h2>
-            <ul className="text-sm list-disc ml-4">
+            <h2 className="text-xl font-semibold font-sans mt-5">Category</h2>
+            <ul className="text-sm list-disc ml-4 font-light">
               <li>Computer Science</li>
             </ul>
           </div>
           <div>
-            <h2 className="text-xl font-extrabold font-sans mt-5">
+            <h2 className="text-xl font-semibold font-sans mt-5">
               Fields Of interests
             </h2>
-            <ul className="text-sm list-disc ml-4">
+            <ul className="text-sm list-disc ml-4 font-light">
               <li>Machine Learning</li>
               <li>Big Data</li>
             </ul>
           </div>
           <div>
-            <h2 className="text-xl font-extrabold font-sans mt-5">Projects</h2>
-            <ul className="text-sm list-disc ml-4">
+            <h2 className="text-xl font-semibold font-sans mt-5">Projects</h2>
+            <ul className="text-sm list-disc ml-4 font-light">
               <li>Lorem ipsum</li>
             </ul>
           </div>
         </div>
         <div className="flex flex-row gap-9 m-5">
+          <span className="w-0.5 h-24 bg-gray-300"></span>
           <a href="#" className="text-blue-500 underline">
             Linkedin
           </a>
@@ -58,9 +62,9 @@ const MentorProfileView: React.FC = () => {
           </a>
         </div>
       </div>
-      <div className="py-9">
-        <h2 className="text-xl font-extrabold">Bio</h2>
-        <p>
+      <div className="pb-9 ">
+        <h2 className="text-xl font-semibold">Bio</h2>
+        <p className="font-light">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -70,8 +74,11 @@ const MentorProfileView: React.FC = () => {
           culpa qui officia deserunt mollit anim id est laborum.
         </p>
       </div>
-      <div>
-        <h1 className="text-xl font-extrabold mb-2">Success Stories</h1>
+      {/* Success stories section */}
+      <div className="py-9">
+        <h1 className="text-xl font-extrabold mb-2 tracking-wide">
+          Success Stories
+        </h1>
         <hr />
         <div className="h-1/3 flex flex-row gap-4 my-9 ">
           <div className="w-1/6  h-64 border-2"></div>
@@ -82,10 +89,13 @@ const MentorProfileView: React.FC = () => {
           <div className="w-1/6  h-64 border-2"></div>
         </div>
       </div>
+      {/* Past Mentee section */}
       <div>
-        <h1 className="text-xl font-extrabold">Past Mentees</h1>
+        <h1 className="text-xl font-extrabold mb-2 tracking-wide">
+          Past Mentees
+        </h1>
         <hr />
-        <div className="mt-9">
+        <div className="mt-12">
           <div className="flex flex-row gap-4">
             <div className="relative w-80">
               <input
@@ -119,7 +129,7 @@ const MentorProfileView: React.FC = () => {
             <button>Advanced options</button>
           </div>
           <div className="w-full mt-9">
-            <div className="w-full h-16 border-gray-200 border-2 grid grid-cols-6 mb-4">
+            <div className="w-full h-16 border-gray-200 border-2 grid grid-cols-6 mb-4 rounded-xl">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Andrew_Tate_on_%27Anything_Goes_With_James_English%27_in_2021.jpg"
                 className="h-10 w-10 object-fill rounded-full my-auto mx-auto"
@@ -129,7 +139,7 @@ const MentorProfileView: React.FC = () => {
               <p className="h-5 my-auto text-sm">University of Colombo</p>
             </div>
 
-            <div className="w-full h-16 border-gray-200 border-2 grid grid-cols-6 mb-4">
+            <div className="w-full h-16 border-gray-200 border-2 grid grid-cols-6 mb-4 rounded-xl">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Andrew_Tate_on_%27Anything_Goes_With_James_English%27_in_2021.jpg"
                 className="h-10 w-10 object-fill rounded-full my-auto mx-auto"
@@ -139,7 +149,7 @@ const MentorProfileView: React.FC = () => {
               <p className="h-5 my-auto text-sm">University of Colombo</p>
             </div>
 
-            <div className="w-full h-16 border-gray-200 border-2 grid grid-cols-6 mb-4">
+            <div className="w-full h-16 border-gray-200 border-2 grid grid-cols-6 mb-4 rounded-xl">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Andrew_Tate_on_%27Anything_Goes_With_James_English%27_in_2021.jpg"
                 className="h-10 w-10 object-fill rounded-full my-auto mx-auto"
