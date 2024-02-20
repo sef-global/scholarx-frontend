@@ -1,7 +1,5 @@
 import React from 'react';
-
-import { Button, Col, Row, Carousel, Typography, Space } from 'antd';
-
+import { Col, Row, Carousel, Typography, Space } from 'antd';
 import styles from './Home.module.css';
 import FAQCollapse from '../FAQ/FAQCollapse';
 import menteeFAQs from '../FAQ/MenteeFAQs.json';
@@ -13,36 +11,31 @@ const { Text } = Typography;
 const Home: React.FC = () => (
   <>
     {/* Main title container */}
-    <Row
-      className={styles.homePageContainer}
-      style={{ paddingRight: '10%', paddingLeft: '10%' }}
-      align={'middle'}
-      justify={'center'}
-    >
-      <Col xs={24} md={24} lg={24} xl={12}>
-        <Text className={styles.homePageMainTitle}>
-          Unlock Mentorship Opportunities with ScholarX
-        </Text>
-        <div style={{ marginTop: '40px' }}>
-          <div className="flex mt-10">
-            <Button className="flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white py-1 px-16 rounded w-40 h-9 font-sans font-bold">
+
+    <div className="homePageContainerNew px-[10%] flex flex-col md:flex-row items-center justify-center">
+      <div className="col">
+        <div className="homePageMainTitleNew text-[43px] font-sans font-bold text-[#32325D]">
+          Unlock Mentorship opportunites with ScholarX
+        </div>
+        <div className="wrapper mt-[40px]">
+          <div className="buttonWrapper flex mt-10">
+            <button className="flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white py-1 px-16 rounded w-40 h-9 font-sans font-bold">
               Apply
-            </Button>
-            <Button className="flex justify-center items-center mr-5 mb-5 text-black py-1 px-16 rounded w-40 h-9 font-sans">
-              See more
-            </Button>
+            </button>
+            <button className="flex justify-center items-center mr-5 mb-5  font-normal text-black focus:outline-none bg-white w-40 h-9  rounded border border-gray-400 hover:bg-gray-100 hover:text-blue-400 hover:border-blue-400 ">
+              See More
+            </button>
           </div>
         </div>
-      </Col>
-      <Col xs={24} md={24} xl={12} style={{ marginTop: '40px' }}>
+      </div>
+      <div className="col mt-[40px] flex justify-right">
         <img
-          className={styles.homePageImage}
           src="/new-findmentor.png"
           alt="find-mentor"
-          style={{ maxWidth: '600px' }}
+          className="homePageImageNew max-w-[600px]"
         />
-      </Col>
-    </Row>
+      </div>
+    </div>
 
     {/* Statistics container */}
     <div className="homePageContainerNew flex flex-wrap justify-evenly p-[4%] m-0 items-center flex-col md:flex-row flex-wrap bg-[#F7F8FA] ">
