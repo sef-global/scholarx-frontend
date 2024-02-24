@@ -37,14 +37,14 @@ const MyMentees: React.FC<MenteeApplicationsProps> = ({
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
-      <div className="w-full md:w-1/4 overflow-y-auto p-4 border-r border-sky-200 bg-blue-100">
+      <div className="w-full md:w-1/4 p-4 border-r border-sky-200 bg-blue-100">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold">Mentee Applications</h2>
         </div>
         <h3 className="text-sm font-bold mb-4">
           {menteeApplications.length} Applications
         </h3>
-        <div className="h-72 overflow-y-auto">
+        <div className="h-72 overflow-y-auto md:overflow-y-visible">
           {menteeApplications.map((applicant) => (
             <div
               key={applicant.id}
@@ -56,6 +56,7 @@ const MyMentees: React.FC<MenteeApplicationsProps> = ({
               <img
                 src={applicant.profilePicture}
                 className="w-16 h-16 object-cover mb-1 mt-1 rounded-full mr-4 ml-4 bg-gray-300"
+                alt={applicant.name}
               />
               <div>
                 <p className="font-bold mt-2 mb-1">{applicant.name}</p>
@@ -65,6 +66,7 @@ const MyMentees: React.FC<MenteeApplicationsProps> = ({
           ))}
         </div>
       </div>
+
       <div className="w-full md:w-3/4 p-4 bg-gray-50">
         <div className="flex items-center mb-10 pb-7 justify-between">
           <div className="flex items-center">
@@ -84,6 +86,7 @@ const MyMentees: React.FC<MenteeApplicationsProps> = ({
               <img
                 src={selectedApplication.profilePicture}
                 className="w-16 h-16 object-cover rounded-full bg-gray-200 md:mr-6 md:mb-0 mb-4"
+                alt={selectedApplication.name}
               />
               <div className="flex-grow">
                 <p className="font-bold mt-2 mb-1 text-center md:text-left">
