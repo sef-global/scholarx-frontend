@@ -81,11 +81,10 @@ const MyMentees: React.FC<MenteeApplicationsProps> = ({
         {/* Header section with back button */}
         <div className="flex items-center mb-10 pb-7 justify-between">
           <div className="flex items-center">
-            <span style={{ fontSize: '48px' }}>&#8592;</span>
+            <span className="text-3xl">&#8592;</span>
             <button
-              style={{ fontSize: '28px', fontWeight: '600' }}
               onClick={handleBack}
-              className="mr-2  bg-transparent px-3 py-1 rounded-md mt-1"
+              className="text-xl font-semibold mr-2  bg-transparent px-3 py-1 rounded-md mt-1"
             >
               Back
             </button>
