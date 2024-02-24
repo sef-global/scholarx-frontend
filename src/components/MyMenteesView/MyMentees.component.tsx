@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+// Define the interface for an Applicant
 interface Applicant {
   id: number;
   name: string;
@@ -16,6 +17,7 @@ interface Applicant {
   reasonForChoice: string;
 }
 
+// Define the interface for the props of the MyMentees component
 interface MenteeApplicationsProps {
   menteeApplications: Applicant[];
 }
@@ -23,28 +25,35 @@ interface MenteeApplicationsProps {
 const MyMentees: React.FC<MenteeApplicationsProps> = ({
   menteeApplications,
 }) => {
+  // Initialize state to store the selected application, defaulting to the first application in the array
   const [selectedApplication, setSelectedApplication] =
-    useState<Applicant | null>(null);
+    useState<Applicant | null>(
+      menteeApplications.length > 0 ? menteeApplications[0] : null
+    );
 
+  // Function to handle click on an application
   const handleApplicationClick = (applicant: Applicant): void => {
     setSelectedApplication(applicant);
   };
 
+  // Function to handle click on the back button
   const handleBack = (): void => {
     console.log('Back button clicked');
     setSelectedApplication(null);
   };
-
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
+      {/* Left side panel showing list of applications */}
       <div className="w-full md:w-1/4 p-4 border-r border-sky-200 bg-blue-100">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold">Mentee Applications</h2>
         </div>
+        {/* Display the number of applications */}
         <h3 className="text-sm font-bold mb-4">
           {menteeApplications.length} Applications
         </h3>
-        <div className="h-72 overflow-y-auto md:overflow-y-visible">
+        {/* Render the list of applications */}
+        <div className="h-96 overflow-y-auto md:overflow-y-visible">
           {menteeApplications.map((applicant) => (
             <div
               key={applicant.id}
@@ -67,7 +76,9 @@ const MyMentees: React.FC<MenteeApplicationsProps> = ({
         </div>
       </div>
 
+      {/* Right side panel showing details of selected application */}
       <div className="w-full md:w-3/4 p-4 bg-gray-50">
+        {/* Header section with back button */}
         <div className="flex items-center mb-10 pb-7 justify-between">
           <div className="flex items-center">
             <span style={{ fontSize: '48px' }}>&#8592;</span>
@@ -80,8 +91,10 @@ const MyMentees: React.FC<MenteeApplicationsProps> = ({
             </button>
           </div>
         </div>
+        {/* Render details of the selected application */}
         {selectedApplication != null ? (
           <div>
+            {/* Applicant details */}
             <div className="flex flex-col md:flex-row items-center md:items-start md:mb-4">
               <img
                 src={selectedApplication.profilePicture}
@@ -100,6 +113,7 @@ const MyMentees: React.FC<MenteeApplicationsProps> = ({
                 Pending
               </button>
             </div>
+            {/* Additional details */}
             <div className="flex flex-col md:flex-row mt-10 md:mt-0">
               <div className="w-full md:w-1/3 mb-4 md:mb-0">
                 <div className="flex justify-between mb-4">
@@ -115,15 +129,11 @@ const MyMentees: React.FC<MenteeApplicationsProps> = ({
                 <div className="flex justify-between mb-4">
                   <div className="mr-5">
                     <p className="font-bold">Lorem Ipsum1</p>
-                    <p>{selectedApplication.Lorem1}</p>{' '}
-                    {/* Add your data field here */}
+                    <p>{selectedApplication.Lorem1}</p>
                   </div>
                   <div className="ml-5">
                     <p className="font-bold text-right">Lorem Ipsum2</p>
-                    <p className="text-right">
-                      {selectedApplication.Lorem2}
-                    </p>{' '}
-                    {/* Add your data field here */}
+                    <p className="text-right">{selectedApplication.Lorem2}</p>
                   </div>
                 </div>
               </div>
@@ -136,6 +146,7 @@ const MyMentees: React.FC<MenteeApplicationsProps> = ({
                   </div>
                   <div className="mt-8 mb-10">
                     <p className="font-bold">Resume</p>
+                    {/* Display resume URL */}
                     <p className="overflow-auto max-w-xs">
                       {selectedApplication.resumeUrl}
                     </p>
@@ -149,6 +160,7 @@ const MyMentees: React.FC<MenteeApplicationsProps> = ({
                 </div>
               </div>
             </div>
+            {/* Intention and reason for choice */}
             <div className="mt-8 mb-10">
               <h3 className="font-bold text-lg">Intention</h3>
               <p className="mt-1">{selectedApplication.intention}</p>
@@ -159,6 +171,7 @@ const MyMentees: React.FC<MenteeApplicationsProps> = ({
                 {selectedApplication.reasonForChoice}
               </p>
             </div>
+            {/* Accept and reject buttons */}
             <div className="flex justify-end mt-10 pt-10 mr-5 pb-10">
               <button className="bg-blue-700 text-white px-9 py-1 mr-2 rounded-full">
                 Accept
@@ -169,6 +182,7 @@ const MyMentees: React.FC<MenteeApplicationsProps> = ({
             </div>
           </div>
         ) : (
+          // If no application is selected, display a message
           <div className="text-lg font-bold text-gray-600">
             Select an application to view details.
           </div>
