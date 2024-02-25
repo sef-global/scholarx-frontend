@@ -38,7 +38,6 @@ const MyMentees: React.FC<MenteeApplicationsProps> = ({
 
   // Function to handle click on the back button
   const handleBack = (): void => {
-    console.log('Back button clicked');
     setSelectedApplication(null);
   };
   return (
