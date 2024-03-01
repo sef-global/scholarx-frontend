@@ -32,7 +32,7 @@ const MenteeApplications: React.FC<MenteeApplicationsProps> = ({
     <div className="mb-8 px-2 md:px-4">
       {/* Section for main mentees */}
       <div className="flex items-center justify-between px-2 py-2 rounded-md">
-        <span className="text-xl font-medium">Mentee</span>
+        <span className="text-xl font-medium">Mentees</span>
         <div className="flex items-center">
           {/* Button for selecting 'available' */}
           <button
