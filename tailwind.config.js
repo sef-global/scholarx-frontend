@@ -6,7 +6,8 @@ export const theme = {
       'primary-blue': '#1677FF',
       'icon-color': '#525F7F',
       'primary': '#6D7893'
-    },
+      'darkmod-blue': '#3D317C',            
+      'desatdark-blue':'#6D7893',      
   },
 };
 export const plugins = [];
