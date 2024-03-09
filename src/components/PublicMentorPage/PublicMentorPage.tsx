@@ -92,9 +92,11 @@ const PublicMentorPage: FC<PublicMentorPageProps> = () => {
         {!isLoading && (
           <div>
             <div className="mb-4 w-full flex items-center justify-between">
-              <div className="text-xl font-bold" style={{ fontSize: '25px' }} >Mentors</div>
+              <div className="text-xl font-bold" style={{ fontSize: '25px' }}>
+                Mentors
+              </div>
             </div>
-            <hr className="mb-8"/>
+            <hr className="mb-8" />
             <div className="mb-4 w-full flex items-center justify-between">
               <div className="flex space-x-2 items-center">
                 <button
@@ -102,7 +104,7 @@ const PublicMentorPage: FC<PublicMentorPageProps> = () => {
                   className={`bg-blue text-black px-2 py-1 rounded border border-blue-500 ${
                     !selectedCategory ? 'bg-blue-500 text-white' : ''
                   }`}
-                  style={{ fontSize: '12px' }} 
+                  style={{ fontSize: '12px' }}
                 >
                   All
                 </button>
@@ -111,27 +113,28 @@ const PublicMentorPage: FC<PublicMentorPageProps> = () => {
                     key={category}
                     onClick={() => handleCategoryChange(category)}
                     className={`bg-blue text-black px-2 py-1 rounded border border-blue-500 ${
-                      selectedCategory === category ? 'bg-blue-500 text-white' : ''
+                      selectedCategory === category
+                        ? 'bg-blue-500 text-white'
+                        : ''
                     }`}
-                    style={{ fontSize: '12px' }} 
+                    style={{ fontSize: '12px' }}
                   >
                     {category}
                   </button>
                 ))}
               </div>
             </div>
-  
+
             <div className="mb-4 w-full flex justify-end">
               <button
                 onClick={handleSortAZ}
                 className="bg-blue text-black px-2 py-1 rounded border border-blue-500"
-                style={{ fontSize: '12px' }} 
+                style={{ fontSize: '12px' }}
               >
-                
                 Sort A-Z
               </button>
             </div>
-  
+
             <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 items-start">
               {mentors.map((mentor) => (
                 <MentorCard key={mentor.mentorId} mentor={mentor} />
@@ -139,63 +142,11 @@ const PublicMentorPage: FC<PublicMentorPageProps> = () => {
             </div>
           </div>
         )}
-  
+
         {isLoading && <p>Loading...</p>}
       </div>
     </div>
   );
-//   return (
-//     <div className="min-h-screen flex justify-center items-start p-8">
-//       <div className="max-w-screen-lg w-full">
-//         {!isLoading && (
-//           <div>
-//             <div className="mb-4 w-full flex items-center justify-between">
-//               <div className="flex space-x-2 items-center">
-//                 <button
-//                   onClick={() => handleCategoryChange(null)}
-//                   className={`bg-blue text-black px-4 py-2 rounded border border-blue-500 ${
-//                     !selectedCategory ? 'bg-blue-500 text-white' : ''
-//                   }`}
-//                 >
-//                   All
-//                 </button>
-//                 {categories.map((category) => (
-//                   <button
-//                     key={category}
-//                     onClick={() => handleCategoryChange(category)}
-//                     className={`bg-blue text-black px-4 py-2 rounded border border-blue-500 ${
-//                       selectedCategory === category
-//                         ? 'bg-blue-500 text-white'
-//                         : ''
-//                     }`}
-//                   >
-//                     {category}
-//                   </button>
-//                 ))}
-//               </div>
-//             </div>
-
-//             <div className="mb-4 w-full flex justify-end">
-//               <button
-//                 onClick={handleSortAZ}
-//                 className="bg-blue text-black px-4 py-2 rounded border border-blue-500"
-//               >
-//                 Sort A-Z
-//               </button>
-//             </div>
-
-//             <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 items-start">
-//               {mentors.map((mentor) => (
-//                 <MentorCard key={mentor.mentorId} mentor={mentor} />
-//               ))}
-//             </div>
-//           </div>
-//         )}
-
-//         {isLoading && <p>Loading...</p>}
-//       </div>
-//     </div>
-//   );
 };
 
 export default PublicMentorPage;
