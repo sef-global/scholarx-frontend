@@ -6,6 +6,7 @@ import MainLayout from './components/Layout/MainLayout';
 import { UserContext, type UserContextType } from './contexts/UserContext';
 import MentorRegistrationPage from './components/MentorRegistrationPage';
 import Dashboard from './components/Dashboard/Dashboard.tsx';
+import PublicMentorPage from './components/PublicMentorPage/PublicMentorPage.tsx';
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App: React.FC = () => {
               element={<MentorRegistrationPage />}
             />
             <Route path="/dashboard/*" element={<Dashboard />} />
+            <Route path="/mentors" element={<PublicMentorPage />} />
           </Routes>
         </MainLayout>
       </BrowserRouter>

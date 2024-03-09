@@ -51,3 +51,15 @@ export interface Profile {
   type: 'DEFAULT' | 'ADMIN';
   uuid: string;
 }
+
+export interface MentorCardType {
+  mentorId: string;
+  category: string;
+  profile: {
+    contact_email: string;
+    first_name: string;
+    last_name: string;
+    image_url: string;
+    linkedin_url: string;
+  };
+}
