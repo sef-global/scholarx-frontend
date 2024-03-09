@@ -1,9 +1,9 @@
 import React from 'react';
 import { UserOutlined } from '@ant-design/icons';
-import { type Mentor } from '../../types.ts';
+import { type MentorCardType } from '../../types.ts';
 
 interface MentorCardProps {
-  mentor: Mentor;
+  mentor: MentorCardType;
 }
 
 const MentorCard: React.FC<MentorCardProps> = ({ mentor }) => (
@@ -23,10 +23,10 @@ const MentorCard: React.FC<MentorCardProps> = ({ mentor }) => (
       <h5 className="text-lg font-bold">
         {mentor.profile.first_name} {mentor.profile.last_name}
       </h5>
-      <p className="text-sm">{mentor.application.designation}</p>
+      {/* <p className="text-sm">{mentor.application.designation}</p>
       <p className="text-xs text-gray-500">
         {mentor.application.company_or_institution}
-      </p>
+      </p> */}
     </div>
   </div>
 );
