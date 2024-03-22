@@ -26,12 +26,10 @@ export const defaultCard: Story = {
       `${mentors[0].profile.first_name} ${mentors[0].profile.last_name}`
     );
 
-    const mentorDesignation = canvas.getByText(
-      mentors[0].application.designation
-    );
+    const mentorDesignation = canvas.getByText(mentors[0].application.position);
 
     const companyOrInstitution = canvas.getByText(
-      mentors[0].application.company_or_institution
+      mentors[0].application.institution
     );
 
     expect(mentorName).toBeInTheDocument();
