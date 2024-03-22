@@ -4,22 +4,33 @@ export interface Mentor {
   updated_at: string;
   state: string;
   category: string;
-  application: Application;
+  application: MentorApplication;
   availability: boolean;
   profile: Profile;
 }
 
-export interface Application {
-  designation: string;
+export interface MentorApplication {
+  firstName: string;
+  lastName: string;
+  email: string;
+  contactNo: string;
   country: string;
-  company_or_institution: string;
-  areas_of_expertise: string;
-  expectations_from_mentees: string;
-  mentoring_philosophy: string;
-  commitment_to_program: boolean;
-  previous_experience_as_mentor: boolean;
-  reason_for_being_mentor: string;
-  cv_link: string;
+  position: string;
+  expertise: string;
+  bio: string;
+  isPastMentor: boolean;
+  reasonToMentor?: string;
+  motivation?: string;
+  cv: string;
+  menteeExpectations: string;
+  mentoringPhilosophy: string;
+  noOfMentees: number;
+  canCommit: boolean;
+  mentoredYear?: number;
+  category: string;
+  institution: string;
+  linkedin?: string;
+  website?: string;
 }
 
 export interface Profile {
