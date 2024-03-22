@@ -23,10 +23,8 @@ const MentorCard: React.FC<MentorCardProps> = ({ mentor }) => (
       <h5 className="text-lg font-bold">
         {mentor.profile.first_name} {mentor.profile.last_name}
       </h5>
-      {/* <p className="text-sm">{mentor.application.designation}</p>
-      <p className="text-xs text-gray-500">
-        {mentor.application.company_or_institution}
-      </p> */}
+      {/* <p className="text-sm">{mentor.application.position}</p>
+      <p className="text-xs text-gray-500">{mentor.application.institution}</p> */}
     </div>
   </div>
 );
