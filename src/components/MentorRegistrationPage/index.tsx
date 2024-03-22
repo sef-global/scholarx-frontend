@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { API_URL } from '../../constants';
 import { z } from 'zod';
@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import FormInput from '../FormFields/FormInput';
 import { useMutation } from '@tanstack/react-query';
 import FormTextarea from '../FormFields/FormTextarea';
+import FormCheckbox from '../FormFields/FormCheckbox';
 
 const MentorApplicationSchema = z.object({
   firstName: z.string().min(1, { message: 'First name cannot be empty' }),
@@ -32,7 +33,7 @@ const MentorApplicationSchema = z.object({
     message: 'Number of mentees must be greater than or equal to 0',
   }),
   canCommit: z.boolean(),
-  mentoredYear: z.coerce.number().optional(),
+  mentoredYear: z.number().optional().or(z.number().min(0)),
   category: z.string().min(1, { message: 'Category cannot be empty' }),
   institution: z.string().min(1, { message: 'Institution cannot be empty' }),
   linkedin: z
@@ -47,6 +48,17 @@ const MentorApplicationSchema = z.object({
     .or(z.literal('')),
 });
 
+const steps = [
+  {
+    id: 'Step 1',
+    fields: ['firstName', 'lastName', 'email', 'contactNo', 'country'],
+  },
+  {
+    id: 'Step 2',
+    fields: ['position', 'institution', 'expertise', 'cv', 'bio'],
+  },
+];
+
 export type MentorApplication = z.infer<typeof MentorApplicationSchema>;
 
 const MentorRegistrationPage: React.FC = () => {
@@ -54,38 +66,30 @@ const MentorRegistrationPage: React.FC = () => {
     register,
     handleSubmit,
     watch,
-    formState: { errors, isSubmitting },
+    trigger,
+    formState: { errors },
   } = useForm<MentorApplication>({
     resolver: zodResolver(MentorApplicationSchema),
   });
-  const { error, data: categories } = useCategories();
+  const { error: categoryError, data: categories } = useCategories();
   const [currentStep, setCurrentStep] = useState(0);
 
-  const handleNext = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
-    e.preventDefault();
+  const handleNext = async (): Promise<void> => {
+    const fields = steps[currentStep].fields;
+    const output = await trigger(fields as [keyof MentorApplication], {
+      shouldFocus: true,
+    });
+
+    if (!output) return;
     setCurrentStep((prevStep) => prevStep + 1);
   };
 
-  const handlePrev = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
-    e.preventDefault();
+  const handlePrev = (): void => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
 
   const onSubmit: SubmitHandler<MentorApplication> = async (data) => {
-    console.log('Form submitted:', data);
-
-    try {
-      createMentorApplication.mutate(data);
-      // Redirect or perform any other action after successful submission
-      window.location.href = '/';
-    } catch (error) {
-      console.error('Error submitting mentor application:', error);
-      // Handle errors appropriately
-    }
+    createMentorApplication.mutate(data);
   };
 
   const createMentorApplication = useMutation({
@@ -251,23 +255,25 @@ const MentorRegistrationPage: React.FC = () => {
           {currentStep === 2 && (
             <>
               <div className="text-xl font-medium mb-2">Mentorship Details</div>
-              <div className="mb-4 flex justify-between">
-                <label className="block text-sm font-medium text-gray-600">
-                  Are you a past mentor?
-                </label>
-                <input type="checkbox" {...register('isPastMentor')} />
-              </div>
+              <FormCheckbox
+                name="isPastMentor"
+                label="Are you a past mentor?"
+                register={register}
+                error={errors.isPastMentor}
+              />
               {watch('isPastMentor') && (
                 <>
-                  <FormInput
-                    type="number"
-                    placeholder=""
-                    name="mentoredYear"
-                    label="Which year?"
-                    register={register}
-                    valueAsNumber={true}
-                    error={errors.mentoredYear}
-                  />
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-600">
+                      Which year?
+                    </label>
+                    <input
+                      type="number"
+                      min={2015}
+                      {...register('mentoredYear', { valueAsNumber: true })}
+                      className="mt-1 p-2 border rounded-md"
+                    />
+                  </div>
                   <FormTextarea
                     placeholder="Seeing mentees succeed and make meaningful contributions to the field inspires me."
                     name="motivation"
@@ -304,26 +310,51 @@ const MentorRegistrationPage: React.FC = () => {
                 </label>
                 <input
                   type="number"
+                  min={0}
+                  defaultValue={1}
                   {...register('noOfMentees', { valueAsNumber: true })}
                   className="mt-1 p-2 border rounded-md"
                 />
+                {errors.noOfMentees != null && (
+                  <span className="text-red-500">
+                    {errors.noOfMentees.message}
+                  </span>
+                )}
               </div>
-              <div className="mb-4 flex">
-                <label className="block text-sm font-medium text-gray-600">
-                  Are you able to commit to a period of 6 months for the
-                  program? (Support description: We expect a minimum of 6 calls
-                  with a mentee in a span of 6 month period)
-                </label>
-                <input type="checkbox" {...register('canCommit')} />
-              </div>
+              <FormCheckbox
+                name="canCommit"
+                label="Are you able to commit to a period of 6 months for the
+                program? (Support description: We expect a minimum of 6 calls
+                with a mentee in a span of 6 month period)"
+                register={register}
+                error={errors.canCommit}
+              />
             </>
           )}
-          {error !== null ? (
+          {categoryError !== null ? (
             <div
-              className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:text-red-400"
+              className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 "
               role="alert"
             >
-              {error.message}
+              {categoryError.message}
+            </div>
+          ) : null}
+          {createMentorApplication.isError &&
+          createMentorApplication?.error instanceof AxiosError ? (
+            <div
+              className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 "
+              role="alert"
+            >
+              {createMentorApplication.error.response?.data.message}
+            </div>
+          ) : null}
+          {createMentorApplication.isSuccess ? (
+            <div
+              className="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50"
+              role="alert"
+            >
+              Successfully applied, You will be contacted shortly via email.
+              Thank you!
             </div>
           ) : null}
           <hr className="border-t border-gray-300 my-6" />
@@ -350,7 +381,7 @@ const MentorRegistrationPage: React.FC = () => {
                 type="submit"
                 className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-1 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-small rounded-md text-sm inline-flex items-center px-3 py-1.5 text-center me-2"
               >
-                {isSubmitting ? 'Submitting...' : 'Submit'}
+                {createMentorApplication.isPending ? 'Submitting...' : 'Submit'}
               </button>
             )}
           </div>
