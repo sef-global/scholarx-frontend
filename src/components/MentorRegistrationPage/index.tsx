@@ -1,52 +1,105 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, type SubmitHandler } from 'react-hook-form';
 import { API_URL } from '../../constants';
+import { z } from 'zod';
 import useCategories from '../../hooks/useCategories';
-import type { MentorApplication } from '../../types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import FormInput from '../FormFields/FormInput';
+import { useMutation } from '@tanstack/react-query';
+import FormTextarea from '../FormFields/FormTextarea';
+
+const MentorApplicationSchema = z.object({
+  firstName: z.string().min(1, { message: 'First name cannot be empty' }),
+  lastName: z.string().min(1, { message: 'Last name cannot be empty' }),
+  email: z.string().email({ message: 'Invalid email address' }),
+  contactNo: z.string().min(1, { message: 'Contact number cannot be empty' }),
+  country: z.string().min(1, { message: 'Country cannot be empty' }),
+  position: z.string().min(1, { message: 'Position cannot be empty' }),
+  expertise: z.string().min(1, { message: 'Expertise cannot be empty' }),
+  bio: z.string().min(1, { message: 'Bio cannot be empty' }).max(200),
+  isPastMentor: z.boolean(),
+  reasonToMentor: z.string().optional(),
+  motivation: z.string().optional(),
+  cv: z.string().min(1, { message: 'CV cannot be empty' }),
+  menteeExpectations: z
+    .string()
+    .min(1, { message: 'Mentee expectations cannot be empty' }),
+  mentoringPhilosophy: z
+    .string()
+    .min(1, { message: 'Mentoring philosophy cannot be empty' }),
+  noOfMentees: z.number().min(0, {
+    message: 'Number of mentees must be greater than or equal to 0',
+  }),
+  canCommit: z.boolean(),
+  mentoredYear: z.coerce.number().optional(),
+  category: z.string().min(1, { message: 'Category cannot be empty' }),
+  institution: z.string().min(1, { message: 'Institution cannot be empty' }),
+  linkedin: z
+    .string()
+    .url({ message: 'Invalid LinkedIn URL' })
+    .optional()
+    .or(z.literal('')),
+  website: z
+    .string()
+    .url({ message: 'Invalid website URL' })
+    .optional()
+    .or(z.literal('')),
+});
+
+export type MentorApplication = z.infer<typeof MentorApplicationSchema>;
 
 const MentorRegistrationPage: React.FC = () => {
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
-  } = useForm<MentorApplication>({ defaultValues: { isPastMentor: false } });
+    formState: { errors, isSubmitting },
+  } = useForm<MentorApplication>({
+    resolver: zodResolver(MentorApplicationSchema),
+  });
   const { error, data: categories } = useCategories();
   const [currentStep, setCurrentStep] = useState(0);
 
-  const handleNext = (): void => {
+  const handleNext = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): void => {
+    e.preventDefault();
     setCurrentStep((prevStep) => prevStep + 1);
   };
 
-  const onSubmit: SubmitHandler<MentorApplication> = (data): void => {
-    console.log(data);
-
-    // axios
-    //   .post(
-    //     `${API_URL}/mentors`,
-    //     {
-    //       application: [
-    //       ],
-    //       categoryId: formData.categoryId,
-    //     },
-    //     { withCredentials: true }
-    //   )
-    //   .then(() => {
-    //     window.location.href = '/';
-    //   })
-    //   .catch((error) => {
-    //     if (error.response.status !== 401) {
-    //       console.error({
-    //         message:
-    //           'Something went wrong with submitting the mentor application',
-    //         description: error,
-    //       });
-    //     } else {
-    //       console.error('Error submitting mentor application:', error);
-    //     }
-    //   });
+  const handlePrev = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): void => {
+    e.preventDefault();
+    setCurrentStep((prevStep) => prevStep - 1);
   };
+
+  const onSubmit: SubmitHandler<MentorApplication> = async (data) => {
+    console.log('Form submitted:', data);
+
+    try {
+      createMentorApplication.mutate(data);
+      // Redirect or perform any other action after successful submission
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Error submitting mentor application:', error);
+      // Handle errors appropriately
+    }
+  };
+
+  const createMentorApplication = useMutation({
+    mutationFn: async (data: MentorApplication) => {
+      await axios.post(
+        `${API_URL}/mentors`,
+        {
+          application: data,
+          categoryId: data.category,
+        },
+        { withCredentials: true }
+      );
+    },
+  });
 
   return (
     <div className="min-h-screen flex justify-center items-start">
@@ -62,7 +115,7 @@ const MentorRegistrationPage: React.FC = () => {
             <div className="pt-3">Step {currentStep + 1} of 3</div>
           </div>
         </div>
-        <div className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           {currentStep === 0 && (
             <>
               <div className="text-xl font-medium mb-2">
@@ -71,57 +124,50 @@ const MentorRegistrationPage: React.FC = () => {
               <hr />
               <div className="flex flex-wrap">
                 <div className="w-full md:w-1/2 md:pr-1 mb-4 md:mb-0">
-                  <label className="block text-sm font-medium text-gray-600">
-                    First Name
-                  </label>
-                  <input
+                  <FormInput
                     type="text"
-                    {...register('firstName')}
-                    className="mt-1 p-2 w-full border rounded-md"
+                    placeholder="John"
+                    name="firstName"
+                    label="First Name"
+                    register={register}
+                    error={errors.firstName}
                   />
                 </div>
                 <div className="w-full md:w-1/2 md:pl-1">
-                  <label className="block text-sm font-medium text-gray-600">
-                    Last Name
-                  </label>
-                  <input
+                  <FormInput
                     type="text"
-                    {...register('lastName')}
-                    className="mt-1 p-2 w-full border rounded-md"
+                    placeholder="Doe"
+                    name="lastName"
+                    label="Last Name"
+                    register={register}
+                    error={errors.lastName}
                   />
                 </div>
               </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  Email
-                </label>
-                <input
-                  type="text"
-                  {...register('email')}
-                  className="mt-1 p-2 w-full border rounded-md"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  Contact No (Whatsapp)
-                </label>
-                <input
-                  type="text"
-                  {...register('contactNo')}
-                  className="mt-1 p-2 w-full border rounded-md"
-                />
-              </div>
-
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  Country
-                </label>
-                <input
-                  type="text"
-                  {...register('country')}
-                  className="mt-1 p-2 w-full border rounded-md"
-                />
-              </div>
+              <FormInput
+                type="text"
+                placeholder="john.doe@example.com"
+                name="email"
+                label="Email"
+                register={register}
+                error={errors.email}
+              />
+              <FormInput
+                type="text"
+                placeholder="+1234567890"
+                name="contactNo"
+                label="Contact No (Whatsapp)"
+                register={register}
+                error={errors.contactNo}
+              />
+              <FormInput
+                type="text"
+                placeholder="United States"
+                name="country"
+                label="Country"
+                register={register}
+                error={errors.country}
+              />
             </>
           )}
           {currentStep === 1 && (
@@ -129,26 +175,22 @@ const MentorRegistrationPage: React.FC = () => {
               <div className="text-xl font-medium mb-2">
                 Professional Information
               </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  Institution
-                </label>
-                <input
-                  type="text"
-                  {...register('institution')}
-                  className="mt-1 p-2 w-full border rounded-md"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  Current Position
-                </label>
-                <input
-                  type="text"
-                  {...register('position')}
-                  className="mt-1 p-2 w-full border rounded-md"
-                />
-              </div>
+              <FormInput
+                type="text"
+                placeholder="Institute of Technology"
+                name="institution"
+                label="Institution"
+                register={register}
+                error={errors.institution}
+              />
+              <FormInput
+                type="text"
+                placeholder="Founder & CEO"
+                name="position"
+                label="Current Position"
+                register={register}
+                error={errors.position}
+              />
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-600">
                   Category
@@ -166,157 +208,113 @@ const MentorRegistrationPage: React.FC = () => {
                   )}
                 </select>
               </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  Areas of Expertise
-                </label>
-                <input
-                  type="text"
-                  {...register('expertise')}
-                  className="mt-1 p-2 w-full border rounded-md"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  Brief Bio (max. 200 characters)
-                </label>
-                <textarea
-                  {...register('bio')}
-                  className="mt-1 p-2 w-full border rounded-md"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  Linkedin
-                </label>
-                <input
-                  type="text"
-                  {...register('linkedin')}
-                  className="mt-1 p-2 w-full border rounded-md"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  Website
-                </label>
-                <input
-                  type="text"
-                  {...register('website')}
-                  className="mt-1 p-2 w-full border rounded-md"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  CV
-                </label>
-                <input
-                  type="text"
-                  {...register('cv')}
-                  className="mt-1 p-2 w-full border rounded-md"
-                />
-              </div>
+              <FormTextarea
+                placeholder="Engineering, Mechanical Engineering, Mechanical designing"
+                name="expertise"
+                label="Areas of Expertise"
+                register={register}
+                error={errors.expertise}
+              />
+              <FormTextarea
+                placeholder="I am a seasoned mechanical engineer with over 15 years of experience in the industry. I founded XYZ Engineering Solutions, a company specializing in innovative mechanical designs."
+                name="bio"
+                label="Brief Bio (max. 200 characters)"
+                register={register}
+                error={errors.bio}
+              />
+              <FormInput
+                type="text"
+                placeholder="https://linkedin.com/in/janesmith"
+                name="linkedin"
+                label="Linkedin"
+                register={register}
+                error={errors.linkedin}
+              />
+              <FormInput
+                type="text"
+                placeholder="https://xyzengineeringsolutions.com"
+                name="website"
+                label="Website"
+                register={register}
+                error={errors.website}
+              />
+              <FormInput
+                type="text"
+                placeholder=""
+                name="cv"
+                label="CV"
+                register={register}
+                error={errors.cv}
+              />
             </>
           )}
           {currentStep === 2 && (
             <>
               <div className="text-xl font-medium mb-2">Mentorship Details</div>
-              <div className="mb-4">
+              <div className="mb-4 flex justify-between">
                 <label className="block text-sm font-medium text-gray-600">
                   Are you a past mentor?
                 </label>
-                <input
-                  type="checkbox"
-                  {...register('isPastMentor')}
-                  className="mt-1 p-2 w-full border rounded-md"
-                />
+                <input type="checkbox" {...register('isPastMentor')} />
               </div>
               {watch('isPastMentor') && (
                 <>
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-600">
-                      Which year?
-                    </label>
-                    <input
-                      type="number"
-                      {...register('mentoredYear')}
-                      className="mt-1 p-2 w-full border rounded-md"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-600">
-                      What was your motivation for joining the program? Has it
-                      changed, if yes, how?
-                    </label>
-                    <input
-                      type="text"
-                      {...register('motivation')}
-                      className="mt-1 p-2 w-full border rounded-md"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-600">
-                      Why would like to be a ScholarX mentor
-                    </label>
-                    <input
-                      type="text"
-                      {...register('reasonToMentor')}
-                      className="mt-1 p-2 w-full border rounded-md"
-                    />
-                  </div>
+                  <FormInput
+                    type="number"
+                    placeholder=""
+                    name="mentoredYear"
+                    label="Which year?"
+                    register={register}
+                    valueAsNumber={true}
+                    error={errors.mentoredYear}
+                  />
+                  <FormTextarea
+                    placeholder="Seeing mentees succeed and make meaningful contributions to the field inspires me."
+                    name="motivation"
+                    label="What was your motivation for joining the program? Has it changed, if yes, how?"
+                    register={register}
+                    error={errors.motivation}
+                  />
+                  <FormTextarea
+                    placeholder="I believe in nurturing the next generation of engineers and entrepreneurs."
+                    name="reasonToMentor"
+                    label="Why would like to be a ScholarX mentor?"
+                    register={register}
+                    error={errors.reasonToMentor}
+                  />
                 </>
               )}
-
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  Reason to Mentor
-                </label>
-                <input
-                  type="text"
-                  {...register('reasonToMentor')}
-                  className="mt-1 p-2 w-full border rounded-md"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  Mentee Expectations (short description: who is your ideal
-                  mentee?)
-                </label>
-                <input
-                  type="text"
-                  {...register('menteeExpectations')}
-                  className="mt-1 p-2 w-full border rounded-md"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">
-                  What is your mentoring philosophy?
-                </label>
-                <textarea
-                  {...register('mentoringPhilosophy')}
-                  className="mt-1 p-2 w-full border rounded-md"
-                />
-              </div>
+              <FormTextarea
+                placeholder="I expect mentees to be passionate about engineering and committed to learning."
+                name="menteeExpectations"
+                label="Mentee Expectations (short description: who is your ideal mentee?)"
+                register={register}
+                error={errors.menteeExpectations}
+              />
+              <FormTextarea
+                placeholder="I believe in fostering a collaborative learning environment where mentees can explore and innovate."
+                name="mentoringPhilosophy"
+                label="What is your mentoring philosophy?"
+                register={register}
+                error={errors.mentoringPhilosophy}
+              />
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-600">
                   How many mentees can you accommodate?
                 </label>
                 <input
                   type="number"
-                  {...register('noOfMentees')}
+                  {...register('noOfMentees', { valueAsNumber: true })}
                   className="mt-1 p-2 border rounded-md"
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-4 flex">
                 <label className="block text-sm font-medium text-gray-600">
                   Are you able to commit to a period of 6 months for the
                   program? (Support description: We expect a minimum of 6 calls
                   with a mentee in a span of 6 month period)
                 </label>
-                <input
-                  type="checkbox"
-                  {...register('canCommit')}
-                  className="mt-1 p-2 w-full border rounded-md"
-                />
+                <input type="checkbox" {...register('canCommit')} />
               </div>
             </>
           )}
@@ -333,9 +331,7 @@ const MentorRegistrationPage: React.FC = () => {
             {currentStep > 0 && (
               <button
                 type="button"
-                onClick={() => {
-                  setCurrentStep((prevStep) => prevStep - 1);
-                }}
+                onClick={handlePrev}
                 className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-1 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-small rounded-md text-sm inline-flex items-center px-3 py-1.5 text-center me-2"
               >
                 Previous
@@ -354,11 +350,11 @@ const MentorRegistrationPage: React.FC = () => {
                 type="submit"
                 className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-1 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-small rounded-md text-sm inline-flex items-center px-3 py-1.5 text-center me-2"
               >
-                Submit
+                {isSubmitting ? 'Submitting...' : 'Submit'}
               </button>
             )}
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
