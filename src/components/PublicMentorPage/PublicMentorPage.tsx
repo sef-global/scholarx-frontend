@@ -1,11 +1,10 @@
-import { FC, useEffect, useState } from 'react';
+import React, { type FC, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import MentorCard from '../MentorCard/MentorCard.component';
-import { MentorCardType } from '../../types';
+import { type MentorCardType } from '../../types';
+import { API_URL } from '../../constants';
 
-interface PublicMentorPageProps {}
-
-const PublicMentorPage: FC<PublicMentorPageProps> = () => {
+const PublicMentorPage: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
@@ -17,75 +16,83 @@ const PublicMentorPage: FC<PublicMentorPageProps> = () => {
     categoryParam
   );
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setIsLoading(true);
 
-    let apiUrl = 'http://localhost:8080/api/mentors';
+    const mentorsUrl = `${API_URL}/mentors`;
+    const categoriesUrl = `${API_URL}/categories`;
 
-    fetch(apiUrl)
-      .then((response) => {
+    Promise.all([
+      fetch(mentorsUrl).then(async (response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        return response.json();
-      })
-      .then((data: { mentors: MentorCardType[] }) => {
-        setMentors(data.mentors);
+        return await response.json();
+      }),
+      fetch(categoriesUrl).then(async (response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return await response.json();
+      }),
+    ])
+      .then(([mentorsData, categoriesData]) => {
+        setMentors(mentorsData.mentors);
 
-        const uniqueCategories = [
-          ...new Set(data.mentors.map((mentor) => mentor.category)),
-        ];
+        const categoryNames: string[] = categoriesData.categories.map(
+          (category: { category: string }) => category.category
+        );
+        const uniqueCategories: string[] = Array.from(new Set(categoryNames));
         setCategories(uniqueCategories);
 
         setIsLoading(false);
       })
       .catch((error) => {
-        console.error('Error fetching mentors:', error);
+        console.error('Error fetching data:', error);
         setIsLoading(false);
       });
   }, []);
 
-  const handleSortAZ = () => {
+  const handleSortAZ = (): void => {
     setIsLoading(true);
-
     const sortedMentors = [...mentors].sort((a, b) =>
       a.profile.first_name.localeCompare(b.profile.first_name)
     );
-
     setMentors(sortedMentors);
     setIsLoading(false);
   };
 
-  const handleCategoryChange = (category: string | null) => {
+  const handleCategoryChange = (category: string | null): void => {
     setSelectedCategory(category);
     setIsLoading(true);
-
-    let apiUrl = 'http://localhost:8080/api/mentors';
-
-    if (category) {
-      apiUrl += `?category=${category}`;
-    }
-
+    const apiUrl = `${API_URL}/mentors${
+      category !== null ? `?category=${category}` : ''
+    }`;
     fetch(apiUrl)
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        return response.json();
+        return await response.json();
       })
-      .then((data: { mentors: MentorCardType[] }) => {
+      .then((data) => {
         setMentors(data.mentors);
+        setError(null);
         setIsLoading(false);
-
-        const newSearch = category ? `?category=${category}` : '';
-        navigate({ search: newSearch });
+        navigate({ search: category !== null ? `?category=${category}` : '' });
       })
       .catch((error) => {
-        console.error('Error fetching mentors:', error);
+        if (error.message === 'Mentors not found') {
+          setError('No mentors found for this category.');
+        } else {
+          setError('No mentors found for this category.');
+        }
         setIsLoading(false);
       });
   };
+
   return (
     <div className="min-h-screen flex justify-center items-start p-8">
       <div className="max-w-screen-lg w-full">
@@ -100,9 +107,11 @@ const PublicMentorPage: FC<PublicMentorPageProps> = () => {
             <div className="mb-4 w-full flex items-center justify-between">
               <div className="flex space-x-2 items-center">
                 <button
-                  onClick={() => handleCategoryChange(null)}
+                  onClick={() => {
+                    handleCategoryChange(null);
+                  }}
                   className={`bg-blue text-black px-2 py-1 rounded border border-blue-500 ${
-                    !selectedCategory ? 'bg-blue-500 text-white' : ''
+                    selectedCategory === null ? 'bg-blue-500 text-white' : ''
                   }`}
                   style={{ fontSize: '12px' }}
                 >
@@ -111,7 +120,9 @@ const PublicMentorPage: FC<PublicMentorPageProps> = () => {
                 {categories.map((category) => (
                   <button
                     key={category}
-                    onClick={() => handleCategoryChange(category)}
+                    onClick={() => {
+                      handleCategoryChange(category);
+                    }}
                     className={`bg-blue text-black px-2 py-1 rounded border border-blue-500 ${
                       selectedCategory === category
                         ? 'bg-blue-500 text-white'
@@ -128,18 +139,26 @@ const PublicMentorPage: FC<PublicMentorPageProps> = () => {
             <div className="mb-4 w-full flex justify-end">
               <button
                 onClick={handleSortAZ}
-                className="bg-blue text-black px-2 py-1 rounded border border-blue-500"
-                style={{ fontSize: '12px' }}
+                className={`bg-blue-500 text-white px-2 py-1 rounded border border-blue-500 text-xs mr-6`}
               >
                 Sort A-Z
               </button>
             </div>
 
-            <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 items-start">
-              {mentors.map((mentor) => (
-                <MentorCard key={mentor.mentorId} mentor={mentor} />
-              ))}
-            </div>
+            {error !== null && error !== undefined && <p>{error}</p>}
+
+            {(error === undefined || error === null) && mentors.length > 0 && (
+              <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 items-start">
+                {mentors.map((mentor) => (
+                  <MentorCard key={mentor?.mentorId} mentor={mentor} />
+                ))}
+              </div>
+            )}
+
+            {mentors.length === 0 &&
+              (error === undefined || error === null) && (
+                <p>No mentors found for this category.</p>
+              )}
           </div>
         )}
 
