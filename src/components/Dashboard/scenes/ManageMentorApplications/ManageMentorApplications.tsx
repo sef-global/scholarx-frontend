@@ -9,30 +9,43 @@ export const ManageMentorApplications: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const renderFilters = () => {
-    const filters = ['', 'pending', 'rejected', 'approved'];
+    // const filters = ['', 'pending', 'rejected', 'approved'];
+
+    const filters = [
+      { label: 'All', status: '' },
+      { label: 'Pending', status: 'pending' },
+      { label: 'Rejected', status: 'rejected' },
+      { label: 'Approved', status: 'approved' },
+    ];
+
     return (
       <div className="flex mb-4">
-        {filters.map((f, index) => (
-          <button
-            key={f}
-            className={`px-4 py-2 font-medium text-xs ${
-              filter === f
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-            } ${
-              index === 0
-                ? 'rounded-l-md'
-                : index === filters.length - 1
-                ? 'rounded-r-md'
-                : 'rounded-none'
-            }`}
-            onClick={() => {
-              setFilter(f);
-            }}
-          >
-            {f.length > 0 ? f.charAt(0).toUpperCase() + f.slice(1) : 'All'}
-          </button>
-        ))}
+        {filters.map(({ label, status }) => {
+          const count = mentors.filter((mentor) =>
+            status.length > 0 ? mentor.state === status : true
+          ).length;
+          return (
+            <button
+              key={label}
+              className={`px-4 py-2 font-medium text-sm ${
+                filter === status
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              } ${
+                label === 'All'
+                  ? 'rounded-l-md'
+                  : label === 'Approved'
+                  ? 'rounded-r-md'
+                  : 'rounded-none'
+              }`}
+              onClick={() => {
+                setFilter(status);
+              }}
+            >
+              {label} ({count})
+            </button>
+          );
+        })}
       </div>
     );
   };
@@ -45,11 +58,7 @@ export const ManageMentorApplications: React.FC = () => {
         { withCredentials: true }
       );
       if (response.status === 200) {
-        setMentors((prevMentors) =>
-          prevMentors.map((mentor) =>
-            mentor.uuid === mentorId ? { ...mentor, state: newStatus } : mentor
-          )
-        );
+        void fetchMentors();
       } else {
         console.error('Failed to update mentor status');
       }
@@ -59,6 +68,11 @@ export const ManageMentorApplications: React.FC = () => {
   };
 
   const renderMentorTable = () => {
+    const filteredMentors =
+      filter !== ''
+        ? mentors.filter((mentor) => mentor.state === filter)
+        : mentors;
+
     return (
       <table className="w-full">
         <thead>
@@ -78,7 +92,7 @@ export const ManageMentorApplications: React.FC = () => {
           </tr>
         </thead>
         <tbody className="bg-white">
-          {mentors.map((mentor) => (
+          {filteredMentors.map((mentor) => (
             <tr key={mentor.uuid}>
               <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                 {mentor.application.firstName} {mentor.application.lastName}
@@ -109,27 +123,25 @@ export const ManageMentorApplications: React.FC = () => {
     );
   };
 
+  const fetchMentors = async () => {
+    const url = `${API_URL}/admin/mentors`;
+    try {
+      const response = await axios.get(url, { withCredentials: true });
+      setMentors(response.data.mentors);
+    } catch (error) {
+      console.error('Error fetching mentors:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
-    const fetchMentors = async () => {
-      const url =
-        filter.length > 0
-          ? `${API_URL}/admin/mentors?status=${filter}`
-          : `${API_URL}/admin/mentors`;
-      try {
-        const response = await axios.get(url, { withCredentials: true });
-        setMentors(response.data.mentors);
-      } catch (error) {
-        console.error('Error fetching mentors:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
     void fetchMentors();
-  }, [filter]);
+  }, []);
 
   return (
-    <div className="container mx-auto p-4 bg-white min-h-full">
+    <div className="container mx-auto p-4 bg-white min-h-full min-w-full">
       <h1 className="text-2xl font-medium my-4">Manage Mentor Applications</h1>
       <hr className="my-6" />
       {renderFilters()}
