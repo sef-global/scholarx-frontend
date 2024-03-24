@@ -2,11 +2,16 @@ import type { Mentor } from '../types';
 
 export const mentors: Mentor[] = [
   {
-    mentor_id: 1,
+    uuid: '0d22aa50-48ba-4ec0-96bd-aca9b54c7e2f',
     created_at: '2023-07-01',
     updated_at: '2023-07-10',
     state: 'approved',
-    category: 'Technology',
+    category: {
+      category: 'Computer Science',
+      uuid: 'fef68adb-e710-4d9e-8772-dc4905885088',
+      created_at: '2023-10-29T14:20:04.335Z',
+      updated_at: '2023-10-29T14:20:04.335Z',
+    },
     application: {
       position: 'Software Engineer',
       country: 'United States',
@@ -41,11 +46,16 @@ export const mentors: Mentor[] = [
     },
   },
   {
-    mentor_id: 2,
+    uuid: '0d22aa50-48ba-4ec0-96bd-aca9b54c7e2e',
     created_at: '2023-07-02',
     updated_at: '2023-07-12',
     state: 'approved',
-    category: 'Business',
+    category: {
+      category: 'Business',
+      uuid: 'fef68adb-e710-4d9e-8772-dc4905885088',
+      created_at: '2023-10-29T14:20:04.335Z',
+      updated_at: '2023-10-29T14:20:04.335Z',
+    },
     application: {
       position: 'Chief Marketing Officer',
       country: 'Canada',
@@ -80,11 +90,16 @@ export const mentors: Mentor[] = [
     },
   },
   {
-    mentor_id: 3,
+    uuid: '0d22aa50-48ba-4ec0-96bd-aca9b54c7e2f',
     created_at: '2023-07-03',
     updated_at: '2023-07-12',
     state: 'approved',
-    category: 'Design',
+    category: {
+      category: 'Design',
+      uuid: 'fef68acb-e710-4d9e-8772-dc4905885088',
+      created_at: '2023-10-29T14:20:04.335Z',
+      updated_at: '2023-10-29T14:20:04.335Z',
+    },
     application: {
       position: 'UI/UX Designer',
       country: 'United Kingdom',
