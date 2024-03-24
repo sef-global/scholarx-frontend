@@ -2,7 +2,7 @@ import React from 'react';
 import { Menu, Layout } from 'antd';
 
 import { Link, Route, Routes } from 'react-router-dom';
-import ManageMentorApplications from './scenes/ManageMentorApplications/ManageMentorApplications.tsx';
+import { ManageMentorApplications } from './scenes/ManageMentorApplications/ManageMentorApplications.tsx';
 import ManageMentors from './scenes/ManageMentors/ManageMentors.tsx';
 import OngoingMentorshipPrograms from './scenes/OngoingMentorshipPrograms/OngoingMentorshipPrograms.tsx';
 import PlatformSettings from './scenes/PlatformSettings/PlatformSettings.tsx';

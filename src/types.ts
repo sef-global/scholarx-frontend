@@ -1,9 +1,15 @@
+export interface Category {
+  category: string;
+  uuid: string;
+  created_at?: string;
+  updated_at?: string;
+}
 export interface Mentor {
-  mentor_id: number;
+  uuid: string;
   created_at: string;
   updated_at: string;
   state: string;
-  category: string;
+  category: Category;
   application: MentorApplication;
   availability: boolean;
   profile: Profile;
