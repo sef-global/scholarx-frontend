@@ -7,15 +7,16 @@ export const ManageMentorApplications: React.FC = () => {
   const [mentors, setMentors] = useState<Mentor[]>([]);
   const [filter, setFilter] = useState('');
   const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [categories, setCategories] = useState<string[]>([]);
+  const [categoryFilter, setCategoryFilter] = useState<string>('');
 
   const renderFilters = () => {
-    // const filters = ['', 'pending', 'rejected', 'approved'];
-
     const filters = [
       { label: 'All', status: '' },
+      { label: 'Approved', status: 'approved' },
       { label: 'Pending', status: 'pending' },
       { label: 'Rejected', status: 'rejected' },
-      { label: 'Approved', status: 'approved' },
     ];
 
     return (
@@ -34,7 +35,7 @@ export const ManageMentorApplications: React.FC = () => {
               } ${
                 label === 'All'
                   ? 'rounded-l-md'
-                  : label === 'Approved'
+                  : label === 'Rejected'
                   ? 'rounded-r-md'
                   : 'rounded-none'
               }`}
@@ -73,53 +74,91 @@ export const ManageMentorApplications: React.FC = () => {
         ? mentors.filter((mentor) => mentor.state === filter)
         : mentors;
 
+    const filteredMentorsByCategory =
+      categoryFilter !== ''
+        ? filteredMentors.filter(
+            (mentor) => mentor.category.category === categoryFilter
+          )
+        : filteredMentors;
+
+    const filteredMentorsByName = filteredMentorsByCategory.filter((mentor) =>
+      `${mentor.application.firstName} ${mentor.application.lastName}`
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+    );
+
     return (
-      <table className="w-full">
-        <thead>
-          <tr>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-              Name
-            </th>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-              Profession
-            </th>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-              Category
-            </th>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-              Status
-            </th>
-          </tr>
-        </thead>
-        <tbody className="bg-white">
-          {filteredMentors.map((mentor) => (
-            <tr key={mentor.uuid}>
-              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                {mentor.application.firstName} {mentor.application.lastName}
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                {mentor.application.position}
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                {mentor.category.category}
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                <select
-                  value={mentor.state}
-                  onChange={async (e) => {
-                    await handleStatusUpdate(mentor.uuid, e.target.value);
-                  }}
-                  className="py-2 px-4 border border-gray-300 rounded-md"
-                >
-                  <option value="pending">Pending</option>
-                  <option value="rejected">Rejected</option>
-                  <option value="approved">Approved</option>
-                </select>
-              </td>
-            </tr>
+      <>
+        <input
+          type="text"
+          placeholder="Search by name"
+          value={searchTerm}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+          }}
+          className="p-2 my-4 border border-gray-300 rounded-md"
+        />
+        <select
+          value={categoryFilter}
+          onChange={(e) => {
+            setCategoryFilter(e.target.value);
+          }}
+          className="p-2 mb-4 border border-gray-300 rounded-md ml-4"
+        >
+          <option value="">All Categories</option>
+          {categories.map((category, index) => (
+            <option key={index} value={category}>
+              {category}
+            </option>
           ))}
-        </tbody>
-      </table>
+        </select>
+        <table className="w-full">
+          <thead>
+            <tr>
+              <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 tracking-wider">
+                Name
+              </th>
+              <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 tracking-wider">
+                Profession
+              </th>
+              <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 tracking-wider">
+                Category
+              </th>
+              <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 tracking-wider">
+                Status
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white">
+            {filteredMentorsByName.map((mentor) => (
+              <tr key={mentor.uuid}>
+                <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                  {mentor.application.firstName} {mentor.application.lastName}
+                </td>
+                <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                  {mentor.application.position}
+                </td>
+                <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                  {mentor.category.category}
+                </td>
+                <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                  <select
+                    value={mentor.state}
+                    onChange={async (e) => {
+                      await handleStatusUpdate(mentor.uuid, e.target.value);
+                    }}
+                    className="py-2 px-4 border border-gray-300 rounded-md"
+                  >
+                    <option value="pending">Pending</option>
+                    <option value="rejected">Rejected</option>
+                    <option value="approved">Approved</option>
+                  </select>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </>
     );
   };
 
@@ -139,6 +178,14 @@ export const ManageMentorApplications: React.FC = () => {
     setLoading(true);
     void fetchMentors();
   }, []);
+
+  useEffect(() => {
+    // Extract unique categories from mentors
+    const uniqueCategories = [
+      ...new Set(mentors.map((mentor) => mentor.category.category)),
+    ];
+    setCategories(uniqueCategories);
+  }, [mentors]);
 
   return (
     <div className="container mx-auto p-4 bg-white min-h-full min-w-full">
