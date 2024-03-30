@@ -147,7 +147,7 @@ const Home: React.FC = () => (
         </div>
         <div className="homePageSecondaryButtonNew flex justify-center items-center">
           <a href="#">
-            <button className="flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white font-bold text-sm w-[214px] h-[34px] rounded mx-auto">
+            <button className="flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white font-normal text-sm w-[214px] h-[34px] rounded mx-auto">
               ScholarX Success Stories
             </button>
           </a>
@@ -165,7 +165,7 @@ const Home: React.FC = () => (
         </div>
         <div className="homePageSecondaryButtonNew flex justify-center items-center">
           <a href="#">
-            <button className="flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white font-bold text-sm w-[214px] h-[34px] rounded mx-auto">
+            <button className="flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white font-normal text-sm w-[214px] h-[34px] rounded mx-auto">
               ScholarX Archive
             </button>
           </a>
