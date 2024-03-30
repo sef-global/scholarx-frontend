@@ -22,7 +22,7 @@ const Home: React.FC = () => (
             <button className="flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white py-1 px-16 rounded w-40 h-9 font-sans font-bold">
               Apply
             </button>
-            <button className="flex justify-center items-center mr-5 mb-5  font-normal text-black focus:outline-none bg-white w-40 h-9  rounded border border-gray-400 hover:bg-gray-100 hover:text-blue-400 hover:border-blue-400 ">
+            <button className="flex justify-center items-center mr-5 mb-5  font-normal text-black focus:outline-none bg-white w-40 h-9  rounded border border-gray-400 hover:bg-gray-100 hover:text-blue-400 hover:border-blue-400">
               See More
             </button>
           </div>
@@ -147,7 +147,7 @@ const Home: React.FC = () => (
         </div>
         <div className="homePageSecondaryButtonNew flex justify-center items-center">
           <a href="#">
-            <button className=" shadow-[0_2px_0_rgba(5,145,255,0.1)] bg-[#ffffff] hover:bg-[#1677ff] text-[#FFFFFF] font-bold text-sm w-[214px] h-[34px] rounded mx-auto">
+            <button className="flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white font-bold text-sm w-[214px] h-[34px] rounded mx-auto">
               ScholarX Success Stories
             </button>
           </a>
@@ -165,7 +165,7 @@ const Home: React.FC = () => (
         </div>
         <div className="homePageSecondaryButtonNew flex justify-center items-center">
           <a href="#">
-            <button className=" shadow-[0_2px_0_rgba(5,145,255,0.1)] bg-[#ffffff] hover:bg-[#1677ff] text-[#FFFFFF] font-bold text-sm w-[214px] h-[34px] rounded mx-auto">
+            <button className="flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white font-bold text-sm w-[214px] h-[34px] rounded mx-auto">
               ScholarX Archive
             </button>
           </a>
