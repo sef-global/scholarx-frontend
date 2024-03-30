@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { type Mentor } from '../../../../types';
-import { API_URL } from '../../../../constants';
-import axios from 'axios';
+import { useMentors } from '../../../../hooks/useMentors';
 
 export const ManageMentorApplications: React.FC = () => {
-  const [mentors, setMentors] = useState<Mentor[]>([]);
   const [filter, setFilter] = useState('');
-  const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [categories, setCategories] = useState<string[]>([]);
   const [categoryFilter, setCategoryFilter] = useState<string>('');
+
+  const { isLoading, data: mentors, updateStatus } = useMentors();
+
+  const handleStatusUpdate = async (mentorId: string, newStatus: string) => {
+    try {
+      await updateStatus({ mentorId, newStatus });
+    } catch (error) {
+      console.error('Error updating mentor status:', error);
+    }
+  };
 
   const renderFilters = () => {
     const filters = [
@@ -20,59 +27,48 @@ export const ManageMentorApplications: React.FC = () => {
     ];
 
     return (
-      <div className="flex mb-4">
-        {filters.map(({ label, status }) => {
-          const count = mentors.filter((mentor) =>
-            status.length > 0 ? mentor.state === status : true
-          ).length;
-          return (
-            <button
-              key={label}
-              className={`px-4 py-2 font-medium text-sm ${
-                filter === status
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              } ${
-                label === 'All'
-                  ? 'rounded-l-md'
-                  : label === 'Rejected'
-                  ? 'rounded-r-md'
-                  : 'rounded-none'
-              }`}
-              onClick={() => {
-                setFilter(status);
-              }}
-            >
-              {label} ({count})
-            </button>
-          );
-        })}
-      </div>
+      <>
+        {mentors !== undefined && (
+          <div className="flex mb-4">
+            {filters.map(({ label, status }) => {
+              const count = mentors.filter((mentor) =>
+                status.length > 0 ? mentor.state === status : true
+              ).length;
+              return (
+                <button
+                  key={label}
+                  className={`px-4 py-2 font-medium text-sm ${
+                    filter === status
+                      ? 'bg-blue-500 text-white'
+                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  } ${
+                    label === 'All'
+                      ? 'rounded-l-md'
+                      : label === 'Rejected'
+                      ? 'rounded-r-md'
+                      : 'rounded-none'
+                  }`}
+                  onClick={() => {
+                    setFilter(status);
+                  }}
+                >
+                  {label} ({count})
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </>
     );
-  };
-
-  const handleStatusUpdate = async (mentorId: string, newStatus: string) => {
-    try {
-      const response = await axios.put(
-        `${API_URL}/admin/mentors/${mentorId}/status`,
-        { status: newStatus },
-        { withCredentials: true }
-      );
-      if (response.status === 200) {
-        void fetchMentors();
-      } else {
-        console.error('Failed to update mentor status');
-      }
-    } catch (error) {
-      console.error('Error updating mentor status:', error);
-    }
   };
 
   const renderMentorTable = () => {
     const filteredMentors =
-      filter !== ''
-        ? mentors.filter((mentor) => mentor.state === filter)
-        : mentors;
+      mentors != null
+        ? filter !== ''
+          ? mentors.filter((mentor) => mentor.state === filter)
+          : mentors
+        : [];
 
     const filteredMentorsByCategory =
       categoryFilter !== ''
@@ -81,10 +77,11 @@ export const ManageMentorApplications: React.FC = () => {
           )
         : filteredMentors;
 
-    const filteredMentorsByName = filteredMentorsByCategory.filter((mentor) =>
-      `${mentor.application.firstName} ${mentor.application.lastName}`
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
+    const filteredMentorsByName = filteredMentorsByCategory.filter(
+      (mentor: Mentor) =>
+        `${mentor.application.firstName} ${mentor.application.lastName}`
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
     );
 
     return (
@@ -162,28 +159,15 @@ export const ManageMentorApplications: React.FC = () => {
     );
   };
 
-  const fetchMentors = async () => {
-    const url = `${API_URL}/admin/mentors`;
-    try {
-      const response = await axios.get(url, { withCredentials: true });
-      setMentors(response.data.mentors);
-    } catch (error) {
-      console.error('Error fetching mentors:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    setLoading(true);
-    void fetchMentors();
-  }, []);
-
   useEffect(() => {
     // Extract unique categories from mentors
-    const uniqueCategories = [
-      ...new Set(mentors.map((mentor) => mentor.category.category)),
-    ];
+
+    let uniqueCategories: React.SetStateAction<string[]> = [];
+    if (mentors != null) {
+      uniqueCategories = [
+        ...new Set(mentors.map((mentor) => mentor.category.category)),
+      ];
+    }
     setCategories(uniqueCategories);
   }, [mentors]);
 
@@ -192,7 +176,7 @@ export const ManageMentorApplications: React.FC = () => {
       <h1 className="text-2xl font-medium my-4">Manage Mentor Applications</h1>
       <hr className="my-6" />
       {renderFilters()}
-      {loading ? (
+      {isLoading ? (
         <div className="flex justify-center items-center h-64">
           <svg
             className="animate-spin h-10 w-10 text-blue-500"
