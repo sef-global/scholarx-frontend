@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { type Mentor } from '../../../../types';
 import { useMentors } from '../../../../hooks/useMentors';
+import useCategories from '../../../../hooks/useCategories';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const ManageMentorApplications: React.FC = () => {
   const [filter, setFilter] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [categories, setCategories] = useState<string[]>([]);
+  const { data: categories } = useCategories();
   const [categoryFilter, setCategoryFilter] = useState<string>('');
-
-  const { isLoading, data: mentors, updateStatus } = useMentors();
+  const queryClient = useQueryClient();
+  const { isLoading, data: mentors, updateStatus } = useMentors(categoryFilter);
 
   const handleStatusUpdate = async (mentorId: string, newStatus: string) => {
     try {
@@ -16,6 +18,16 @@ export const ManageMentorApplications: React.FC = () => {
     } catch (error) {
       console.error('Error updating mentor status:', error);
     }
+  };
+
+  const handleCategoryChange = async (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const selectedCategory = e.target.value;
+    setCategoryFilter(selectedCategory);
+    await queryClient.refetchQueries({
+      queryKey: ['mentors', selectedCategory],
+    });
   };
 
   const renderFilters = () => {
@@ -73,7 +85,7 @@ export const ManageMentorApplications: React.FC = () => {
     const filteredMentorsByCategory =
       categoryFilter !== ''
         ? filteredMentors.filter(
-            (mentor) => mentor.category.category === categoryFilter
+            (mentor) => mentor.category.uuid === categoryFilter
           )
         : filteredMentors;
 
@@ -97,15 +109,13 @@ export const ManageMentorApplications: React.FC = () => {
         />
         <select
           value={categoryFilter}
-          onChange={(e) => {
-            setCategoryFilter(e.target.value);
-          }}
+          onChange={handleCategoryChange}
           className="p-2 mb-4 border border-gray-300 rounded-md ml-4"
         >
           <option value="">All Categories</option>
-          {categories.map((category, index) => (
-            <option key={index} value={category}>
-              {category}
+          {categories.map((category: { uuid: string; category: string }) => (
+            <option key={category.uuid} value={category.uuid}>
+              {category.category}
             </option>
           ))}
         </select>
@@ -158,18 +168,6 @@ export const ManageMentorApplications: React.FC = () => {
       </>
     );
   };
-
-  useEffect(() => {
-    // Extract unique categories from mentors
-
-    let uniqueCategories: React.SetStateAction<string[]> = [];
-    if (mentors != null) {
-      uniqueCategories = [
-        ...new Set(mentors.map((mentor) => mentor.category.category)),
-      ];
-    }
-    setCategories(uniqueCategories);
-  }, [mentors]);
 
   return (
     <div className="container mx-auto p-4 bg-white min-h-full min-w-full">

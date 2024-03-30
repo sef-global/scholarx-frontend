@@ -1,4 +1,10 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  type QueryFunction,
+  type QueryKey,
+} from '@tanstack/react-query';
 import axios, { type AxiosError } from 'axios';
 import { API_URL } from '../constants';
 import { type Mentor } from '../types';
@@ -8,8 +14,15 @@ interface MentorStatus {
   newStatus: string;
 }
 
-const fetchMentors = async () => {
-  const response = await axios.get(`${API_URL}/admin/mentors`, {
+const fetchMentors: QueryFunction<Mentor[], QueryKey> = async ({
+  queryKey,
+}) => {
+  const [, category]: [string, string] = queryKey as [string, string];
+  let url = `${API_URL}/admin/mentors`;
+  if (category !== '' && category != null) {
+    url += `?categoryId=${category}`;
+  }
+  const response = await axios.get(url, {
     withCredentials: true,
   });
   return response.data.mentors;
@@ -25,11 +38,11 @@ const updateMentorStatus = async (mentorStatus: MentorStatus) => {
   return response.data;
 };
 
-export const useMentors = () => {
+export const useMentors = (categoryId?: string) => {
   const queryClient = useQueryClient();
 
   const { isLoading, error, data } = useQuery<Mentor[], AxiosError>({
-    queryKey: ['mentors'],
+    queryKey: ['mentors', categoryId],
     queryFn: fetchMentors,
   });
 
