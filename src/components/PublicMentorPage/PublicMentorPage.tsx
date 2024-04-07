@@ -1,97 +1,57 @@
-import React, { type FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import MentorCard from '../MentorCard/MentorCard.component';
-import { type MentorCardType } from '../../types';
-import { API_URL } from '../../constants';
+import { useMentors } from '../../hooks/useMentors';
+import useCategories from '../../hooks/useCategories';
+import { type Category, type Mentor } from '../../types';
 
-const PublicMentorPage: FC = () => {
+const PublicMentorPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
-  const categoryParam = queryParams.get('category');
+  const categoryParam =
+    queryParams.get('category') !== null ? queryParams.get('category') : '';
 
-  const [mentors, setMentors] = useState<MentorCardType[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(
-    categoryParam
+  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
+    categoryParam !== null ? categoryParam : undefined
   );
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [sortedMentors, setSortedMentors] = useState<Mentor[] | undefined>(
+    undefined
+  );
+  const {
+    data: mentors,
+    isLoading: mentorsLoading,
+    error: mentorsError,
+  } = useMentors(selectedCategory);
+  const {
+    data: categories,
+    isLoading: categoriesLoading,
+    error: categoriesError,
+  } = useCategories();
 
   useEffect(() => {
-    setIsLoading(true);
+    if (categoryParam !== selectedCategory && categoryParam !== null) {
+      setSelectedCategory(categoryParam);
+    }
+  }, [categoryParam, selectedCategory]);
 
-    const mentorsUrl = `${API_URL}/mentors`;
-    const categoriesUrl = `${API_URL}/categories`;
-
-    Promise.all([
-      fetch(mentorsUrl).then(async (response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return await response.json();
-      }),
-      fetch(categoriesUrl).then(async (response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return await response.json();
-      }),
-    ])
-      .then(([mentorsData, categoriesData]) => {
-        setMentors(mentorsData.mentors);
-
-        const categoryNames: string[] = categoriesData.categories.map(
-          (category: { category: string }) => category.category
-        );
-        const uniqueCategories: string[] = Array.from(new Set(categoryNames));
-        setCategories(uniqueCategories);
-
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-        setIsLoading(false);
-      });
-  }, []);
-
-  const handleSortAZ = (): void => {
-    setIsLoading(true);
-    const sortedMentors = [...mentors].sort((a, b) =>
-      a.profile.first_name.localeCompare(b.profile.first_name)
-    );
-    setMentors(sortedMentors);
-    setIsLoading(false);
+  const handleSortAZ = () => {
+    if (mentors !== undefined) {
+      const sortedMentors = [...mentors].sort((a, b) =>
+        a.application.firstName.localeCompare(b.application.firstName)
+      );
+      setSortedMentors(sortedMentors);
+    }
   };
 
-  const handleCategoryChange = (category: string | null): void => {
-    setSelectedCategory(category);
-    setIsLoading(true);
-    const apiUrl = `${API_URL}/mentors${
-      category !== null ? `?category=${category}` : ''
-    }`;
-    fetch(apiUrl)
-      .then(async (response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return await response.json();
-      })
-      .then((data) => {
-        setMentors(data.mentors);
-        setError(null);
-        setIsLoading(false);
-        navigate({ search: category !== null ? `?category=${category}` : '' });
-      })
-      .catch((error) => {
-        if (error.message === 'Mentors not found') {
-          setError('No mentors found for this category.');
-        } else {
-          setError('No mentors found for this category.');
-        }
-        setIsLoading(false);
-      });
+  const handleCategoryChange = (category: string | null) => {
+    setSelectedCategory(category !== null ? category : undefined);
+    setSortedMentors(undefined); // Reset sorted mentors when category changes
+    navigate({ search: category !== null ? `?category=${category}` : '' });
   };
+
+  const isLoading = mentorsLoading || categoriesLoading;
+  const error = mentorsError != null || categoriesError;
 
   return (
     <div className="min-h-screen flex justify-center items-start p-8">
@@ -111,26 +71,28 @@ const PublicMentorPage: FC = () => {
                     handleCategoryChange(null);
                   }}
                   className={`bg-blue text-black px-2 py-1 rounded border border-blue-500 ${
-                    selectedCategory === null ? 'bg-blue-500 text-white' : ''
+                    selectedCategory === undefined
+                      ? 'bg-blue-500 text-white'
+                      : ''
                   }`}
                   style={{ fontSize: '12px' }}
                 >
                   All
                 </button>
-                {categories.map((category) => (
+                {categories?.map((category: Category) => (
                   <button
-                    key={category}
+                    key={category.uuid}
                     onClick={() => {
-                      handleCategoryChange(category);
+                      handleCategoryChange(category.uuid);
                     }}
                     className={`bg-blue text-black px-2 py-1 rounded border border-blue-500 ${
-                      selectedCategory === category
+                      selectedCategory === category.category
                         ? 'bg-blue-500 text-white'
                         : ''
                     }`}
                     style={{ fontSize: '12px' }}
                   >
-                    {category}
+                    {category.category}
                   </button>
                 ))}
               </div>
@@ -145,20 +107,36 @@ const PublicMentorPage: FC = () => {
               </button>
             </div>
 
-            {error !== null && error !== undefined && <p>{error}</p>}
-
-            {(error === undefined || error === null) && mentors.length > 0 && (
-              <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 items-start">
-                {mentors.map((mentor) => (
-                  <MentorCard key={mentor?.mentorId} mentor={mentor} />
-                ))}
-              </div>
+            {error !== undefined && error !== null && (
+              <p>{'An error occurred.'}</p>
             )}
 
-            {mentors.length === 0 &&
-              (error === undefined || error === null) && (
-                <p>No mentors found for this category.</p>
-              )}
+            {(error === undefined || error === null) && (
+              <>
+                {sortedMentors !== undefined && sortedMentors.length > 0 && (
+                  <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 items-start">
+                    {sortedMentors.map((mentor) => (
+                      <MentorCard key={mentor?.uuid} mentor={mentor} />
+                    ))}
+                  </div>
+                )}
+
+                {(sortedMentors === undefined || sortedMentors.length === 0) &&
+                  mentors !== undefined &&
+                  mentors.length > 0 && (
+                    <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 items-start">
+                      {mentors.map((mentor) => (
+                        <MentorCard key={mentor?.uuid} mentor={mentor} />
+                      ))}
+                    </div>
+                  )}
+
+                {(sortedMentors?.length === 0 ||
+                  (mentors !== undefined && mentors.length === 0)) && (
+                  <p>No mentors found for this category.</p>
+                )}
+              </>
+            )}
           </div>
         )}
 
