@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import MentorCard from '../MentorCard/MentorCard.component';
 import useCategories from '../../hooks/useCategories';
-import { type Category, type Mentor } from '../../types';
+import { type MentorCardType, type Category } from '../../types';
 import { usePublicMentors } from '../../hooks/usePublicMentors';
 
 const PublicMentorPage = () => {
@@ -15,9 +15,9 @@ const PublicMentorPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
     categoryParam !== null ? categoryParam : undefined
   );
-  const [sortedMentors, setSortedMentors] = useState<Mentor[] | undefined>(
-    undefined
-  );
+  const [sortedMentors, setSortedMentors] = useState<
+    MentorCardType[] | undefined
+  >(undefined);
   const {
     data: mentors,
     isLoading: mentorsLoading,
@@ -38,7 +38,7 @@ const PublicMentorPage = () => {
   const handleSortAZ = () => {
     if (mentors !== undefined) {
       const sortedMentors = [...mentors].sort((a, b) =>
-        a.application.firstName.localeCompare(b.application.firstName)
+        a.profile.first_name.localeCompare(b.profile.first_name)
       );
       setSortedMentors(sortedMentors);
     }
@@ -116,7 +116,7 @@ const PublicMentorPage = () => {
                 {sortedMentors !== undefined && sortedMentors.length > 0 && (
                   <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 items-start">
                     {sortedMentors.map((mentor) => (
-                      <MentorCard key={mentor?.uuid} mentor={mentor} />
+                      <MentorCard key={mentor.mentorId} mentor={mentor} />
                     ))}
                   </div>
                 )}
@@ -126,7 +126,7 @@ const PublicMentorPage = () => {
                   mentors.length > 0 && (
                     <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 items-start">
                       {mentors.map((mentor) => (
-                        <MentorCard key={mentor?.uuid} mentor={mentor} />
+                        <MentorCard key={mentor?.mentorId} mentor={mentor} />
                       ))}
                     </div>
                   )}

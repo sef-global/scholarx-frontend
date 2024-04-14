@@ -53,9 +53,8 @@ export interface Profile {
 }
 
 export interface MentorCardType {
-  uuid: string;
+  mentorId: string;
   category: Category;
-  application: MentorApplication;
   profile: {
     contact_email: string;
     first_name: string;

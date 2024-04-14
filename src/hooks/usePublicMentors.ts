@@ -5,9 +5,9 @@ import {
 } from '@tanstack/react-query';
 import axios, { type AxiosError } from 'axios';
 import { API_URL } from '../constants';
-import { type Mentor } from '../types';
+import { type MentorCardType } from '../types';
 
-const fetchPublicMentors: QueryFunction<Mentor[], QueryKey> = async ({
+const fetchPublicMentors: QueryFunction<MentorCardType[], QueryKey> = async ({
   queryKey,
 }) => {
   const [, category]: [string, string] = queryKey as [string, string];
@@ -22,7 +22,7 @@ const fetchPublicMentors: QueryFunction<Mentor[], QueryKey> = async ({
 };
 
 export const usePublicMentors = (categoryId?: string) => {
-  const { isLoading, error, data } = useQuery<Mentor[], AxiosError>({
+  const { isLoading, error, data } = useQuery<MentorCardType[], AxiosError>({
     queryKey: ['public-mentors', categoryId],
     queryFn: fetchPublicMentors,
   });
