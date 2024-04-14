@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { within } from '@storybook/testing-library';
 
 import MentorCard from './MentorCard.component';
-import { mentors } from '../../__mocks__/mentors';
+import { mentorCards } from '../../__mocks__/mentorCards';
 
 const meta: Meta<typeof MentorCard> = {
   component: MentorCard,
@@ -17,29 +17,29 @@ type Story = StoryObj<typeof meta>;
 
 export const defaultCard: Story = {
   args: {
-    mentor: mentors[0],
+    mentor: mentorCards[0],
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
     const mentorName = canvas.getByText(
-      `${mentors[0].profile.first_name} ${mentors[0].profile.last_name}`
+      `${mentorCards[0].profile.first_name} ${mentorCards[0].profile.last_name}`
     );
 
-    const mentorDesignation = canvas.getByText(mentors[0].application.position);
+    const mentorDesignation = canvas.getByText(mentorCards[0].profile.position);
 
-    const companyOrInstitution = canvas.getByText(
-      mentors[0].application.institution
-    );
+    // const companyOrInstitution = canvas.getByText(
+    //   mentorCards[0].application.institution
+    // );
 
     expect(mentorName).toBeInTheDocument();
     expect(mentorDesignation).toBeInTheDocument();
-    expect(companyOrInstitution).toBeInTheDocument();
+    // expect(companyOrInstitution).toBeInTheDocument();
   },
 };
 
 export const cardWithDefaultImage: Story = {
   args: {
-    mentor: mentors[2],
+    mentor: mentorCards[2],
   },
 };

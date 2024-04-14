@@ -54,12 +54,13 @@ export interface Profile {
 
 export interface MentorCardType {
   mentorId: string;
-  category: Category;
+  category: string;
   profile: {
     contact_email: string;
     first_name: string;
     last_name: string;
     image_url?: string | undefined;
     linkedin_url: string;
+    position: string;
   };
 }
