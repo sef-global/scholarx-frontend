@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import MentorCard from '../MentorCard/MentorCard.component';
-import { useMentors } from '../../hooks/useMentors';
 import useCategories from '../../hooks/useCategories';
 import { type Category, type Mentor } from '../../types';
+import { usePublicMentors } from '../../hooks/usePublicMentors';
 
 const PublicMentorPage = () => {
   const location = useLocation();
@@ -22,7 +22,7 @@ const PublicMentorPage = () => {
     data: mentors,
     isLoading: mentorsLoading,
     error: mentorsError,
-  } = useMentors(selectedCategory);
+  } = usePublicMentors(selectedCategory);
   const {
     data: categories,
     isLoading: categoriesLoading,
