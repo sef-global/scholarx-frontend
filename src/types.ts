@@ -1,9 +1,15 @@
+export interface Category {
+  category: string;
+  uuid: string;
+  created_at?: string;
+  updated_at?: string;
+}
 export interface Mentor {
-  mentor_id: number;
+  uuid: string;
   created_at: string;
   updated_at: string;
   state: string;
-  category: string;
+  category: Category;
   application: MentorApplication;
   availability: boolean;
   profile: Profile;
@@ -44,4 +50,17 @@ export interface Profile {
   linkedin_url: string;
   type: 'DEFAULT' | 'ADMIN';
   uuid: string;
+}
+
+export interface MentorCardType {
+  mentorId: string;
+  category: string;
+  profile: {
+    contact_email: string;
+    first_name: string;
+    last_name: string;
+    image_url?: string | undefined;
+    linkedin_url: string;
+    position: string;
+  };
 }
