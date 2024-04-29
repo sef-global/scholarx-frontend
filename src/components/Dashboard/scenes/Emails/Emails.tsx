@@ -89,7 +89,7 @@ const Emails: React.FC = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       setMessage('Emails succesfuly sent');
-    } catch {
+    } catch (error) {
       setMessage((error as Error).message);
     } finally {
       setIsSent(false);
@@ -98,7 +98,7 @@ const Emails: React.FC = () => {
 
   return (
     <div>
-      <div className="container mx-auto p-4 bg-white min-h-full min-w-full">
+      <div className="container mx-auto p-4 bg-white max-h-[500px] overflow-y-auto min-h-full min-w-full">
         <h1 className="text-2xl font-medium my-4">Send Emails</h1>
         <hr className="my-4" />
         <p className="mb-4 text-lg font-bold">
