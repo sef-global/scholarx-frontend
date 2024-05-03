@@ -10,7 +10,7 @@ interface EmailTemplateProps {
 const EmailTemplate: React.FC<EmailTemplateProps> = ({
   subject,
   body,
-  recipient,
+  select,
 }) => {
   return (
     <div
@@ -82,7 +82,7 @@ const EmailTemplate: React.FC<EmailTemplateProps> = ({
                                      ${subject}
                                     </p>
                         <p style="margin-top: 0; margin-bottom: 22px">
-                                     Dear mentee,
+                                     Dear ${select},
                                     </p>
                                     <p style="margin-top: 0; margin-bottom: 22px">
                                         ${body}
