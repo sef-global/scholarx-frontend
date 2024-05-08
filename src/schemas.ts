@@ -42,3 +42,41 @@ export const MenteeApplicationSchema = z.object({
     .string()
     .url({ message: 'Please submit a valid video submission' }),
 });
+
+export const MentorApplicationSchema = z.object({
+  firstName: z.string().min(1, { message: 'First name cannot be empty' }),
+  lastName: z.string().min(1, { message: 'Last name cannot be empty' }),
+  email: z.string().email({ message: 'Invalid email address' }),
+  contactNo: z.string().min(1, { message: 'Contact number cannot be empty' }),
+  country: z.string().min(1, { message: 'Country cannot be empty' }),
+  position: z.string().min(1, { message: 'Position cannot be empty' }),
+  expertise: z.string().min(1, { message: 'Expertise cannot be empty' }),
+  bio: z.string().min(1, { message: 'Bio cannot be empty' }).max(200),
+  isPastMentor: z.boolean(),
+  reasonToMentor: z.string().optional(),
+  motivation: z.string().optional(),
+  cv: z.string().min(1, { message: 'CV cannot be empty' }),
+  menteeExpectations: z
+    .string()
+    .min(1, { message: 'Mentee expectations cannot be empty' }),
+  mentoringPhilosophy: z
+    .string()
+    .min(1, { message: 'Mentoring philosophy cannot be empty' }),
+  noOfMentees: z.number().min(0, {
+    message: 'Number of mentees must be greater than or equal to 0',
+  }),
+  canCommit: z.boolean(),
+  mentoredYear: z.number().optional().or(z.number().min(0)),
+  category: z.string().min(1, { message: 'Category cannot be empty' }),
+  institution: z.string().min(1, { message: 'Institution cannot be empty' }),
+  linkedin: z
+    .string()
+    .url({ message: 'Invalid LinkedIn URL' })
+    .optional()
+    .or(z.literal('')),
+  website: z
+    .string()
+    .url({ message: 'Invalid website URL' })
+    .optional()
+    .or(z.literal('')),
+});

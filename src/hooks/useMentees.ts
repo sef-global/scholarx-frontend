@@ -7,7 +7,7 @@ import axios, { type AxiosError } from 'axios';
 import { API_URL } from '../constants';
 import { type Mentee } from '../types';
 
-const fetchMentors: QueryFunction<Mentee[], QueryKey> = async () => {
+const fetchMentees: QueryFunction<Mentee[], QueryKey> = async () => {
   const response = await axios.get(`${API_URL}/mentors/mentees`, {
     withCredentials: true,
   });
@@ -17,7 +17,7 @@ const fetchMentors: QueryFunction<Mentee[], QueryKey> = async () => {
 export const useMentees = () => {
   const { isLoading, error, data } = useQuery<Mentee[], AxiosError>({
     queryKey: ['mentees'],
-    queryFn: fetchMentors,
+    queryFn: fetchMentees,
   });
 
   return {
