@@ -1,3 +1,6 @@
+import { type z } from 'zod';
+import { type MenteeApplicationSchema } from './schemas';
+
 export interface Category {
   category: string;
   uuid: string;
@@ -14,6 +17,36 @@ export interface Mentor {
   availability: boolean;
   profile: Profile;
 }
+
+export type MenteeApplication = z.infer<typeof MenteeApplicationSchema>;
+
+export interface Mentee {
+  state: string;
+  application: MenteeApplication;
+  profile: string;
+  mentor: string;
+  uuid: string;
+  created_at: Date;
+  updated_at: Date;
+  certificate_id: string;
+  journal: string;
+}
+
+// export interface MenteeApplication {
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+//   contactNo: string;
+//   company?: string;
+//   course?: string;
+//   position: string;
+//   cv: string;
+//   isUndergrad: boolean;
+//   consentGiven: boolean;
+//   graduatedYear: number;
+//   mentorId: string;
+//   submission: string;
+// }
 
 export interface MentorApplication {
   firstName: string;
