@@ -1,6 +1,6 @@
 import React from 'react';
 import type { FieldError, UseFormRegister } from 'react-hook-form';
-import type { MenteeApplication } from '../../../MenteeApplicationPage';
+import { type MenteeApplication } from '../../../../types';
 
 export interface FormInputProps {
   type: string;

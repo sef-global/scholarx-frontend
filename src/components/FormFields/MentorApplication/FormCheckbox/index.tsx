@@ -1,6 +1,6 @@
 import React from 'react';
 import type { FieldError, UseFormRegister } from 'react-hook-form';
-import type { MentorApplication } from '../../../MentorRegistrationPage';
+import { type MentorApplication } from '../../../../types';
 
 export interface FormCheckboxProps {
   name: keyof MentorApplication;
