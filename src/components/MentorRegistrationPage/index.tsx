@@ -5,10 +5,10 @@ import { API_URL } from '../../constants';
 import { z } from 'zod';
 import useCategories from '../../hooks/useCategories';
 import { zodResolver } from '@hookform/resolvers/zod';
-import FormInput from '../FormFields/FormInput';
+import FormInput from '../FormFields/MentorApplication/FormInput';
 import { useMutation } from '@tanstack/react-query';
-import FormTextarea from '../FormFields/FormTextarea';
-import FormCheckbox from '../FormFields/FormCheckbox';
+import FormTextarea from '../FormFields/MentorApplication/FormTextarea';
+import FormCheckbox from '../FormFields/MentorApplication/FormCheckbox';
 
 const MentorApplicationSchema = z.object({
   firstName: z.string().min(1, { message: 'First name cannot be empty' }),
@@ -324,7 +324,7 @@ const MentorRegistrationPage: React.FC = () => {
               <FormCheckbox
                 name="canCommit"
                 label="Are you able to commit to a period of 6 months for the
-                program? (Support description: We expect a minimum of 6 calls
+                program? (We expect a minimum of 6 calls
                 with a mentee in a span of 6 month period)"
                 register={register}
                 error={errors.canCommit}

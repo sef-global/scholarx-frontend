@@ -1,33 +1,28 @@
 import React from 'react';
 import type { FieldError, UseFormRegister } from 'react-hook-form';
-import type { MentorApplication } from '../../MentorRegistrationPage';
+import type { MentorApplication } from '../../../MentorRegistrationPage';
 
-export interface FormInputProps {
-  type: string;
+export interface FormTextareaProps {
   placeholder: string;
   name: keyof MentorApplication;
   label: string;
   register: UseFormRegister<MentorApplication>;
   error: FieldError | undefined;
-  valueAsNumber?: boolean;
 }
 
-const FormInput: React.FC<FormInputProps> = ({
-  type,
+const FormTextarea: React.FC<FormTextareaProps> = ({
   placeholder,
   name,
   register,
   error,
   label,
-  valueAsNumber,
 }) => {
   return (
     <div className="mb-4">
       <label className="block text-sm font-medium text-gray-600">{label}</label>
-      <input
-        type={type}
+      <textarea
         placeholder={placeholder}
-        {...register(name, { valueAsNumber })}
+        {...register(name)}
         className="mt-1 p-2 w-full border rounded-md"
       />
       {error != null && <span className="text-red-500">{error.message}</span>}
@@ -35,4 +30,4 @@ const FormInput: React.FC<FormInputProps> = ({
   );
 };
 
-export default FormInput;
+export default FormTextarea;

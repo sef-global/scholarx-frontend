@@ -1,11 +1,11 @@
 import React from 'react';
 import type { FieldError, UseFormRegister } from 'react-hook-form';
-import type { MentorApplication } from '../../MentorRegistrationPage';
+import type { MenteeApplication } from '../../../MenteeApplicationPage';
 
 export interface FormCheckboxProps {
-  name: keyof MentorApplication;
+  name: keyof MenteeApplication;
   label: string;
-  register: UseFormRegister<MentorApplication>;
+  register: UseFormRegister<MenteeApplication>;
   error: FieldError | undefined;
 }
 
