@@ -7,6 +7,7 @@ export interface UserContextType {
   user: Profile | null;
   setUserContext: (user: Profile | null) => void;
   getUser: () => void;
+  isUserLoading: boolean;
 }
 
 export const UserContext = createContext<UserContextType | null>(null);
@@ -15,12 +16,14 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<Profile | null>(null);
+  const [isUserLoading, setIsUserLoading] = useState(true);
 
   const setUserContext = (user: Profile | null): void => {
     setUser(user);
   };
 
   const getUser = (): void => {
+    setIsUserLoading(true);
     axios
       .get(`${API_URL}/me/profile`, { withCredentials: true })
       .then((response: AxiosResponse<Profile>) => {
@@ -39,11 +42,16 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
           });
           setUser(null);
         }
+      })
+      .finally(() => {
+        setIsUserLoading(false);
       });
   };
 
   return (
-    <UserContext.Provider value={{ user, setUserContext, getUser }}>
+    <UserContext.Provider
+      value={{ user, setUserContext, getUser, isUserLoading }}
+    >
       {children}
     </UserContext.Provider>
   );

@@ -2,51 +2,14 @@ import React, { useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { API_URL } from '../../constants';
-import { z } from 'zod';
 import useCategories from '../../hooks/useCategories';
 import { zodResolver } from '@hookform/resolvers/zod';
-import FormInput from '../FormFields/FormInput';
+import FormInput from '../FormFields/MentorApplication/FormInput';
 import { useMutation } from '@tanstack/react-query';
-import FormTextarea from '../FormFields/FormTextarea';
-import FormCheckbox from '../FormFields/FormCheckbox';
-
-const MentorApplicationSchema = z.object({
-  firstName: z.string().min(1, { message: 'First name cannot be empty' }),
-  lastName: z.string().min(1, { message: 'Last name cannot be empty' }),
-  email: z.string().email({ message: 'Invalid email address' }),
-  contactNo: z.string().min(1, { message: 'Contact number cannot be empty' }),
-  country: z.string().min(1, { message: 'Country cannot be empty' }),
-  position: z.string().min(1, { message: 'Position cannot be empty' }),
-  expertise: z.string().min(1, { message: 'Expertise cannot be empty' }),
-  bio: z.string().min(1, { message: 'Bio cannot be empty' }).max(200),
-  isPastMentor: z.boolean(),
-  reasonToMentor: z.string().optional(),
-  motivation: z.string().optional(),
-  cv: z.string().min(1, { message: 'CV cannot be empty' }),
-  menteeExpectations: z
-    .string()
-    .min(1, { message: 'Mentee expectations cannot be empty' }),
-  mentoringPhilosophy: z
-    .string()
-    .min(1, { message: 'Mentoring philosophy cannot be empty' }),
-  noOfMentees: z.number().min(0, {
-    message: 'Number of mentees must be greater than or equal to 0',
-  }),
-  canCommit: z.boolean(),
-  mentoredYear: z.number().optional().or(z.number().min(0)),
-  category: z.string().min(1, { message: 'Category cannot be empty' }),
-  institution: z.string().min(1, { message: 'Institution cannot be empty' }),
-  linkedin: z
-    .string()
-    .url({ message: 'Invalid LinkedIn URL' })
-    .optional()
-    .or(z.literal('')),
-  website: z
-    .string()
-    .url({ message: 'Invalid website URL' })
-    .optional()
-    .or(z.literal('')),
-});
+import FormTextarea from '../FormFields/MentorApplication/FormTextarea';
+import FormCheckbox from '../FormFields/MentorApplication/FormCheckbox';
+import { MentorApplicationSchema } from '../../schemas';
+import { type MentorApplication } from '../../types';
 
 const steps = [
   {
@@ -58,8 +21,6 @@ const steps = [
     fields: ['position', 'institution', 'expertise', 'cv', 'bio'],
   },
 ];
-
-export type MentorApplication = z.infer<typeof MentorApplicationSchema>;
 
 const MentorRegistrationPage: React.FC = () => {
   const {
@@ -324,7 +285,7 @@ const MentorRegistrationPage: React.FC = () => {
               <FormCheckbox
                 name="canCommit"
                 label="Are you able to commit to a period of 6 months for the
-                program? (Support description: We expect a minimum of 6 calls
+                program? (We expect a minimum of 6 calls
                 with a mentee in a span of 6 month period)"
                 register={register}
                 error={errors.canCommit}
