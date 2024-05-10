@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useMentees } from '../../hooks/useMentees';
 import { type Mentee } from '../../types';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
+import { API_URL } from '../../constants';
+import { ApplicationStatus } from '../../enums';
 
 const MyMentees: React.FC = () => {
   const { data: menteeApplications } = useMentees();
@@ -14,6 +18,30 @@ const MyMentees: React.FC = () => {
 
   const handleBack = (): void => {
     setSelectedApplication(null);
+  };
+
+  const updateMenteeStatus = useMutation({
+    mutationFn: async ({
+      menteeId,
+      state,
+    }: {
+      menteeId: string;
+      state: ApplicationStatus;
+    }) => {
+      await axios.put(
+        `${API_URL}/mentees/${menteeId}/status`,
+        {
+          state,
+        },
+        { withCredentials: true }
+      );
+    },
+  });
+
+  const handleStateUpdate = (state: ApplicationStatus) => {
+    if (selectedMentee !== null) {
+      updateMenteeStatus.mutate({ menteeId: selectedMentee.uuid, state });
+    }
   };
 
   return (
@@ -128,10 +156,20 @@ const MyMentees: React.FC = () => {
               </p>
             </div>
             <div className="flex justify-end mt-10 pt-10 mr-5 pb-10">
-              <button className="bg-blue-700 text-white px-9 py-1 mr-2 rounded-full">
-                Accept
+              <button
+                className="bg-blue-700 text-white px-9 py-1 mr-2 rounded-full"
+                onClick={() => {
+                  handleStateUpdate(ApplicationStatus.APPROVED);
+                }}
+              >
+                {updateMenteeStatus.isPending ? 'Loading' : 'Accept'}
               </button>
-              <button className="bg-red-600 text-white px-9 py-1 rounded-full">
+              <button
+                className="bg-red-600 text-white px-9 py-1 rounded-full"
+                onClick={() => {
+                  handleStateUpdate(ApplicationStatus.REJECTED);
+                }}
+              >
                 Reject
               </button>
             </div>

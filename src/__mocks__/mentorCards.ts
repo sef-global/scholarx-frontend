@@ -1,6 +1,6 @@
-import { type MentorCardType } from '../types';
+import { type Mentor } from '../types';
 
-export const mentorCards: MentorCardType[] = [
+export const mentorCards: Mentor[] = [
   {
     mentorId: '86b65e78-dde4-447a-9abb-c72a4b86cf6f',
     category: 'Computer Science',
