@@ -72,7 +72,7 @@ const Navbar: React.FC = () => {
         <Col xs={20} md={2} lg={4} xl={4} xxl={4}>
           <img
             className={styles.navbarLogoContainer}
-            src="./scholarx-logo.png"
+            src="/scholarx-logo.png"
           />
         </Col>
         <AlignRightOutlined

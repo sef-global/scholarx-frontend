@@ -139,7 +139,13 @@ export const ManageMentorApplications: React.FC = () => {
           <tbody className="bg-white">
             {filteredMentorsByName.map((mentor) => (
               <tr key={mentor.uuid}>
-                <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/4">
+                <td
+                  className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/4"
+                  onClick={() => {
+                    window.open(`/dashboard/mentor-application/${mentor.uuid}`);
+                  }}
+                  style={{ cursor: 'pointer' }}
+                >
                   {mentor.application.firstName} {mentor.application.lastName}
                 </td>
                 <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/4">

@@ -2,26 +2,34 @@ import React from 'react';
 import { type Mentor } from '../../types';
 
 interface MentorApplicationProps {
-  isLoading: boolean;
-  mentor: Mentor;
-  onAccept: (mentorUuid: string) => void;
+  mentor: Mentor | undefined;
+  onApprove: (mentorUuid: string) => void;
+  onReject: (mentorUuid: string) => void;
 }
 
 const MentorApplication: React.FC<MentorApplicationProps> = ({
-  isLoading,
   mentor,
-  onAccept,
+  onApprove,
+  onReject,
 }) => {
-  const handleAccept = () => {
-    onAccept(mentor.uuid);
+  const handleApprove = () => {
+    if (mentor != null) {
+      onApprove(mentor.uuid);
+    }
+  };
+
+  const handleReject = () => {
+    if (mentor != null) {
+      onReject(mentor.uuid);
+    }
   };
 
   return (
     <>
-      {isLoading ? (
+      {mentor == null ? (
         <div>Skeleton</div>
       ) : (
-        <div className="space-y-8">
+        <div className="w-full space-y-8">
           <div className="flex items-center">
             <img
               src={mentor.profile.image_url}
@@ -43,29 +51,16 @@ const MentorApplication: React.FC<MentorApplicationProps> = ({
             </div>
             <div className="ml-auto flex overflow-hidden">
               <button
-                className="inline-block rounded-l-full border-r px-10 py-2 my-2 ml-2 text-sm font-medium text-white bg-primary-blue focus:outline-none focus:ring"
-                onClick={handleAccept}
+                className="inline-block rounded border px-10 py-2 my-2 mx-2 text-sm font-medium text-primary-blue border-primary-blue focus:outline-none focus:ring"
+                onClick={handleApprove}
               >
-                Accept
+                Approve
               </button>
               <button
-                className="inline-block px-3 py-2 my-2 mr-2 rounded-r-full text-white bg-primary-blue focus:ring focus:outline-none"
-                title="More"
+                className="inline-block rounded border px-10 py-2 my-2 mx-2 text-sm font-medium text-red-500 border-red-500 focus:outline-none focus:ring"
+                onClick={handleReject}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"
-                  />
-                </svg>
+                Reject
               </button>
             </div>
           </div>
@@ -92,14 +87,21 @@ const MentorApplication: React.FC<MentorApplicationProps> = ({
             </div>
             <div className="col-span-2 pl-8 border-l">
               <div className="grid grid-cols-2 gap-1">
-                <a href="#" className="underline mb-2">
+                <a
+                  href={mentor.application.linkedin}
+                  target="_blank"
+                  className="underline mb-2"
+                  rel="noreferrer"
+                >
                   LinkedIn
                 </a>
-                <a href="#" className="underline mb-2">
+                <a
+                  href={mentor.application.website}
+                  target="_blank"
+                  className="underline mb-2"
+                  rel="noreferrer"
+                >
                   Website
-                </a>
-                <a href="#" className="underline mb-2">
-                  Google Scholar
                 </a>
                 <a
                   href={mentor.application.cv}
@@ -108,9 +110,6 @@ const MentorApplication: React.FC<MentorApplicationProps> = ({
                   className="underline mb-2"
                 >
                   CV
-                </a>
-                <a href="#" className="underline mb-2">
-                  ResearchGate
                 </a>
               </div>
             </div>
