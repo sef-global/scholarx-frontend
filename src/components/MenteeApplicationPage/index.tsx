@@ -237,7 +237,8 @@ const MenteeRegistrationPage: React.FC = () => {
                 >
                   {mentors?.map((mentor) => (
                     <option key={mentor.uuid} value={mentor.uuid}>
-                      {mentor.profile.first_name}
+                      {mentor.application.firstName}{' '}
+                      {mentor.application.lastName}
                     </option>
                   ))}
                 </select>

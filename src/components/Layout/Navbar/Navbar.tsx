@@ -84,7 +84,7 @@ const Navbar: React.FC = () => {
         <Col md={16} lg={12} xl={14} xxl={16}>
           <Space direction="horizontal">
             <div className={styles.navbarItemContainer}>
-              <a href="https://sefglobal.org/">
+              <a href="/">
                 <Text className={styles.antTypography}>Home</Text>
               </a>
               <a href="" target="_blank" rel="noreferrer">

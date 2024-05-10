@@ -1,6 +1,16 @@
 import React from 'react';
+import useMentor from '../../hooks/useMentor';
+import { useNavigate, useParams } from 'react-router';
 
 const MentorProfileView: React.FC = () => {
+  const { mentorId } = useParams();
+  const { data: mentor } = useMentor(mentorId);
+  const navigate = useNavigate();
+
+  const apply = () => {
+    if (mentorId != null) navigate(`/mentee-application/${mentorId}`);
+  };
+
   return (
     <div className="w-screen px-16">
       {/* Bio Section */}
@@ -12,13 +22,19 @@ const MentorProfileView: React.FC = () => {
         />
         <div className="w-full h-1/2 mt-20">
           <h1 className="text-5xl font-extrabold font-sans mb-2 tracking-wider">
-            John Doe
+            {mentor?.application.firstName} {mentor?.application.lastName}
           </h1>
           <div className="flex flex-row place-content-between w-full">
             <p className="text-sm font-sans">
-              Software Engineer, <span className="text-gray-500">Google</span>
+              {mentor?.application.position},{' '}
+              <span className="text-gray-500">
+                {mentor?.application.institution}
+              </span>
             </p>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white px-12 rounded text-lg font-medium mb-3">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white px-12 rounded text-lg font-medium mb-3"
+              onClick={apply}
+            >
               Apply
             </button>
           </div>
@@ -30,7 +46,7 @@ const MentorProfileView: React.FC = () => {
           <div>
             <h2 className="text-xl font-semibold font-sans mt-5">Category</h2>
             <ul className="text-sm list-disc ml-4 font-light">
-              <li>Computer Science</li>
+              <li>{mentor?.category.category}</li>
             </ul>
           </div>
           <div>
@@ -43,9 +59,9 @@ const MentorProfileView: React.FC = () => {
             </ul>
           </div>
           <div>
-            <h2 className="text-xl font-semibold font-sans mt-5">Projects</h2>
+            <h2 className="text-xl font-semibold font-sans mt-5">Country</h2>
             <ul className="text-sm list-disc ml-4 font-light">
-              <li>Lorem ipsum</li>
+              <li>{mentor?.application.country}</li>
             </ul>
           </div>
         </div>
@@ -64,15 +80,7 @@ const MentorProfileView: React.FC = () => {
       </div>
       <div className="pb-9 ">
         <h2 className="text-xl font-semibold">Bio</h2>
-        <p className="font-light">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
+        <p className="font-light">{mentor?.application.bio}</p>
       </div>
     </div>
   );

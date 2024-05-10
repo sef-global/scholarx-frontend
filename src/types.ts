@@ -10,6 +10,7 @@ export interface Category {
   created_at?: string;
   updated_at?: string;
 }
+
 export interface Mentor {
   uuid: string;
   created_at: string;
@@ -28,7 +29,7 @@ export type MentorApplication = z.infer<typeof MentorApplicationSchema>;
 export interface Mentee {
   state: string;
   application: MenteeApplication;
-  profile: string;
+  profile: Profile;
   mentor: string;
   uuid: string;
   created_at: Date;
