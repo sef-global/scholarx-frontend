@@ -3,6 +3,7 @@ import { type Mentor } from '../../../../types';
 import { useMentors } from '../../../../hooks/useMentors';
 import useCategories from '../../../../hooks/useCategories';
 import { useQueryClient } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 
 export const ManageMentorApplications: React.FC = () => {
   const [filter, setFilter] = useState('');
@@ -139,14 +140,13 @@ export const ManageMentorApplications: React.FC = () => {
           <tbody className="bg-white">
             {filteredMentorsByName.map((mentor) => (
               <tr key={mentor.uuid}>
-                <td
-                  className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/4"
-                  onClick={() => {
-                    window.open(`/dashboard/mentor-application/${mentor.uuid}`);
-                  }}
-                  style={{ cursor: 'pointer' }}
-                >
-                  {mentor.application.firstName} {mentor.application.lastName}
+                <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/4">
+                  <Link
+                    to={`/dashboard/mentor-application/${mentor.uuid}`}
+                    target="_blank"
+                  >
+                    {mentor.application.firstName} {mentor.application.lastName}
+                  </Link>
                 </td>
                 <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/4">
                   {mentor.application.position}

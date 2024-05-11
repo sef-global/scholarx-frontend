@@ -41,8 +41,18 @@ const MentorApplication: React.FC<MentorApplicationProps> = ({
                 <span className="text-2xl font-semibold">
                   {mentor.application.firstName} {mentor.application.lastName}
                 </span>
-                <span className="whitespace-nowrap rounded-full bg-blue-100 px-2.5 py-0.5 text-sm text-blue-700">
-                  Pending
+                <span
+                  className={`whitespace-nowrap rounded-full px-2.5 py-0.5 text-sm ${
+                    mentor.state === 'pending'
+                      ? 'bg-blue-100 text-blue-700'
+                      : mentor.state === 'approved'
+                      ? 'bg-green-100 text-green-700'
+                      : mentor.state === 'rejected'
+                      ? 'bg-red-100 text-red-700'
+                      : 'bg-gray-100 text-gray-700'
+                  }`}
+                >
+                  {mentor.state}
                 </span>
               </div>
               <span className="text-xl font-light">
