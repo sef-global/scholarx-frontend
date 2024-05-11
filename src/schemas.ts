@@ -51,7 +51,10 @@ export const MentorApplicationSchema = z.object({
   country: z.string().min(1, { message: 'Country cannot be empty' }),
   position: z.string().min(1, { message: 'Position cannot be empty' }),
   expertise: z.string().min(1, { message: 'Expertise cannot be empty' }),
-  bio: z.string().min(1, { message: 'Bio cannot be empty' }).max(200),
+  bio: z
+    .string()
+    .min(1, { message: 'Bio cannot be empty' })
+    .max(2000, { message: 'Bio cannot exceed 2000 characters' }),
   isPastMentor: z.boolean(),
   reasonToMentor: z.string().optional(),
   motivation: z.string().optional(),
@@ -65,7 +68,9 @@ export const MentorApplicationSchema = z.object({
   noOfMentees: z.number().min(0, {
     message: 'Number of mentees must be greater than or equal to 0',
   }),
-  canCommit: z.boolean(),
+  canCommit: z.boolean().refine((val) => val, {
+    message: 'You must mention if you can commit',
+  }),
   mentoredYear: z.number().optional().or(z.number().min(0)),
   category: z.string().min(1, { message: 'Category cannot be empty' }),
   institution: z.string().min(1, { message: 'Institution cannot be empty' }),

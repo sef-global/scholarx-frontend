@@ -7,7 +7,7 @@ import {
   InstagramOutlined,
   FacebookFilled,
 } from '@ant-design/icons';
-import { Button, Col, Row, Space, Typography } from 'antd';
+import { Button, Col, Row, Space } from 'antd';
 
 import styles from './Navbar.module.css';
 import MenuDrawer from '../MenuDrawer/MenuDrawer';
@@ -20,8 +20,6 @@ import {
 } from './../../../contexts/UserContext';
 import LogoutModal from '../../LogoutModal';
 import { useNavigate } from 'react-router-dom';
-
-const { Text } = Typography;
 
 const Navbar: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -66,6 +64,10 @@ const Navbar: React.FC = () => {
     setOpenMenu(false);
   };
 
+  const handleNavigation = (path: string) => {
+    navigate(path);
+  };
+
   return (
     <>
       <Row align={'middle'} justify={'start'}>
@@ -84,24 +86,38 @@ const Navbar: React.FC = () => {
         <Col md={16} lg={12} xl={14} xxl={16}>
           <Space direction="horizontal">
             <div className={styles.navbarItemContainer}>
-              <a href="/">
-                <Text className={styles.antTypography}>Home</Text>
+              <span
+                className={styles.antTypography}
+                onClick={() => {
+                  handleNavigation('/');
+                }}
+              >
+                Home
+              </span>
+              <span
+                className={styles.antTypography}
+                onClick={() => {
+                  handleNavigation('/mentors');
+                }}
+              >
+                Mentors
+              </span>
+              <a href="" target="_blank" rel="noreferrer">
+                <span className={styles.antTypography}>About</span>
               </a>
               <a href="" target="_blank" rel="noreferrer">
-                <Text className={styles.antTypography}>About</Text>
+                <span className={styles.antTypography}>Initiatives</span>
               </a>
               <a href="" target="_blank" rel="noreferrer">
-                <Text className={styles.antTypography}>Initiatives</Text>
+                <span className={styles.antTypography}>Join Us</span>
               </a>
-              <a href="" target="_blank" rel="noreferrer">
-                <Text className={styles.antTypography}>Join Us</Text>
-              </a>
-              <Button
-                className="mr-5 mb-5 w-40 h-9 font-sans text-black-400 py-1 px-4 rounded"
+              <button
+                type="button"
                 onClick={handleMentorRegistration}
+                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
               >
                 Become a Mentor
-              </Button>
+              </button>
             </div>
           </Space>
         </Col>

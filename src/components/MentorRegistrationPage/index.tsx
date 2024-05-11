@@ -329,7 +329,7 @@ const MentorRegistrationPage: React.FC = () => {
                 Previous
               </button>
             )}
-            {currentStep < 2 ? (
+            {currentStep < 2 && (
               <button
                 type="button"
                 onClick={handleNext}
@@ -337,7 +337,8 @@ const MentorRegistrationPage: React.FC = () => {
               >
                 Next
               </button>
-            ) : (
+            )}
+            {currentStep === 2 && (
               <button
                 type="submit"
                 className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-1 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-small rounded-md text-sm inline-flex items-center px-3 py-1.5 text-center me-2"

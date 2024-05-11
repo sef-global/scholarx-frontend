@@ -13,10 +13,9 @@ const MentorProfileView: React.FC = () => {
 
   return (
     <div className="w-screen px-16">
-      {/* Bio Section */}
       <div className="flex flex-row gap-2 ">
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Andrew_Tate_on_%27Anything_Goes_With_James_English%27_in_2021.jpg"
+          src="https://palmbayprep.org/wp-content/uploads/2015/09/user-icon-placeholder.png"
           alt="find-mentor"
           className="w-36 h-36 rounded-full object-cover my-auto"
         />
@@ -50,12 +49,9 @@ const MentorProfileView: React.FC = () => {
             </ul>
           </div>
           <div>
-            <h2 className="text-xl font-semibold font-sans mt-5">
-              Fields Of interests
-            </h2>
+            <h2 className="text-xl font-semibold font-sans mt-5">Expertise</h2>
             <ul className="text-sm list-disc ml-4 font-light">
-              <li>Machine Learning</li>
-              <li>Big Data</li>
+              <li>{mentor?.application.expertise}</li>
             </ul>
           </div>
           <div>
@@ -71,14 +67,19 @@ const MentorProfileView: React.FC = () => {
             Linkedin
           </a>
           <a href="#" className="text-blue-500 underline">
-            Google scholar
-          </a>
-          <a href="#" className="text-blue-500 underline">
             Website
           </a>
         </div>
       </div>
-      <div className="pb-9 ">
+      <div className="pb-9">
+        <h2 className="text-xl font-semibold">Mentoring Philosophy</h2>
+        <p className="font-light">{mentor?.application.mentoringPhilosophy}</p>
+      </div>
+      <div className="pb-9">
+        <h2 className="text-xl font-semibold">Mentee Expectations</h2>
+        <p className="font-light">{mentor?.application.menteeExpectations}</p>
+      </div>
+      <div className="pb-9">
         <h2 className="text-xl font-semibold">Bio</h2>
         <p className="font-light">{mentor?.application.bio}</p>
       </div>
