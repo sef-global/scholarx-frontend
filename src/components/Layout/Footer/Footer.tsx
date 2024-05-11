@@ -108,7 +108,7 @@ const Footer: React.FC = () => (
             <li className="w-[70px]">
               <a
                 href="https://sefglobal.org/join-us.html"
-                className="text-sm font-medium mr-5 text-desatdark-blue inline-block w-[100%] block "
+                className="text-sm font-medium mr-5 text-desatdark-blue inline-block w-[100%]"
               >
                 Join Us
               </a>

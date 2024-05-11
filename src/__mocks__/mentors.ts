@@ -43,6 +43,7 @@ export const mentors: Mentor[] = [
       linkedin_url: 'https://linkedin.com/in/mentor1',
       type: 'DEFAULT',
       uuid: 'abc123',
+      mentor: [],
     },
   },
   {
@@ -87,6 +88,7 @@ export const mentors: Mentor[] = [
       linkedin_url: 'https://linkedin.com/in/mentor2',
       type: 'DEFAULT',
       uuid: 'def456',
+      mentor: [],
     },
   },
   {
@@ -131,6 +133,7 @@ export const mentors: Mentor[] = [
       linkedin_url: 'https://linkedin.com/in/mentor3',
       type: 'DEFAULT',
       uuid: 'ghi789',
+      mentor: [],
     },
   },
 ];

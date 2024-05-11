@@ -11,4 +11,5 @@ export const profile: Profile = {
   linkedin_url: 'https://linkedin.com/in/user1',
   type: 'DEFAULT',
   uuid: 'abc123',
+  mentor: [],
 };
