@@ -40,6 +40,7 @@ export interface Mentee {
 
 export interface Profile {
   created_at: Date;
+  mentor: Mentor[];
   updated_at: Date;
   primary_email: string;
   contact_email: string;

@@ -1,15 +1,5 @@
 import React, { useContext, useState } from 'react';
 
-import {
-  AlignRightOutlined,
-  TwitterOutlined,
-  LinkedinFilled,
-  InstagramOutlined,
-  FacebookFilled,
-} from '@ant-design/icons';
-import { Button, Col, Row, Space } from 'antd';
-
-import styles from './Navbar.module.css';
 import MenuDrawer from '../MenuDrawer/MenuDrawer';
 import LoginModal from '../../LoginModal';
 import RegisterModal from '../../RegisterModal';
@@ -19,7 +9,7 @@ import {
   type UserContextType,
 } from './../../../contexts/UserContext';
 import LogoutModal from '../../LogoutModal';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -64,132 +54,195 @@ const Navbar: React.FC = () => {
     setOpenMenu(false);
   };
 
-  const handleNavigation = (path: string) => {
-    navigate(path);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
   return (
     <>
-      <Row align={'middle'} justify={'start'}>
-        <Col xs={20} md={2} lg={4} xl={4} xxl={4}>
-          <img
-            className={styles.navbarLogoContainer}
-            src="./scholarx-logo.png"
-          />
-        </Col>
-        <AlignRightOutlined
-          className={styles.menuIcon}
-          onClick={() => {
-            setOpenMenu(true);
-          }}
-        />
-        <Col md={16} lg={12} xl={14} xxl={16}>
-          <Space direction="horizontal">
-            <div className={styles.navbarItemContainer}>
-              <span
-                className={styles.antTypography}
-                onClick={() => {
-                  handleNavigation('/');
-                }}
-              >
-                Home
-              </span>
-              <span
-                className={styles.antTypography}
-                onClick={() => {
-                  handleNavigation('/mentors');
-                }}
-              >
-                Mentors
-              </span>
-              <a href="" target="_blank" rel="noreferrer">
-                <span className={styles.antTypography}>About</span>
-              </a>
-              <a href="" target="_blank" rel="noreferrer">
-                <span className={styles.antTypography}>Initiatives</span>
-              </a>
-              <a href="" target="_blank" rel="noreferrer">
-                <span className={styles.antTypography}>Join Us</span>
-              </a>
-              <button
-                type="button"
-                onClick={handleMentorRegistration}
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-              >
-                Become a Mentor
-              </button>
+      <nav className="bg-white border-gray-200">
+        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+          <Link to="/">
+            <img
+              src="./scholarx-logo.png"
+              className="h-12"
+              alt="ScholarX Logo"
+            />
+          </Link>
+          <div
+            className={`${
+              user === null ? 'invisible' : 'visible'
+            } flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse relative`}
+          >
+            <button
+              type="button"
+              className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300"
+              onClick={toggleDropdown}
+            >
+              <span className="sr-only">Open user menu</span>
+              <img
+                className="w-8 h-8 rounded-full"
+                src={user?.image_url}
+                alt="user photo"
+              />
+            </button>
+            {/* Dropdown menu */}
+            <div
+              className={`z-50 ${
+                isDropdownOpen ? 'block' : 'hidden'
+              } my-4 text-base list-none top-5 right-5 bg-white divide-y absolute divide-gray-100 rounded-lg shadow`}
+            >
+              <div className="px-4 py-3">
+                <span className="block text-sm text-gray-900">
+                  {user?.first_name}
+                </span>
+                <span className="block text-sm text-gray-500 truncate">
+                  {user?.primary_email}
+                </span>
+              </div>
+              <ul className="py-2" aria-labelledby="user-menu-button">
+                <li>
+                  <p
+                    onClick={() => {
+                      if (user?.mentor.length != null) {
+                        navigate('/mentor/dashboard');
+                        setIsDropdownOpen(false);
+                      }
+                    }}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                  >
+                    Dashboard
+                  </p>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                  >
+                    Settings
+                  </a>
+                </li>
+
+                <li>
+                  <p
+                    onClick={handleLogoutModalOpen}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                  >
+                    Log out
+                  </p>
+                </li>
+              </ul>
             </div>
-          </Space>
-        </Col>
-        <Col md={4} lg={4} xl={3} className={styles.socialMediaContainer}>
-          <Space direction="horizontal">
-            <a
-              href="https://www.facebook.com/sustainableeducationfoundation/"
-              target="_blank"
-              rel="noreferrer"
+            <button
+              data-collapse-toggle="navbar-user"
+              type="button"
+              onClick={() => {
+                setOpenMenu(true);
+              }}
+              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+              aria-controls="navbar-user"
+              aria-expanded="false"
             >
-              <Button className={styles.antButton} shape="circle">
-                <FacebookFilled className={styles.antIcon} />
-              </Button>
-            </a>
-            <a
-              href="https://twitter.com/goasksef"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Button className={styles.antButton} shape="circle">
-                <TwitterOutlined className={styles.antIcon} />
-              </Button>
-            </a>
-            <a
-              href="https://www.linkedin.com/company/sefglobal/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Button className={styles.antButton} shape="circle">
-                <LinkedinFilled className={styles.antIcon} />
-              </Button>
-            </a>
-            <a
-              href="https://www.instagram.com/sefglobal/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Button className={styles.antButton} shape="circle">
-                <InstagramOutlined className={styles.antIcon} />
-              </Button>
-            </a>
-            {user === null ? (
-              <>
-                <Button
-                  className={styles.loginButton}
-                  onClick={handleLoginModalOpen}
-                >
-                  Login
-                </Button>
-                <Button
-                  className={styles.loginButton}
-                  onClick={handleRegisterModalOpen}
-                >
-                  Register
-                </Button>
-              </>
-            ) : (
-              <Button
-                className={styles.loginButton}
-                onClick={handleLogoutModalOpen}
+              <span className="sr-only">Open main menu</span>
+              <svg
+                className="w-5 h-5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 17 14"
               >
-                Logout
-              </Button>
-            )}
-          </Space>
-        </Col>
-      </Row>
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M1 1h15M1 7h15M1 13h15"
+                />
+              </svg>
+            </button>
+          </div>
+          <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1 ">
+            <ul className=" align-middle flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
+              <li>
+                <Link
+                  className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 cursor-pointer"
+                  to="/"
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 cursor-pointer"
+                  to="/mentors"
+                >
+                  Mentors
+                </Link>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 "
+                >
+                  About
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 "
+                >
+                  Initiatives
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 "
+                >
+                  Join Us
+                </a>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={handleMentorRegistration}
+                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+                >
+                  Become a Mentor
+                </button>
+              </li>
+              <li>
+                {user === null && (
+                  <>
+                    <span
+                      className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 "
+                      onClick={handleLoginModalOpen}
+                    >
+                      Login
+                    </span>{' '}
+                    <span
+                      className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 "
+                      onClick={handleRegisterModalOpen}
+                    >
+                      Register
+                    </span>
+                  </>
+                )}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
       <MenuDrawer
         openMenu={openMenu}
         setOpenMenu={setOpenMenu}
         handleMentorRegistration={handleMentorRegistration}
       />
+
       {isLoginModalVisible ? (
         <LoginModal handleClose={handleLoginModalClose} />
       ) : null}

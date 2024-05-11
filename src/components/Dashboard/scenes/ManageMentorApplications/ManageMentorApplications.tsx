@@ -4,7 +4,7 @@ import { useMentors } from '../../../../hooks/useMentors';
 import useCategories from '../../../../hooks/useCategories';
 import { useQueryClient } from '@tanstack/react-query';
 
-export const ManageMentorApplications: React.FC = () => {
+const ManageMentorApplications: React.FC = () => {
   const [filter, setFilter] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const { data: categories } = useCategories();
@@ -200,3 +200,5 @@ export const ManageMentorApplications: React.FC = () => {
     </div>
   );
 };
+
+export default ManageMentorApplications;

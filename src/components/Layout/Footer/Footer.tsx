@@ -8,7 +8,7 @@ import SlackIcon from '../../../assets/svg/Icons/SlackIcon.tsx';
 import GithubIcon from '../../../assets/svg/Icons/GithubIcon.tsx';
 import YoutubeIcon from '../../../assets/svg/Icons/YoutubeIcon.tsx';
 
-const FooterComponent: React.FC = () => (
+const Footer: React.FC = () => (
   <>
     <div className="wrapper flex justify-around flex-col sm:flex-row ">
       <div className="col ml-8">
@@ -141,4 +141,4 @@ const FooterComponent: React.FC = () => (
     </div>
   </>
 );
-export default FooterComponent;
+export default Footer;

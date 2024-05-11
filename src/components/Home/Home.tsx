@@ -5,17 +5,11 @@ import FAQCollapse from '../FAQ/FAQCollapse';
 import menteeFAQs from '../FAQ/MenteeFAQs.json';
 import mentorFAQs from '../FAQ/MentorFAQs.json';
 import TestimonialCard from '../Testimonials/TestimonialCard';
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const { Text } = Typography;
 
 const Home: React.FC = () => {
-  const navigation = useNavigate();
-
-  const apply = () => {
-    navigation('/mentors');
-  };
-
   return (
     <>
       {/* Main title container */}
@@ -26,12 +20,11 @@ const Home: React.FC = () => {
           </div>
           <div className="wrapper mt-[40px]">
             <div className="buttonWrapper flex mt-10">
-              <button
-                onClick={apply}
-                className="flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white py-1 px-16 rounded w-40 h-9 font-sans font-bold"
-              >
-                Apply
-              </button>
+              <Link to="/mentors">
+                <button className="flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white py-1 px-16 rounded w-40 h-9 font-sans font-bold">
+                  Apply
+                </button>
+              </Link>
               <button className="flex justify-center items-center mr-5 mb-5  font-normal text-black focus:outline-none bg-white w-40 h-9  rounded border border-gray-400 hover:bg-gray-100 hover:text-blue-400 hover:border-blue-400 ">
                 See More
               </button>
@@ -48,7 +41,7 @@ const Home: React.FC = () => {
       </div>
 
       {/* Statistics container */}
-      <div className="homePageContainerNew flex flex-wrap justify-evenly p-[4%] m-0 items-center flex-col md:flex-row flex-wrap bg-[#F7F8FA] ">
+      <div className="homePageContainerNew flex justify-evenly p-[4%] m-0 items-center flex-col md:flex-row flex-wrap bg-[#F7F8FA] ">
         <div className="ContainerOne text-center">
           <div className="homePageSecondaryTitleNew font-sans text-3xl font-bold text-[#1D1D1F]">
             100,000+

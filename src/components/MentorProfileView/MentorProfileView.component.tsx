@@ -1,26 +1,21 @@
 import React from 'react';
 import useMentor from '../../hooks/useMentor';
-import { useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const MentorProfileView: React.FC = () => {
   const { mentorId } = useParams();
   const { data: mentor } = useMentor(mentorId);
-  const navigate = useNavigate();
-
-  const apply = () => {
-    if (mentorId != null) navigate(`/mentee-application/${mentorId}`);
-  };
-
   return (
     <div className="w-screen px-16">
-      <div className="flex flex-row gap-2 ">
+      <div className="flex flex-row gap-2">
         <img
           src="https://palmbayprep.org/wp-content/uploads/2015/09/user-icon-placeholder.png"
           alt="find-mentor"
           className="w-36 h-36 rounded-full object-cover my-auto"
         />
         <div className="w-full h-1/2 mt-20">
-          <h1 className="text-5xl font-extrabold font-sans mb-2 tracking-wider">
+          <h1 className="text-3xl font-extrabold font-sans mb-2 tracking-wider">
             {mentor?.application.firstName} {mentor?.application.lastName}
           </h1>
           <div className="flex flex-row place-content-between w-full">
@@ -30,12 +25,12 @@ const MentorProfileView: React.FC = () => {
                 {mentor?.application.institution}
               </span>
             </p>
-            <button
+            <Link
               className="bg-blue-500 hover:bg-blue-700 text-white px-12 rounded text-lg font-medium mb-3"
-              onClick={apply}
+              to={`/mentee-application/${mentorId as string}`}
             >
               Apply
-            </button>
+            </Link>
           </div>
           <hr className="w-full" />
         </div>

@@ -1,21 +1,17 @@
 import React from 'react';
 import { UserOutlined } from '@ant-design/icons';
 import { type Mentor } from '../../types.ts';
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
 interface MentorCardProps {
   mentor: Mentor;
 }
 
 const MentorCard: React.FC<MentorCardProps> = ({ mentor }) => {
-  const navigation = useNavigate();
-
   return (
-    <div
-      className="border border-gray-200 p-4 rounded-md shadow-md w-52 cursor-pointer"
-      onClick={() => {
-        navigation(`/mentors/${mentor.uuid}`);
-      }}
+    <Link
+      className="border border-gray-200 p-4 rounded-md shadow-md w-52"
+      to={`/mentors/${mentor.uuid}`}
     >
       {mentor.profile.image_url !== '' ? (
         <img
@@ -37,7 +33,7 @@ const MentorCard: React.FC<MentorCardProps> = ({ mentor }) => {
           {mentor.application.institution}
         </p>
       </div>
-    </div>
+    </Link>
   );
 };
 
