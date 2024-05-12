@@ -3,6 +3,8 @@ import EmailTemplate from './EmailTemplate';
 import EmailHistory from './EmailHistory';
 import axios from 'axios';
 import CheckButton from './CheckButton';
+import { EMAILAPI_URL } from '../../../../constants';
+
 
 const Emails: React.FC = () => {
   const [mentees, setMentees] = useState([]);
@@ -21,7 +23,7 @@ const Emails: React.FC = () => {
 
   const fetchEmails = useCallback(() => {
     axios
-      .get('http://localhost:4000/api/v1/sent')
+      .get(`${EMAILAPI_URL}/api/v1/sent`)
       .then((response) => {
         setEmails(response.data.recipient);
       })
@@ -30,12 +32,13 @@ const Emails: React.FC = () => {
       });
   }, []);
 
+  console.log(EMAILAPI_URL);
   useEffect(fetchEmails, []);
 
   const checkApiStatus = () => {
     setIsLoading(true);
     axios
-      .get('https://64.227.135.79/api/v1/healthcheck')
+      .get(`${EMAILAPI_URL}/api/v1/healthcheck`)
       .then((response) => {
         setTimeout(() => {
           if (response.data.status === 'available') {
@@ -71,7 +74,7 @@ const Emails: React.FC = () => {
     };
     setIsLoading(true);
     try {
-      const response = await fetch('https://64.227.135.79/api/v1/send', {
+      const response = await fetch(`${EMAILAPI_URL}api/v1/send`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

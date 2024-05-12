@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
+import { EMAILAPI_URL } from '../../../../constants';
 
 interface Email {
   recipients: string;
@@ -18,7 +19,7 @@ const EmailHistory: React.FC<{ refreshCount: number }> = ({ refreshCount }) => {
     setIsLoading(true);
     setTimeout(() => {
       axios
-        .get('https://64.227.135.79/api/v1/sent')
+        .get(`${EMAILAPI_URL}/api/v1/sent`)
         .then((response) => {
           setEmails(
             Array.isArray(response.data.emails) ? response.data.emails : []
