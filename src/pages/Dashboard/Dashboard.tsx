@@ -2,7 +2,7 @@ import React from 'react';
 import { Menu, Layout } from 'antd';
 
 import { Link, Route, Routes } from 'react-router-dom';
-import { ManageMentorApplications } from './scenes/ManageMentorApplications/ManageMentorApplications.tsx';
+import ManageMentorApplications from './scenes/ManageMentorApplications/ManageMentorApplications.tsx';
 import ManageMentors from './scenes/ManageMentors/ManageMentors.tsx';
 import OngoingMentorshipPrograms from './scenes/OngoingMentorshipPrograms/OngoingMentorshipPrograms.tsx';
 import PlatformSettings from './scenes/PlatformSettings/PlatformSettings.tsx';
@@ -46,28 +46,23 @@ const Dashboard: React.FC = () => {
           </Menu.Item>
         </Menu>
       </Sider>
-      <Layout>
-        <Content className="h-screen">
-          <Routes>
-            <Route path="/manage-mentors" element={<ManageMentors />} />
-            <Route
-              path="/manage-mentor-application"
-              element={<ManageMentorApplications />}
-            />
-            <Route
-              path="/mentee-applications"
-              element={<MenteeApplications />}
-            />
-            <Route
-              path="/ongoing-mentorship-programs"
-              element={<OngoingMentorshipPrograms />}
-            />
-            <Route path="/platform-settings" element={<PlatformSettings />} />
-            <Route path="/manage-users" element={<ManageUsers />} />
-            <Route path="/emails" element={<Emails />} />
-          </Routes>
-        </Content>
-      </Layout>
+      <Content className="h-screen">
+        <Routes>
+          <Route path="/manage-mentors" element={<ManageMentors />} />
+          <Route
+            path="/manage-mentor-application"
+            element={<ManageMentorApplications />}
+          />
+          <Route path="/mentee-applications" element={<MenteeApplications />} />
+          <Route
+            path="/ongoing-mentorship-programs"
+            element={<OngoingMentorshipPrograms />}
+          />
+          <Route path="/platform-settings" element={<PlatformSettings />} />
+          <Route path="/manage-users" element={<ManageUsers />} />
+          <Route path="/emails" element={<Emails />} />
+        </Routes>
+      </Content>
     </Layout>
   );
 };

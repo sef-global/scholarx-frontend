@@ -1,3 +1,4 @@
+import { ProfileTypes } from '../enums';
 import type { Profile } from '../types';
 
 export const profile: Profile = {
@@ -9,6 +10,7 @@ export const profile: Profile = {
   last_name: 'Doe',
   image_url: 'https://xsgames.co/randomusers/avatar.php?g=male',
   linkedin_url: 'https://linkedin.com/in/user1',
-  type: 'DEFAULT',
+  type: ProfileTypes.DEFAULT,
   uuid: 'abc123',
+  mentor: [],
 };

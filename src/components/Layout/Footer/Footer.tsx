@@ -8,7 +8,7 @@ import SlackIcon from '../../../assets/svg/Icons/SlackIcon.tsx';
 import GithubIcon from '../../../assets/svg/Icons/GithubIcon.tsx';
 import YoutubeIcon from '../../../assets/svg/Icons/YoutubeIcon.tsx';
 
-const FooterComponent: React.FC = () => (
+const Footer: React.FC = () => (
   <>
     <div className="wrapper flex justify-around flex-col sm:flex-row ">
       <div className="col ml-8">
@@ -108,7 +108,7 @@ const FooterComponent: React.FC = () => (
             <li className="w-[70px]">
               <a
                 href="https://sefglobal.org/join-us.html"
-                className="text-sm font-medium mr-5 text-desatdark-blue inline-block w-[100%] block "
+                className="text-sm font-medium mr-5 text-desatdark-blue inline-block w-[100%]"
               >
                 Join Us
               </a>
@@ -141,4 +141,4 @@ const FooterComponent: React.FC = () => (
     </div>
   </>
 );
-export default FooterComponent;
+export default Footer;

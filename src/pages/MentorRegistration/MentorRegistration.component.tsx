@@ -4,12 +4,12 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import { API_URL } from '../../constants';
 import useCategories from '../../hooks/useCategories';
 import { zodResolver } from '@hookform/resolvers/zod';
-import FormInput from '../FormFields/MentorApplication/FormInput';
 import { useMutation } from '@tanstack/react-query';
-import FormTextarea from '../FormFields/MentorApplication/FormTextarea';
-import FormCheckbox from '../FormFields/MentorApplication/FormCheckbox';
 import { MentorApplicationSchema } from '../../schemas';
 import { type MentorApplication } from '../../types';
+import FormCheckbox from '../../components/FormFields/MentorApplication/FormCheckbox';
+import FormInput from '../../components/FormFields/MentorApplication/FormInput';
+import FormTextarea from '../../components/FormFields/MentorApplication/FormTextarea';
 
 const steps = [
   {
@@ -329,7 +329,7 @@ const MentorRegistrationPage: React.FC = () => {
                 Previous
               </button>
             )}
-            {currentStep < 2 ? (
+            {currentStep < 2 && (
               <button
                 type="button"
                 onClick={handleNext}
@@ -337,7 +337,8 @@ const MentorRegistrationPage: React.FC = () => {
               >
                 Next
               </button>
-            ) : (
+            )}
+            {currentStep === 2 && (
               <button
                 type="submit"
                 className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-1 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-small rounded-md text-sm inline-flex items-center px-3 py-1.5 text-center me-2"

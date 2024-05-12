@@ -3,12 +3,12 @@ import axios, { AxiosError } from 'axios';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { API_URL } from '../../constants';
 import { zodResolver } from '@hookform/resolvers/zod';
-import FormInput from '../FormFields/MenteeApplication/FormInput';
 import { useMutation } from '@tanstack/react-query';
 import { usePublicMentors } from '../../hooks/usePublicMentors';
-import FormCheckbox from '../FormFields/MenteeApplication/FormCheckbox';
 import { type MenteeApplication } from '../../types';
 import { MenteeApplicationSchema } from '../../schemas';
+import FormCheckbox from '../../components/FormFields/MenteeApplication/FormCheckbox';
+import FormInput from '../../components/FormFields/MenteeApplication/FormInput';
 
 const steps = [
   {
@@ -21,7 +21,7 @@ const steps = [
   },
 ];
 
-const MenteeRegistrationPage: React.FC = () => {
+const MenteeApplicationForm: React.FC = () => {
   const {
     register,
     unregister,
@@ -236,8 +236,9 @@ const MenteeRegistrationPage: React.FC = () => {
                   {...register('mentorId')}
                 >
                   {mentors?.map((mentor) => (
-                    <option key={mentor.mentorId} value={mentor.mentorId}>
-                      {mentor.profile.first_name}
+                    <option key={mentor.uuid} value={mentor.uuid}>
+                      {mentor.application.firstName}{' '}
+                      {mentor.application.lastName}
                     </option>
                   ))}
                 </select>
@@ -354,4 +355,4 @@ const MenteeRegistrationPage: React.FC = () => {
   );
 };
 
-export default MenteeRegistrationPage;
+export default MenteeApplicationForm;

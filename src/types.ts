@@ -3,6 +3,7 @@ import {
   type MentorApplicationSchema,
   type MenteeApplicationSchema,
 } from './schemas';
+import { type ProfileTypes } from './enums';
 
 export interface Category {
   category: string;
@@ -10,6 +11,7 @@ export interface Category {
   created_at?: string;
   updated_at?: string;
 }
+
 export interface Mentor {
   uuid: string;
   created_at: string;
@@ -28,7 +30,7 @@ export type MentorApplication = z.infer<typeof MentorApplicationSchema>;
 export interface Mentee {
   state: string;
   application: MenteeApplication;
-  profile: string;
+  profile: Profile;
   mentor: string;
   uuid: string;
   created_at: Date;
@@ -39,6 +41,7 @@ export interface Mentee {
 
 export interface Profile {
   created_at: Date;
+  mentor: Mentor[];
   updated_at: Date;
   primary_email: string;
   contact_email: string;
@@ -46,19 +49,6 @@ export interface Profile {
   last_name: string;
   image_url?: string;
   linkedin_url: string;
-  type: 'DEFAULT' | 'ADMIN';
+  type: ProfileTypes;
   uuid: string;
-}
-
-export interface MentorCardType {
-  mentorId: string;
-  category: string;
-  profile: {
-    contact_email: string;
-    first_name: string;
-    last_name: string;
-    image_url?: string | undefined;
-    linkedin_url: string;
-    position: string;
-  };
 }

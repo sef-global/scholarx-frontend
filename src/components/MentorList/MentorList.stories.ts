@@ -1,7 +1,7 @@
+import { mentors } from './../../__mocks__/mentors';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { MentorList } from './MentorList.component';
-import { mentorCards } from '../../__mocks__/mentorCards';
 
 const meta: Meta<typeof MentorList> = {
   title: 'Mentor List',
@@ -18,7 +18,7 @@ type Story = StoryObj<typeof meta>;
 
 export const ListWithData: Story = {
   args: {
-    mentors: [...mentorCards, ...mentorCards],
+    mentors: [...mentors, ...mentors],
   },
 };
 export const EmptyList: Story = {};
