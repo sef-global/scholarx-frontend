@@ -21,7 +21,7 @@ const steps = [
   },
 ];
 
-const MenteeRegistrationPage: React.FC = () => {
+const MenteeApplicationForm: React.FC = () => {
   const {
     register,
     unregister,
@@ -355,4 +355,4 @@ const MenteeRegistrationPage: React.FC = () => {
   );
 };
 
-export default MenteeRegistrationPage;
+export default MenteeApplicationForm;

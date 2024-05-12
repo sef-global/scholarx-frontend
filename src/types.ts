@@ -3,6 +3,7 @@ import {
   type MentorApplicationSchema,
   type MenteeApplicationSchema,
 } from './schemas';
+import { type ProfileTypes } from './enums';
 
 export interface Category {
   category: string;
@@ -48,6 +49,6 @@ export interface Profile {
   last_name: string;
   image_url?: string;
   linkedin_url: string;
-  type: 'DEFAULT' | 'ADMIN';
+  type: ProfileTypes;
   uuid: string;
 }

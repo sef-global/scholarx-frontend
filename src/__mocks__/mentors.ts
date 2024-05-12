@@ -1,3 +1,4 @@
+import { ProfileTypes } from '../enums';
 import type { Mentor } from '../types';
 
 export const mentors: Mentor[] = [
@@ -41,7 +42,7 @@ export const mentors: Mentor[] = [
       last_name: 'Doe',
       image_url: 'https://xsgames.co/randomusers/avatar.php?g=male',
       linkedin_url: 'https://linkedin.com/in/mentor1',
-      type: 'DEFAULT',
+      type: ProfileTypes.DEFAULT,
       uuid: 'abc123',
       mentor: [],
     },
@@ -86,7 +87,7 @@ export const mentors: Mentor[] = [
       last_name: 'Smith',
       image_url: 'https://xsgames.co/randomusers/avatar.php?g=female',
       linkedin_url: 'https://linkedin.com/in/mentor2',
-      type: 'DEFAULT',
+      type: ProfileTypes.DEFAULT,
       uuid: 'def456',
       mentor: [],
     },
@@ -131,7 +132,7 @@ export const mentors: Mentor[] = [
       last_name: 'Johnson',
       image_url: '',
       linkedin_url: 'https://linkedin.com/in/mentor3',
-      type: 'DEFAULT',
+      type: ProfileTypes.DEFAULT,
       uuid: 'ghi789',
       mentor: [],
     },

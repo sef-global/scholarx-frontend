@@ -2,7 +2,7 @@ import React, { createContext, useState } from 'react';
 import axios, { type AxiosResponse } from 'axios';
 import type { Profile } from '../types';
 import { API_URL } from './../constants';
-import { ApplicationStatus } from '../enums';
+import { ApplicationStatus, ProfileTypes } from '../enums';
 
 export interface UserContextType {
   user: Profile | null;
@@ -10,6 +10,7 @@ export interface UserContextType {
   getUser: () => void;
   isUserLoading: boolean;
   isUserMentor: boolean;
+  isUserAdmin: boolean;
 }
 
 export const UserContext = createContext<UserContextType | null>(null);
@@ -19,6 +20,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [user, setUser] = useState<Profile | null>(null);
   const [isUserLoading, setIsUserLoading] = useState(true);
+  const isUserAdmin = user?.type === ProfileTypes.ADMIN;
   const isUserMentor =
     user?.mentor.some(
       (mentor) => mentor.state === ApplicationStatus.APPROVED
@@ -56,7 +58,14 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <UserContext.Provider
-      value={{ user, setUserContext, getUser, isUserLoading, isUserMentor }}
+      value={{
+        user,
+        setUserContext,
+        getUser,
+        isUserLoading,
+        isUserMentor,
+        isUserAdmin,
+      }}
     >
       {children}
     </UserContext.Provider>

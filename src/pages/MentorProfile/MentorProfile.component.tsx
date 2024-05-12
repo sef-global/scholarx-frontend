@@ -3,7 +3,7 @@ import useMentor from '../../hooks/useMentor';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 
-const MentorProfileView: React.FC = () => {
+const MentorProfile: React.FC = () => {
   const { mentorId } = useParams();
   const { data: mentor } = useMentor(mentorId);
   return (
@@ -82,4 +82,4 @@ const MentorProfileView: React.FC = () => {
   );
 };
 
-export default MentorProfileView;
+export default MentorProfile;

@@ -5,7 +5,7 @@ import { type Mentor, type Category } from '../../types';
 import { usePublicMentors } from '../../hooks/usePublicMentors';
 import MentorCard from '../../components/MentorCard/MentorCard.component';
 
-const PublicMentorPage = () => {
+const Mentors = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
@@ -146,4 +146,4 @@ const PublicMentorPage = () => {
   );
 };
 
-export default PublicMentorPage;
+export default Mentors;

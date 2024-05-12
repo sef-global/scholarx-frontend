@@ -3,7 +3,7 @@ import { waitFor, within } from '@storybook/testing-library';
 import { screen, fireEvent } from '@testing-library/react';
 import type { Meta, StoryObj } from '@storybook/react';
 
-import MentorRegistrationPage from './';
+import MentorRegistrationPage from './MentorRegistration.component';
 
 const meta: Meta<typeof MentorRegistrationPage> = {
   component: MentorRegistrationPage,
