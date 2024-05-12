@@ -1,4 +1,3 @@
-// CheckButton.tsx
 import React from 'react';
 
 interface CheckButtonProps {
