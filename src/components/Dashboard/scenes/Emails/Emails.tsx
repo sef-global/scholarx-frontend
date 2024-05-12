@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import EmailTemplate from './EmailTemplate';
 import EmailHistory from './EmailHistory';
 import axios from 'axios';
+import CheckButton from './CheckButton';
 
 const Emails: React.FC = () => {
   const [mentees, setMentees] = useState([]);
@@ -13,13 +14,12 @@ const Emails: React.FC = () => {
   const [apiStatus, setApiStatus] = useState('Checking...');
   const [emails, setEmails] = useState([]);
   const [refreshCount, setRefreshCount] = useState(0);
-  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(true);
   const [select, setSelect] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [message, setMessage] = useState('');
 
   const fetchEmails = useCallback(() => {
-    setIsRefreshing(true);
     axios
       .get('http://localhost:4000/api/v1/sent')
       .then((response) => {
@@ -27,43 +27,38 @@ const Emails: React.FC = () => {
       })
       .catch((error) => {
         console.error('Error:', error);
-      })
-      .finally(() => {
-        setIsRefreshing(true);
       });
   }, []);
 
   useEffect(fetchEmails, []);
 
-  // useEffect(() => {
-  //   // Fetch mentees from backend API
-  //   // Replace with your actual API call
-  //   fetch('/api/mentees')
-  //     .then(async (response) => await response.json())
-  //     .then((data) => {
-  //       setMentees(data);
-  //     });
-  // }, []);
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   // Handle form submission here
-  // };
-
-  useEffect(() => {
+  const checkApiStatus = () => {
+    setIsLoading(true);
     axios
-      .get('http://localhost:4000/api/v1/healthcheck')
+      .get('https://64.227.135.79/api/v1/healthcheck')
       .then((response) => {
-        if (response.data.status === 'available') {
-          setApiStatus('Connected');
-        } else {
-          setApiStatus('Disconnected');
-        }
+        setTimeout(() => {
+          if (response.data.status === 'available') {
+            setApiStatus('Connected');
+          } else {
+            setApiStatus('Disconnected');
+          }
+        }, 1000);
       })
       .catch((error) => {
-        setApiStatus('Error');
-        console.log('Error:', error);
+        setTimeout(() => {
+          setApiStatus('Error');
+          setMessage(`Error : ${(error as Error).message}`);
+        }, 1000);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
       });
+  };
+  useEffect(() => {
+    checkApiStatus();
   }, []);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -76,17 +71,16 @@ const Emails: React.FC = () => {
     };
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:4000/api/v1/send', {
+      const response = await fetch('https://64.227.135.79/api/v1/send', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(emailData),
       });
-
-      const data = await response.json();
+      console.log(response);
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.statusText}`);
       }
       setMessage('Success: Emails sent!');
     } catch (error) {
@@ -124,6 +118,7 @@ const Emails: React.FC = () => {
           >
             {apiStatus}
           </span>
+          <CheckButton isLoading={isLoading} checkApiStatus={checkApiStatus} />
         </p>
         <div className="flex space-x-2">
           <button

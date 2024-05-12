@@ -1,20 +1,27 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
+
+interface Email {
+  recipients: string;
+  subject: string;
+  status: string;
+  opened: boolean;
+  sentTime: string;
+}
 
 const EmailHistory: React.FC<{ refreshCount: number }> = ({ refreshCount }) => {
-  const [emails, setEmails] = useState([]);
+  const [emails, setEmails] = useState<Email[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchEmails = useCallback(() => {
     setIsLoading(true);
     setTimeout(() => {
       axios
-        .get('http://localhost:4000/api/v1/sent')
+        .get('https://64.227.135.79/api/v1/sent')
         .then((response) => {
           setEmails(
-            Array.isArray(response.data.recipient)
-              ? response.data.recipient
-              : []
+            Array.isArray(response.data.emails) ? response.data.emails : []
           );
           setIsLoading(false);
         })
@@ -29,7 +36,7 @@ const EmailHistory: React.FC<{ refreshCount: number }> = ({ refreshCount }) => {
   }, [fetchEmails, refreshCount]);
 
   return (
-    <div className="container mx-auto p-4 bg-white max-h-[500px] overflow-y-auto min-h-full min-w-full">
+    <div className="container mx-auto p-4 bg-white max-h-[800px] overflow-y-auto min-h-full min-w-full">
       <div className="flex flex-col items-center justify-center">
         <p className="text-2xl font-bold mb-4">History</p>
         <button
