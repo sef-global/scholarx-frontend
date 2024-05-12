@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import MentorCard from '../MentorCard/MentorCard.component';
 import useCategories from '../../hooks/useCategories';
 import { type Mentor, type Category } from '../../types';
 import { usePublicMentors } from '../../hooks/usePublicMentors';
+import MentorCard from '../../components/MentorCard/MentorCard.component';
 
 const PublicMentorPage = () => {
   const location = useLocation();

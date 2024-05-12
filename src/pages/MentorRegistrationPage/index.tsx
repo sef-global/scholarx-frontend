@@ -4,12 +4,12 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import { API_URL } from '../../constants';
 import useCategories from '../../hooks/useCategories';
 import { zodResolver } from '@hookform/resolvers/zod';
-import FormInput from '../FormFields/MentorApplication/FormInput';
 import { useMutation } from '@tanstack/react-query';
-import FormTextarea from '../FormFields/MentorApplication/FormTextarea';
-import FormCheckbox from '../FormFields/MentorApplication/FormCheckbox';
 import { MentorApplicationSchema } from '../../schemas';
 import { type MentorApplication } from '../../types';
+import FormCheckbox from '../../components/FormFields/MentorApplication/FormCheckbox';
+import FormInput from '../../components/FormFields/MentorApplication/FormInput';
+import FormTextarea from '../../components/FormFields/MentorApplication/FormTextarea';
 
 const steps = [
   {

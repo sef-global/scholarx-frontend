@@ -3,12 +3,12 @@ import axios, { AxiosError } from 'axios';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { API_URL } from '../../constants';
 import { zodResolver } from '@hookform/resolvers/zod';
-import FormInput from '../FormFields/MenteeApplication/FormInput';
 import { useMutation } from '@tanstack/react-query';
 import { usePublicMentors } from '../../hooks/usePublicMentors';
-import FormCheckbox from '../FormFields/MenteeApplication/FormCheckbox';
 import { type MenteeApplication } from '../../types';
 import { MenteeApplicationSchema } from '../../schemas';
+import FormCheckbox from '../../components/FormFields/MenteeApplication/FormCheckbox';
+import FormInput from '../../components/FormFields/MenteeApplication/FormInput';
 
 const steps = [
   {
