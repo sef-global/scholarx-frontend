@@ -31,7 +31,6 @@ const Emails: React.FC = () => {
       });
   }, []);
 
-  console.log(EMAILAPI_URL);
   useEffect(fetchEmails, []);
 
   const checkApiStatus = () => {
