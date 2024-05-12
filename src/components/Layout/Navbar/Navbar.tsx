@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const { user } = useContext(UserContext) as UserContextType;
+  const { user, isUserMentor } = useContext(UserContext) as UserContextType;
 
   const handleLoginModalClose = (): void => {
     setIsLoginModalVisible(false);
@@ -106,8 +106,11 @@ const Navbar: React.FC = () => {
                 <li>
                   <p
                     onClick={() => {
-                      if (user?.mentor.length != null) {
+                      if (isUserMentor) {
                         navigate('/mentor/dashboard');
+                        setIsDropdownOpen(false);
+                      } else {
+                        navigate('/mentee/dashboard');
                         setIsDropdownOpen(false);
                       }
                     }}
@@ -205,26 +208,29 @@ const Navbar: React.FC = () => {
                   Join Us
                 </a>
               </li>
-              <li>
-                <button
-                  type="button"
-                  onClick={handleMentorRegistration}
-                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-                >
-                  Become a Mentor
-                </button>
-              </li>
+              {!isUserMentor && (
+                <li>
+                  <button
+                    type="button"
+                    onClick={handleMentorRegistration}
+                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+                  >
+                    Become a Mentor
+                  </button>
+                </li>
+              )}
+
               <li>
                 {user === null && (
                   <>
                     <span
-                      className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 "
+                      className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 cursor-pointer"
                       onClick={handleLoginModalOpen}
                     >
                       Login
                     </span>{' '}
                     <span
-                      className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 "
+                      className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 cursor-pointer"
                       onClick={handleRegisterModalOpen}
                     >
                       Register
