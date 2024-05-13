@@ -9,6 +9,7 @@ import PlatformSettings from './scenes/PlatformSettings/PlatformSettings.tsx';
 import MenteeApplications from './scenes/MenteeApplications/MenteeApplications.tsx';
 import ManageUsers from './scenes/ManageUsers/ManageUsers.tsx';
 import Emails from './scenes/Emails/Emails.tsx';
+import MentorApplicationPage from './scenes/ManageMentorApplications/MentorApplicationPage.tsx';
 
 const { Content, Sider } = Layout;
 
@@ -53,6 +54,10 @@ const Dashboard: React.FC = () => {
             <Route
               path="/manage-mentor-application"
               element={<ManageMentorApplications />}
+            />
+            <Route
+              path="/mentor-application/:mentorUuid"
+              element={<MentorApplicationPage />}
             />
             <Route
               path="/mentee-applications"

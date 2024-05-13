@@ -9,7 +9,6 @@ import Dashboard from './components/Dashboard/Dashboard.tsx';
 import PublicMentorPage from './components/PublicMentorPage/PublicMentorPage.tsx';
 import MenteeRegistrationPage from './components/MenteeApplicationPage/index.tsx';
 import MyMentees from './components/MyMenteesView/MyMentees.component.tsx';
-import MentorApplicationPage from './components/Dashboard/scenes/ManageMentorApplications/MentorApplicationPage.tsx';
 
 const queryClient = new QueryClient();
 
@@ -35,10 +34,6 @@ const App: React.FC = () => {
               element={<MenteeRegistrationPage />}
             />
             <Route path="/dashboard/*" element={<Dashboard />} />
-            <Route
-              path="/dashboard/mentor-application/:mentorUuid"
-              element={<MentorApplicationPage />}
-            />
             <Route path="/mentor/my-mentees" element={<MyMentees />} />
             <Route path="/mentors" element={<PublicMentorPage />} />
           </Routes>
