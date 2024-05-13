@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import MentorApplication from '../../../MentorApplication/MentorApplication.component';
 import { mentors } from '../../../../__mocks__/mentors';
 import { type Mentor } from '../../../../types';
+import MentorApplication from '../../../../components/MentorApplication/MentorApplication.component';
 
 const MentorApplicationPage = () => {
   const { mentorUuid } = useParams();
