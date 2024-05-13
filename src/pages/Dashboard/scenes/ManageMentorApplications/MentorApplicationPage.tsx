@@ -1,28 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { mentors } from '../../../../__mocks__/mentors';
-import { type Mentor } from '../../../../types';
 import MentorApplication from '../../../../components/MentorApplication/MentorApplication.component';
+import useMentor from '../../../../hooks/useMentor';
 
 const MentorApplicationPage = () => {
-  const { mentorUuid } = useParams();
-  const [mentor, setMentor] = React.useState<Mentor>();
-
-  const fetchData = async () => {
-    try {
-      // use mock data for now
-      setMentor(mentors.find((mentor) => mentor.uuid === mentorUuid));
-    } catch (error) {
-      console.error('Error fetching mentor data:', error);
-    }
-  };
-
-  useEffect(() => {
-    void fetchData();
-  }, [mentorUuid]);
+  const { mentorId } = useParams();
+  const { isLoading, data: mentor, changeState } = useMentor(mentorId);
 
   return (
-    <div className="mx-auto p-8 max-w-4xl">
+    <div className="p-8 max-w-4xl">
       <nav aria-label="Breadcrumb">
         <ol className="flex items-center gap-1 text-sm text-gray-600">
           <li>
@@ -70,19 +56,15 @@ const MentorApplicationPage = () => {
             </svg>
           </li>
           <li>
-            <span className="block transition">{mentorUuid}</span>
+            <span className="block transition">{mentorId}</span>
           </li>
         </ol>
       </nav>
       <div className="mt-10 flex justify-center">
         <MentorApplication
+          isLoading={isLoading}
           mentor={mentor}
-          onApprove={(mentorUuid) => {
-            console.log('Approved:', mentorUuid);
-          }}
-          onReject={(mentorUuid) => {
-            console.log('Rejected:', mentorUuid);
-          }}
+          onStateChange={changeState}
         />
       </div>
     </div>

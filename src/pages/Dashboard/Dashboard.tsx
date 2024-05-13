@@ -55,7 +55,7 @@ const Dashboard: React.FC = () => {
             element={<ManageMentorApplications />}
           />
           <Route
-            path="/mentor-application/:mentorUuid"
+            path="/manage-mentor-application/:mentorId"
             element={<MentorApplicationPage />}
           />
           <Route path="/mentee-applications" element={<MenteeApplications />} />

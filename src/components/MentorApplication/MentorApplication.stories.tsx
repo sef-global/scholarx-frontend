@@ -16,12 +16,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    isLoading: false,
     mentor: mentors[0],
-    onApprove: (mentorUuid) => {
-      console.log(`Approved mentor with UUID: ${mentorUuid}`);
-    },
-    onReject: (mentorUuid) => {
-      console.log(`Rejected mentor with UUID: ${mentorUuid}`);
+    onStateChange: (newState: string) => {
+      console.log('Changing state to', newState);
     },
   },
 
@@ -61,7 +59,7 @@ export const Default: Story = {
 
 export const Loading: Story = {
   args: {
-    mentor: undefined,
+    isLoading: true,
   },
 
   play: async ({ canvasElement }) => {
