@@ -7,11 +7,7 @@ interface EmailTemplateProps {
   recipient: string;
 }
 
-const EmailTemplate: React.FC<EmailTemplateProps> = ({
-  subject,
-  body,
-  select,
-}) => {
+const EmailTemplate: React.FC<EmailTemplateProps> = ({ subject, body }) => {
   return (
     <div
       dangerouslySetInnerHTML={{
@@ -82,7 +78,7 @@ const EmailTemplate: React.FC<EmailTemplateProps> = ({
                                      ${subject}
                                     </p>
                         <p style="margin-top: 0; margin-bottom: 22px">
-                                     Dear ${select},
+                                     Dear ,
                                     </p>
                                     <p style="margin-top: 0; margin-bottom: 22px">
                                         ${body}

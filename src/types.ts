@@ -52,3 +52,10 @@ export interface Profile {
   type: ProfileTypes;
   uuid: string;
 }
+export interface Email {
+  recipients: string;
+  subject: string;
+  status: string;
+  opened: boolean;
+  sentTime: string;
+}
