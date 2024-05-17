@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import EmailTemplate from './EmailTemplate';
-import EmailHistory from './EmailHistory';
+import EmailTemplate from '../../../../components/Dashboard/scenes/Emails/EmailTemplate';
+import EmailHistory from '../../../../components/Dashboard/scenes/Emails/EmailHistory';
 import axios from 'axios';
 import { EMAILAPI_URL, EMAILAPI_SENDER } from '../../../../constants';
 import LoadingSmallSVG from '../../../../assets/svg/LoadingSmallSVG';
