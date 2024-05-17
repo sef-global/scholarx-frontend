@@ -14,9 +14,7 @@ const EmailHistory: React.FC<{ refreshCount: number }> = ({ refreshCount }) => {
       axios
         .get(`${EMAILAPI_URL}/api/v1/sent`)
         .then((response) => {
-          setEmails(
-            Array.isArray(response.data.emails) ? response.data.emails : []
-          );
+          setEmails(response.data.emails);
           setIsLoading(false);
         })
         .catch((error) => {
