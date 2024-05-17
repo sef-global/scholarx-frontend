@@ -23,9 +23,10 @@ const EmailHistory: React.FC<{ refreshCount: number }> = ({ refreshCount }) => {
         });
     }, 1000);
   }, []);
+
   useEffect(() => {
     fetchEmails();
-  }, [fetchEmails, refreshCount]);
+  }, []);
 
   return (
     <div className="container mx-auto p-4 bg-white max-h-[800px] overflow-y-auto min-h-full min-w-full">
