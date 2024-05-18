@@ -13,7 +13,7 @@ const fetchEmails: QueryFunction<Email[], QueryKey> = async () => {
 };
 
 export const useFetchEmails = () => {
-  const { isLoading, error, data, refetch } = useQuery<Email[], AxiosError>({
+  const { isLoading, error, data } = useQuery<Email[], AxiosError>({
     queryKey: ['emails'],
     queryFn: fetchEmails,
   });
@@ -22,6 +22,5 @@ export const useFetchEmails = () => {
     isLoading,
     error,
     data,
-    refetch,
   };
 };
