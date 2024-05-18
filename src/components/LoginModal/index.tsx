@@ -34,8 +34,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
             withCredentials: true,
           }
         )
-        .then((response: AxiosResponse<Profile>) => {
-          setUserContext(response.data);
+        .then((response: AxiosResponse<{ user: Profile }>) => {
+          setUserContext(response.data.user);
           handleClose();
         })
         .catch((error) => {

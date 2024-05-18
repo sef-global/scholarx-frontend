@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { type Profile } from '../../types';
 import {
   Button,
   Col,

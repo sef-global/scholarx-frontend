@@ -3,7 +3,6 @@ import { Menu, Layout } from 'antd';
 
 import { Link, Route, Routes } from 'react-router-dom';
 import ManageMentorApplications from './scenes/ManageMentorApplications/ManageMentorApplications.tsx';
-import ManageMentors from './scenes/ManageMentors/ManageMentors.tsx';
 import OngoingMentorshipPrograms from './scenes/OngoingMentorshipPrograms/OngoingMentorshipPrograms.tsx';
 import PlatformSettings from './scenes/PlatformSettings/PlatformSettings.tsx';
 import MenteeApplications from './scenes/MenteeApplications/MenteeApplications.tsx';
@@ -17,12 +16,9 @@ const Dashboard: React.FC = () => {
     <Layout>
       <Sider breakpoint="lg" collapsedWidth="0" width="250" theme="light">
         <Menu mode="inline">
-          <Menu.Item key="1">
-            <Link to={`/admin/dashboard/manage-mentors`}>Manage Mentors</Link>
-          </Menu.Item>
           <Menu.Item key="2">
-            <Link to={`/admin/dashboard/manage-mentor-application`}>
-              Manage Mentor Applications
+            <Link to={`/admin/dashboard/mentor-applications`}>
+              Mentor Applications
             </Link>
           </Menu.Item>
           <Menu.Item key="3">
@@ -50,9 +46,8 @@ const Dashboard: React.FC = () => {
       </Sider>
       <Content className="h-screen">
         <Routes>
-          <Route path="/manage-mentors" element={<ManageMentors />} />
           <Route
-            path="/manage-mentor-application"
+            path="/mentor-applications"
             element={<ManageMentorApplications />}
           />
           <Route path="/mentee-applications" element={<MenteeApplications />} />
