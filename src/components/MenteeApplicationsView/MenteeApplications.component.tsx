@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import useMyMentees from '../../hooks/useMyMentees';
 import { ApplicationStatus } from '../../enums';
+import MenteeCard from '../MenteeCard/MenteeCard.component';
 
 const MenteeApplications: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState<
@@ -48,51 +49,21 @@ const MenteeApplications: React.FC = () => {
         <p className="text-lg font-medium mb-2 pb-5">
           These mentees are waiting for your response:
         </p>
-        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 px-2 md:px-6">
+        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-4 px-2 md:px-6">
           {mentees
             ?.filter((mentee) => mentee.state === ApplicationStatus.PENDING)
             .map((mentee) => (
-              <div
-                key={mentee.uuid}
-                className="border border-black rounded-md flex flex-col items-center py-8"
-              >
-                <img
-                  src={mentee.profile.image_url}
-                  alt="Mentee Profile"
-                  className="w-20 h-20 md:w-16 md:h-16 rounded-full mb-2"
-                />
-                <p className="text-sm lg:text-md font-medium text-center">
-                  {mentee.application.firstName}
-                </p>
-                <p className="text-xs text-center">
-                  {mentee.application.university} {mentee.application.company}
-                </p>
-              </div>
+              <MenteeCard key={mentee.uuid} mentee={mentee} />
             ))}
         </div>
       </div>
       <div className="px-2 py-2 mt-4">
         <p className="text-lg font-medium mb-2 pt-10 pb-5">My Mentees:</p>
-        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 px-2 md:px-6">
+        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-4 px-2 md:px-6">
           {mentees
             ?.filter((mentee) => mentee.state === ApplicationStatus.APPROVED)
             .map((mentee) => (
-              <div
-                key={mentee.uuid}
-                className="border border-black rounded-md flex flex-col items-center py-8"
-              >
-                <img
-                  src={mentee.profile.image_url}
-                  alt="Mentee Profile"
-                  className="w-20 h-20 md:w-16 md:h-16 rounded-full mb-2"
-                />
-                <p className="text-sm lg:text-md font-medium text-center">
-                  {mentee.application.firstName} {mentee.application.lastName}
-                </p>
-                <p className="text-xs text-center">
-                  {mentee.application.university} {mentee.application.company}
-                </p>
-              </div>
+              <MenteeCard key={mentee.uuid} mentee={mentee} />
             ))}
         </div>
       </div>

@@ -5,6 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { API_URL } from '../../constants';
 import { ApplicationStatus } from '../../enums';
+import { Link } from 'react-router-dom';
 
 const MyMentees: React.FC = () => {
   const { data: menteeApplications } = useMentees();
@@ -14,10 +15,6 @@ const MyMentees: React.FC = () => {
 
   const handleApplicationClick = (applicant: Mentee): void => {
     setSelectedApplication(applicant);
-  };
-
-  const handleBack = (): void => {
-    setSelectedApplication(null);
   };
 
   const updateMenteeStatus = useMutation({
@@ -76,15 +73,12 @@ const MyMentees: React.FC = () => {
 
       <div className="w-full md:w-4/5 p-4 bg-gray-50">
         <div className="flex items-center mb-10 pb-7 justify-between">
-          <div className="flex items-center">
+          <Link to={'/mentor/dashboard'} className="flex items-center">
             <span className="text-3xl">&#8592;</span>
-            <button
-              onClick={handleBack}
-              className="text-xl font-semibold mr-2  bg-transparent px-3 py-1 rounded-md mt-1"
-            >
+            <button className="text-xl font-semibold mr-2  bg-transparent px-3 py-1 rounded-md mt-1">
               Back
             </button>
-          </div>
+          </Link>
         </div>
         {selectedMentee != null ? (
           <div>
@@ -99,7 +93,7 @@ const MyMentees: React.FC = () => {
                 </p>
               </div>
               <button className="border border-gray-400 rounded-full px-4 py-2 md:ml-auto ml-0">
-                Pending
+                {selectedMentee.state}
               </button>
             </div>
             {/* Additional details */}
@@ -151,9 +145,14 @@ const MyMentees: React.FC = () => {
 
             <div className="mt-10 pb-10">
               <h3 className="font-bold text-lg">Video Submission</h3>
-              <p className="mt-2 pb-10">
+              <a
+                href={selectedMentee.application.submission}
+                className="mt-2 pb-10"
+                target="_blank"
+                rel="noreferrer"
+              >
                 {selectedMentee.application.submission}
-              </p>
+              </a>
             </div>
             <div className="flex justify-end mt-10 pt-10 mr-5 pb-10">
               <button
