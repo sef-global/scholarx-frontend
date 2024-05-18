@@ -9,7 +9,6 @@ export const profile: Profile = {
   first_name: 'John',
   last_name: 'Doe',
   image_url: 'https://xsgames.co/randomusers/avatar.php?g=male',
-  linkedin_url: 'https://linkedin.com/in/user1',
   type: ProfileTypes.DEFAULT,
   uuid: 'abc123',
   mentor: [],

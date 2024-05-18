@@ -18,31 +18,33 @@ const Dashboard: React.FC = () => {
       <Sider breakpoint="lg" collapsedWidth="0" width="250" theme="light">
         <Menu mode="inline">
           <Menu.Item key="1">
-            <Link to={`/dashboard/manage-mentors`}>Manage Mentors</Link>
+            <Link to={`/admin/dashboard/manage-mentors`}>Manage Mentors</Link>
           </Menu.Item>
           <Menu.Item key="2">
-            <Link to={`/dashboard/manage-mentor-application`}>
+            <Link to={`/admin/dashboard/manage-mentor-application`}>
               Manage Mentor Applications
             </Link>
           </Menu.Item>
           <Menu.Item key="3">
-            <Link to={`/dashboard/mentee-applications`}>
+            <Link to={`/admin/dashboard/mentee-applications`}>
               Mentee Applications
             </Link>
           </Menu.Item>
           <Menu.Item key="4">
-            <Link to={`/dashboard/ongoing-mentorship-programs`}>
+            <Link to={`/admin/dashboard/ongoing-mentorship-programs`}>
               Ongoing Mentorship Programs
             </Link>
           </Menu.Item>
           <Menu.Item key="5">
-            <Link to={`/dashboard/platform-settings`}>Platform Settings</Link>
+            <Link to={`/admin/dashboard/platform-settings`}>
+              Platform Settings
+            </Link>
           </Menu.Item>
           <Menu.Item key="6">
-            <Link to={`/dashboard/manage-users`}>Manage Users</Link>
+            <Link to={`/admin/dashboard/manage-users`}>Manage Users</Link>
           </Menu.Item>
           <Menu.Item key="7">
-            <Link to={`/dashboard/emails`}>Emails</Link>
+            <Link to={`/admin/dashboard/emails`}>Emails</Link>
           </Menu.Item>
         </Menu>
       </Sider>

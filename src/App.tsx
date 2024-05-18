@@ -11,6 +11,8 @@ import MenteeApplicationForm from './pages/MenteeApplication/index.tsx';
 import MentorProfile from './pages/MentorProfile/MentorProfile.component.tsx';
 import MentorRegistrationPage from './pages/MentorRegistration/MentorRegistration.component.tsx';
 import MyMentees from './pages/MyMentees/MyMentees.component.tsx';
+import EditProfileForm from './pages/EditProfileForm/EditProfileForm.component.tsx';
+import MenteeDashboard from './pages/MenteeDashboard/index.tsx';
 
 const queryClient = new QueryClient();
 
@@ -35,11 +37,13 @@ const App: React.FC = () => {
               path="/mentee-application/:mentorId"
               element={<MenteeApplicationForm />}
             />
-            <Route path="/dashboard/*" element={<Dashboard />} />
+            <Route path="/admin/dashboard/*" element={<Dashboard />} />
             <Route path="/mentor/dashboard" element={<MenteeApplications />} />
+            <Route path="/mentee/dashboard" element={<MenteeDashboard />} />
             <Route path="/mentor/my-mentees" element={<MyMentees />} />
             <Route path="/mentors" element={<Mentors />} />
             <Route path="/mentors/:mentorId" element={<MentorProfile />} />
+            <Route path="/settings" element={<EditProfileForm />} />
           </Routes>
         </MainLayout>
       </BrowserRouter>

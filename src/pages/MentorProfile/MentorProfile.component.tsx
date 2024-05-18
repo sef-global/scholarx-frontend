@@ -7,7 +7,7 @@ const MentorProfile: React.FC = () => {
   const { mentorId } = useParams();
   const { data: mentor } = useMentor(mentorId);
   return (
-    <div className="w-screen px-16">
+    <div>
       <div className="flex flex-row gap-2">
         <img
           src="https://palmbayprep.org/wp-content/uploads/2015/09/user-icon-placeholder.png"
