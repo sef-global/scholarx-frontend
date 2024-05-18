@@ -89,9 +89,8 @@ const Emails: React.FC = () => {
   return (
     <div>
       <div className="container mx-auto p-4 bg-white max-h-[800px] overflow-y-auto min-h-full min-w-full">
-        <h1 className="text-2xl font-medium my-4">Send Emails</h1>
-        <hr className="my-4" />
-        <div className="flex space-x-2">
+        <div className="flex items-center space-x-4">
+          <h1 className="text-2xl font-medium my-4">Send Emails</h1>
           <button
             onClick={() => {
               setView('sent');
