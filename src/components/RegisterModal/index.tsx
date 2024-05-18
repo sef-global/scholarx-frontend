@@ -3,7 +3,7 @@ import axios from 'axios';
 import { API_URL } from '../../constants';
 import closeIcon from '../../assets/svg/closeIcon.svg';
 import styles from './RegisterModal.module.css';
-import GoogleBtn from '../OAuth/Google';
+import GoogleLoginButton from '../OAuth/Google';
 
 interface RegisterModalProps {
   handleClose: () => void;
@@ -154,7 +154,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ handleClose }) => {
                 >
                   Register
                 </button>
-                <GoogleBtn />
+                <GoogleLoginButton />
                 <div className="text-sm font-thin text-center text-gray-900">
                   Already have an account?{' '}
                   <a className="font-medium text-black hover:underline">

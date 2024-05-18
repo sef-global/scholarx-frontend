@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import EmailTemplate from '../../../../components/Dashboard/scenes/Emails/EmailTemplate';
 import EmailHistory from '../../../../components/Dashboard/scenes/Emails/EmailHistory';
-import axios from 'axios';
 import { EMAILAPI_URL, EMAILAPI_SENDER } from '../../../../constants';
 import LoadingSmallSVG from '../../../../assets/svg/LoadingSmallSVG';
 
@@ -12,24 +11,10 @@ const Emails: React.FC = () => {
   const [body, setBody] = useState('');
   const [view, setView] = useState('sent');
   const [showRefresh, setShowRefresh] = useState(false);
-  const [emails, setEmails] = useState([]);
   const [refreshCount, setRefreshCount] = useState(0);
   const [select, setSelect] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
-
-  const fetchEmails = useCallback(() => {
-    axios
-      .get(`${EMAILAPI_URL}/api/v1/sent`)
-      .then((response) => {
-        setEmails(response.data.recipient);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  }, []);
-
-  useEffect(fetchEmails, []);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,7 +37,6 @@ const Emails: React.FC = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.statusText}`);
       }
-
       setMessage('Success: Emails sent!');
     } catch (error) {
       setMessage(`Error : ${(error as Error).message}`);
@@ -68,7 +52,7 @@ const Emails: React.FC = () => {
     if (message.length > 0) {
       const timer = setTimeout(() => {
         setMessage('');
-      }, 6000);
+      }, 1000);
       return () => {
         clearTimeout(timer);
       };

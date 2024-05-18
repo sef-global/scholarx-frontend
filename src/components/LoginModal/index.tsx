@@ -5,7 +5,7 @@ import { type Profile } from '../../types';
 import { UserContext, type UserContextType } from '../../contexts/UserContext';
 import closeIcon from '../../assets/svg/closeIcon.svg';
 import styles from './LoginModal.module.css';
-import GoogleBtn from '../OAuth/Google';
+import GoogleLoginButton from '../OAuth/Google';
 
 interface LoginModalProps {
   handleClose: () => void;
@@ -141,7 +141,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
                 >
                   Login
                 </button>
-                <GoogleBtn />
+                <GoogleLoginButton />
                 <div className="text-sm font-thin text-center text-gray-900">
                   Not registered yet?{' '}
                   <a className="font-medium text-black hover:underline">
