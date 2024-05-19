@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { UserContext, type UserContextType } from '../../contexts/UserContext';
 import axios from 'axios';
 import { API_URL } from '../../constants';
+import { useNavigate } from 'react-router-dom';
 
 interface LogoutModalProps {
   onClose: () => void;
@@ -10,6 +11,8 @@ interface LogoutModalProps {
 const LogoutModal: React.FC<LogoutModalProps> = ({ onClose }) => {
   const { setUserContext } = useContext(UserContext) as UserContextType;
 
+  const navigate = useNavigate();
+
   const handleLogoutConfirm = (): void => {
     axios
       .get(`${API_URL}/auth/logout`, {
@@ -17,6 +20,7 @@ const LogoutModal: React.FC<LogoutModalProps> = ({ onClose }) => {
       })
       .then(() => {
         setUserContext(null);
+        navigate('/');
         onClose();
       })
       .catch((error) => {

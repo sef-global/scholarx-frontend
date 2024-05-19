@@ -1,14 +1,12 @@
 import React from 'react';
 
-import {
-  TwitterOutlined,
-  LinkedinFilled,
-  InstagramOutlined,
-  FacebookFilled,
-} from '@ant-design/icons';
 import { Avatar, Button, Drawer, Space, Typography } from 'antd';
 
 import styles from './MenuDrawer.module.css';
+import TwitterIcon from '../../../assets/svg/Icons/TwitterIcon';
+import FacebookIcon from '../../../assets/svg/Icons/FacebookIcon';
+import LinkedinIcon from '../../../assets/svg/Icons/LinkedinIcon';
+import InstagramIcon from '../../../assets/svg/Icons/InstagramIcon';
 
 const { Text } = Typography;
 
@@ -68,7 +66,7 @@ const MenuDrawer: React.FC<MenuDrawerProps> = ({
             rel="noreferrer"
           >
             <Button className={styles.antButton} shape="circle">
-              <FacebookFilled className={styles.antIcon} />
+              <FacebookIcon />
             </Button>
           </a>
           <a
@@ -77,7 +75,7 @@ const MenuDrawer: React.FC<MenuDrawerProps> = ({
             rel="noreferrer"
           >
             <Button className={styles.antButton} shape="circle">
-              <TwitterOutlined className={styles.antIcon} />
+              <TwitterIcon />
             </Button>
           </a>
           <a
@@ -86,7 +84,7 @@ const MenuDrawer: React.FC<MenuDrawerProps> = ({
             rel="noreferrer"
           >
             <Button className={styles.antButton} shape="circle">
-              <LinkedinFilled className={styles.antIcon} />
+              <LinkedinIcon />
             </Button>
           </a>
           <a
@@ -95,7 +93,7 @@ const MenuDrawer: React.FC<MenuDrawerProps> = ({
             rel="noreferrer"
           >
             <Button className={styles.antButton} shape="circle">
-              <InstagramOutlined className={styles.antIcon} />
+              <InstagramIcon />
             </Button>
           </a>
         </Space>

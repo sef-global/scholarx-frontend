@@ -31,7 +31,7 @@ export interface Mentee {
   state: string;
   application: MenteeApplication;
   profile: Profile;
-  mentor: string;
+  mentor: Mentor;
   uuid: string;
   created_at: Date;
   updated_at: Date;
@@ -48,7 +48,6 @@ export interface Profile {
   first_name: string;
   last_name: string;
   image_url?: string;
-  linkedin_url: string;
   type: ProfileTypes;
   uuid: string;
 }

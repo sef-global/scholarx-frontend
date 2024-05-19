@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { type Profile } from '../../types';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Button,
   Col,
@@ -12,29 +11,14 @@ import {
   type UploadFile,
   type UploadProps,
 } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
 import Title from 'antd/es/typography/Title';
 import styles from './EditProfileForm.module.css';
 import { type RcFile } from 'antd/es/upload';
 import { getBase64 } from '../../util/imageConversion.util';
+import { UserContext, type UserContextType } from '../../contexts/UserContext';
 
-interface EditProfileFormProps {
-  isLoading: boolean;
-  profile: Profile;
-  onSubmit: (formValues: {
-    first_name: string;
-    last_name: string;
-    contact_email: string;
-    linkedin_url: string;
-    image_url?: string;
-  }) => void;
-}
-
-const EditProfileForm: React.FC<EditProfileFormProps> = ({
-  isLoading,
-  profile,
-  onSubmit,
-}) => {
+const EditProfileForm: React.FC = () => {
+  const { user, isUserLoading } = useContext(UserContext) as UserContextType;
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
@@ -43,34 +27,37 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
     first_name: string;
     last_name: string;
     contact_email: string;
-    linkedin_url: string;
     image_url?: string;
   }>();
 
   useEffect(() => {
-    if (!isLoading) {
-      setFormValues({
-        first_name: profile.first_name,
-        last_name: profile.last_name,
-        contact_email: profile.contact_email,
-        linkedin_url: profile.linkedin_url,
-        image_url: profile.image_url,
-      });
+    if (!isUserLoading) {
+      user != null &&
+        setFormValues({
+          first_name: user.first_name,
+          last_name: user.last_name,
+          contact_email: user.contact_email,
+          image_url: user.image_url,
+        });
 
-      if (profile.image_url != null && profile.image_url !== '') {
+      if (user?.image_url != null && user.image_url !== '') {
         setFileList([
           {
-            uid: profile.uuid,
-            name: `ProfilePicture_${profile.first_name}${profile.last_name}`,
-            url: profile.image_url,
+            uid: user.uuid,
+            name: `ProfilePicture_${user.first_name}${user.last_name}`,
+            url: user.image_url,
           },
         ]);
       }
     }
-  }, [profile, isLoading]);
+  }, [user, isUserLoading]);
 
   const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
     setFileList(newFileList);
+  };
+
+  const onSubmit = (d: any) => {
+    console.log(d);
   };
 
   const handlePreview = async (file: UploadFile): Promise<void> => {
@@ -98,7 +85,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
           order: 1,
         }}
       >
-        {isLoading ? (
+        {isUserLoading ? (
           <>
             <Skeleton
               paragraph={{
@@ -179,7 +166,6 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
                   first_name: string;
                   last_name: string;
                   contact_email: string;
-                  linkedin_url: string;
                   image_url?: string;
                 }
               );
@@ -189,7 +175,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
             <Form.Item<string>
               label="First Name"
               name="first_name"
-              initialValue={profile.first_name}
+              initialValue={user?.first_name}
               rules={[
                 { required: true, message: 'First name cannot be empty!' },
               ]}
@@ -200,7 +186,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
             <Form.Item<string>
               label="Last Name"
               name="last_name"
-              initialValue={profile.last_name}
+              initialValue={user?.last_name}
               rules={[
                 { required: true, message: 'Last name cannot be empty!' },
               ]}
@@ -211,7 +197,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
             <Form.Item<string>
               label="Primary Email"
               name="primary_email"
-              initialValue={profile.primary_email}
+              initialValue={user?.primary_email}
             >
               <Input disabled />
             </Form.Item>
@@ -219,18 +205,10 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
             <Form.Item<string>
               label="Contact Email"
               name="contact_email"
-              initialValue={profile.contact_email}
+              initialValue={user?.contact_email}
               rules={[
                 { required: true, message: 'Contact email cannot be empty!' },
               ]}
-            >
-              <Input />
-            </Form.Item>
-
-            <Form.Item<string>
-              label="LinkedIn URL"
-              name="linkedin_url"
-              initialValue={profile.linkedin_url}
             >
               <Input />
             </Form.Item>
@@ -255,7 +233,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
           pull: 1,
         }}
       >
-        {isLoading ? (
+        {isUserLoading ? (
           <>
             <Skeleton.Avatar active size={100} style={{ display: 'block' }} />
             <br />
@@ -281,8 +259,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
             >
               {fileList.length === 0 ? (
                 <div>
-                  <PlusOutlined />
-                  <div style={{ marginTop: 8 }}>Upload</div>
+                  +<div style={{ marginTop: 8 }}>Upload</div>
                 </div>
               ) : null}
             </Upload>
@@ -302,7 +279,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
             </Modal>
 
             <Title level={4} style={{ marginTop: '1rem' }}>
-              {profile.first_name} {profile.last_name}
+              {user?.first_name} {user?.last_name}
             </Title>
           </>
         )}
