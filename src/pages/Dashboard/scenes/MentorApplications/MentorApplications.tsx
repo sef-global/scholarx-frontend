@@ -142,7 +142,7 @@ const MentorApplications: React.FC = () => {
               <tr key={mentor.uuid}>
                 <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/4">
                   <Link
-                    to={`/dashboard/manage-mentor-application/${mentor.uuid}`}
+                    to={`/admin/dashboard/mentor-applications/${mentor.uuid}`}
                   >
                     {mentor.application.firstName} {mentor.application.lastName}
                   </Link>

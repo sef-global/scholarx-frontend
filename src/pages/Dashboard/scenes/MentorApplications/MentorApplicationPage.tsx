@@ -1,7 +1,8 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import MentorApplication from '../../../../components/MentorApplication/MentorApplication.component';
-import useMentor from '../../../../hooks/useMentor';
+import useMentor from '../../../../hooks/admin/useMentor';
+import ChevronRightIcon from '../../../../assets/svg/Icons/ChevronRightIcon';
 
 const MentorApplicationPage = () => {
   const { mentorId } = useParams();
@@ -20,18 +21,7 @@ const MentorApplicationPage = () => {
             </Link>
           </li>
           <li>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <ChevronRightIcon />
           </li>
           <li>
             <Link
@@ -42,21 +32,12 @@ const MentorApplicationPage = () => {
             </Link>
           </li>
           <li>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <ChevronRightIcon />
           </li>
           <li>
-            <span className="block transition">{mentorId}</span>
+            <span className="block transition">
+              {mentor?.application.firstName} {mentor?.application.lastName}
+            </span>
           </li>
         </ol>
       </nav>
