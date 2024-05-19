@@ -2,14 +2,13 @@ import React from 'react';
 import { Menu, Layout } from 'antd';
 
 import { Link, Route, Routes } from 'react-router-dom';
-import ManageMentorApplications from './scenes/ManageMentorApplications/ManageMentorApplications.tsx';
-import ManageMentors from './scenes/ManageMentors/ManageMentors.tsx';
 import OngoingMentorshipPrograms from './scenes/OngoingMentorshipPrograms/OngoingMentorshipPrograms.tsx';
 import PlatformSettings from './scenes/PlatformSettings/PlatformSettings.tsx';
 import MenteeApplications from './scenes/MenteeApplications/MenteeApplications.tsx';
 import ManageUsers from './scenes/ManageUsers/ManageUsers.tsx';
 import Emails from './scenes/Emails/Emails.tsx';
-import MentorApplicationPage from './scenes/ManageMentorApplications/MentorApplicationPage.tsx';
+import MentorApplications from './scenes/MentorApplications/MentorApplications.tsx';
+import MentorApplicationPage from './scenes/MentorApplications/MentorApplicationPage.tsx';
 
 const { Content, Sider } = Layout;
 
@@ -18,44 +17,39 @@ const Dashboard: React.FC = () => {
     <Layout>
       <Sider breakpoint="lg" collapsedWidth="0" width="250" theme="light">
         <Menu mode="inline">
-          <Menu.Item key="1">
-            <Link to={`/dashboard/manage-mentors`}>Manage Mentors</Link>
-          </Menu.Item>
           <Menu.Item key="2">
-            <Link to={`/dashboard/manage-mentor-application`}>
-              Manage Mentor Applications
+            <Link to={`/admin/dashboard/mentor-applications`}>
+              Mentor Applications
             </Link>
           </Menu.Item>
           <Menu.Item key="3">
-            <Link to={`/dashboard/mentee-applications`}>
+            <Link to={`/admin/dashboard/mentee-applications`}>
               Mentee Applications
             </Link>
           </Menu.Item>
           <Menu.Item key="4">
-            <Link to={`/dashboard/ongoing-mentorship-programs`}>
+            <Link to={`/admin/dashboard/ongoing-mentorship-programs`}>
               Ongoing Mentorship Programs
             </Link>
           </Menu.Item>
           <Menu.Item key="5">
-            <Link to={`/dashboard/platform-settings`}>Platform Settings</Link>
+            <Link to={`/admin/dashboard/platform-settings`}>
+              Platform Settings
+            </Link>
           </Menu.Item>
           <Menu.Item key="6">
-            <Link to={`/dashboard/manage-users`}>Manage Users</Link>
+            <Link to={`/admin/dashboard/manage-users`}>Manage Users</Link>
           </Menu.Item>
           <Menu.Item key="7">
-            <Link to={`/dashboard/emails`}>Emails</Link>
+            <Link to={`/admin/dashboard/emails`}>Emails</Link>
           </Menu.Item>
         </Menu>
       </Sider>
       <Content className="h-screen">
         <Routes>
-          <Route path="/manage-mentors" element={<ManageMentors />} />
+          <Route path="/mentor-applications" element={<MentorApplications />} />
           <Route
-            path="/manage-mentor-application"
-            element={<ManageMentorApplications />}
-          />
-          <Route
-            path="/manage-mentor-application/:mentorId"
+            path="/mentor-applications/:mentorId"
             element={<MentorApplicationPage />}
           />
           <Route path="/mentee-applications" element={<MenteeApplications />} />

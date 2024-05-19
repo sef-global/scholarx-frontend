@@ -9,7 +9,7 @@ import GithubIcon from '../../../assets/svg/Icons/GithubIcon.tsx';
 import YoutubeIcon from '../../../assets/svg/Icons/YoutubeIcon.tsx';
 
 const Footer: React.FC = () => (
-  <>
+  <footer>
     <div className="wrapper flex justify-around flex-col sm:flex-row ">
       <div className="col ml-8">
         <div className="footerMainTitle font-sans text-4xl text-darkmod-blue font-bold mb-12">
@@ -139,6 +139,6 @@ const Footer: React.FC = () => (
         </a>
       </div>
     </div>
-  </>
+  </footer>
 );
 export default Footer;

@@ -22,7 +22,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isUserLoading, setIsUserLoading] = useState(true);
   const isUserAdmin = user?.type === ProfileTypes.ADMIN;
   const isUserMentor =
-    user?.mentor.some(
+    user?.mentor?.some(
       (mentor) => mentor.state === ApplicationStatus.APPROVED
     ) ?? false;
 

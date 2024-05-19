@@ -19,7 +19,9 @@ const Navbar: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const { user, isUserMentor } = useContext(UserContext) as UserContextType;
+  const { user, isUserMentor, isUserAdmin } = useContext(
+    UserContext
+  ) as UserContextType;
 
   const handleLoginModalClose = (): void => {
     setIsLoginModalVisible(false);
@@ -78,15 +80,32 @@ const Navbar: React.FC = () => {
           >
             <button
               type="button"
-              className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300"
+              className="flex w-8 h-8  justify-center items-center text-sm bg-gray-200 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300"
               onClick={toggleDropdown}
             >
-              <span className="sr-only">Open user menu</span>
-              <img
-                className="w-8 h-8 rounded-full"
-                src={user?.image_url}
-                alt="user photo"
-              />
+              {user?.image_url !== '' ? (
+                <img
+                  className="w-8 h-8 rounded-full"
+                  src={user?.image_url}
+                  alt="user photo"
+                />
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-user"
+                >
+                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              )}
             </button>
             {/* Dropdown menu */}
             <div
@@ -108,11 +127,12 @@ const Navbar: React.FC = () => {
                     onClick={() => {
                       if (isUserMentor) {
                         navigate('/mentor/dashboard');
-                        setIsDropdownOpen(false);
+                      } else if (isUserAdmin) {
+                        navigate('/admin/dashboard');
                       } else {
                         navigate('/mentee/dashboard');
-                        setIsDropdownOpen(false);
                       }
+                      setIsDropdownOpen(false);
                     }}
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                   >
@@ -120,12 +140,12 @@ const Navbar: React.FC = () => {
                   </p>
                 </li>
                 <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                  <Link
+                    to="/settings"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
                     Settings
-                  </a>
+                  </Link>
                 </li>
 
                 <li>

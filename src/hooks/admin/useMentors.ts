@@ -6,8 +6,8 @@ import {
   type QueryKey,
 } from '@tanstack/react-query';
 import axios, { type AxiosError } from 'axios';
-import { API_URL } from '../constants';
-import { type Mentor } from '../types';
+import { API_URL } from '../../constants';
+import { type Mentor } from '../../types';
 
 interface MentorStatus {
   mentorId: string;

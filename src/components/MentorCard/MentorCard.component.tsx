@@ -1,7 +1,7 @@
 import React from 'react';
-import { UserOutlined } from '@ant-design/icons';
 import { type Mentor } from '../../types.ts';
 import { Link } from 'react-router-dom';
+import UserIcon from '../../assets/svg/Icons/UserIcon.tsx';
 
 interface MentorCardProps {
   mentor: Mentor;
@@ -21,7 +21,7 @@ const MentorCard: React.FC<MentorCardProps> = ({ mentor }) => {
         />
       ) : (
         <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center">
-          <UserOutlined className="text-gray-400 text-2xl" />
+          <UserIcon />
         </div>
       )}
       <div className="text-center">

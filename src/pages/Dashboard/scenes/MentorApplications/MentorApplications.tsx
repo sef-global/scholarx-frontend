@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { type Mentor } from '../../../../types';
-import { useMentors } from '../../../../hooks/useMentors';
+import { useMentors } from '../../../../hooks/admin/useMentors';
 import useCategories from '../../../../hooks/useCategories';
 import { useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 
-const ManageMentorApplications: React.FC = () => {
+const MentorApplications: React.FC = () => {
   const [filter, setFilter] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const { data: categories } = useCategories();
@@ -206,4 +206,4 @@ const ManageMentorApplications: React.FC = () => {
   );
 };
 
-export default ManageMentorApplications;
+export default MentorApplications;
