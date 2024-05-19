@@ -2,9 +2,10 @@ import React from 'react';
 import { type Mentee } from '../../types';
 import { ApplicationStatus } from '../../enums';
 import { useMentees } from '../../hooks/useMentees';
+import UserIcon from '../../assets/svg/Icons/UserIcon';
 
 interface MenteeProfileProps {
-  mentee: Mentee | null;
+  mentee: Mentee;
 }
 
 const MenteeProfile: React.FC<MenteeProfileProps> = ({ mentee }) => {
@@ -33,29 +34,40 @@ const MenteeProfile: React.FC<MenteeProfileProps> = ({ mentee }) => {
     <>
       <div className="w-full space-y-8">
         <div className="flex items-center">
-          <img
-            src={mentee?.profile.image_url}
-            alt=""
-            className="w-28 rounded-full object-fill"
-          />
+          {mentee.profile.image_url !== '' ? (
+            <img
+              src={mentee.profile.image_url}
+              alt="Mentee Avatar"
+              className="w-24 h-24 rounded-full mx-auto mb-4"
+            />
+          ) : (
+            <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center">
+              <UserIcon />
+            </div>
+          )}
           <div className="ml-5">
             <div className="flex items-center space-x-3">
               <span className="text-2xl font-semibold">
-                {mentee?.application.firstName} {mentee?.application.lastName}
+                {mentee.application.firstName} {mentee.application.lastName}
               </span>
               <span
                 className={`whitespace-nowrap rounded-full px-2.5 py-0.5 text-sm ${getStateColor(
-                  mentee?.state
+                  mentee.state
                 )}`}
               >
-                {mentee?.state}
+                {mentee.state}
               </span>
             </div>
-            <span className="text-xl font-light">
-              {mentee?.application.position}, {mentee?.application.company}
-              {mentee?.application.yearOfStudy},{' '}
-              {mentee?.application.university}
-            </span>
+            {mentee.application.isUndergrad ? (
+              <span className="text-xl font-light">
+                {mentee.application.yearOfStudy},{' '}
+                {mentee.application.university}
+              </span>
+            ) : (
+              <span className="text-xl font-light">
+                {mentee.application.position}, {mentee.application.company}
+              </span>
+            )}
           </div>
           <div className="ml-auto flex overflow-hidden">
             <button
@@ -81,34 +93,34 @@ const MenteeProfile: React.FC<MenteeProfileProps> = ({ mentee }) => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <h3 className="text-base font-bold">Course</h3>
-                <p>{mentee?.application.course}</p>
+                <p>{mentee.application.course}</p>
               </div>
               <div>
                 <h3 className="text-base font-bold">Graduated Year</h3>
-                <p>{mentee?.application.graduatedYear}</p>
+                <p>{mentee.application.graduatedYear}</p>
               </div>
               <div>
                 <h3 className="text-base font-bold">Contact No</h3>
-                <p>{mentee?.application.contactNo}</p>
+                <p>{mentee.application.contactNo}</p>
               </div>
               <div>
                 <h3 className="text-base font-bold">Undergraduate</h3>
-                <p>{mentee?.application.isUndergrad === true ? 'Yes' : 'No'}</p>
+                <p>{mentee.application.isUndergrad ? 'Yes' : 'No'}</p>
               </div>
             </div>
           </div>
           <div className="col-span-2 pl-8 border-l">
             <div className="grid grid-cols-2 gap-1">
               <a
-                href={mentee?.application.email}
+                href={mentee.application.email}
                 target="_blank"
                 rel="noreferrer"
                 className="underline mb-2"
               >
-                {mentee?.application.email}
+                {mentee.application.email}
               </a>
               <a
-                href={mentee?.application.cv}
+                href={mentee.application.cv}
                 target="_blank"
                 rel="noreferrer"
                 className="underline mb-2"
@@ -121,7 +133,7 @@ const MenteeProfile: React.FC<MenteeProfileProps> = ({ mentee }) => {
             <div className="mb-4">
               <h3 className="text-base font-bold">Video Submission</h3>
               <a
-                href={mentee?.application.submission}
+                href={mentee.application.submission}
                 target="_blank"
                 rel="noreferrer"
                 className="underline mb-2"

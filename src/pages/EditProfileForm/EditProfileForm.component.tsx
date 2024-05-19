@@ -11,7 +11,6 @@ import {
   type UploadFile,
   type UploadProps,
 } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
 import Title from 'antd/es/typography/Title';
 import styles from './EditProfileForm.module.css';
 import { type RcFile } from 'antd/es/upload';
@@ -260,8 +259,7 @@ const EditProfileForm: React.FC = () => {
             >
               {fileList.length === 0 ? (
                 <div>
-                  <PlusOutlined />
-                  <div style={{ marginTop: 8 }}>Upload</div>
+                  +<div style={{ marginTop: 8 }}>Upload</div>
                 </div>
               ) : null}
             </Upload>

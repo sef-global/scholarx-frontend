@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import useMyMentees from '../../hooks/useMyMentees';
 import { ApplicationStatus } from '../../enums';
-import MenteeCard from '../MenteeCard/MenteeCard.component';
+import MenteeCard from '../MenteeCard';
 
 const MenteeApplications: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState<
