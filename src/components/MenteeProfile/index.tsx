@@ -1,0 +1,139 @@
+import React from 'react';
+import { type Mentee } from '../../types';
+import { ApplicationStatus } from '../../enums';
+import { useMentees } from '../../hooks/useMentees';
+
+interface MenteeProfileProps {
+  mentee: Mentee | null;
+}
+
+const MenteeProfile: React.FC<MenteeProfileProps> = ({ mentee }) => {
+  const { isLoading, updateMenteeStatus } = useMentees();
+
+  const handleStateUpdate = (state: ApplicationStatus) => {
+    if (mentee != null) {
+      updateMenteeStatus.mutate({ menteeId: mentee.uuid, state });
+    }
+  };
+
+  const getStateColor = (state: string | undefined) => {
+    switch (state) {
+      case 'pending':
+        return 'bg-blue-100 text-blue-700';
+      case 'approved':
+        return 'bg-green-100 text-green-700';
+      case 'rejected':
+        return 'bg-red-100 text-red-700';
+      default:
+        return 'bg-gray-100 text-gray-700';
+    }
+  };
+
+  return (
+    <>
+      <div className="w-full space-y-8">
+        <div className="flex items-center">
+          <img
+            src={mentee?.profile.image_url}
+            alt=""
+            className="w-28 rounded-full object-fill"
+          />
+          <div className="ml-5">
+            <div className="flex items-center space-x-3">
+              <span className="text-2xl font-semibold">
+                {mentee?.application.firstName} {mentee?.application.lastName}
+              </span>
+              <span
+                className={`whitespace-nowrap rounded-full px-2.5 py-0.5 text-sm ${getStateColor(
+                  mentee?.state
+                )}`}
+              >
+                {mentee?.state}
+              </span>
+            </div>
+            <span className="text-xl font-light">
+              {mentee?.application.position}, {mentee?.application.company}
+              {mentee?.application.yearOfStudy},{' '}
+              {mentee?.application.university}
+            </span>
+          </div>
+          <div className="ml-auto flex overflow-hidden">
+            <button
+              className="inline-block rounded border px-10 py-2 my-2 mx-2 text-sm font-medium text-primary-blue border-primary-blue focus:outline-none focus:ring"
+              onClick={() => {
+                handleStateUpdate(ApplicationStatus.APPROVED);
+              }}
+            >
+              {isLoading ? 'Loading...' : 'Approve'}
+            </button>
+            <button
+              className="inline-block rounded border px-10 py-2 my-2 mx-2 text-sm font-medium text-red-500 border-red-500 focus:outline-none focus:ring"
+              onClick={() => {
+                handleStateUpdate(ApplicationStatus.REJECTED);
+              }}
+            >
+              Reject
+            </button>
+          </div>
+        </div>
+        <div className="grid grid-cols-5 gap-12">
+          <div className="col-span-3">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <h3 className="text-base font-bold">Course</h3>
+                <p>{mentee?.application.course}</p>
+              </div>
+              <div>
+                <h3 className="text-base font-bold">Graduated Year</h3>
+                <p>{mentee?.application.graduatedYear}</p>
+              </div>
+              <div>
+                <h3 className="text-base font-bold">Contact No</h3>
+                <p>{mentee?.application.contactNo}</p>
+              </div>
+              <div>
+                <h3 className="text-base font-bold">Undergraduate</h3>
+                <p>{mentee?.application.isUndergrad === true ? 'Yes' : 'No'}</p>
+              </div>
+            </div>
+          </div>
+          <div className="col-span-2 pl-8 border-l">
+            <div className="grid grid-cols-2 gap-1">
+              <a
+                href={mentee?.application.email}
+                target="_blank"
+                rel="noreferrer"
+                className="underline mb-2"
+              >
+                {mentee?.application.email}
+              </a>
+              <a
+                href={mentee?.application.cv}
+                target="_blank"
+                rel="noreferrer"
+                className="underline mb-2"
+              >
+                CV
+              </a>
+            </div>
+          </div>
+          <div className="col-span-5">
+            <div className="mb-4">
+              <h3 className="text-base font-bold">Video Submission</h3>
+              <a
+                href={mentee?.application.submission}
+                target="_blank"
+                rel="noreferrer"
+                className="underline mb-2"
+              >
+                Link
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default MenteeProfile;
