@@ -2,12 +2,12 @@ import React from 'react';
 import { Menu, Layout } from 'antd';
 
 import { Link, Route, Routes } from 'react-router-dom';
-import ManageMentorApplications from './scenes/ManageMentorApplications/ManageMentorApplications.tsx';
 import OngoingMentorshipPrograms from './scenes/OngoingMentorshipPrograms/OngoingMentorshipPrograms.tsx';
 import PlatformSettings from './scenes/PlatformSettings/PlatformSettings.tsx';
 import MenteeApplications from './scenes/MenteeApplications/MenteeApplications.tsx';
 import ManageUsers from './scenes/ManageUsers/ManageUsers.tsx';
 import Emails from './scenes/Emails/Emails.tsx';
+import MentorApplications from './scenes/MentorApplications/MentorApplications.tsx';
 
 const { Content, Sider } = Layout;
 
@@ -46,10 +46,7 @@ const Dashboard: React.FC = () => {
       </Sider>
       <Content className="h-screen">
         <Routes>
-          <Route
-            path="/mentor-applications"
-            element={<ManageMentorApplications />}
-          />
+          <Route path="/mentor-applications" element={<MentorApplications />} />
           <Route path="/mentee-applications" element={<MenteeApplications />} />
           <Route
             path="/ongoing-mentorship-programs"
