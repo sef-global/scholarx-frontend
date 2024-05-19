@@ -28,7 +28,6 @@ export const formWithData: Story = {
     const lastName = canvas.getByLabelText('Last Name');
     const primaryEmail = canvas.getByLabelText('Primary Email');
     const contactEmail = canvas.getByLabelText('Contact Email');
-    const linkedInUrl = canvas.getByLabelText('LinkedIn URL');
     const fullName = canvas.getByText(
       `${profile.first_name} ${profile.last_name}`
     );
@@ -42,7 +41,6 @@ export const formWithData: Story = {
     expect(lastName).toHaveValue(profile.last_name);
     expect(primaryEmail).toHaveValue(profile.primary_email);
     expect(contactEmail).toHaveValue(profile.contact_email);
-    expect(linkedInUrl).toHaveValue(profile.linkedin_url);
     expect(fullName).toBeVisible();
 
     await waitFor(
@@ -69,7 +67,6 @@ export const formWithoutProfilePicture: Story = {
     const lastName = canvas.getByLabelText('Last Name');
     const primaryEmail = canvas.getByLabelText('Primary Email');
     const contactEmail = canvas.getByLabelText('Contact Email');
-    const linkedInUrl = canvas.getByLabelText('LinkedIn URL');
     const fullName = canvas.getByText(
       `${profile.first_name} ${profile.last_name}`
     );
@@ -79,7 +76,6 @@ export const formWithoutProfilePicture: Story = {
     expect(lastName).toHaveValue(profile.last_name);
     expect(primaryEmail).toHaveValue(profile.primary_email);
     expect(contactEmail).toHaveValue(profile.contact_email);
-    expect(linkedInUrl).toHaveValue(profile.linkedin_url);
     expect(fullName).toBeVisible();
     expect(uploadIcon).toBeVisible();
   },

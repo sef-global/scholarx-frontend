@@ -7,7 +7,7 @@ const MentorProfile: React.FC = () => {
   const { mentorId } = useParams();
   const { data: mentor } = useMentor(mentorId);
   return (
-    <div className="w-screen px-16">
+    <div>
       <div className="flex flex-row gap-2">
         <img
           src="https://palmbayprep.org/wp-content/uploads/2015/09/user-icon-placeholder.png"
@@ -26,7 +26,7 @@ const MentorProfile: React.FC = () => {
               </span>
             </p>
             <Link
-              className="bg-blue-500 hover:bg-blue-700 text-white px-12 rounded text-lg font-medium mb-3"
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
               to={`/mentee-application/${mentorId as string}`}
             >
               Apply
