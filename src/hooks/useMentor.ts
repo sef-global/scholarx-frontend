@@ -22,7 +22,7 @@ const useMentor = (mentorId: string | undefined) => {
     mutationFn: async (newState: string) => {
       if (mentorId != null) {
         const { data } = await axios.put(
-          `${API_URL}/mentors/${mentorId}/state`,
+          `${API_URL}/admin/mentors/${mentorId}/state`,
           {
             state: newState,
           }
