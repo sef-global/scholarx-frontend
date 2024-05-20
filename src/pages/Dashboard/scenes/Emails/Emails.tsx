@@ -5,13 +5,10 @@ import { EMAILAPI_URL, EMAILAPI_SENDER } from '../../../../constants';
 import LoadingSmallSVG from '../../../../assets/svg/LoadingSmallSVG';
 
 const Emails: React.FC = () => {
-  const [mentees, setMentees] = useState([]);
   const [selectedMentees, setSelectedMentees] = useState<string[]>([]);
   const [subject, setSubject] = useState('');
   const [body, setBody] = useState('');
   const [view, setView] = useState('sent');
-  const [showRefresh, setShowRefresh] = useState(false);
-  const [refreshCount, setRefreshCount] = useState(0);
   const [select, setSelect] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -94,7 +91,6 @@ const Emails: React.FC = () => {
           <button
             onClick={() => {
               setView('sent');
-              setShowRefresh(false);
             }}
             className="px-8 py-1 text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
           >
@@ -103,7 +99,6 @@ const Emails: React.FC = () => {
           <button
             onClick={() => {
               setView('history');
-              setShowRefresh(true);
             }}
             className="px-8 py-1 text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
           >
@@ -113,8 +108,8 @@ const Emails: React.FC = () => {
         <hr className="my-4" />
         {view === 'sent' ? (
           <>
-            <div className="flex space-x-6">
-              <div className="w-2/3 space-y-4 p-6 rounded-lg  bg-gray-100 shadow-lg">
+            <div className="flex flex-col space-y-4">
+              <div className="p-6 rounded-lg  bg-gray-100 shadow-lg">
                 <h2 className="text-xl font-bold mb-2 text-blue-500">
                   Write Email here
                 </h2>
@@ -181,7 +176,6 @@ const Emails: React.FC = () => {
                             className="mt-4 x-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 cursor-pointer"
                           >
                             <div className="flex justify-center items-center h-5 px-6 py-2">
-                              Sending...
                               <>
                                 <LoadingSmallSVG />
                               </>
@@ -205,7 +199,7 @@ const Emails: React.FC = () => {
                   </form>
                 </div>
               </div>
-              <div className="w-1/2 bg-gray-100 space-y-4 p-6 rounded shadow-lg">
+              <div className="bg-gray-100 p-6 rounded shadow-lg">
                 <h2 className="text-xl font-bold mb-2 text-blue-500">
                   Email Preview here
                 </h2>
@@ -221,7 +215,7 @@ const Emails: React.FC = () => {
           </>
         ) : (
           <>
-            <EmailHistory refreshCount={refreshCount} />
+            <EmailHistory />
           </>
         )}
       </div>

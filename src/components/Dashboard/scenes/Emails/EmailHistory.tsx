@@ -2,7 +2,7 @@ import React from 'react';
 import LoadingSVG from '../../../../assets/svg/LoadingSVG';
 import { useFetchEmails } from '../../../../hooks/useFetchEmails';
 
-const EmailHistory: React.FC<{ refreshCount: number }> = () => {
+const EmailHistory: React.FC = () => {
   const { data: emails, isLoading } = useFetchEmails();
 
   return (
@@ -17,42 +17,42 @@ const EmailHistory: React.FC<{ refreshCount: number }> = () => {
             <LoadingSVG />
           </div>
         ) : emails != null && emails.length > 0 ? (
-          <table className="min-w-full divide-y divide-gray-200 shadow-sm rounded-lg overflow-hidden">
+          <table className="w-full divide-y divide-gray-200 shadow-sm rounded-lg overflow-hidden">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 tracking-wider w-1/5">
                   Recipient
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 tracking-wider w-1/5">
                   Subject
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 tracking-wider w-1/5">
                   Sent Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 tracking-wider w-1/5">
                   Opened
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 tracking-wider w-1/5">
                   Sent Time
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white">
               {emails.map((email, index) => (
                 <tr key={index}>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/5">
                     {email.recipients}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/5">
                     {email.subject}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/5">
                     {email.status}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/5">
                     {email.opened}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/5">
                     {new Date(email.sentTime).toLocaleString()}
                   </td>
                 </tr>
