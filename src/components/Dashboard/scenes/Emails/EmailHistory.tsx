@@ -1,6 +1,19 @@
 import React from 'react';
-import LoadingSVG from '../../../../assets/svg/Loading';
+import Loading from '../../../../assets/svg/Loading';
 import { useEmails } from '../../../../hooks/useEmails';
+
+function truncateSubject(subject: string, wordLimit: number) {
+  const words = subject.split(' ');
+  if (words.length > wordLimit) {
+    return words.slice(0, wordLimit).join(' ') + '...';
+  }
+  return subject;
+}
+
+function getUsername(email: string) {
+  const emailParts = email.split('@');
+  return emailParts[0];
+}
 
 const EmailHistory: React.FC = () => {
   const { data: emails, isLoading } = useEmails();
@@ -14,10 +27,10 @@ const EmailHistory: React.FC = () => {
         <p className="text-2xl font-bold mb-4">Mail Box</p>
         {isLoading ? (
           <div className="flex justify-center items-center h-64">
-            <LoadingSVG />
+            <Loading />
           </div>
         ) : emails != null && emails.length > 0 ? (
-          <table className="w-full divide-y divide-gray-200 shadow-sm rounded-lg overflow-hidden">
+          <table className="w-full divide-y divide-gray-200 shadow-sm rounded-lg overflow-auto">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 tracking-wider w-1/5">
@@ -37,14 +50,14 @@ const EmailHistory: React.FC = () => {
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white">
+            <tbody className="bg-white truncate">
               {emails.map((email, index) => (
                 <tr key={index}>
                   <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/5">
-                    {email.recipients}
+                    {getUsername(email.recipients)}
                   </td>
                   <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/5">
-                    {email.subject}
+                    {truncateSubject(email.subject, 2)}
                   </td>
                   <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/5">
                     {email.status}

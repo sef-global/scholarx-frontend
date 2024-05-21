@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import EmailTemplate from '../../../../components/Dashboard/scenes/Emails/EmailTemplate';
+import React, { useState } from 'react';
 import EmailHistory from '../../../../components/Dashboard/scenes/Emails/EmailHistory';
 import { EMAILAPI_URL, EMAILAPI_SENDER } from '../../../../constants';
 import Loading from '../../../../assets/svg/Loading';
@@ -12,7 +11,6 @@ const Emails: React.FC = () => {
   const [select, setSelect] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
-  const [showPreview, setShowPreview] = useState(false);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,33 +40,28 @@ const Emails: React.FC = () => {
       setIsLoading(false);
     }
   };
-
-  // const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   switch (e.target.value) {
-  //     case 'allMentors':
-  //       setSelectedMentees(allMentorsEmails);
-  //       setSelect('Mentor');
-  //       break;
-  //     case 'allMentees':
-  //       setSelectedMentees(allMenteesEmails);
-  //       setSelect('Mentees');
-  //       break;
-  //     case 'acceptedMentors':
-  //       setSelectedMentees(acceptMentorsEmails);
-  //       setSelect('Mentor');
-  //       break;
-  //     case 'acceptedMentees':
-  //       setSelectedMentees(acceptedMenteesEmails);
-  //       setSelect('Mentees');
-  //       break;
-  //     case 'rejectedMentees':
-  //       setSelectedMentees(rejectedMenteesEmails);
-  //       setSelect('Mentees');
-  //       break;
-  //     default:
-  //       setSelectedMentees([]);
-  //   }
-  // };
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log(`Selected: ${e.target.value}`);
+    switch (e.target.value) {
+      case 'allMentors':
+        setSelect('Mentor');
+        break;
+      case 'allMentees':
+        setSelect('Mentees');
+        break;
+      case 'acceptedMentors':
+        setSelect('Mentor');
+        break;
+      case 'acceptedMentees':
+        setSelect('Mentees');
+        break;
+      case 'rejectedMentees':
+        setSelect('Mentees');
+        break;
+      default:
+        setSelectedMentees([]);
+    }
+  };
 
   return (
     <div>
@@ -101,14 +94,6 @@ const Emails: React.FC = () => {
                   <h2 className="text-xl font-bold mb-2 text-blue-500">
                     Write Email here
                   </h2>
-                  <button
-                    className="text-gray-700 font-bold py-2 px-4 rounded"
-                    onClick={() => {
-                      setShowPreview(!showPreview);
-                    }}
-                  >
-                    Preview
-                  </button>
                 </div>
                 <div className="bg-white p-4 rounded shadow">
                   <form onSubmit={handleFormSubmit}>
@@ -129,7 +114,7 @@ const Emails: React.FC = () => {
                         <span className="text-gray-700">Recipients:</span>
                         <select
                           className="mt-4 block w-full p-3 rounded-md border-gray-500 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 text-gray-700"
-                          // onChange={handleSelectChange}
+                          onChange={handleSelectChange}
                         >
                           <option value="">Select recipient group</option>
                           <option value="allMentors">All Mentors</option>
@@ -196,22 +181,6 @@ const Emails: React.FC = () => {
                   </form>
                 </div>
               </div>
-              {showPreview && (
-                <>
-                  <div className="bg-gray-100 p-6 rounded shadow-lg">
-                    <h2 className="text-xl font-bold mb-2 text-blue-500">
-                      Email Preview here
-                    </h2>
-                    <div className="bg-white p-4 rounded shadow">
-                      <EmailTemplate
-                        subject={subject}
-                        body={body}
-                        recipient={select}
-                      />
-                    </div>
-                  </div>
-                </>
-              )}
             </div>
           </>
         ) : (
