@@ -3,6 +3,7 @@ import { type Mentor } from '../../../../types';
 import { useMentors } from '../../../../hooks/admin/useMentors';
 import useCategories from '../../../../hooks/useCategories';
 import { useQueryClient } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 
 const MentorApplications: React.FC = () => {
   const [filter, setFilter] = useState('');
@@ -140,7 +141,11 @@ const MentorApplications: React.FC = () => {
             {filteredMentorsByName.map((mentor) => (
               <tr key={mentor.uuid}>
                 <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/4">
-                  {mentor.application.firstName} {mentor.application.lastName}
+                  <Link
+                    to={`/admin/dashboard/mentor-applications/${mentor.uuid}`}
+                  >
+                    {mentor.application.firstName} {mentor.application.lastName}
+                  </Link>
                 </td>
                 <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/4">
                   {mentor.application.position}
