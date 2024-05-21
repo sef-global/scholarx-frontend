@@ -1,9 +1,9 @@
 import React from 'react';
-import LoadingSVG from '../../../../assets/svg/LoadingSVG';
-import { useFetchEmails } from '../../../../hooks/useFetchEmails';
+import LoadingSVG from '../../../../assets/svg/Loading';
+import { useEmails } from '../../../../hooks/useEmails';
 
 const EmailHistory: React.FC = () => {
-  const { data: emails, isLoading } = useFetchEmails();
+  const { data: emails, isLoading } = useEmails();
 
   return (
     <div className="container mx-auto p-4 bg-white max-h-[800px] overflow-y-auto min-h-full min-w-full">
@@ -30,7 +30,7 @@ const EmailHistory: React.FC = () => {
                   Sent Status
                 </th>
                 <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 tracking-wider w-1/5">
-                  Opened
+                  Open Status
                 </th>
                 <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 tracking-wider w-1/5">
                   Sent Time

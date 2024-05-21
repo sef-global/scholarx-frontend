@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LoadingSVG: React.FC = () => (
+const Loading: React.FC = () => (
   <svg
     aria-hidden="true"
     className="inline w-8 h-8 text-gray-200 animate-spin fill-blue-600"
@@ -19,4 +19,4 @@ const LoadingSVG: React.FC = () => (
   </svg>
 );
 
-export default LoadingSVG;
+export default Loading;

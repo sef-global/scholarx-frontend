@@ -58,4 +58,27 @@ export interface Email {
   status: string;
   opened: boolean;
   sentTime: string;
+  profile: Profile;
+}
+
+export interface EmailData {
+  sender: string;
+  recipients: string[];
+  subject: string;
+  body: string;
+}
+
+export interface SendEmailsResponse {
+  status: string;
+  message: string;
+}
+
+export type SendEmailsFunction = (
+  emailData: EmailData
+) => Promise<SendEmailsResponse>;
+
+export interface EmailTemplateProps {
+  subject: string;
+  body: string;
+  recipient: string;
 }

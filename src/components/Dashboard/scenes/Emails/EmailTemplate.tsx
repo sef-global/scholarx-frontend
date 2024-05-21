@@ -1,10 +1,5 @@
 import React from 'react';
-
-interface EmailTemplateProps {
-  subject: string;
-  body: string;
-  recipient: string;
-}
+import { type EmailTemplateProps } from '../../../../types';
 
 const EmailTemplate: React.FC<EmailTemplateProps> = ({ subject, body }) => {
   return (

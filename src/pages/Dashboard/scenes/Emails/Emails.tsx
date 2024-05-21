@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import EmailTemplate from '../../../../components/Dashboard/scenes/Emails/EmailTemplate';
 import EmailHistory from '../../../../components/Dashboard/scenes/Emails/EmailHistory';
 import { EMAILAPI_URL, EMAILAPI_SENDER } from '../../../../constants';
-import LoadingSmallSVG from '../../../../assets/svg/LoadingSmallSVG';
+import Loading from '../../../../assets/svg/Loading';
 
 const Emails: React.FC = () => {
   const [selectedMentees, setSelectedMentees] = useState<string[]>([]);
@@ -12,6 +12,7 @@ const Emails: React.FC = () => {
   const [select, setSelect] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [showPreview, setShowPreview] = useState(false);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,56 +33,42 @@ const Emails: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.statusText}`);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
       setMessage('Success: Emails sent!');
     } catch (error) {
       setMessage(`Error : ${(error as Error).message}`);
     } finally {
       setIsLoading(false);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
     }
   };
 
-  useEffect(() => {
-    if (message.length > 0) {
-      const timer = setTimeout(() => {
-        setMessage('');
-      }, 1000);
-      return () => {
-        clearTimeout(timer);
-      };
-    }
-  }, [message]);
-
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    switch (e.target.value) {
-      case 'allMentors':
-        setSelectedMentees(allMentorsEmails);
-        setSelect('Mentor');
-        break;
-      case 'allMentees':
-        setSelectedMentees(allMenteesEmails);
-        setSelect('Mentees');
-        break;
-      case 'acceptedMentors':
-        setSelectedMentees(acceptMentorsEmails);
-        setSelect('Mentor');
-        break;
-      case 'acceptedMentees':
-        setSelectedMentees(acceptedMenteesEmails);
-        setSelect('Mentees');
-        break;
-      case 'rejectedMentees':
-        setSelectedMentees(rejectedMenteesEmails);
-        setSelect('Mentees');
-        break;
-      default:
-        setSelectedMentees([]);
-    }
-  };
+  // const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   switch (e.target.value) {
+  //     case 'allMentors':
+  //       setSelectedMentees(allMentorsEmails);
+  //       setSelect('Mentor');
+  //       break;
+  //     case 'allMentees':
+  //       setSelectedMentees(allMenteesEmails);
+  //       setSelect('Mentees');
+  //       break;
+  //     case 'acceptedMentors':
+  //       setSelectedMentees(acceptMentorsEmails);
+  //       setSelect('Mentor');
+  //       break;
+  //     case 'acceptedMentees':
+  //       setSelectedMentees(acceptedMenteesEmails);
+  //       setSelect('Mentees');
+  //       break;
+  //     case 'rejectedMentees':
+  //       setSelectedMentees(rejectedMenteesEmails);
+  //       setSelect('Mentees');
+  //       break;
+  //     default:
+  //       setSelectedMentees([]);
+  //   }
+  // };
 
   return (
     <div>
@@ -108,11 +95,21 @@ const Emails: React.FC = () => {
         <hr className="my-4" />
         {view === 'sent' ? (
           <>
-            <div className="flex flex-col space-y-4">
+            <div className="flex flex-col space-y-2">
               <div className="p-6 rounded-lg  bg-gray-100 shadow-lg">
-                <h2 className="text-xl font-bold mb-2 text-blue-500">
-                  Write Email here
-                </h2>
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl font-bold mb-2 text-blue-500">
+                    Write Email here
+                  </h2>
+                  <button
+                    className="text-gray-700 font-bold py-2 px-4 rounded"
+                    onClick={() => {
+                      setShowPreview(!showPreview);
+                    }}
+                  >
+                    Preview
+                  </button>
+                </div>
                 <div className="bg-white p-4 rounded shadow">
                   <form onSubmit={handleFormSubmit}>
                     <div className="space-y-4">
@@ -132,7 +129,7 @@ const Emails: React.FC = () => {
                         <span className="text-gray-700">Recipients:</span>
                         <select
                           className="mt-4 block w-full p-3 rounded-md border-gray-500 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 text-gray-700"
-                          onChange={handleSelectChange}
+                          // onChange={handleSelectChange}
                         >
                           <option value="">Select recipient group</option>
                           <option value="allMentors">All Mentors</option>
@@ -177,7 +174,7 @@ const Emails: React.FC = () => {
                           >
                             <div className="flex justify-center items-center h-5 px-6 py-2">
                               <>
-                                <LoadingSmallSVG />
+                                <Loading />
                               </>
                             </div>
                           </button>
@@ -199,24 +196,26 @@ const Emails: React.FC = () => {
                   </form>
                 </div>
               </div>
-              <div className="bg-gray-100 p-6 rounded shadow-lg">
-                <h2 className="text-xl font-bold mb-2 text-blue-500">
-                  Email Preview here
-                </h2>
-                <div className="bg-white p-4 rounded shadow">
-                  <EmailTemplate
-                    subject={subject}
-                    body={body}
-                    recipient={select}
-                  />
-                </div>
-              </div>
+              {showPreview && (
+                <>
+                  <div className="bg-gray-100 p-6 rounded shadow-lg">
+                    <h2 className="text-xl font-bold mb-2 text-blue-500">
+                      Email Preview here
+                    </h2>
+                    <div className="bg-white p-4 rounded shadow">
+                      <EmailTemplate
+                        subject={subject}
+                        body={body}
+                        recipient={select}
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </>
         ) : (
-          <>
-            <EmailHistory />
-          </>
+          <EmailHistory />
         )}
       </div>
     </div>
