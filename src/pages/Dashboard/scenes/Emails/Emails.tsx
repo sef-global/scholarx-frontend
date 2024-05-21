@@ -6,7 +6,6 @@ import { useSendEmail } from '../../../../hooks/useEmails';
 import { type EmailData } from '../../../../types';
 
 const Emails: React.FC = () => {
-  const [selectedMentees, setSelectedMentees] = useState<string[]>([]);
   const [view, setView] = useState('sent');
   const [select, setSelect] = useState('');
   const [message, setMessage] = useState('');
@@ -52,25 +51,25 @@ const Emails: React.FC = () => {
   };
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(`Selected: ${e.target.value}`);
+    console.log(`Selected: ${select}`);
     switch (e.target.value) {
       case 'allMentors':
-        setSelect('Mentor');
+        setSelect('All Mentors');
         break;
       case 'allMentees':
-        setSelect('Mentees');
+        setSelect('All Mentees');
         break;
       case 'acceptedMentors':
-        setSelect('Mentor');
+        setSelect('Accepted Mentor');
         break;
       case 'acceptedMentees':
-        setSelect('Mentees');
+        setSelect('Accepted Mentees');
         break;
       case 'rejectedMentees':
-        setSelect('Mentees');
+        setSelect('Rejected Mentees');
         break;
       default:
-        setSelectedMentees([]);
+        setSelect('');
     }
   };
 
