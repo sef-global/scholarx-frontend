@@ -21,12 +21,12 @@ const Emails: React.FC = () => {
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    sendEmailMutation.mutate(formData, {
-      onSuccess: (data) => {
-        console.log('Email sent successfully:', data);
+    sendEmailMutation.mutation.mutate(formData, {
+      onSuccess: () => {
+        setMessage('Email sent successfully');
       },
-      onError: (error) => {
-        console.error('Error sending email:', error);
+      onError: () => {
+        setMessage('Error sending email');
       },
     });
   };

@@ -76,3 +76,7 @@ export interface SendEmailsResponse {
 export type SendEmailsFunction = (
   emailData: EmailData
 ) => Promise<SendEmailsResponse>;
+
+export interface MutationData {
+  message: string;
+}
