@@ -76,9 +76,3 @@ export interface SendEmailsResponse {
 export type SendEmailsFunction = (
   emailData: EmailData
 ) => Promise<SendEmailsResponse>;
-
-export interface EmailTemplateProps {
-  subject: string;
-  body: string;
-  recipient: string;
-}

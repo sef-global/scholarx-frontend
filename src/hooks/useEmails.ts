@@ -1,7 +1,9 @@
 import {
+  type Mutation,
   useQuery,
   type QueryFunction,
   type QueryKey,
+  useMutation,
 } from '@tanstack/react-query';
 import axios, { type AxiosError } from 'axios';
 import { EMAILAPI_URL } from '../constants';
@@ -12,25 +14,20 @@ const fetchEmails: QueryFunction<Email[], QueryKey> = async () => {
   return response.data.emails;
 };
 
-// const sendEmails = async (emailData: any) => {
-//   return {
-//     mutationFn: async () => {
-//       try {
-//         const response = await axios.post(
-//           `${EMAILAPI_URL}/api/v1/send`,
-//           emailData
-//         );
+const sendEmail: Mutation<SendEmailsResponse, AxiosError, EmailData> = async (
+  emailData
+) => {
+  const response = await axios.post(`${EMAILAPI_URL}/api/v1/send`, emailData);
+  return response.data;
+};
 
-//         if (response.status !== 201) {
-//           throw new Error(`HTTP error: ${response.statusText}`);
-//         }
-//         return response.data;
-//       } catch (error) {
-//         throw new Error(`Error sending email: ${error.message}`);
-//       }
-//     },
-//   };
-// };
+const useSendEmail = () => {
+  const mutation = useMutation({
+    mutationFn: sendEmail,
+  });
+
+  return mutation;
+};
 
 const useEmails = () => {
   const { isLoading, error, data } = useQuery<Email[], AxiosError>({
@@ -45,4 +42,4 @@ const useEmails = () => {
   };
 };
 
-export { useEmails };
+export { useEmails, useSendEmail };

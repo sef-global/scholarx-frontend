@@ -1,45 +1,56 @@
 import React, { useState } from 'react';
 import EmailHistory from '../../../../components/Dashboard/scenes/Emails/EmailHistory';
-import { EMAILAPI_URL, EMAILAPI_SENDER } from '../../../../constants';
+import { EMAILAPI_SENDER } from '../../../../constants';
 import Loading from '../../../../assets/svg/Loading';
+import { useSendEmail } from '../../../../hooks/useEmails';
+import { type EmailData } from '../../../../types';
 
 const Emails: React.FC = () => {
   const [selectedMentees, setSelectedMentees] = useState<string[]>([]);
-  const [subject, setSubject] = useState('');
-  const [body, setBody] = useState('');
   const [view, setView] = useState('sent');
   const [select, setSelect] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const sendEmailMutation = useSendEmail();
 
-  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const [formData, setFormData] = useState<EmailData>({
+    sender: EMAILAPI_SENDER,
+    recipients: [],
+    subject: '',
+    body: '',
+  });
+
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const emailData = {
-      sender: `${EMAILAPI_SENDER}`,
-      recipients: selectedMentees,
-      subject,
-      body,
-    };
-    setIsLoading(true);
-    try {
-      const response = await fetch(`${EMAILAPI_URL}api/v1/send`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(emailData),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      setMessage('Success: Emails sent!');
-    } catch (error) {
-      setMessage(`Error : ${(error as Error).message}`);
-    } finally {
-      setIsLoading(false);
-    }
+    sendEmailMutation.mutate(formData, {
+      onSuccess: (data) => {
+        console.log('Email sent successfully:', data);
+      },
+      onError: (error) => {
+        console.error('Error sending email:', error);
+      },
+    });
   };
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleRecipientsChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const { value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      recipients: value.split(','),
+    }));
+  };
+
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     console.log(`Selected: ${e.target.value}`);
     switch (e.target.value) {
@@ -102,11 +113,10 @@ const Emails: React.FC = () => {
                         <span className="text-gray-700">Subject:</span>
                         <input
                           type="text"
-                          value={subject}
+                          name="subject"
+                          value={formData.subject}
                           placeholder="Write subject here"
-                          onChange={(e) => {
-                            setSubject(e.target.value);
-                          }}
+                          onChange={handleInputChange}
                           className="mt-1 px-4 py-4 block w-full rounded-md border-gray-300 shadow-sm"
                         />
                       </label>
@@ -130,12 +140,9 @@ const Emails: React.FC = () => {
                           </option>
                         </select>
                         <textarea
-                          value={selectedMentees}
-                          onChange={(
-                            e: React.ChangeEvent<HTMLTextAreaElement>
-                          ) => {
-                            setSelectedMentees(e.target.value.split(','));
-                          }}
+                          name="recipients"
+                          value={formData.recipients.join(',')}
+                          onChange={handleRecipientsChange}
                           placeholder="Enter recipient emails, separated by commas"
                           className="mt-1 px-4 py-2 block w-full rounded-md border-gray-300 shadow-sm"
                         />
@@ -143,16 +150,15 @@ const Emails: React.FC = () => {
                       <label className="block">
                         <span className="text-gray-700">Body:</span>
                         <textarea
-                          value={body}
+                          name="body"
+                          value={formData.body}
                           placeholder="Write body message here"
-                          onChange={(e) => {
-                            setBody(e.target.value);
-                          }}
+                          onChange={handleInputChange}
                           className="mt-2 px-4 py-4 block w-full rounded-md border-gray-300 shadow-sm"
                         />
                       </label>
                       <div>
-                        {isLoading ? (
+                        {sendEmailMutation.isLoading ? (
                           <button
                             type="submit"
                             className="mt-4 x-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 cursor-pointer"
