@@ -7,7 +7,6 @@ import { type EmailData } from '../../../../types';
 
 const Emails: React.FC = () => {
   const [view, setView] = useState('sent');
-  const [select, setSelect] = useState('');
   const [message, setMessage] = useState('');
   const sendEmailMutation = useEmails();
 
@@ -53,22 +52,16 @@ const Emails: React.FC = () => {
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     switch (e.target.value) {
       case 'allMentors':
-        setSelect('All Mentors');
         break;
       case 'allMentees':
-        setSelect('All Mentees');
         break;
       case 'acceptedMentors':
-        setSelect('Accepted Mentor');
         break;
       case 'acceptedMentees':
-        setSelect('Accepted Mentees');
         break;
       case 'rejectedMentees':
-        setSelect('Rejected Mentees');
         break;
       default:
-        setSelect('');
     }
   };
 
