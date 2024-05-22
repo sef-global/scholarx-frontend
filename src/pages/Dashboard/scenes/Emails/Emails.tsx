@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import EmailHistory from '../../../../components/Dashboard/scenes/Emails/EmailHistory';
 import { EMAILAPI_SENDER } from '../../../../constants';
 import Loading from '../../../../assets/svg/Loading';
-import { useSendEmail } from '../../../../hooks/useEmails';
+import { useEmails } from '../../../../hooks/useEmails';
 import { type EmailData } from '../../../../types';
 
 const Emails: React.FC = () => {
   const [view, setView] = useState('sent');
   const [select, setSelect] = useState('');
   const [message, setMessage] = useState('');
-  const sendEmailMutation = useSendEmail();
+  const sendEmailMutation = useEmails();
 
   const [formData, setFormData] = useState<EmailData>({
     sender: EMAILAPI_SENDER,
@@ -51,7 +51,6 @@ const Emails: React.FC = () => {
   };
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(`Selected: ${select}`);
     switch (e.target.value) {
       case 'allMentors':
         setSelect('All Mentors');
@@ -157,7 +156,7 @@ const Emails: React.FC = () => {
                         />
                       </label>
                       <div>
-                        {sendEmailMutation.isLoading ? (
+                        {sendEmailMutation.isPending ? (
                           <button
                             type="submit"
                             className="mt-4 x-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 cursor-pointer"

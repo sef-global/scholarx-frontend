@@ -18,29 +18,28 @@ const sendEmail = async (emailData: EmailData): Promise<SendEmailsResponse> => {
   return response.data;
 };
 
-const useSendEmail = () => {
-  const mutation = useMutation({
-    mutationFn: sendEmail,
-  });
+export const useEmails = () => {
+  const useSendEmail = () => {
+    const mutation = useMutation({
+      mutationFn: sendEmail,
+    });
 
-  return {
-    mutation,
-    isLoading: mutation.status === 'pending',
-    responseMessage: mutation.data?.message,
+    return mutation;
   };
-};
 
-const useEmails = () => {
   const { isLoading, error, data } = useQuery<Email[], AxiosError>({
     queryKey: ['emails'],
     queryFn: fetchEmails,
   });
 
+  const mutation = useSendEmail();
+
   return {
     isLoading,
     error,
     data,
+    mutation,
+    isPending: mutation.status === 'pending',
+    responseMessage: mutation.data?.message,
   };
 };
-
-export { useEmails, useSendEmail };
