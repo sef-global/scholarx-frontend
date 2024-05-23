@@ -1,14 +1,9 @@
 import React from 'react';
-
-import { Avatar, Button, Drawer, Space, Typography } from 'antd';
-
-import styles from './MenuDrawer.module.css';
+import { Link } from 'react-router-dom';
 import TwitterIcon from '../../../assets/svg/Icons/TwitterIcon';
 import FacebookIcon from '../../../assets/svg/Icons/FacebookIcon';
 import LinkedinIcon from '../../../assets/svg/Icons/LinkedinIcon';
 import InstagramIcon from '../../../assets/svg/Icons/InstagramIcon';
-
-const { Text } = Typography;
 
 interface MenuDrawerProps {
   openMenu: boolean;
@@ -30,75 +25,78 @@ const MenuDrawer: React.FC<MenuDrawerProps> = ({
   };
 
   return (
-    <Drawer
-      open={handleOpenMenu()}
-      placement="right"
-      onClose={() => {
-        handleCloseMenu();
-      }}
-      width={320}
-      closable
+    <div
+      className={`fixed inset-0 z-50 transform ${
+        handleOpenMenu() ? 'translate-x-0' : 'translate-x-full'
+      } transition-transform duration-300 ease-in-out flex justify-end`}
     >
-      <Space className={styles.drawerContent} direction="vertical" size={50}>
-        <Avatar size={135} />
-        <a href="https://sefglobal.org/">
-          <Text className={styles.antTypography}>Home</Text>
-        </a>
-        <a href="" target="_blank" rel="noreferrer">
-          <Text className={styles.antTypography}>About</Text>
-        </a>
-        <a href="" target="_blank" rel="noreferrer">
-          <Text className={styles.antTypography}>Initiatives</Text>
-        </a>
-        <a href="" target="_blank" rel="noreferrer">
-          <Text className={styles.antTypography}>Join Us</Text>
-        </a>
-        <Button
-          className="mr-5 mb-5 w-40 h-9 font-sans text-black-400 py-1 px-4 rounded"
-          onClick={handleMentorRegistration}
-        >
-          Become a Mentor
-        </Button>
-        <Space direction="horizontal" size={20}>
-          <a
-            href="https://www.facebook.com/sustainableeducationfoundation/"
-            target="_blank"
-            rel="noreferrer"
+      <div
+        className="fixed inset-0 bg-black opacity-50"
+        onClick={handleCloseMenu}
+      ></div>
+      <div className="relative w-80 bg-white h-full shadow-lg p-6">
+        <div className="flex flex-col items-center space-y-12">
+          <div className="w-12 h-12 rounded-full bg-gray-300"></div>
+          <Link to="/" className="text-lg text-black">
+            Home
+          </Link>
+          <Link to="/about" className="text-lg text-black">
+            About
+          </Link>
+          <Link to="/initiatives" className="text-lg text-black">
+            Initiatives
+          </Link>
+          <Link to="/join-us" className="text-lg text-black">
+            Join Us
+          </Link>
+          <button
+            className="mr-5 mb-5 w-40 h-9 font-sans text-black bg-gray-200 py-1 px-4 rounded"
+            onClick={handleMentorRegistration}
           >
-            <Button className={styles.antButton} shape="circle">
-              <FacebookIcon />
-            </Button>
-          </a>
-          <a
-            href="https://twitter.com/goasksef"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <Button className={styles.antButton} shape="circle">
-              <TwitterIcon />
-            </Button>
-          </a>
-          <a
-            href="https://www.linkedin.com/company/sefglobal/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <Button className={styles.antButton} shape="circle">
-              <LinkedinIcon />
-            </Button>
-          </a>
-          <a
-            href="https://www.instagram.com/sefglobal/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <Button className={styles.antButton} shape="circle">
-              <InstagramIcon />
-            </Button>
-          </a>
-        </Space>
-      </Space>
-    </Drawer>
+            Become a Mentor
+          </button>
+          <div className="flex space-x-5">
+            <a
+              href="https://www.facebook.com/sustainableeducationfoundation/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200">
+                <FacebookIcon />
+              </div>
+            </a>
+            <a
+              href="https://twitter.com/goasksef"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200">
+                <TwitterIcon />
+              </div>
+            </a>
+            <a
+              href="https://www.linkedin.com/company/sefglobal/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200">
+                <LinkedinIcon />
+              </div>
+            </a>
+            <a
+              href="https://www.instagram.com/sefglobal/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200">
+                <InstagramIcon />
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
+
 export default MenuDrawer;

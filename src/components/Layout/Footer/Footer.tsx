@@ -12,15 +12,15 @@ const Footer: React.FC = () => (
   <footer>
     <div className="wrapper flex justify-around flex-col sm:flex-row ">
       <div className="col ml-8">
-        <div className="footerMainTitle font-sans text-4xl text-darkmod-blue font-bold mb-12">
+        <div className="text-2xl md:text-4xl text-darkmod-blue font-bold mb-4 md:mb-12">
           Let`s Rethink Education!
         </div>
-        <div className="footerSecondaryTitle font-sans text-base text-darkmod-blue font-normal">
+        <div className="text-base text-darkmod-blue font-normal">
           Get in touch with using any of these platforms.
         </div>
 
         {/* SEF Social Media Links */}
-        <div className="flex socialmedia mt-[10px]">
+        <div className="flex mt-[10px]">
           <div className="twitter w-7 h-7  rounded flex justify-center items-center bg-[#1DA1F2]">
             <a href="https://twitter.com/goasksef">
               <TwitterIcon />
@@ -128,14 +128,14 @@ const Footer: React.FC = () => (
 
     {/* Footer Link */}
     <div className="footerlinks flex justify-center mt-[8%]">
-      <div className="footerLink font-sans text-base text-darkmod-blue font-normal ">
+      <div className="footerLink text-base text-darkmod-blue font-normal ">
         © 2024
         <a
           href="https://sefglobal.org/"
-          className=" sefLink active:text-darkmod-blue font-sans font-normal"
+          className=" sefLink active:text-darkmod-blue font-normal"
         >
           {' '}
-          Sustainable Education Foundation - SEF.
+          Sustainable Education Foundation - SEF
         </a>
       </div>
     </div>

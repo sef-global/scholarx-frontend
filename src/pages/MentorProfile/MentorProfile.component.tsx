@@ -7,15 +7,15 @@ const MentorProfile: React.FC = () => {
   const { mentorId } = useParams();
   const { data: mentor } = useMentor(mentorId);
   return (
-    <div>
+    <>
       <div className="flex flex-row gap-2">
         <img
           src="https://palmbayprep.org/wp-content/uploads/2015/09/user-icon-placeholder.png"
           alt="find-mentor"
-          className="w-36 h-36 rounded-full object-cover my-auto"
+          className="w-20 h-20 md:w-28 md:h-28 rounded-full object-cover my-auto"
         />
         <div className="w-full h-1/2 mt-20">
-          <h1 className="text-3xl font-extrabold font-sans mb-2 tracking-wider">
+          <h1 className="text-lg md:text-3xl font-extrabold font-sans mb-2 tracking-wider">
             {mentor?.application.firstName} {mentor?.application.lastName}
           </h1>
           <div className="flex flex-row place-content-between w-full">
@@ -35,8 +35,8 @@ const MentorProfile: React.FC = () => {
           <hr className="w-full" />
         </div>
       </div>
-      <div className="flex flex-row h-1/3 py-9">
-        <div className="grid grid-cols-4 gap-9 w-2/3">
+      <div className="md:flex flex-row h-1/3 py-9">
+        <div className="grid md:grid-cols-4 md:gap-9 md:w-2/3">
           <div>
             <h2 className="text-xl font-semibold font-sans mt-5">Category</h2>
             <ul className="text-sm list-disc ml-4 font-light">
@@ -56,7 +56,7 @@ const MentorProfile: React.FC = () => {
             </ul>
           </div>
         </div>
-        <div className="flex flex-row gap-9 m-5">
+        <div className="md:flex flex-row gap-9 m-5">
           <span className="w-0.5 h-24 bg-gray-300"></span>
           <a href="#" className="text-blue-500 underline">
             Linkedin
@@ -78,7 +78,7 @@ const MentorProfile: React.FC = () => {
         <h2 className="text-xl font-semibold">Bio</h2>
         <p className="font-light">{mentor?.application.bio}</p>
       </div>
-    </div>
+    </>
   );
 };
 
