@@ -14,7 +14,7 @@ const MentorApplicationPage = () => {
         <ol className="flex items-center gap-1 text-sm text-gray-600">
           <li>
             <Link
-              to="/dashboard"
+              to="/admin/dashboard"
               className="block transition hover:text-gray-700"
             >
               Dashboard

@@ -1,48 +1,36 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  type ChangeEvent,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { UserContext, type UserContextType } from '../../contexts/UserContext';
+import useProfile from '../../hooks/useProfile';
 
 const EditProfileForm: React.FC = () => {
   const { user, isUserLoading } = useContext(UserContext) as UserContextType;
-  const [fileList, setFileList] = useState<File[]>([]);
-  const [formValues, setFormValues] = useState<{
-    first_name: string;
-    last_name: string;
-    contact_email: string;
-    image_url?: string;
-  }>();
+  const { updateProfile } = useProfile();
+  const [fileList, setFileList] = useState<File | null>(null);
+  const [profilePic, setProfilePic] = useState(user?.image_url);
+  const [firstName, setFirstName] = useState(user?.first_name);
+  const [lastName, setLastName] = useState(user?.last_name);
+  const [email, setEmail] = useState(user?.primary_email);
 
-  useEffect(() => {
-    if (!isUserLoading) {
-      user &&
-        setFormValues({
-          first_name: user.first_name,
-          last_name: user.last_name,
-          contact_email: user.contact_email,
-          image_url: user.image_url,
-        });
-
-      if (user?.image_url) {
-        setFileList([
-          {
-            uid: user.uuid,
-            name: `ProfilePicture_${user.first_name}${user.last_name}`,
-            url: user.image_url,
-          },
-        ]);
-      }
-    }
-  }, [user, isUserLoading]);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files && files.length > 0) {
-      setFileList(Array.from(files));
+  const handleProfilePicChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files != null) {
+      const file = event.target.files[0];
+      setFileList(file);
+      setProfilePic(URL.createObjectURL(file));
     }
   };
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(formValues);
+    updateProfile({ first_name: firstName, last_name: lastName });
+  };
+
+  const handleImageClick = () => {
+    document.getElementById('profilePic')?.click();
   };
 
   return (
@@ -64,10 +52,10 @@ const EditProfileForm: React.FC = () => {
               <label className="block text-gray-700">First Name</label>
               <input
                 type="text"
-                value={formValues?.first_name ?? ''}
-                onChange={(e) =>
-                  setFormValues({ ...formValues, first_name: e.target.value })
-                }
+                value={firstName}
+                onChange={(e) => {
+                  setFirstName(e.target.value);
+                }}
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
                 required
               />
@@ -77,9 +65,9 @@ const EditProfileForm: React.FC = () => {
               <label className="block text-gray-700">Last Name</label>
               <input
                 type="text"
-                value={formValues?.last_name ?? ''}
+                value={lastName}
                 onChange={(e) => {
-                  setFormValues({ ...formValues, last_name: e.target.value });
+                  setLastName(e.target.value);
                 }}
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
                 required
@@ -90,7 +78,7 @@ const EditProfileForm: React.FC = () => {
               <label className="block text-gray-700">Primary Email</label>
               <input
                 type="email"
-                value={user?.primary_email ?? ''}
+                value={user?.primary_email}
                 disabled
                 className="w-full px-4 py-2 border rounded-md bg-gray-100 cursor-not-allowed"
               />
@@ -100,13 +88,10 @@ const EditProfileForm: React.FC = () => {
               <label className="block text-gray-700">Contact Email</label>
               <input
                 type="email"
-                value={formValues?.contact_email || ''}
-                onChange={(e) =>
-                  setFormValues({
-                    ...formValues,
-                    contact_email: e.target.value,
-                  })
-                }
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
                 required
               />
@@ -128,30 +113,39 @@ const EditProfileForm: React.FC = () => {
             <div className="h-6 bg-gray-300 rounded mt-4"></div>
           </div>
         ) : (
-          <>
-            <div className="relative inline-block">
-              {fileList.length > 0 ? (
+          <div className="relative">
+            <input
+              type="file"
+              id="profilePic"
+              name="profilePic"
+              accept="image/*"
+              onChange={handleProfilePicChange}
+              className="hidden"
+            />
+            <div
+              onClick={handleImageClick}
+              className="cursor-pointer relative group"
+            >
+              {profilePic !== '' ? (
                 <img
-                  src={fileList[0].url || ''}
+                  src={profilePic}
                   alt="Profile"
-                  className="w-24 h-24 rounded-full mx-auto"
+                  className="w-[90px] h-[90px] rounded-full object-cover"
                 />
               ) : (
-                <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto flex items-center justify-center">
-                  <span className="text-gray-400">+</span>
+                <div className="w-[90px] h-[90px] rounded-full bg-gray-200 flex items-center justify-center">
+                  <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto flex items-center justify-center">
+                    <span className="text-gray-400">+</span>
+                  </div>
                 </div>
               )}
-              <input
-                type="file"
-                onChange={handleChange}
-                className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
-              />
+              <div className="absolute bottom-0 w-[90px] h-1/2 bg-black bg-opacity-40 rounded-b-full flex items-center p-5 justify-center">
+                <span className="text-white text-center text-xs">
+                  Change Photo
+                </span>
+              </div>
             </div>
-
-            <h4 className="mt-4 text-lg font-medium">
-              {user?.first_name} {user?.last_name}
-            </h4>
-          </>
+          </div>
         )}
       </div>
     </div>

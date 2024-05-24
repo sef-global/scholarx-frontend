@@ -23,7 +23,7 @@ export const useMentees = () => {
     queryFn: fetchMentees,
   });
 
-  const updateMenteeStatus = useMutation({
+  const { mutate: updateMenteeStatus } = useMutation({
     mutationFn: async ({
       menteeId,
       state,

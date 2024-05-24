@@ -13,7 +13,7 @@ const MenteeProfile: React.FC<MenteeProfileProps> = ({ mentee }) => {
 
   const handleStateUpdate = (state: ApplicationStatus) => {
     if (mentee != null) {
-      updateMenteeStatus.mutate({ menteeId: mentee.uuid, state });
+      updateMenteeStatus({ menteeId: mentee.uuid, state });
     }
   };
 
