@@ -1,12 +1,8 @@
 import React from 'react';
-import { Col, Row, Typography } from 'antd';
-import styles from './Home.module.css';
 import FAQSection from '../FAQ';
 import menteeFAQs from '../FAQ/MenteeFAQs.json';
 import mentorFAQs from '../FAQ/MentorFAQs.json';
 import { Link } from 'react-router-dom';
-
-const { Text } = Typography;
 
 const Home: React.FC = () => {
   return (
@@ -114,34 +110,24 @@ const Home: React.FC = () => {
       </div>
 
       {/* FAQs container */}
-      <Row
-        className={styles.homePageContainer}
-        align={'middle'}
-        justify={'center'}
-      >
-        <Col span={24} style={{ textAlign: 'center' }}>
-          <Text
-            className={styles.homePageSecondaryTitle}
-            style={{ fontSize: '25px', color: '#3D317C', fontWeight: 600 }}
-          >
+      <div className="flex flex-col items-center">
+        <div className="w-full text-center">
+          <h2 className="text-3xl font-semibold text-[#3D317C]">
             FAQ for Mentors
-          </Text>
-        </Col>
-        <Col xs={20} xl={12}>
+          </h2>
+        </div>
+        <div className="w-full xs:w-4/5 xl:w-1/2">
           <FAQSection faqs={mentorFAQs} />
-        </Col>
-        <Col span={24} style={{ textAlign: 'center' }}>
-          <Text
-            className={styles.homePageSecondaryTitle}
-            style={{ fontSize: '25px', color: '#3D317C', fontWeight: 600 }}
-          >
+        </div>
+        <div className="w-full text-center mt-8">
+          <h2 className="text-3xl font-semibold text-[#3D317C]">
             FAQ for Mentees
-          </Text>
-        </Col>
-        <Col xs={20} xl={12}>
+          </h2>
+        </div>
+        <div className="w-full xs:w-4/5 xl:w-1/2">
           <FAQSection faqs={menteeFAQs} />
-        </Col>
-      </Row>
+        </div>
+      </div>
     </>
   );
 };

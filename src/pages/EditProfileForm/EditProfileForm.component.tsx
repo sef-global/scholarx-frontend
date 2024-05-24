@@ -1,28 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import {
-  Button,
-  Col,
-  Form,
-  Input,
-  Modal,
-  Row,
-  Skeleton,
-  Upload,
-  type UploadFile,
-  type UploadProps,
-} from 'antd';
-import Title from 'antd/es/typography/Title';
-import styles from './EditProfileForm.module.css';
-import { type RcFile } from 'antd/es/upload';
-import { getBase64 } from '../../util/imageConversion.util';
 import { UserContext, type UserContextType } from '../../contexts/UserContext';
 
 const EditProfileForm: React.FC = () => {
   const { user, isUserLoading } = useContext(UserContext) as UserContextType;
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState('');
-  const [previewTitle, setPreviewTitle] = useState('');
+  const [fileList, setFileList] = useState<File[]>([]);
   const [formValues, setFormValues] = useState<{
     first_name: string;
     last_name: string;
@@ -32,7 +13,7 @@ const EditProfileForm: React.FC = () => {
 
   useEffect(() => {
     if (!isUserLoading) {
-      user != null &&
+      user &&
         setFormValues({
           first_name: user.first_name,
           last_name: user.last_name,
@@ -40,7 +21,7 @@ const EditProfileForm: React.FC = () => {
           image_url: user.image_url,
         });
 
-      if (user?.image_url != null && user.image_url !== '') {
+      if (user?.image_url) {
         setFileList([
           {
             uid: user.uuid,
@@ -52,239 +33,128 @@ const EditProfileForm: React.FC = () => {
     }
   }, [user, isUserLoading]);
 
-  const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-  };
-
-  const onSubmit = (d: any) => {
-    console.log(d);
-  };
-
-  const handlePreview = async (file: UploadFile): Promise<void> => {
-    if (file.url == null && file.preview == null) {
-      file.preview = await getBase64(file.originFileObj as RcFile);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      setFileList(Array.from(files));
     }
-    setPreviewImage(file.url ?? (file.preview as string));
-    setPreviewOpen(true);
-    setPreviewTitle(file.name);
   };
 
-  const handleCancel = (): void => {
-    setPreviewOpen(false);
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log(formValues);
   };
 
   return (
-    <Row gutter={48}>
-      <Col
-        xs={{
-          span: 24,
-          order: 2,
-        }}
-        md={{
-          span: 16,
-          order: 1,
-        }}
-      >
+    <div className="flex flex-wrap">
+      <div className="w-full md:w-2/3 p-4">
         {isUserLoading ? (
-          <>
-            <Skeleton
-              paragraph={{
-                rows: 0,
-              }}
-              active
-            />
-            <Skeleton.Input
-              active
-              block
-              size="small"
-              style={{ marginTop: '-0.75rem', marginBottom: '1rem' }}
-            />
-            <Skeleton
-              paragraph={{
-                rows: 0,
-              }}
-              active
-            />
-            <Skeleton.Input
-              active
-              block
-              size="small"
-              style={{ marginTop: '-0.75rem', marginBottom: '1rem' }}
-            />
-            <Skeleton
-              paragraph={{
-                rows: 0,
-              }}
-              active
-            />
-            <Skeleton.Input
-              active
-              block
-              size="small"
-              style={{ marginTop: '-0.75rem', marginBottom: '1rem' }}
-            />
-            <Skeleton
-              paragraph={{
-                rows: 0,
-              }}
-              active
-            />
-            <Skeleton.Input
-              active
-              block
-              size="small"
-              style={{ marginTop: '-0.75rem', marginBottom: '1rem' }}
-            />
-            <Skeleton
-              paragraph={{
-                rows: 0,
-              }}
-              active
-            />
-            <Skeleton.Input
-              active
-              block
-              size="small"
-              style={{ marginTop: '-0.75rem', marginBottom: '1rem' }}
-            />
-
-            <Skeleton.Button
-              active
-              style={{
-                marginTop: '1rem',
-              }}
-            />
-          </>
+          <div className="animate-pulse space-y-4">
+            <div className="h-6 bg-gray-300 rounded"></div>
+            <div className="h-6 bg-gray-300 rounded"></div>
+            <div className="h-6 bg-gray-300 rounded"></div>
+            <div className="h-6 bg-gray-300 rounded"></div>
+            <div className="h-6 bg-gray-300 rounded"></div>
+            <div className="h-6 bg-gray-300 rounded"></div>
+            <div className="h-10 bg-gray-300 rounded"></div>
+          </div>
         ) : (
-          <Form
-            name="basic"
-            layout="vertical"
-            initialValues={{ remember: true }}
-            onFinish={() => {
-              onSubmit(
-                formValues as {
-                  first_name: string;
-                  last_name: string;
-                  contact_email: string;
-                  image_url?: string;
+          <form onSubmit={onSubmit} className="space-y-4">
+            <div className="space-y-1">
+              <label className="block text-gray-700">First Name</label>
+              <input
+                type="text"
+                value={formValues?.first_name ?? ''}
+                onChange={(e) =>
+                  setFormValues({ ...formValues, first_name: e.target.value })
                 }
-              );
-            }}
-            autoComplete="off"
-          >
-            <Form.Item<string>
-              label="First Name"
-              name="first_name"
-              initialValue={user?.first_name}
-              rules={[
-                { required: true, message: 'First name cannot be empty!' },
-              ]}
-            >
-              <Input />
-            </Form.Item>
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+                required
+              />
+            </div>
 
-            <Form.Item<string>
-              label="Last Name"
-              name="last_name"
-              initialValue={user?.last_name}
-              rules={[
-                { required: true, message: 'Last name cannot be empty!' },
-              ]}
-            >
-              <Input />
-            </Form.Item>
+            <div className="space-y-1">
+              <label className="block text-gray-700">Last Name</label>
+              <input
+                type="text"
+                value={formValues?.last_name ?? ''}
+                onChange={(e) => {
+                  setFormValues({ ...formValues, last_name: e.target.value });
+                }}
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+                required
+              />
+            </div>
 
-            <Form.Item<string>
-              label="Primary Email"
-              name="primary_email"
-              initialValue={user?.primary_email}
-            >
-              <Input disabled />
-            </Form.Item>
+            <div className="space-y-1">
+              <label className="block text-gray-700">Primary Email</label>
+              <input
+                type="email"
+                value={user?.primary_email ?? ''}
+                disabled
+                className="w-full px-4 py-2 border rounded-md bg-gray-100 cursor-not-allowed"
+              />
+            </div>
 
-            <Form.Item<string>
-              label="Contact Email"
-              name="contact_email"
-              initialValue={user?.contact_email}
-              rules={[
-                { required: true, message: 'Contact email cannot be empty!' },
-              ]}
-            >
-              <Input />
-            </Form.Item>
+            <div className="space-y-1">
+              <label className="block text-gray-700">Contact Email</label>
+              <input
+                type="email"
+                value={formValues?.contact_email || ''}
+                onChange={(e) =>
+                  setFormValues({
+                    ...formValues,
+                    contact_email: e.target.value,
+                  })
+                }
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+                required
+              />
+            </div>
 
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Save
-              </Button>
-            </Form.Item>
-          </Form>
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            >
+              Save
+            </button>
+          </form>
         )}
-      </Col>
-      <Col
-        style={{ textAlign: 'center' }}
-        xs={{
-          span: 24,
-          order: 1,
-        }}
-        md={{
-          span: 8,
-          order: 2,
-          pull: 1,
-        }}
-      >
+      </div>
+      <div className="w-full md:w-1/3 p-4 text-center">
         {isUserLoading ? (
-          <>
-            <Skeleton.Avatar active size={100} style={{ display: 'block' }} />
-            <br />
-            <Skeleton.Input
-              style={{ display: 'block', marginTop: '1rem' }}
-              size="small"
-              active
-            />
-          </>
+          <div className="animate-pulse">
+            <div className="w-24 h-24 bg-gray-300 rounded-full mx-auto"></div>
+            <div className="h-6 bg-gray-300 rounded mt-4"></div>
+          </div>
         ) : (
           <>
-            <Upload
-              fileList={fileList}
-              onChange={handleChange}
-              onPreview={(file) => {
-                void handlePreview(file);
-              }}
-              multiple={false}
-              maxCount={1}
-              listType="picture-circle"
-              isImageUrl={() => true}
-              className={styles.uploadWrapper}
-            >
-              {fileList.length === 0 ? (
-                <div>
-                  +<div style={{ marginTop: 8 }}>Upload</div>
+            <div className="relative inline-block">
+              {fileList.length > 0 ? (
+                <img
+                  src={fileList[0].url || ''}
+                  alt="Profile"
+                  className="w-24 h-24 rounded-full mx-auto"
+                />
+              ) : (
+                <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto flex items-center justify-center">
+                  <span className="text-gray-400">+</span>
                 </div>
-              ) : null}
-            </Upload>
-            <Modal
-              open={previewOpen}
-              title={previewTitle}
-              footer={null}
-              onCancel={() => {
-                handleCancel();
-              }}
-            >
-              <img
-                alt={previewTitle}
-                style={{ width: '100%' }}
-                src={previewImage}
+              )}
+              <input
+                type="file"
+                onChange={handleChange}
+                className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
               />
-            </Modal>
+            </div>
 
-            <Title level={4} style={{ marginTop: '1rem' }}>
+            <h4 className="mt-4 text-lg font-medium">
               {user?.first_name} {user?.last_name}
-            </Title>
+            </h4>
           </>
         )}
-      </Col>
-    </Row>
+      </div>
+    </div>
   );
 };
 
