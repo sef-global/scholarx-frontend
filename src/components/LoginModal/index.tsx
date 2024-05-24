@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { API_URL } from '../../constants';
 import closeIcon from '../../assets/svg/closeIcon.svg';
 import styles from './LoginModal.module.css';
@@ -17,12 +17,16 @@ const handleLoginGoogle = (e: React.FormEvent): void => {
 const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const { refetch } = useProfile();
 
-  const handleLogin = (e: React.FormEvent): void => {
+  const handleLogin = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     try {
-      axios
+      setError('');
+      setIsLoading(true);
+      await axios
         .post(
           `${API_URL}/auth/login`,
           {
@@ -36,17 +40,14 @@ const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
         .then(async () => {
           await refetch();
           handleClose();
-        })
-        .catch((error) => {
-          if (error.response.status !== 401) {
-            console.error({
-              message: 'Something went wrong when fetching the user',
-              description: error.toString(),
-            });
-          }
         });
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       console.error('Login error:', error);
+      if (error instanceof AxiosError) {
+        setError(error.response?.data.message);
+      }
     }
   };
 
@@ -140,8 +141,9 @@ const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
                   type="submit"
                   className="w-full px-5 py-3 text-base font-medium text-center text-white tracking-widest bg-primary-blue rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300"
                 >
-                  Login
+                  {isLoading ? 'Loading' : 'Login'}
                 </button>
+                <p className="text-red-600 text-center">{error}</p>
                 <div className="my-1 m-0 flex items-center before:mt-0.2 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
                   <p className="mx-1 mb-0 text-center font-semibold text-gray-400">
                     or Sign-in with

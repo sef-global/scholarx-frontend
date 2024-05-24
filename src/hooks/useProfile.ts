@@ -22,17 +22,19 @@ const useProfile = () => {
     },
   });
 
-  const { mutate: updateProfile } = useMutation({
+  const { mutate: updateProfile, isPending } = useMutation({
     mutationFn: async ({
       profile,
       image,
     }: {
       profile: Profile;
-      image: File;
+      image: File | null;
     }) => {
       const formData = new FormData();
 
-      formData.append('profile_image', image);
+      if (image != null) {
+        formData.append('profile_image', image);
+      }
       Object.entries(profile).forEach(([key, value]) => {
         formData.append(key, value);
       });
@@ -51,6 +53,7 @@ const useProfile = () => {
   });
 
   return {
+    isPending,
     isLoading,
     error,
     data,

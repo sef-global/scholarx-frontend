@@ -5,8 +5,8 @@ import { type Profile } from '../../types';
 
 const EditProfileForm: React.FC = () => {
   const { user, isUserLoading } = useContext(UserContext) as UserContextType;
-  const { updateProfile } = useProfile();
-  const [fileList, setFileList] = useState<File | null>(null);
+  const { updateProfile, isPending } = useProfile();
+  const [image, setImage] = useState<File | null>(null);
   const [profilePic, setProfilePic] = useState(user?.image_url);
   const [firstName, setFirstName] = useState(user?.first_name);
   const [lastName, setLastName] = useState(user?.last_name);
@@ -15,16 +15,21 @@ const EditProfileForm: React.FC = () => {
   const handleProfilePicChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files != null) {
       const file = event.target.files[0];
-      setFileList(file);
+      setImage(file);
       setProfilePic(URL.createObjectURL(file));
     }
   };
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const profile = {
+      first_name: firstName,
+      last_name: lastName,
+      contact_email: email,
+    };
     updateProfile({
-      profile: { first_name: firstName, last_name: lastName } as Profile,
-      image: fileList,
+      profile: profile as Profile,
+      image,
     });
   };
 
@@ -100,7 +105,7 @@ const EditProfileForm: React.FC = () => {
               type="submit"
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
             >
-              Save
+              {isPending ? 'Loading' : 'Save'}
             </button>
           </form>
         )}
