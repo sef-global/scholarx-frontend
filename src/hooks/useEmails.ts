@@ -10,7 +10,6 @@ import { type Email, type EmailData, type SendEmailsResponse } from '../types';
 
 const fetchEmails: QueryFunction<Email[], QueryKey> = async () => {
   const response = await axios.get(`${EMAILAPI_URL}/api/v1/sent`);
-  console.log(response.data.emails);
   return response.data.emails;
 };
 
