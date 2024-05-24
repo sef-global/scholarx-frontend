@@ -10,7 +10,7 @@ interface LayoutProps {
 const MainLayout: React.FC<LayoutProps> = ({ children }) => (
   <>
     <Navbar />
-    <section className="min-h-[80vh] m-4 md:mx-[100px] md:my-[30px]">
+    <section className="min-h-[80vh] p-4 m-4 md:mx-8 md:my-[30px]">
       {children}
     </section>
     <Footer />

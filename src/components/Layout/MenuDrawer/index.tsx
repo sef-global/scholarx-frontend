@@ -49,7 +49,7 @@ const MenuDrawer: React.FC<MenuDrawerProps> = ({
             Join Us
           </Link>
           <button
-            className="mr-5 mb-5 w-40 h-9 font-sans text-black bg-gray-200 py-1 px-4 rounded"
+            className="mr-5 mb-5 w-40 h-9  text-black bg-gray-200 py-1 px-4 rounded"
             onClick={handleMentorRegistration}
           >
             Become a Mentor

@@ -35,28 +35,16 @@ const Home: React.FC = () => {
       {/* Statistics container */}
       <div className="flex justify-evenly p-[4%] m-0 items-center flex-col md:flex-row flex-wrap bg-[#F7F8FA] ">
         <div className="ContainerOne text-center">
-          <div className="homePageSecondaryTitleNew text-3xl font-bold text-[#1D1D1F]">
-            100,000+
-          </div>
-          <div className="homePageSecondaryTitleNew font-normal text-[20px] text-[#1D1D1F]">
-            Mentees
-          </div>
+          <div className="text-3xl font-bold text-[#1D1D1F]">100,000+</div>
+          <div className="font-normal text-[20px] text-[#1D1D1F]">Mentees</div>
         </div>
         <div className="ContainerTwo  text-center">
-          <div className="homePageSecondaryTitleNew text-3xl font-bold text-[#1D1D1F]">
-            500+
-          </div>
-          <div className="homePageSecondaryTitleNew font-normal text-[20px] text-[#1D1D1F]">
-            Mentors
-          </div>
+          <div className="text-3xl font-bold text-[#1D1D1F]">500+</div>
+          <div className="font-normal text-[20px] text-[#1D1D1F]">Mentors</div>
         </div>
         <div className="ContainerThree  text-center">
-          <div className="homePageSecondaryTitleNew text-3xl font-bold text-[#1D1D1F]">
-            70%
-          </div>
-          <div className="homePageSecondaryTitleNew font-normal font-sans text-[20px] text-[#1D1D1F]">
-            Growth
-          </div>
+          <div className="text-3xl font-bold text-[#1D1D1F]">70%</div>
+          <div className="font-normal  text-[20px] text-[#1D1D1F]">Growth</div>
         </div>
       </div>
 

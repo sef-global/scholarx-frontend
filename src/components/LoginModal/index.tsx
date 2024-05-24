@@ -76,16 +76,10 @@ const LoginModal: React.FC<LoginModalProps> = ({
 
           <div className="bg-white p-6 space-y-8 rounded-lg shadow-xl">
             <div className="m-5">
-              <h2 className="text-2xl font-bold text-gray-900 tracking-widest text-center">
+              <h2 className="text-2xl font-semibold text-gray-900 text-center">
                 Welcome back!
               </h2>
-              <div className="flex justify-center">
-                <img
-                  src="../../../public/scholarx-logo.png"
-                  alt="scholarx-logo"
-                  className="w-48"
-                />
-              </div>
+
               <form className="mt-8 space-y-6" onSubmit={handleLogin}>
                 <div>
                   <input
@@ -115,8 +109,8 @@ const LoginModal: React.FC<LoginModalProps> = ({
                     required
                   />
                 </div>
-                <div className="flex items-start">
-                  <div className="flex items-center h-5">
+                <div className="flex">
+                  <div className="flex items-center">
                     <input
                       id="remember"
                       aria-describedby="remember"
@@ -135,14 +129,14 @@ const LoginModal: React.FC<LoginModalProps> = ({
                   </div>
                   <a
                     href="#"
-                    className="ml-auto text-sm font-normal text-black hover:underline"
+                    className="text-sm font-normal text-black hover:underline"
                   >
                     Forgot Password?
                   </a>
                 </div>
                 <button
                   type="submit"
-                  className="w-full px-5 py-3 text-base font-medium text-center text-white tracking-widest bg-primary-blue rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300"
+                  className="w-full px-5 py-3 text-base font-medium text-center text-white bg-primary-blue rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300"
                 >
                   {isLoading ? 'Loading' : 'Login'}
                 </button>

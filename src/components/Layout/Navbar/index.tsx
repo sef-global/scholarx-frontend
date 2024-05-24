@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 
-import MenuDrawer from '../MenuDrawer/MenuDrawer';
+import MenuDrawer from '../MenuDrawer';
 import LoginModal from '../../LoginModal';
 import RegisterModal from '../../RegisterModal';
 
@@ -65,7 +65,7 @@ const Navbar: React.FC = () => {
   return (
     <>
       <nav className="bg-white border-gray-200">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <div className="flex flex-wrap items-center justify-between mx-8 p-4">
           <Link to="/">
             <img
               src="/scholarx-logo.png"
@@ -73,14 +73,7 @@ const Navbar: React.FC = () => {
               alt="ScholarX Logo"
             />
           </Link>
-          {user === null && (
-            <span
-              className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 cursor-pointer md:hidden block"
-              onClick={handleLoginModalOpen}
-            >
-              Login
-            </span>
-          )}
+
           {user != null && (
             <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse relative">
               <button
@@ -165,98 +158,101 @@ const Navbar: React.FC = () => {
               </div>
             </div>
           )}
-          <button
-            data-collapse-toggle="navbar-user"
-            type="button"
-            onClick={() => {
-              setOpenMenu(true);
-            }}
-            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-            aria-controls="navbar-user"
-            aria-expanded="false"
-          >
-            <svg
-              className="w-5 h-5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 17 14"
+          <div className="flex">
+            {user === null && (
+              <button
+                type="button"
+                onClick={handleLoginModalOpen}
+                className="text-blue-700 md:hidden hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+              >
+                Login
+              </button>
+            )}
+            <button
+              data-collapse-toggle="navbar-user"
+              type="button"
+              onClick={() => {
+                setOpenMenu(true);
+              }}
+              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+              aria-controls="navbar-user"
+              aria-expanded="false"
             >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M1 1h15M1 7h15M1 13h15"
-              />
-            </svg>
-          </button>
-          <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1 ">
-            <ul className=" align-middle flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
-              <li>
-                <Link
-                  className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 cursor-pointer"
-                  to="/"
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 cursor-pointer"
-                  to="/mentors"
-                >
-                  Mentors
-                </Link>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 "
-                >
-                  About
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 "
-                >
-                  Initiatives
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 "
-                >
-                  Join Us
-                </a>
-              </li>
-              {!isUserMentor && (
-                <li>
-                  <button
-                    type="button"
-                    onClick={handleMentorRegistration}
-                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-                  >
-                    Become a Mentor
-                  </button>
-                </li>
-              )}
-
-              <li>
-                {user === null && (
-                  <span
-                    className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 cursor-pointer"
-                    onClick={handleLoginModalOpen}
-                  >
-                    Login
-                  </span>
-                )}
-              </li>
-            </ul>
+              <svg
+                className="w-5 h-5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 17 14"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M1 1h15M1 7h15M1 13h15"
+                />
+              </svg>
+            </button>
           </div>
+
+          <ul className="items-baseline hidden md:flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
+            <li>
+              <Link
+                className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 cursor-pointer"
+                to="/mentors"
+              >
+                Find a mentor
+              </Link>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 "
+              >
+                About
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 "
+              >
+                Initiatives
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 "
+              >
+                Join Us
+              </a>
+            </li>
+            {!isUserMentor && (
+              <li>
+                <button
+                  type="button"
+                  onClick={handleMentorRegistration}
+                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+                >
+                  Become a Mentor
+                </button>
+              </li>
+            )}
+
+            <li>
+              {user === null && (
+                <button
+                  type="button"
+                  onClick={handleLoginModalOpen}
+                  className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+                >
+                  Login
+                </button>
+              )}
+            </li>
+          </ul>
         </div>
       </nav>
 

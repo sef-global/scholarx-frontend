@@ -74,15 +74,9 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
           <div className="bg-white p-6 space-y-8 rounded-lg shadow-xl">
             <div className="m-5">
               <h2 className="text-2xl font-bold text-gray-900 text-center">
-                Create your Account
+                Elevate Your Career Journey
               </h2>
-              <div className="flex justify-center">
-                <img
-                  src="../../../public/scholarx-logo.png"
-                  alt="scholarx-logo"
-                  className="w-48"
-                />
-              </div>
+
               <form className="mt-8 space-y-6" onSubmit={handleRegister}>
                 <div>
                   <input

@@ -2,24 +2,33 @@ import React from 'react';
 import useMentor from '../../hooks/useMentor';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
+import UserIcon from '../../assets/svg/Icons/UserIcon';
 
 const MentorProfile: React.FC = () => {
   const { mentorId } = useParams();
   const { data: mentor } = useMentor(mentorId);
   return (
     <>
-      <div className="flex flex-row gap-2">
-        <img
-          src="https://palmbayprep.org/wp-content/uploads/2015/09/user-icon-placeholder.png"
-          alt="find-mentor"
-          className="w-20 h-20 md:w-28 md:h-28 rounded-full object-cover my-auto"
-        />
-        <div className="w-full h-1/2 mt-20">
-          <h1 className="text-lg md:text-3xl font-extrabold font-sans mb-2 tracking-wider">
+      <div className="flex items-center gap-4 w-full">
+        <div className="w-1/3 md:w-28">
+          {mentor?.profile.image_url !== '' ? (
+            <img
+              src={mentor?.profile.image_url}
+              alt="Mentor Avatar"
+              className="w-24 h-24 rounded-full mb-4"
+            />
+          ) : (
+            <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center">
+              <UserIcon />
+            </div>
+          )}
+        </div>
+        <div className="w-3/5 md:w-full">
+          <h1 className="text-lg md:text-3xl font-semibold mb-2">
             {mentor?.application.firstName} {mentor?.application.lastName}
           </h1>
           <div className="flex flex-row place-content-between w-full">
-            <p className="text-sm font-sans">
+            <p className="text-sm ">
               {mentor?.application.position},{' '}
               <span className="text-gray-500">
                 {mentor?.application.institution}
@@ -38,26 +47,26 @@ const MentorProfile: React.FC = () => {
       <div className="md:flex flex-row h-1/3 py-9">
         <div className="grid md:grid-cols-4 md:gap-9 md:w-2/3">
           <div>
-            <h2 className="text-xl font-semibold font-sans mt-5">Category</h2>
+            <h2 className="text-lg font-medium  mt-5">Category</h2>
             <ul className="text-sm list-disc ml-4 font-light">
               <li>{mentor?.category.category}</li>
             </ul>
           </div>
           <div>
-            <h2 className="text-xl font-semibold font-sans mt-5">Expertise</h2>
+            <h2 className="text-lg font-medium  mt-5">Expertise</h2>
             <ul className="text-sm list-disc ml-4 font-light">
               <li>{mentor?.application.expertise}</li>
             </ul>
           </div>
           <div>
-            <h2 className="text-xl font-semibold font-sans mt-5">Country</h2>
+            <h2 className="text-lg font-medium  mt-5">Country</h2>
             <ul className="text-sm list-disc ml-4 font-light">
               <li>{mentor?.application.country}</li>
             </ul>
           </div>
         </div>
-        <div className="md:flex flex-row gap-9 m-5">
-          <span className="w-0.5 h-24 bg-gray-300"></span>
+        <div className="flex flex-row md:gap-9 md:m-5 gap-4 mt-4">
+          <span className="w-0.5 h-24 bg-gray-300 md:block hidden"></span>
           <a href="#" className="text-blue-500 underline">
             Linkedin
           </a>
@@ -67,15 +76,15 @@ const MentorProfile: React.FC = () => {
         </div>
       </div>
       <div className="pb-9">
-        <h2 className="text-xl font-semibold">Mentoring Philosophy</h2>
+        <h2 className="text-lg font-medium ">Mentoring Philosophy</h2>
         <p className="font-light">{mentor?.application.mentoringPhilosophy}</p>
       </div>
       <div className="pb-9">
-        <h2 className="text-xl font-semibold">Mentee Expectations</h2>
+        <h2 className="text-lg font-medium ">Mentee Expectations</h2>
         <p className="font-light">{mentor?.application.menteeExpectations}</p>
       </div>
       <div className="pb-9">
-        <h2 className="text-xl font-semibold">Bio</h2>
+        <h2 className="text-lg font-medium ">Bio</h2>
         <p className="font-light">{mentor?.application.bio}</p>
       </div>
     </>

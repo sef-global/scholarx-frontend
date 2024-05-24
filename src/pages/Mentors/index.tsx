@@ -58,21 +58,18 @@ const Mentors = () => {
       {!isLoading && (
         <div>
           <div className="mb-4 w-full flex items-center justify-between">
-            <div className="text-xl font-bold" style={{ fontSize: '25px' }}>
-              Mentors
-            </div>
+            <div className="text-2xl font-semibold">Mentors</div>
           </div>
           <hr className="mb-8" />
           <div className="mb-4 w-full flex items-center justify-between">
-            <div className="flex space-x-2 items-center">
+            <div className="flex space-x-2 items-center text-sm">
               <button
                 onClick={() => {
                   handleCategoryChange(null);
                 }}
-                className={`bg-blue text-black px-2 py-1 rounded border border-blue-500 ${
+                className={`bg-blue text-black px-4 py-1 rounded-full border border-blue-500 ${
                   selectedCategory === undefined ? 'bg-blue-500 text-white' : ''
                 }`}
-                style={{ fontSize: '12px' }}
               >
                 All
               </button>
@@ -82,12 +79,11 @@ const Mentors = () => {
                   onClick={() => {
                     handleCategoryChange(category.uuid);
                   }}
-                  className={`bg-blue text-black px-2 py-1 rounded border border-blue-500 ${
-                    selectedCategory === category.category
+                  className={`bg-blue text-black px-4 py-1 rounded-full border border-blue-500 ${
+                    selectedCategory === category.uuid
                       ? 'bg-blue-500 text-white'
                       : ''
                   }`}
-                  style={{ fontSize: '12px' }}
                 >
                   {category.category}
                 </button>
@@ -121,7 +117,7 @@ const Mentors = () => {
               {(sortedMentors === undefined || sortedMentors.length === 0) &&
                 mentors !== undefined &&
                 mentors.length > 0 && (
-                  <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 items-start">
+                  <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 items-start">
                     {mentors.map((mentor) => (
                       <MentorCard key={mentor?.uuid} mentor={mentor} />
                     ))}
