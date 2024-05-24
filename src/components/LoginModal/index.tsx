@@ -1,10 +1,9 @@
-import React, { useState, useContext } from 'react';
-import axios, { type AxiosResponse } from 'axios';
+import React, { useState } from 'react';
+import axios from 'axios';
 import { API_URL } from '../../constants';
-import { type Profile } from '../../types';
-import { UserContext, type UserContextType } from '../../contexts/UserContext';
 import closeIcon from '../../assets/svg/closeIcon.svg';
 import styles from './LoginModal.module.css';
+import useProfile from '../../hooks/useProfile';
 
 interface LoginModalProps {
   handleClose: () => void;
@@ -18,7 +17,7 @@ const handleLoginGoogle = (e: React.FormEvent): void => {
 const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { setUserContext } = useContext(UserContext) as UserContextType;
+  const { refetch } = useProfile();
 
   const handleLogin = (e: React.FormEvent): void => {
     e.preventDefault();
@@ -34,8 +33,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
             withCredentials: true,
           }
         )
-        .then((response: AxiosResponse<{ user: Profile }>) => {
-          setUserContext(response.data.user);
+        .then(async () => {
+          await refetch();
           handleClose();
         })
         .catch((error) => {
@@ -44,8 +43,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
               message: 'Something went wrong when fetching the user',
               description: error.toString(),
             });
-          } else {
-            setUserContext(null);
           }
         });
     } catch (error) {

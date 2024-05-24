@@ -1,38 +1,36 @@
-import React, { useContext } from 'react';
-import { UserContext, type UserContextType } from '../../contexts/UserContext';
+import React from 'react';
 import axios from 'axios';
 import { API_URL } from '../../constants';
 import { useNavigate } from 'react-router-dom';
+import useProfile from '../../hooks/useProfile';
 
 interface LogoutModalProps {
   onClose: () => void;
 }
 
 const LogoutModal: React.FC<LogoutModalProps> = ({ onClose }) => {
-  const { setUserContext } = useContext(UserContext) as UserContextType;
-
   const navigate = useNavigate();
+  const { refetch } = useProfile();
 
   const handleLogoutConfirm = (): void => {
     axios
       .get(`${API_URL}/auth/logout`, {
         withCredentials: true,
       })
-      .then(() => {
-        setUserContext(null);
+      .then(async () => {
         navigate('/');
-        onClose();
       })
-      .catch((error) => {
+      .catch(async (error) => {
         if (error.response.status !== 401) {
           console.error({
             message: 'Something went wrong during logout',
             description: error.toString(),
           });
-        } else {
-          setUserContext(null);
-          onClose();
         }
+      })
+      .finally(async () => {
+        await refetch();
+        onClose();
       });
   };
 

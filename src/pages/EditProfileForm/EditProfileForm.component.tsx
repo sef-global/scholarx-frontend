@@ -1,11 +1,7 @@
-import React, {
-  type ChangeEvent,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import React, { type ChangeEvent, useContext, useState } from 'react';
 import { UserContext, type UserContextType } from '../../contexts/UserContext';
 import useProfile from '../../hooks/useProfile';
+import { type Profile } from '../../types';
 
 const EditProfileForm: React.FC = () => {
   const { user, isUserLoading } = useContext(UserContext) as UserContextType;
@@ -26,7 +22,10 @@ const EditProfileForm: React.FC = () => {
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    updateProfile({ first_name: firstName, last_name: lastName });
+    updateProfile({
+      profile: { first_name: firstName, last_name: lastName } as Profile,
+      image: fileList,
+    });
   };
 
   const handleImageClick = () => {
