@@ -36,7 +36,6 @@ const MenuDrawer: React.FC<MenuDrawerProps> = ({
       ></div>
       <div className="relative w-80 bg-white h-full shadow-lg p-6">
         <div className="flex flex-col items-center space-y-12">
-          <div className="w-12 h-12 rounded-full bg-gray-300"></div>
           <Link to="/" className="text-lg text-black">
             Home
           </Link>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { type ChangeEvent, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { API_URL } from '../../constants';
@@ -10,6 +10,7 @@ import { type MentorApplication } from '../../types';
 import FormCheckbox from '../../components/FormFields/MentorApplication/FormCheckbox';
 import FormInput from '../../components/FormFields/MentorApplication/FormInput';
 import FormTextarea from '../../components/FormFields/MentorApplication/FormTextarea';
+import useProfile from '../../hooks/useProfile';
 
 const steps = [
   {
@@ -33,6 +34,9 @@ const MentorRegistrationPage: React.FC = () => {
     resolver: zodResolver(MentorApplicationSchema),
   });
   const { error: categoryError, data: categories } = useCategories();
+  const { data: user, updateProfile } = useProfile();
+  const [image, setImage] = useState<File | null>(null);
+  const [profilePic, setProfilePic] = useState(user?.image_url);
   const [currentStep, setCurrentStep] = useState(0);
 
   const handleNext = async (): Promise<void> => {
@@ -51,6 +55,7 @@ const MentorRegistrationPage: React.FC = () => {
 
   const onSubmit: SubmitHandler<MentorApplication> = async (data) => {
     createMentorApplication.mutate(data);
+    updateProfile({ profile: null, image });
   };
 
   const createMentorApplication = useMutation({
@@ -65,6 +70,18 @@ const MentorRegistrationPage: React.FC = () => {
       );
     },
   });
+
+  const handleProfilePicChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files != null) {
+      const file = event.target.files[0];
+      setImage(file);
+      setProfilePic(URL.createObjectURL(file));
+    }
+  };
+
+  const handleImageClick = () => {
+    document.getElementById('profilePic')?.click();
+  };
 
   return (
     <div className="relative w-full">
@@ -84,6 +101,39 @@ const MentorRegistrationPage: React.FC = () => {
           <>
             <div className="text-xl font-medium mb-2">Personal Information</div>
             <hr />
+            <div className="relative">
+              <input
+                type="file"
+                id="profilePic"
+                name="profilePic"
+                accept="image/*"
+                onChange={handleProfilePicChange}
+                className="hidden"
+              />
+              <div
+                onClick={handleImageClick}
+                className="cursor-pointer relative group"
+              >
+                {profilePic !== '' ? (
+                  <img
+                    src={profilePic}
+                    alt="Profile"
+                    className="w-[90px] h-[90px] rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="w-[90px] h-[90px] rounded-full bg-gray-200 flex items-center justify-center">
+                    <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto flex items-center justify-center">
+                      <span className="text-gray-400">+</span>
+                    </div>
+                  </div>
+                )}
+                <div className="absolute bottom-0 w-[90px] h-1/2 bg-black bg-opacity-40 rounded-b-full flex items-center p-5 justify-center">
+                  <span className="text-white text-center text-xs">
+                    Change Photo
+                  </span>
+                </div>
+              </div>
+            </div>
             <div className="flex flex-wrap">
               <div className="w-full md:w-1/2 md:pr-1 mb-4 md:mb-0">
                 <FormInput

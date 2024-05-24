@@ -28,7 +28,8 @@ const useMentor = (mentorId: string | undefined) => {
           `${API_URL}/admin/mentors/${mentorId}/state`,
           {
             state: newState,
-          }
+          },
+          { withCredentials: true }
         );
         return data;
       }

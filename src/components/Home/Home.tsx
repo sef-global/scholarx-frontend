@@ -8,13 +8,13 @@ const Home: React.FC = () => {
   return (
     <>
       {/* Main title container */}
-      <div className="homePageContainerNew flex flex-col md:flex-row items-center justify-center">
-        <div className="col">
+      <div className="flex flex-col md:flex-row items-center justify-center">
+        <div>
           <div className="text-3xl md:text-[43px] font-bold text-[#32325D]">
             Unlock Mentorship opportunities with ScholarX
           </div>
           <div className="wrapper mt-[40px]">
-            <div className="buttonWrapper flex mt-10">
+            <div className="flex mt-10">
               <Link to="/mentors">
                 <button className="flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white py-1 px-16 rounded w-40 h-9 font-bold">
                   Apply
@@ -33,7 +33,7 @@ const Home: React.FC = () => {
       </div>
 
       {/* Statistics container */}
-      <div className="homePageContainerNew flex justify-evenly p-[4%] m-0 items-center flex-col md:flex-row flex-wrap bg-[#F7F8FA] ">
+      <div className="flex justify-evenly p-[4%] m-0 items-center flex-col md:flex-row flex-wrap bg-[#F7F8FA] ">
         <div className="ContainerOne text-center">
           <div className="homePageSecondaryTitleNew text-3xl font-bold text-[#1D1D1F]">
             100,000+
@@ -61,7 +61,7 @@ const Home: React.FC = () => {
       </div>
 
       {/* Success stories container */}
-      <div className="homePageContainerNew p-[4%] bg-[#F8FDFF] flex  flex-col md:flex-row justify-center items-center">
+      <div className="p-[4%] bg-[#F8FDFF] flex  flex-col md:flex-row justify-center items-center">
         <div className="imageCol mb-2.5">
           <img
             className="max-w-[300px] mx-auto  w-[100%]"
@@ -69,14 +69,14 @@ const Home: React.FC = () => {
             alt="success-image"
           />
         </div>
-        <div className="textCol md:ml-16 ">
-          <div className="homepageSecondaryTitleNew text-3xl font-bold text-darkmod-blue text-center mb-2.5">
+        <div className="md:ml-16">
+          <div className="text-3xl font-bold text-darkmod-blue text-center mb-2.5">
             Let&apos;s hear it from our
             <br /> ScholarX Alumni
           </div>
-          <div className="homePageSecondaryButtonNew flex justify-center items-center">
+          <div className="flex justify-center items-center">
             <a href="#">
-              <button className=" shadow-[0_2px_0_rgba(5,145,255,0.1)] bg-[#ffffff] hover:bg-[#1677ff] text-[#FFFFFF] font-bold text-sm w-[214px] h-[34px] rounded mx-auto">
+              <button className="flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white py-1 px-16 rounded h-9 font-bold">
                 ScholarX Success Stories
               </button>
             </a>
@@ -86,15 +86,15 @@ const Home: React.FC = () => {
 
       {/* Archive container */}
 
-      <div className="homePagecontainernew p-[4%] bg-[#F8FDFF] flex  flex-col md:flex-row justify-center items-center mb-1">
+      <div className="p-[4%] bg-[#F8FDFF] flex  flex-col md:flex-row justify-center items-center mb-1">
         <div className="textCol md:mr-16 ">
-          <div className="homepageSecondaryTitleNew text-3xl font-bold text-darkmod-blue text-center mb-2.5">
+          <div className="text-3xl font-bold text-darkmod-blue text-center mb-2.5">
             Checkout our past
             <br /> mentors and mentees
           </div>
-          <div className="homePageSecondaryButtonNew flex justify-center items-center">
+          <div className="flex justify-center items-center">
             <a href="#">
-              <button className=" shadow-[0_2px_0_rgba(5,145,255,0.1)] bg-[#ffffff] hover:bg-[#1677ff] text-[#FFFFFF] font-bold text-sm w-[214px] h-[34px] rounded mx-auto">
+              <button className="flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white py-1 px-16 rounded h-9 font-bold">
                 ScholarX Archive
               </button>
             </a>

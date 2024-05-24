@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { API_URL } from '../../constants';
 import closeIcon from '../../assets/svg/closeIcon.svg';
-import styles from './RegisterModal.module.css';
 
 interface RegisterModalProps {
   handleClose: () => void;
+  onLoginClick: () => void;
 }
 
-const RegisterModal: React.FC<RegisterModalProps> = ({ handleClose }) => {
+const RegisterModal: React.FC<RegisterModalProps> = ({
+  handleClose,
+  onLoginClick,
+}) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -55,7 +58,6 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ handleClose }) => {
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
-        &#8203;
         <div
           className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
           role="dialog"
@@ -70,14 +72,15 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ handleClose }) => {
           </button>
 
           <div className="bg-white p-6 space-y-8 rounded-lg shadow-xl">
-            <div className={styles.modalWrapper}>
+            <div className="m-5">
               <h2 className="text-2xl font-bold text-gray-900 text-center">
                 Create your Account
               </h2>
-              <div className={styles.scholarxLogoWrapper}>
+              <div className="flex justify-center">
                 <img
                   src="../../../public/scholarx-logo.png"
                   alt="scholarx-logo"
+                  className="w-48"
                 />
               </div>
               <form className="mt-8 space-y-6" onSubmit={handleRegister}>
@@ -154,10 +157,16 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ handleClose }) => {
                   Register
                 </button>
                 <div className="text-sm font-thin text-center text-gray-900">
-                  Already have an account?{' '}
-                  <a className="font-medium text-black hover:underline">
+                  Already have an account?
+                  <p
+                    className="font-medium text-black hover:underline cursor-pointer"
+                    onClick={() => {
+                      handleClose();
+                      onLoginClick();
+                    }}
+                  >
                     Login
-                  </a>
+                  </p>
                 </div>
               </form>
             </div>

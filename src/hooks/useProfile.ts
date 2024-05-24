@@ -27,7 +27,7 @@ const useProfile = () => {
       profile,
       image,
     }: {
-      profile: Profile;
+      profile: Profile | null;
       image: File | null;
     }) => {
       const formData = new FormData();
@@ -35,9 +35,11 @@ const useProfile = () => {
       if (image != null) {
         formData.append('profile_image', image);
       }
-      Object.entries(profile).forEach(([key, value]) => {
-        formData.append(key, value);
-      });
+      if (profile != null) {
+        Object.entries(profile).forEach(([key, value]) => {
+          formData.append(key, value);
+        });
+      }
 
       const { data } = await axios.put(`${API_URL}/me/profile`, formData, {
         withCredentials: true,

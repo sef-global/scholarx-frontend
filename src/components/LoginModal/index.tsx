@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { API_URL } from '../../constants';
 import closeIcon from '../../assets/svg/closeIcon.svg';
-import styles from './LoginModal.module.css';
 import useProfile from '../../hooks/useProfile';
 
 interface LoginModalProps {
   handleClose: () => void;
+  onRegistrationClick: () => void;
 }
 
 const handleLoginGoogle = (e: React.FormEvent): void => {
@@ -14,7 +14,10 @@ const handleLoginGoogle = (e: React.FormEvent): void => {
   window.location.href = `${API_URL}/auth/google`;
 };
 
-const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
+const LoginModal: React.FC<LoginModalProps> = ({
+  handleClose,
+  onRegistrationClick,
+}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -58,7 +61,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
-        &#8203;
         <div
           className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
           role="dialog"
@@ -73,14 +75,15 @@ const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
           </button>
 
           <div className="bg-white p-6 space-y-8 rounded-lg shadow-xl">
-            <div className={styles.modalWrapper}>
+            <div className="m-5">
               <h2 className="text-2xl font-bold text-gray-900 tracking-widest text-center">
                 Welcome back!
               </h2>
-              <div className={styles.scholarxLogoWrapper}>
+              <div className="flex justify-center">
                 <img
                   src="../../../public/scholarx-logo.png"
                   alt="scholarx-logo"
+                  className="w-48"
                 />
               </div>
               <form className="mt-8 space-y-6" onSubmit={handleLogin}>
@@ -164,10 +167,16 @@ const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
                   </button>
                 </div>
                 <div className="text-sm font-thin text-center text-gray-900">
-                  Not registered yet?{' '}
-                  <a className="font-medium text-black hover:underline">
+                  Not registered yet?
+                  <p
+                    className="font-medium text-black hover:underline cursor-pointer"
+                    onClick={() => {
+                      onRegistrationClick();
+                      handleClose();
+                    }}
+                  >
                     Create account
-                  </a>
+                  </p>
                 </div>
               </form>
             </div>

@@ -7,7 +7,7 @@ import RegisterModal from '../../RegisterModal';
 import {
   UserContext,
   type UserContextType,
-} from './../../../contexts/UserContext';
+} from '../../../contexts/UserContext';
 import LogoutModal from '../../LogoutModal';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -73,6 +73,14 @@ const Navbar: React.FC = () => {
               alt="ScholarX Logo"
             />
           </Link>
+          {user === null && (
+            <span
+              className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 cursor-pointer md:hidden block"
+              onClick={handleLoginModalOpen}
+            >
+              Login
+            </span>
+          )}
           {user != null && (
             <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse relative">
               <button
@@ -239,20 +247,12 @@ const Navbar: React.FC = () => {
 
               <li>
                 {user === null && (
-                  <>
-                    <span
-                      className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 cursor-pointer"
-                      onClick={handleLoginModalOpen}
-                    >
-                      Login
-                    </span>{' '}
-                    <span
-                      className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 cursor-pointer"
-                      onClick={handleRegisterModalOpen}
-                    >
-                      Register
-                    </span>
-                  </>
+                  <span
+                    className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 cursor-pointer"
+                    onClick={handleLoginModalOpen}
+                  >
+                    Login
+                  </span>
                 )}
               </li>
             </ul>
@@ -267,10 +267,16 @@ const Navbar: React.FC = () => {
       />
 
       {isLoginModalVisible ? (
-        <LoginModal handleClose={handleLoginModalClose} />
+        <LoginModal
+          handleClose={handleLoginModalClose}
+          onRegistrationClick={handleRegisterModalOpen}
+        />
       ) : null}
       {isRegisterModalVisible ? (
-        <RegisterModal handleClose={handleRegisterModalClose} />
+        <RegisterModal
+          handleClose={handleRegisterModalClose}
+          onLoginClick={handleLoginModalOpen}
+        />
       ) : null}
       {isLogoutModalVisible && <LogoutModal onClose={handleLogoutModalClose} />}
     </>
