@@ -45,20 +45,20 @@ const EmailHistory: React.FC = () => {
             <tbody className="bg-white divide-y divide-gray-200">
               {emails.map((email, index) => (
                 <tr key={index}>
-                  <td className="px-2 py-1 whitespace-nowrap text-sm truncate overflow-hidden w-2/6">
+                  <td className="px-2 py-1 whitespace-nowrap text-sm truncate overflow-hidden w-2/6 text-center">
                     {email.subject.split(' ').slice(0, 4).join(' ') +
                       (email.subject.split(' ').length > 4 ? '...' : '')}
                   </td>
-                  <td className="px-2 py-1 whitespace-nowrap text-sm w-1/6">
+                  <td className="px-2 py-1 whitespace-nowrap text-sm w-1/6 text-center">
                     {getUsername(email.recipients)}
                   </td>
-                  <td className="px-2 py-1 whitespace-nowrap text-sm w-1/6">
+                  <td className="px-2 py-1 whitespace-nowrap text-sm justify-center items-center w-1/6 text-center">
                     {email.status}
                   </td>
-                  <td className="px-2 py-1 whitespace-nowrap text-sm w-1/6">
+                  <td className="px-2 py-1 whitespace-nowrap text-sm w-1/6 text-center">
                     {email.opened}
                   </td>
-                  <td className="px-2 py-1 whitespace-nowrap text-sm w-1/6">
+                  <td className="px-2 py-1 whitespace-nowrap text-sm w-1/6 text-center">
                     {new Date(email.sentTime).toLocaleString()}
                   </td>
                 </tr>

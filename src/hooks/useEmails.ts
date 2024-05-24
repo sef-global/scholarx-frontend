@@ -10,21 +10,33 @@ import { type Email, type EmailData, type SendEmailsResponse } from '../types';
 
 const fetchEmails: QueryFunction<Email[], QueryKey> = async () => {
   const response = await axios.get(`${EMAILAPI_URL}/api/v1/sent`);
+  console.log(response.data.emails);
   return response.data.emails;
 };
 
-const sendEmail = async (emailData: EmailData): Promise<SendEmailsResponse> => {
-  const response = await axios.post(`${EMAILAPI_URL}/api/v1/send`, emailData);
-  return response.data;
-};
-
 export const useEmails = () => {
-  const useSendEmail = () => {
-    const mutation = useMutation({
-      mutationFn: sendEmail,
-    });
+  const mutation = useMutation({
+    mutationFn: async (emailData: EmailData): Promise<SendEmailsResponse> => {
+      const response = await axios.post(
+        `${EMAILAPI_URL}/api/v1/send`,
+        emailData
+      );
+      return response.data;
+    },
+  });
 
-    return mutation;
+  const sendEmail = (
+    formData: EmailData,
+    { onSuccess, onError }: { onSuccess: () => void; onError: () => void }
+  ) => {
+    mutation.mutate(formData, {
+      onSuccess: () => {
+        onSuccess();
+      },
+      onError: () => {
+        onError();
+      },
+    });
   };
 
   const { isLoading, error, data } = useQuery<Email[], AxiosError>({
@@ -32,14 +44,10 @@ export const useEmails = () => {
     queryFn: fetchEmails,
   });
 
-  const mutation = useSendEmail();
-
   return {
     isLoading,
     error,
     data,
-    mutation,
-    isPending: mutation.status === 'pending',
-    responseMessage: mutation.data?.message,
+    sendEmail,
   };
 };

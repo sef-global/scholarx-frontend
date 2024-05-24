@@ -4,11 +4,20 @@ import { EMAILAPI_SENDER } from '../../../../constants';
 import Loading from '../../../../assets/svg/Loading';
 import { useEmails } from '../../../../hooks/useEmails';
 import { type EmailData } from '../../../../types';
+import { z } from 'zod';
+
+const EmailDataSchema = z.object({
+  sender: z.string(),
+  recipients: z.array(z.string()),
+  subject: z.string(),
+  body: z.string(),
+});
 
 const Emails: React.FC = () => {
   const [view, setView] = useState('sent');
   const [message, setMessage] = useState('');
-  const sendEmailMutation = useEmails();
+  const [loading, setLoading] = useState(false);
+  const { sendEmail } = useEmails();
 
   const [formData, setFormData] = useState<EmailData>({
     sender: EMAILAPI_SENDER,
@@ -19,12 +28,17 @@ const Emails: React.FC = () => {
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    sendEmailMutation.mutation.mutate(formData, {
+    setLoading(true);
+
+    const validatedData = EmailDataSchema.parse(formData);
+    sendEmail(validatedData, {
       onSuccess: () => {
         setMessage('Email sent successfully');
+        setLoading(false);
       },
       onError: () => {
         setMessage('Error sending email');
+        setLoading(false);
       },
     });
   };
@@ -149,7 +163,7 @@ const Emails: React.FC = () => {
                         />
                       </label>
                       <div>
-                        {sendEmailMutation.isPending ? (
+                        {loading ? (
                           <button
                             type="submit"
                             className="mt-4 x-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 cursor-pointer"
