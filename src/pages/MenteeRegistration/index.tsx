@@ -14,7 +14,7 @@ import useProfile from '../../hooks/useProfile';
 const steps = [
   {
     id: 'Step 1',
-    fields: ['firstName', 'lastName', 'email', 'contactNo', 'profilePic'],
+    fields: ['firstName', 'lastName', 'email', 'contactNo'],
   },
   {
     id: 'Step 2',
@@ -61,7 +61,9 @@ const MenteeRegistration: React.FC = () => {
   const handleNext = async (): Promise<void> => {
     let fields = steps[currentStep].fields;
 
-    if (currentStep === 1) {
+    if (currentStep === 0 && !profilePic) {
+      fields.push('profilePic');
+    } else if (currentStep === 1) {
       if (watch('isUndergrad')) {
         fields = ['course', 'university', 'yearOfStudy'];
         unregister(['graduatedYear', 'position', 'company']);

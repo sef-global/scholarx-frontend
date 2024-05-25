@@ -15,14 +15,7 @@ import useProfile from '../../hooks/useProfile';
 const steps = [
   {
     id: 'Step 1',
-    fields: [
-      'firstName',
-      'lastName',
-      'email',
-      'contactNo',
-      'country',
-      'profilePic',
-    ],
+    fields: ['firstName', 'lastName', 'email', 'contactNo', 'country'],
   },
   {
     id: 'Step 2',
@@ -56,7 +49,9 @@ const MentorRegistrationPage: React.FC = () => {
   const handleNext = async (): Promise<void> => {
     let fields = steps[currentStep].fields;
 
-    if (currentStep === 2) {
+    if (currentStep === 0 && !profilePic) {
+      fields.push('profilePic');
+    } else if (currentStep === 2) {
       if (watch('isPastMentor')) {
         fields = ['mentoredYear', 'motivation', 'reasonToMentor'];
       } else {
