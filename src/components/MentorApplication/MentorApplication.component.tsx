@@ -39,7 +39,7 @@ const MentorApplication: React.FC<MentorApplicationProps> = ({
             <img
               src={mentor?.profile.image_url}
               alt=""
-              className="w-28 rounded-full object-fill"
+              className="w-24 h-24 rounded-full object-fill"
             />
             <div className="ml-5">
               <div className="flex items-center space-x-3">

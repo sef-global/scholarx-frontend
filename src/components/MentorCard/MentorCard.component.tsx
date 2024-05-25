@@ -25,7 +25,7 @@ const MentorCard: React.FC<MentorCardProps> = ({ mentor }) => {
         </div>
       )}
       <div className="text-center">
-        <h5 className="text-lg font-bold">
+        <h5 className="text-lg font-semibold">
           {mentor.application.firstName} {mentor.application.lastName}
         </h5>
         <p className="text-sm">{mentor.application.position}</p>

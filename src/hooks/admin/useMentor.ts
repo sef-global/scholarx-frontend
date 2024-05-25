@@ -13,7 +13,8 @@ const useMentor = (mentorId: string | undefined) => {
     queryFn: async () => {
       if (mentorId != null) {
         const { data } = await axios.get(
-          `${API_URL}/admin/mentors/${mentorId}`
+          `${API_URL}/admin/mentors/${mentorId}`,
+          { withCredentials: true }
         );
         return data.mentor as Mentor;
       }
@@ -27,7 +28,8 @@ const useMentor = (mentorId: string | undefined) => {
           `${API_URL}/admin/mentors/${mentorId}/state`,
           {
             state: newState,
-          }
+          },
+          { withCredentials: true }
         );
         return data;
       }

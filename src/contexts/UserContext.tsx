@@ -1,16 +1,14 @@
-import React, { createContext, useState } from 'react';
-import axios, { type AxiosResponse } from 'axios';
-import type { Profile } from '../types';
-import { API_URL } from './../constants';
+import React, { createContext } from 'react';
+import type { Mentor, Profile } from '../types';
 import { ApplicationStatus, ProfileTypes } from '../enums';
+import useProfile from '../hooks/useProfile';
 
 export interface UserContextType {
   user: Profile | null;
-  setUserContext: (user: Profile | null) => void;
-  getUser: () => void;
   isUserLoading: boolean;
   isUserMentor: boolean;
   isUserAdmin: boolean;
+  mentor: Mentor | null;
 }
 
 export const UserContext = createContext<UserContextType | null>(null);
@@ -18,53 +16,25 @@ export const UserContext = createContext<UserContextType | null>(null);
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [user, setUser] = useState<Profile | null>(null);
-  const [isUserLoading, setIsUserLoading] = useState(true);
+  const { data: user, isLoading: isUserLoading } = useProfile();
   const isUserAdmin = user?.type === ProfileTypes.ADMIN;
   const isUserMentor =
     user?.mentor?.some(
       (mentor) => mentor.state === ApplicationStatus.APPROVED
     ) ?? false;
-
-  const setUserContext = (user: Profile | null): void => {
-    setUser(user);
-  };
-
-  const getUser = (): void => {
-    setIsUserLoading(true);
-    axios
-      .get(`${API_URL}/me/profile`, { withCredentials: true })
-      .then((response: AxiosResponse<Profile>) => {
-        setUser(response.data);
-      })
-      .catch((error) => {
-        if (error.response !== undefined && error.response.status !== 401) {
-          console.error({
-            message: 'Something went wrong when fetching the user',
-            description: error.toString(),
-          });
-        } else {
-          console.error({
-            message: 'User not authenticated',
-            description: error.toString(),
-          });
-          setUser(null);
-        }
-      })
-      .finally(() => {
-        setIsUserLoading(false);
-      });
-  };
+  const mentor =
+    user?.mentor?.find(
+      (mentor) => mentor.state === ApplicationStatus.APPROVED
+    ) ?? null;
 
   return (
     <UserContext.Provider
       value={{
         user,
-        setUserContext,
-        getUser,
         isUserLoading,
         isUserMentor,
         isUserAdmin,
+        mentor,
       }}
     >
       {children}

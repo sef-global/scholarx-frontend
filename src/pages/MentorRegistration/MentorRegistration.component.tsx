@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { type ChangeEvent, useState, useEffect } from 'react';
 import axios, { AxiosError } from 'axios';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { API_URL } from '../../constants';
@@ -10,6 +10,7 @@ import { type MentorApplication } from '../../types';
 import FormCheckbox from '../../components/FormFields/MentorApplication/FormCheckbox';
 import FormInput from '../../components/FormFields/MentorApplication/FormInput';
 import FormTextarea from '../../components/FormFields/MentorApplication/FormTextarea';
+import useProfile from '../../hooks/useProfile';
 
 const steps = [
   {
@@ -23,20 +24,41 @@ const steps = [
 ];
 
 const MentorRegistrationPage: React.FC = () => {
+  const { data: user, updateProfile } = useProfile();
   const {
     register,
     handleSubmit,
     watch,
     trigger,
+    setValue,
+    unregister,
     formState: { errors },
   } = useForm<MentorApplication>({
     resolver: zodResolver(MentorApplicationSchema),
+    defaultValues: {
+      firstName: user?.first_name,
+      lastName: user?.last_name,
+      email: user?.primary_email,
+    },
   });
   const { error: categoryError, data: categories } = useCategories();
+  const [image, setImage] = useState<File | null>(null);
+  const [profilePic, setProfilePic] = useState(user?.image_url);
   const [currentStep, setCurrentStep] = useState(0);
 
   const handleNext = async (): Promise<void> => {
-    const fields = steps[currentStep].fields;
+    let fields = steps[currentStep].fields;
+
+    if (currentStep === 0 && !profilePic) {
+      fields.push('profilePic');
+    } else if (currentStep === 2) {
+      if (watch('isPastMentor')) {
+        fields = ['mentoredYear', 'motivation', 'reasonToMentor'];
+      } else {
+        unregister(['mentoredYear', 'motivation', 'reasonToMentor']);
+      }
+    }
+
     const output = await trigger(fields as [keyof MentorApplication], {
       shouldFocus: true,
     });
@@ -49,11 +71,31 @@ const MentorRegistrationPage: React.FC = () => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
 
+  useEffect(() => {
+    if (watch('isPastMentor')) {
+      async () => {
+        await trigger(['mentoredYear', 'motivation', 'reasonToMentor'], {
+          shouldFocus: true,
+        });
+      };
+    } else {
+      unregister(['mentoredYear', 'motivation', 'reasonToMentor']);
+    }
+  }, [watch('isPastMentor')]);
+
   const onSubmit: SubmitHandler<MentorApplication> = async (data) => {
-    createMentorApplication.mutate(data);
+    const { profilePic, ...application } = data;
+    createMentorApplication(application as MentorApplication);
+    updateProfile({ profile: null, image });
   };
 
-  const createMentorApplication = useMutation({
+  const {
+    mutate: createMentorApplication,
+    error: applicationError,
+    isSuccess: applicationSuccess,
+    isError: isApplicationError,
+    isPending: isApplicationSubmitting,
+  } = useMutation({
     mutationFn: async (data: MentorApplication) => {
       await axios.post(
         `${API_URL}/mentors`,
@@ -65,6 +107,19 @@ const MentorRegistrationPage: React.FC = () => {
       );
     },
   });
+
+  const handleProfilePicChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files != null) {
+      const file = event.target.files[0];
+      setImage(file);
+      setValue('profilePic', file);
+      setProfilePic(URL.createObjectURL(file));
+    }
+  };
+
+  const handleImageClick = () => {
+    document.getElementById('profilePic')?.click();
+  };
 
   return (
     <div className="relative w-full">
@@ -84,6 +139,45 @@ const MentorRegistrationPage: React.FC = () => {
           <>
             <div className="text-xl font-medium mb-2">Personal Information</div>
             <hr />
+            <div className="relative">
+              <input
+                type="file"
+                id="profilePic"
+                accept="image/*"
+                className="hidden"
+                onChange={handleProfilePicChange}
+                name="profilePic"
+              />
+              <div
+                onClick={handleImageClick}
+                className="cursor-pointer relative group mb-4"
+              >
+                {profilePic !== '' ? (
+                  <img
+                    src={profilePic}
+                    alt="Profile"
+                    className="w-[90px] h-[90px] rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="w-[90px] h-[90px] rounded-full bg-gray-200 flex items-center justify-center">
+                    <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto flex items-center justify-center">
+                      <span className="text-gray-400">+</span>
+                    </div>
+                  </div>
+                )}
+                <div className="absolute bottom-0 w-[90px] h-1/2 bg-black bg-opacity-40 rounded-b-full flex items-center p-5 justify-center">
+                  <span className="text-white text-center text-xs">
+                    Change Photo
+                  </span>
+                </div>
+              </div>
+              {errors != null && (
+                <span className="text-red-500">
+                  {errors.profilePic?.message}
+                </span>
+              )}
+            </div>
+
             <div className="flex flex-wrap">
               <div className="w-full md:w-1/2 md:pr-1 mb-4 md:mb-0">
                 <FormInput
@@ -227,7 +321,6 @@ const MentorRegistrationPage: React.FC = () => {
                   </label>
                   <input
                     type="number"
-                    min={2015}
                     {...register('mentoredYear', { valueAsNumber: true })}
                     className="mt-1 p-2 border rounded-md"
                   />
@@ -297,16 +390,15 @@ const MentorRegistrationPage: React.FC = () => {
             {categoryError.message}
           </div>
         ) : null}
-        {createMentorApplication.isError &&
-        createMentorApplication?.error instanceof AxiosError ? (
+        {isApplicationError && applicationError instanceof AxiosError ? (
           <div
             className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 "
             role="alert"
           >
-            {createMentorApplication.error.response?.data.message}
+            {applicationError.response?.data.message}
           </div>
         ) : null}
-        {createMentorApplication.isSuccess ? (
+        {applicationSuccess ? (
           <div
             className="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50"
             role="alert"
@@ -340,7 +432,7 @@ const MentorRegistrationPage: React.FC = () => {
               type="submit"
               className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-1 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-small rounded-md text-sm inline-flex items-center px-3 py-1.5 text-center me-2"
             >
-              {createMentorApplication.isPending ? 'Submitting...' : 'Submit'}
+              {isApplicationSubmitting ? 'Submitting...' : 'Submit'}
             </button>
           )}
         </div>
