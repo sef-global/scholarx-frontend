@@ -4,19 +4,31 @@ import menteeFAQs from '../FAQ/MenteeFAQs.json';
 import mentorFAQs from '../FAQ/MentorFAQs.json';
 import { Link } from 'react-router-dom';
 
+const logos = [
+  'google.png',
+  'facebook.png',
+  'microsoft.png',
+  'apple.png',
+  'linkedin.png',
+  'mit.png',
+  'stanford.png',
+  'harvard.png',
+  'oxford.png',
+  'cambridge.png',
+];
+
 const Home: React.FC = () => {
   return (
     <>
-      {/* Main title container */}
-      <div className="flex flex-col md:flex-row items-center justify-center">
+      <section className="flex flex-col md:flex-row items-center justify-between">
         <div>
-          <div className="text-3xl md:text-[43px] font-bold text-[#32325D]">
+          <p className="text-3xl md:text-5xl font-bold text-[#32325D] leading-">
             Unlock Mentorship opportunities with ScholarX
-          </div>
+          </p>
           <div className="wrapper mt-[40px]">
             <div className="flex mt-10">
               <Link to="/mentors">
-                <button className="flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white py-1 px-16 rounded w-40 h-9 font-bold">
+                <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
                   Apply
                 </button>
               </Link>
@@ -30,10 +42,30 @@ const Home: React.FC = () => {
             className="w-[40rem]"
           />
         </div>
-      </div>
+      </section>
+
+      <section className="section py-12">
+        <div className="text-center">
+          <div className="text-3xl font-bold text-center mb-4 text-[#32325D]">
+            Our mentors are from{' '}
+            <span className="text-xl align-text-top">*</span>
+          </div>
+          <div className="grid justify-center pb-3 grid-cols-2 md:grid-cols-5 gap-10">
+            {logos.map((logo, index) => (
+              <div key={index} className="p-2 w-40">
+                <img
+                  className="mx-auto img-fluid"
+                  src={`logos/${logo}`}
+                  alt={`${logo.split('.')[0]} logo`}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Statistics container */}
-      <div className="flex justify-evenly p-[4%] m-0 items-center flex-col md:flex-row flex-wrap bg-[#F7F8FA] ">
+      <section className="flex justify-evenly p-[4%] m-0 items-center flex-col md:flex-row flex-wrap bg-[#F7F8FA] ">
         <div className="ContainerOne text-center">
           <div className="text-3xl font-bold text-[#1D1D1F]">100,000+</div>
           <div className="font-normal text-[20px] text-[#1D1D1F]">Mentees</div>
@@ -46,59 +78,55 @@ const Home: React.FC = () => {
           <div className="text-3xl font-bold text-[#1D1D1F]">70%</div>
           <div className="font-normal  text-[20px] text-[#1D1D1F]">Growth</div>
         </div>
-      </div>
+      </section>
 
-      {/* Success stories container */}
-      <div className="p-[4%] bg-[#F8FDFF] flex  flex-col md:flex-row justify-center items-center">
-        <div className="imageCol mb-2.5">
+      <section className="py-12 bg-[#F8FDFF] flex  flex-col md:flex-row justify-center items-center">
+        <div className="mb-2">
           <img
             className="max-w-[300px] mx-auto  w-[100%]"
-            src="../../../public/success.png"
+            src="/success.png"
             alt="success-image"
           />
         </div>
-        <div className="md:ml-16">
+        <div className="md:mx-16">
           <div className="text-3xl font-bold text-darkmod-blue text-center mb-2.5">
             Let&apos;s hear it from our
             <br /> ScholarX Alumni
           </div>
           <div className="flex justify-center items-center">
             <a href="#">
-              <button className="flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white py-1 px-16 rounded h-9 font-bold">
-                Alumni
+              <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+                ScholarX Alumni
               </button>
             </a>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Archive container */}
-
-      <div className="p-[4%] bg-[#F8FDFF] flex  flex-col md:flex-row justify-center items-center mb-1">
-        <div className="textCol md:mr-16 ">
-          <div className="text-3xl font-bold text-darkmod-blue text-center mb-2.5">
+      <section className="py-12 bg-[#F8FDFF] flex  flex-col md:flex-row justify-center items-center mb-1">
+        <div className="md:mx-16">
+          <div className="text-3xl font-bold text-darkmod-blue text-center mb-2">
             Checkout our past
             <br /> mentors and mentees
           </div>
           <div className="flex justify-center items-center">
             <a href="#">
-              <button className="flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white py-1 px-16 rounded h-9 font-bold">
-                Archive
+              <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+                ScholarX Archive
               </button>
             </a>
           </div>
         </div>
-        <div className="imageCol ">
+        <div>
           <img
-            className="max-w-[360px] mx-auto  w-[100%]"
-            src="../../../public/scholarX-archive.png"
+            className="max-w-[360px] mx-auto w-full"
+            src="/scholarX-archive.png"
             alt="scholarX-archive-image"
           />
         </div>
-      </div>
+      </section>
 
-      {/* FAQs container */}
-      <div className="flex flex-col items-center">
+      <section className="flex flex-col items-center py-12">
         <div className="w-full text-center">
           <h2 className="text-3xl font-semibold text-[#3D317C]">
             FAQ for Mentors
@@ -115,7 +143,7 @@ const Home: React.FC = () => {
         <div className="w-full xs:w-4/5 xl:w-1/2">
           <FAQSection faqs={menteeFAQs} />
         </div>
-      </div>
+      </section>
     </>
   );
 };

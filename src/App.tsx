@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import Home from './components/Home/Home';
+import Home from './components/Home';
 import MainLayout from './components/Layout/MainLayout';
 import { UserProvider } from './contexts/UserContext';
 import MenteeApplications from './components/MenteeApplicationsView/MenteeApplications.component.tsx';

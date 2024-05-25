@@ -10,6 +10,7 @@ import { MenteeApplicationSchema } from '../../schemas';
 import FormCheckbox from '../../components/FormFields/MenteeApplication/FormCheckbox';
 import FormInput from '../../components/FormFields/MenteeApplication/FormInput';
 import useProfile from '../../hooks/useProfile';
+import { useParams } from 'react-router-dom';
 
 const steps = [
   {
@@ -24,6 +25,7 @@ const steps = [
 
 const MenteeRegistration: React.FC = () => {
   const { data: user, updateProfile } = useProfile();
+  const { mentorId } = useParams();
   const {
     register,
     unregister,
@@ -38,6 +40,7 @@ const MenteeRegistration: React.FC = () => {
       firstName: user?.first_name,
       lastName: user?.last_name,
       email: user?.primary_email,
+      mentorId,
     },
   });
   const { error: mentorsError, data: mentors } = usePublicMentors(null);
