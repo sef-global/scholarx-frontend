@@ -1,55 +1,61 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import useMyMentees from '../../hooks/useMyMentees';
 import { ApplicationStatus } from '../../enums';
 import MenteeCard from '../MenteeCard';
+import useMentor from '../../hooks/useMentor';
+import { UserContext, type UserContextType } from '../../contexts/UserContext';
 
 const MenteeApplications: React.FC = () => {
-  const [selectedOption, setSelectedOption] = useState<
-    'available' | 'notAvailable'
-  >('available');
-
+  const { mentor } = useContext(UserContext) as UserContextType;
   const { data: mentees } = useMyMentees();
+  const [isAvailable, setIsAvailable] = useState(mentor?.availability);
+  const { updateAvailability } = useMentor(mentor?.uuid);
 
-  const handleOptionChange = (option: 'available' | 'notAvailable'): void => {
-    setSelectedOption(option);
+  const handleAvailability = (availability: boolean) => {
+    updateAvailability(availability);
+    setIsAvailable(availability);
   };
 
   return (
     <div className="mb-8 px-2 md:px-4">
       <div className="flex items-center justify-between px-2 py-2 rounded-md">
-        <span className="text-xl font-medium">Mentees</span>
-        <div className="flex items-center">
-          <button
-            className={`px-2 py-1 rounded-l-md text-xs md:text-sm ${
-              selectedOption === 'available'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-300 text-black'
-            }`}
-            onClick={() => {
-              handleOptionChange('available');
-            }}
-          >
-            Available
-          </button>
-          <button
-            className={`px-2 py-1 rounded-r-md text-xs md:text-sm ${
-              selectedOption === 'notAvailable'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-300 text-black'
-            }`}
-            onClick={() => {
-              handleOptionChange('notAvailable');
-            }}
-          >
-            Not Available
-          </button>
+        <p className="text-xl md:text-2xl font-semibold">Mentees</p>
+        <div className="flex items-center justify-center">
+          {isAvailable !== undefined && (
+            <div className="flex">
+              <button
+                className={`px-4 py-2 rounded-l-full text-sm font-medium transition-all duration-300 ${
+                  isAvailable
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-300 text-gray-800'
+                }`}
+                onClick={() => {
+                  handleAvailability(true);
+                }}
+              >
+                Available
+              </button>
+              <button
+                className={`px-4 py-2 rounded-r-full text-sm font-medium transition-all duration-300 ${
+                  !isAvailable
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-300 text-gray-800'
+                }`}
+                onClick={() => {
+                  handleAvailability(false);
+                }}
+              >
+                Not Available
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <div className="px-2 py-2 mt-4">
         <p className="text-lg font-medium mb-2 pb-5">
           These mentees are waiting for your response:
         </p>
-        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-4 px-2 md:px-6">
+        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4 px-2 md:px-6">
           {mentees
             ?.filter((mentee) => mentee.state === ApplicationStatus.PENDING)
             .map((mentee) => (

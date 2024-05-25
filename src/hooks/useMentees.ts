@@ -3,6 +3,7 @@ import {
   type QueryFunction,
   type QueryKey,
   useMutation,
+  useQueryClient,
 } from '@tanstack/react-query';
 import axios, { type AxiosError } from 'axios';
 import { API_URL } from '../constants';
@@ -17,13 +18,14 @@ const fetchMentees: QueryFunction<Mentee[], QueryKey> = async () => {
 };
 
 export const useMentees = () => {
+  const queryClient = useQueryClient();
   const { isLoading, error, data } = useQuery<Mentee[], AxiosError>({
     initialData: [],
     queryKey: ['mentees'],
     queryFn: fetchMentees,
   });
 
-  const updateMenteeStatus = useMutation({
+  const { mutate: updateMenteeStatus } = useMutation({
     mutationFn: async ({
       menteeId,
       state,
@@ -38,6 +40,9 @@ export const useMentees = () => {
         },
         { withCredentials: true }
       );
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['mentees'] });
     },
   });
 

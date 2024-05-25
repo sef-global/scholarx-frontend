@@ -92,19 +92,19 @@ const MenteeApplications: React.FC = () => {
         <table className="w-full">
           <thead>
             <tr>
-              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 tracking-wider  w-1/5">
+              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 w-1/5">
                 Name
               </th>
-              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 tracking-wider  w-1/5">
+              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 w-1/5">
                 Company / University
               </th>
-              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 tracking-wider  w-1/5">
+              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 w-1/5">
                 Mentor
               </th>
-              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 tracking-wider  w-1/5">
+              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 w-1/5">
                 Video Submission
               </th>
-              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 tracking-wider  w-1/5">
+              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 w-1/5">
                 Status
               </th>
             </tr>

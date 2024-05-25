@@ -1,23 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import useCategories from '../../hooks/useCategories';
 import { type Mentor, type Category } from '../../types';
 import { usePublicMentors } from '../../hooks/usePublicMentors';
 import MentorCard from '../../components/MentorCard/MentorCard.component';
 
 const Mentors = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const queryParams = new URLSearchParams(location.search);
-  const categoryParam =
-    queryParams.get('category') !== null ? queryParams.get('category') : '';
-
-  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
-    categoryParam !== null ? categoryParam : undefined
-  );
-  const [sortedMentors, setSortedMentors] = useState<Mentor[] | undefined>(
-    undefined
-  );
+  const [selectedCategory, setSelectedCategory] = useState<string | null>('');
+  const [sortedMentors, setSortedMentors] = useState<Mentor[]>([]);
   const {
     data: mentors,
     isLoading: mentorsLoading,
@@ -30,24 +19,20 @@ const Mentors = () => {
   } = useCategories();
 
   useEffect(() => {
-    if (categoryParam !== selectedCategory && categoryParam !== null) {
-      setSelectedCategory(categoryParam);
+    if (mentors) {
+      setSortedMentors([...mentors]);
     }
-  }, [categoryParam, selectedCategory]);
+  }, [mentors]);
 
   const handleSortAZ = () => {
-    if (mentors !== undefined) {
-      const sortedMentors = [...mentors].sort((a, b) =>
-        a.profile.first_name.localeCompare(b.profile.first_name)
-      );
-      setSortedMentors(sortedMentors);
-    }
+    const sorted = [...sortedMentors].sort((a, b) =>
+      b.profile.first_name.localeCompare(a.profile.first_name)
+    );
+    setSortedMentors(sorted);
   };
 
   const handleCategoryChange = (category: string | null) => {
-    setSelectedCategory(category !== null ? category : undefined);
-    setSortedMentors(undefined); // Reset sorted mentors when category changes
-    navigate({ search: category !== null ? `?category=${category}` : '' });
+    setSelectedCategory(category);
   };
 
   const isLoading = mentorsLoading || categoriesLoading;
@@ -58,21 +43,18 @@ const Mentors = () => {
       {!isLoading && (
         <div>
           <div className="mb-4 w-full flex items-center justify-between">
-            <div className="text-xl font-bold" style={{ fontSize: '25px' }}>
-              Mentors
-            </div>
+            <p className="text-2xl font-semibold">Mentors</p>
           </div>
           <hr className="mb-8" />
           <div className="mb-4 w-full flex items-center justify-between">
-            <div className="flex space-x-2 items-center">
+            <div className="flex space-x-2 items-center text-sm">
               <button
                 onClick={() => {
                   handleCategoryChange(null);
                 }}
-                className={`bg-blue text-black px-2 py-1 rounded border border-blue-500 ${
-                  selectedCategory === undefined ? 'bg-blue-500 text-white' : ''
+                className={`bg-blue text-black px-4 py-1 rounded-full border border-blue-500 ${
+                  selectedCategory === null ? 'bg-blue-500 text-white' : ''
                 }`}
-                style={{ fontSize: '12px' }}
               >
                 All
               </button>
@@ -82,12 +64,11 @@ const Mentors = () => {
                   onClick={() => {
                     handleCategoryChange(category.uuid);
                   }}
-                  className={`bg-blue text-black px-2 py-1 rounded border border-blue-500 ${
-                    selectedCategory === category.category
+                  className={`bg-blue text-black px-4 py-1 rounded-full border border-blue-500 ${
+                    selectedCategory === category.uuid
                       ? 'bg-blue-500 text-white'
                       : ''
                   }`}
-                  style={{ fontSize: '12px' }}
                 >
                   {category.category}
                 </button>
@@ -110,26 +91,15 @@ const Mentors = () => {
 
           {(error === undefined || error === null) && (
             <>
-              {sortedMentors !== undefined && sortedMentors.length > 0 && (
-                <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 items-start">
+              {sortedMentors.length > 0 && (
+                <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-8 items-start">
                   {sortedMentors.map((mentor) => (
                     <MentorCard key={mentor.uuid} mentor={mentor} />
                   ))}
                 </div>
               )}
 
-              {(sortedMentors === undefined || sortedMentors.length === 0) &&
-                mentors !== undefined &&
-                mentors.length > 0 && (
-                  <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 items-start">
-                    {mentors.map((mentor) => (
-                      <MentorCard key={mentor?.uuid} mentor={mentor} />
-                    ))}
-                  </div>
-                )}
-
-              {(sortedMentors?.length === 0 ||
-                (mentors !== undefined && mentors.length === 0)) && (
+              {sortedMentors.length === 0 && (
                 <p>No mentors found for this category.</p>
               )}
             </>

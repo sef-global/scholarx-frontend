@@ -7,9 +7,13 @@ import GoogleLoginButton from '../OAuth/Google';
 
 interface RegisterModalProps {
   handleClose: () => void;
+  onLoginClick: () => void;
 }
 
-const RegisterModal: React.FC<RegisterModalProps> = ({ handleClose }) => {
+const RegisterModal: React.FC<RegisterModalProps> = ({
+  handleClose,
+  onLoginClick,
+}) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -51,12 +55,11 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ handleClose }) => {
 
   return (
     <div className="fixed z-10 inset-0 overflow-y-auto">
-      <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div className="flex min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0 flex-col items-center justify-center h-screen w-full p-5 ">
         <div className="fixed inset-0 transition-opacity">
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
-        &#8203;
         <div
           className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
           role="dialog"
@@ -71,16 +74,11 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ handleClose }) => {
           </button>
 
           <div className="bg-white p-6 space-y-8 rounded-lg shadow-xl">
-            <div className={styles.modalWrapper}>
+            <div className="m-5">
               <h2 className="text-2xl font-bold text-gray-900 text-center">
-                Create your Account
+                Elevate Your Career Journey
               </h2>
-              <div className={styles.scholarxLogoWrapper}>
-                <img
-                  src="../../../public/scholarx-logo.png"
-                  alt="scholarx-logo"
-                />
-              </div>
+
               <form className="mt-8 space-y-6" onSubmit={handleRegister}>
                 <div>
                   <input
@@ -156,10 +154,16 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ handleClose }) => {
                 </button>
                 <GoogleLoginButton />
                 <div className="text-sm font-thin text-center text-gray-900">
-                  Already have an account?{' '}
-                  <a className="font-medium text-black hover:underline">
+                  Already have an account?
+                  <p
+                    className="font-medium text-black hover:underline cursor-pointer"
+                    onClick={() => {
+                      handleClose();
+                      onLoginClick();
+                    }}
+                  >
                     Login
-                  </a>
+                  </p>
                 </div>
               </form>
             </div>
