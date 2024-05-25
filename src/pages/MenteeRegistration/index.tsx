@@ -40,7 +40,7 @@ const MenteeRegistration: React.FC = () => {
       email: user?.primary_email,
     },
   });
-  const { error: mentorsError, data: mentors } = usePublicMentors();
+  const { error: mentorsError, data: mentors } = usePublicMentors(null);
   const [currentStep, setCurrentStep] = useState(0);
   const [image, setImage] = useState<File | null>(null);
   const [profilePic, setProfilePic] = useState(user?.image_url);

@@ -1,4 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, {
+  type RefObject,
+  useContext,
+  useRef,
+  useState,
+  useEffect,
+} from 'react';
 
 import MenuDrawer from '../MenuDrawer';
 import LoginModal from '../../LoginModal';
@@ -16,7 +22,8 @@ const Navbar: React.FC = () => {
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const [isRegisterModalVisible, setIsRegisterModalVisible] = useState(false);
   const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
-
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   const { user, isUserMentor, isUserAdmin } = useContext(
@@ -56,11 +63,31 @@ const Navbar: React.FC = () => {
     setOpenMenu(false);
   };
 
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+
+  const handleClickOutside = (event: React.MouseEvent<Document>) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
+      setIsDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener(
+      'mousedown',
+      handleClickOutside as unknown as EventListener
+    );
+    return () => {
+      document.removeEventListener(
+        'mousedown',
+        handleClickOutside as unknown as EventListener
+      );
+    };
+  }, []);
 
   return (
     <>
@@ -75,7 +102,10 @@ const Navbar: React.FC = () => {
           </Link>
 
           {user != null && (
-            <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse relative">
+            <div
+              className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse relative"
+              ref={dropdownRef}
+            >
               <button
                 type="button"
                 className="flex w-8 h-8  justify-center items-center text-sm bg-gray-200 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300"
@@ -113,7 +143,7 @@ const Navbar: React.FC = () => {
               >
                 <div className="px-4 py-3">
                   <span className="block text-sm text-gray-900">
-                    {user?.first_name}
+                    {user?.first_name} {user?.last_name}
                   </span>
                   <span className="block text-sm text-gray-500 truncate">
                     {user?.primary_email}
