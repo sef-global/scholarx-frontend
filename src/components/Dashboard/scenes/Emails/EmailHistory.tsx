@@ -24,20 +24,20 @@ const EmailHistory: React.FC = () => {
         ) : emails != null && emails.length > 0 ? (
           <table className="divide-y divide-gray-200 shadow-sm rounded-lg overflow-y-scroll">
             <thead className="bg-gray-50">
-              <tr>
-                <th className="px-2 py-1 whitespace-nowrap text-xs font-medium text-gray-500 tracking-wider w-1/5">
+              <tr className="text-xs font-medium text-gray-500 tracking-wider">
+                <th className="px-2 py-1 whitespace-nowrap w-1/5 md:w-1/5">
                   Subject
                 </th>
-                <th className="px-2 py-1 whitespace-nowrap text-xs truncate overflow-hidden font-medium text-gray-500 tracking-wider w-1/5 ">
+                <th className="px-2 py-1 whitespace-nowrap truncate overflow-hidden w-1/5 md:w-1/5">
                   Recipient
                 </th>
-                <th className="px-2 py-1 whitespace-nowrap text-xs font-medium text-gray-500 tracking-wider w-1/5">
+                <th className="px-2 py-1 whitespace-nowrap w-1/5 md:w-1/5">
                   Sent Status
                 </th>
-                <th className="px-2 py-1 whitespace-nowrap text-xs font-medium text-gray-500 tracking-wider w-1/5">
+                <th className="px-2 py-1 whitespace-nowrap w-1/5 md:w-1/5">
                   Open Status
                 </th>
-                <th className="px-2 py-1 whitespace-nowrap text-xs font-medium text-gray-500 tracking-wider w-1/5">
+                <th className="px-2 py-1 whitespace-nowrap w-1/5 md:w-1/5">
                   Sent Time
                 </th>
               </tr>
@@ -45,20 +45,20 @@ const EmailHistory: React.FC = () => {
             <tbody className="bg-white divide-y divide-gray-200">
               {emails.map((email, index) => (
                 <tr key={index}>
-                  <td className="px-2 py-1 whitespace-nowrap text-sm truncate overflow-hidden w-2/6 text-center">
+                  <td className="px-2 py-1 whitespace-nowrap text-sm truncate overflow-hidden w-full md:w-2/6 text-center">
                     {email.subject.split(' ').slice(0, 4).join(' ') +
                       (email.subject.split(' ').length > 4 ? '...' : '')}
                   </td>
-                  <td className="px-2 py-1 whitespace-nowrap text-sm w-1/6 text-center">
+                  <td className="px-2 py-1 whitespace-nowrap text-sm w-full md:w-1/6 text-center">
                     {getUsername(email.recipients)}
                   </td>
-                  <td className="px-2 py-1 whitespace-nowrap text-sm justify-center items-center w-1/6 text-center">
+                  <td className="px-2 py-1 whitespace-nowrap text-sm justify-center items-center w-full md:w-1/6 text-center">
                     {email.status}
                   </td>
-                  <td className="px-2 py-1 whitespace-nowrap text-sm w-1/6 text-center">
+                  <td className="px-2 py-1 whitespace-nowrap text-sm w-full md:w-1/6 text-center">
                     {email.opened}
                   </td>
-                  <td className="px-2 py-1 whitespace-nowrap text-sm w-1/6 text-center">
+                  <td className="px-2 py-1 whitespace-nowrap text-sm w-full md:w-1/6 text-center">
                     {new Date(email.sentTime).toLocaleString()}
                   </td>
                 </tr>
