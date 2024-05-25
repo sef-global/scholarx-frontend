@@ -49,7 +49,7 @@ const LogoutModal: React.FC<LogoutModalProps> = ({ onClose }) => {
         >
           <div className="p-4 md:p-5 text-center">
             <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-              Are you sure you want to logout from ScholarX?
+              Are you sure you want to logout?
             </h3>
             <button
               onClick={handleLogoutConfirm}

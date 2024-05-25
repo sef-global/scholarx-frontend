@@ -56,8 +56,19 @@ export const MentorApplicationSchema = z.object({
     .min(1, { message: 'Bio cannot be empty' })
     .max(2000, { message: 'Bio cannot exceed 2000 characters' }),
   isPastMentor: z.boolean(),
-  reasonToMentor: z.string().optional(),
-  motivation: z.string().optional(),
+  reasonToMentor: z
+    .string()
+    .min(1, { message: 'This cannot be empty' })
+    .optional(),
+  motivation: z.string().min(1, { message: 'This cannot be empty' }).optional(),
+  profilePic: z
+    .custom<File>()
+    .refine((files) => files !== undefined, {
+      message: 'The profile picture is required.',
+    })
+    .refine((file) => file && file?.size <= 5 * 1024 * 1024, {
+      message: 'The profile picture must be a maximum of 5MB.',
+    }),
   cv: z.string().min(1, { message: 'CV cannot be empty' }),
   menteeExpectations: z
     .string()
@@ -71,7 +82,7 @@ export const MentorApplicationSchema = z.object({
   canCommit: z.boolean().refine((val) => val, {
     message: 'You must mention if you can commit',
   }),
-  mentoredYear: z.number().optional().or(z.number().min(0)),
+  mentoredYear: z.number().or(z.number().min(0)).optional(),
   category: z.string().min(1, { message: 'Category cannot be empty' }),
   institution: z.string().min(1, { message: 'Institution cannot be empty' }),
   linkedin: z
