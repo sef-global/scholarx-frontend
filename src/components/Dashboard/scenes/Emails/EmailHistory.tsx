@@ -53,10 +53,10 @@ const EmailHistory: React.FC = () => {
                     {getUsername(email.recipients)}
                   </td>
                   <td className="px-2 py-1 whitespace-nowrap text-sm justify-center items-center w-1/6 text-center">
-                    {email.status === 'true' ? 'Sent' : 'Not Sent'}
+                    {email.status}
                   </td>
                   <td className="px-2 py-1 whitespace-nowrap text-sm w-1/6 text-center">
-                    {email.opened === 'true' ? 'Opened' : 'Not Opened'}
+                    {email.opened}
                   </td>
                   <td className="px-2 py-1 whitespace-nowrap text-sm w-1/6 text-center">
                     {new Date(email.sentTime).toLocaleString()}
