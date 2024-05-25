@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { API_URL } from '../../constants';
 import closeIcon from '../../assets/svg/closeIcon.svg';
-import styles from './LoginModal.module.css';
-import GoogleLoginButton from '../OAuth/Google';
 import useProfile from '../../hooks/useProfile';
 
 interface LoginModalProps {
@@ -11,7 +9,6 @@ interface LoginModalProps {
   onRegistrationClick: () => void;
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
 const handleLoginGoogle = (e: React.FormEvent): void => {
   e.preventDefault();
   window.location.href = `${API_URL}/auth/google`;
@@ -143,7 +140,6 @@ const LoginModal: React.FC<LoginModalProps> = ({
                 >
                   {isLoading ? 'Loading' : 'Login'}
                 </button>
-                <GoogleLoginButton />
                 <p className="text-red-600 text-center">{error}</p>
                 <div className="my-1 m-0 flex items-center before:mt-0.2 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
                   <p className="mx-1 mb-0 text-center font-semibold text-gray-400">
