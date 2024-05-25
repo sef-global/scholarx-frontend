@@ -12,7 +12,7 @@ const fetchPublicMentors: QueryFunction<Mentor[], QueryKey> = async ({
 }) => {
   const [, category]: [string, string] = queryKey as [string, string];
   let url = `${API_URL}/mentors`;
-  if (category !== '' && category != null) {
+  if (category != null) {
     url += `?categoryId=${category}`;
   }
   const response = await axios.get(url, {
@@ -21,10 +21,11 @@ const fetchPublicMentors: QueryFunction<Mentor[], QueryKey> = async ({
   return response.data.mentors;
 };
 
-export const usePublicMentors = (categoryId?: string) => {
+export const usePublicMentors = (categoryId: string | null) => {
   const { isLoading, error, data } = useQuery<Mentor[], AxiosError>({
     queryKey: ['public-mentors', categoryId],
     queryFn: fetchPublicMentors,
+    initialData: [],
   });
 
   return {

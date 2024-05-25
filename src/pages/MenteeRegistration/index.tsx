@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { type ChangeEvent, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { API_URL } from '../../constants';
@@ -9,6 +9,8 @@ import { type MenteeApplication } from '../../types';
 import { MenteeApplicationSchema } from '../../schemas';
 import FormCheckbox from '../../components/FormFields/MenteeApplication/FormCheckbox';
 import FormInput from '../../components/FormFields/MenteeApplication/FormInput';
+import useProfile from '../../hooks/useProfile';
+import { useParams } from 'react-router-dom';
 
 const steps = [
   {
@@ -21,24 +23,50 @@ const steps = [
   },
 ];
 
-const MenteeApplicationForm: React.FC = () => {
+const MenteeRegistration: React.FC = () => {
+  const { data: user, updateProfile } = useProfile();
+  const { mentorId } = useParams();
   const {
     register,
     unregister,
     handleSubmit,
     watch,
+    setValue,
     trigger,
     formState: { errors },
   } = useForm<MenteeApplication>({
     resolver: zodResolver(MenteeApplicationSchema),
+    defaultValues: {
+      firstName: user?.first_name,
+      lastName: user?.last_name,
+      email: user?.primary_email,
+      mentorId,
+    },
   });
-  const { error: mentorsError, data: mentors } = usePublicMentors();
+  const { error: mentorsError, data: mentors } = usePublicMentors(null);
   const [currentStep, setCurrentStep] = useState(0);
+  const [image, setImage] = useState<File | null>(null);
+  const [profilePic, setProfilePic] = useState(user?.image_url);
+
+  const handleProfilePicChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files != null) {
+      const file = event.target.files[0];
+      setImage(file);
+      setValue('profilePic', file);
+      setProfilePic(URL.createObjectURL(file));
+    }
+  };
+
+  const handleImageClick = () => {
+    document.getElementById('profilePic')?.click();
+  };
 
   const handleNext = async (): Promise<void> => {
     let fields = steps[currentStep].fields;
 
-    if (currentStep === 1) {
+    if (currentStep === 0 && !profilePic) {
+      fields.push('profilePic');
+    } else if (currentStep === 1) {
       if (watch('isUndergrad')) {
         fields = ['course', 'university', 'yearOfStudy'];
         unregister(['graduatedYear', 'position', 'company']);
@@ -61,10 +89,17 @@ const MenteeApplicationForm: React.FC = () => {
   };
 
   const onSubmit: SubmitHandler<MenteeApplication> = async (data) => {
-    applyForMentor.mutate(data);
+    applyForMentor(data);
+    updateProfile({ profile: null, image });
   };
 
-  const applyForMentor = useMutation({
+  const {
+    mutate: applyForMentor,
+    error: applicationError,
+    isError: isApplicationError,
+    isSuccess: applicationSuccess,
+    isPending: isApplicationPending,
+  } = useMutation({
     mutationFn: async (data: MenteeApplication) => {
       await axios.post(
         `${API_URL}/mentees`,
@@ -95,6 +130,44 @@ const MenteeApplicationForm: React.FC = () => {
           <>
             <div className="text-xl font-medium mb-2">Personal Information</div>
             <hr />
+            <div className="relative">
+              <input
+                type="file"
+                id="profilePic"
+                accept="image/*"
+                className="hidden"
+                onChange={handleProfilePicChange}
+                name="profilePic"
+              />
+              <div
+                onClick={handleImageClick}
+                className="cursor-pointer relative group mb-4"
+              >
+                {profilePic !== '' ? (
+                  <img
+                    src={profilePic}
+                    alt="Profile"
+                    className="w-[90px] h-[90px] rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="w-[90px] h-[90px] rounded-full bg-gray-200 flex items-center justify-center">
+                    <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto flex items-center justify-center">
+                      <span className="text-gray-400">+</span>
+                    </div>
+                  </div>
+                )}
+                <div className="absolute bottom-0 w-[90px] h-1/2 bg-black bg-opacity-40 rounded-b-full flex items-center p-5 justify-center">
+                  <span className="text-white text-center text-xs">
+                    Change Photo
+                  </span>
+                </div>
+              </div>
+              {errors != null && (
+                <span className="text-red-500">
+                  {errors.profilePic?.message}
+                </span>
+              )}
+            </div>
             <div className="flex flex-wrap">
               <div className="w-full md:w-1/2 md:pr-1 mb-4 md:mb-0">
                 <FormInput
@@ -296,16 +369,15 @@ const MenteeApplicationForm: React.FC = () => {
             {mentorsError.message}
           </div>
         ) : null}
-        {applyForMentor.isError &&
-        applyForMentor?.error instanceof AxiosError ? (
+        {isApplicationError && applicationError instanceof AxiosError ? (
           <div
             className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 "
             role="alert"
           >
-            {applyForMentor.error.response?.data.message}
+            {applicationError.response?.data.message}
           </div>
         ) : null}
-        {applyForMentor.isSuccess ? (
+        {applicationSuccess ? (
           <div
             className="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50"
             role="alert"
@@ -320,7 +392,7 @@ const MenteeApplicationForm: React.FC = () => {
             <button
               type="button"
               onClick={handlePrev}
-              className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-1 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-small rounded-md text-sm inline-flex items-center px-3 py-1.5 text-center me-2"
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
             >
               Previous
             </button>
@@ -329,7 +401,7 @@ const MenteeApplicationForm: React.FC = () => {
             <button
               type="button"
               onClick={handleNext}
-              className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-1 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-small rounded-md text-sm inline-flex items-center px-3 py-1.5 text-center me-2"
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
             >
               Next
             </button>
@@ -337,9 +409,9 @@ const MenteeApplicationForm: React.FC = () => {
           {currentStep === 2 && (
             <button
               type="submit"
-              className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-1 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-small rounded-md text-sm inline-flex items-center px-3 py-1.5 text-center me-2"
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
             >
-              {applyForMentor.isPending ? 'Submitting...' : 'Submit'}
+              {isApplicationPending ? 'Submitting...' : 'Submit'}
             </button>
           )}
         </div>
@@ -348,4 +420,4 @@ const MenteeApplicationForm: React.FC = () => {
   );
 };
 
-export default MenteeApplicationForm;
+export default MenteeRegistration;

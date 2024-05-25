@@ -1,13 +1,12 @@
-import React, { useState, useContext } from 'react';
-import axios, { type AxiosResponse } from 'axios';
+import React, { useState } from 'react';
+import axios, { AxiosError } from 'axios';
 import { API_URL } from '../../constants';
-import { type Profile } from '../../types';
-import { UserContext, type UserContextType } from '../../contexts/UserContext';
 import closeIcon from '../../assets/svg/closeIcon.svg';
-import styles from './LoginModal.module.css';
+import useProfile from '../../hooks/useProfile';
 
 interface LoginModalProps {
   handleClose: () => void;
+  onRegistrationClick: () => void;
 }
 
 const handleLoginGoogle = (e: React.FormEvent): void => {
@@ -15,15 +14,22 @@ const handleLoginGoogle = (e: React.FormEvent): void => {
   window.location.href = `${API_URL}/auth/google`;
 };
 
-const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
+const LoginModal: React.FC<LoginModalProps> = ({
+  handleClose,
+  onRegistrationClick,
+}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { setUserContext } = useContext(UserContext) as UserContextType;
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const { refetch } = useProfile();
 
-  const handleLogin = (e: React.FormEvent): void => {
+  const handleLogin = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     try {
-      axios
+      setError('');
+      setIsLoading(true);
+      await axios
         .post(
           `${API_URL}/auth/login`,
           {
@@ -34,22 +40,17 @@ const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
             withCredentials: true,
           }
         )
-        .then((response: AxiosResponse<{ user: Profile }>) => {
-          setUserContext(response.data.user);
+        .then(async () => {
+          await refetch();
           handleClose();
-        })
-        .catch((error) => {
-          if (error.response.status !== 401) {
-            console.error({
-              message: 'Something went wrong when fetching the user',
-              description: error.toString(),
-            });
-          } else {
-            setUserContext(null);
-          }
         });
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       console.error('Login error:', error);
+      if (error instanceof AxiosError) {
+        setError(error.response?.data.message);
+      }
     }
   };
 
@@ -60,7 +61,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
-        &#8203;
         <div
           className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
           role="dialog"
@@ -75,16 +75,11 @@ const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
           </button>
 
           <div className="bg-white p-6 space-y-8 rounded-lg shadow-xl">
-            <div className={styles.modalWrapper}>
-              <h2 className="text-2xl font-bold text-gray-900 tracking-widest text-center">
+            <div className="m-5">
+              <h2 className="text-2xl font-semibold text-gray-900 text-center">
                 Welcome back!
               </h2>
-              <div className={styles.scholarxLogoWrapper}>
-                <img
-                  src="../../../public/scholarx-logo.png"
-                  alt="scholarx-logo"
-                />
-              </div>
+
               <form className="mt-8 space-y-6" onSubmit={handleLogin}>
                 <div>
                   <input
@@ -114,8 +109,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
                     required
                   />
                 </div>
-                <div className="flex items-start">
-                  <div className="flex items-center h-5">
+                <div className="flex">
+                  <div className="flex items-center">
                     <input
                       id="remember"
                       aria-describedby="remember"
@@ -134,17 +129,18 @@ const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
                   </div>
                   <a
                     href="#"
-                    className="ml-auto text-sm font-normal text-black hover:underline"
+                    className="text-sm font-normal text-black hover:underline"
                   >
                     Forgot Password?
                   </a>
                 </div>
                 <button
                   type="submit"
-                  className="w-full px-5 py-3 text-base font-medium text-center text-white tracking-widest bg-primary-blue rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300"
+                  className="w-full px-5 py-3 text-base font-medium text-center text-white bg-primary-blue rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300"
                 >
-                  Login
+                  {isLoading ? 'Loading' : 'Login'}
                 </button>
+                <p className="text-red-600 text-center">{error}</p>
                 <div className="my-1 m-0 flex items-center before:mt-0.2 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
                   <p className="mx-1 mb-0 text-center font-semibold text-gray-400">
                     or Sign-in with
@@ -165,10 +161,16 @@ const LoginModal: React.FC<LoginModalProps> = ({ handleClose }) => {
                   </button>
                 </div>
                 <div className="text-sm font-thin text-center text-gray-900">
-                  Not registered yet?{' '}
-                  <a className="font-medium text-black hover:underline">
+                  Not registered yet?
+                  <p
+                    className="font-medium text-black hover:underline cursor-pointer"
+                    onClick={() => {
+                      onRegistrationClick();
+                      handleClose();
+                    }}
+                  >
                     Create account
-                  </a>
+                  </p>
                 </div>
               </form>
             </div>

@@ -1,52 +1,72 @@
 import React from 'react';
-import { Menu, Layout } from 'antd';
-
 import { Link, Route, Routes } from 'react-router-dom';
-import OngoingMentorshipPrograms from './scenes/OngoingMentorshipPrograms/OngoingMentorshipPrograms.tsx';
-import PlatformSettings from './scenes/PlatformSettings/PlatformSettings.tsx';
-import MenteeApplications from './scenes/MenteeApplications/MenteeApplications.tsx';
-import ManageUsers from './scenes/ManageUsers/ManageUsers.tsx';
-import Emails from './scenes/Emails/Emails.tsx';
-import MentorApplications from './scenes/MentorApplications/MentorApplications.tsx';
-import MentorApplicationPage from './scenes/MentorApplications/MentorApplicationPage.tsx';
+import OngoingMentorshipPrograms from './scenes/OngoingMentorshipPrograms/OngoingMentorshipPrograms';
+import PlatformSettings from './scenes/PlatformSettings/PlatformSettings';
+import MenteeApplications from './scenes/MenteeApplications/MenteeApplications';
+import ManageUsers from './scenes/ManageUsers/ManageUsers';
+import Emails from './scenes/Emails/Emails';
+import MentorApplications from './scenes/MentorApplications/MentorApplications';
+import MentorApplicationPage from './scenes/MentorApplications/MentorApplicationPage';
 import MenteeApplicationPage from './scenes/MenteeApplications/MenteeApplicationPage.tsx';
-
-const { Content, Sider } = Layout;
 
 const Dashboard: React.FC = () => {
   return (
-    <Layout>
-      <Sider breakpoint="lg" collapsedWidth="0" width="250" theme="light">
-        <Menu mode="inline">
-          <Menu.Item key="2">
-            <Link to={`/admin/dashboard/mentor-applications`}>
-              Mentor Applications
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="3">
-            <Link to={`/admin/dashboard/mentee-applications`}>
-              Mentee Applications
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="4">
-            <Link to={`/admin/dashboard/ongoing-mentorship-programs`}>
-              Ongoing Mentorship Programs
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="5">
-            <Link to={`/admin/dashboard/platform-settings`}>
-              Platform Settings
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="6">
-            <Link to={`/admin/dashboard/manage-users`}>Manage Users</Link>
-          </Menu.Item>
-          <Menu.Item key="7">
-            <Link to={`/admin/dashboard/emails`}>Emails</Link>
-          </Menu.Item>
-        </Menu>
-      </Sider>
-      <Content className="h-screen">
+    <div className="flex h-screen">
+      <aside className="w-64 bg-gray-100 h-full shadow-md">
+        <nav className="h-full">
+          <ul className="space-y-2 p-4">
+            <li>
+              <Link
+                to="/admin/dashboard/mentor-applications"
+                className="block py-2 px-4 rounded hover:bg-gray-200"
+              >
+                Mentor Applications
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/admin/dashboard/mentee-applications"
+                className="block py-2 px-4 rounded hover:bg-gray-200"
+              >
+                Mentee Applications
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/admin/dashboard/ongoing-mentorship-programs"
+                className="block py-2 px-4 rounded hover:bg-gray-200"
+              >
+                Ongoing Mentorship Programs
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/admin/dashboard/platform-settings"
+                className="block py-2 px-4 rounded hover:bg-gray-200"
+              >
+                Platform Settings
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/admin/dashboard/manage-users"
+                className="block py-2 px-4 rounded hover:bg-gray-200"
+              >
+                Manage Users
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/admin/dashboard/emails"
+                className="block py-2 px-4 rounded hover:bg-gray-200"
+              >
+                Emails
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      <main className="flex-1 p-6 overflow-y-auto">
         <Routes>
           <Route path="/mentor-applications" element={<MentorApplications />} />
           <Route
@@ -66,8 +86,8 @@ const Dashboard: React.FC = () => {
           <Route path="/manage-users" element={<ManageUsers />} />
           <Route path="/emails" element={<Emails />} />
         </Routes>
-      </Content>
-    </Layout>
+      </main>
+    </div>
   );
 };
 

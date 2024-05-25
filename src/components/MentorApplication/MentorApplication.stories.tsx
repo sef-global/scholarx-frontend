@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { within } from '@storybook/testing-library';
 import { mentors } from '../../__mocks__/mentors';
 import { expect } from '@storybook/jest';
+import { type Mentor } from '../../types';
 
 const meta: Meta<typeof MentorApplication> = {
   component: MentorApplication,
@@ -17,7 +18,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     isLoading: false,
-    mentor: mentors[0],
+    mentor: mentors[0] as Mentor,
     onStateChange: (newState: string) => {
       console.log('Changing state to', newState);
     },

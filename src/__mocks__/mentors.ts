@@ -1,7 +1,11 @@
 import { ProfileTypes } from '../enums';
 import type { Mentor } from '../types';
 
-export const mentors: Mentor[] = [
+type MentorWithoutProfilePic = Omit<Mentor, 'application'> & {
+  application: Omit<Mentor['application'], 'profilePic'>;
+};
+
+export const mentors: MentorWithoutProfilePic[] = [
   {
     uuid: '0d22aa50-48ba-4ec0-96bd-aca9b54c7e2f',
     created_at: '2023-07-01',

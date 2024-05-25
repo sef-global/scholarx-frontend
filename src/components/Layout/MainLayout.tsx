@@ -1,7 +1,7 @@
 import React, { type ReactNode } from 'react';
 
-import Footer from './Footer/Footer';
-import Navbar from './Navbar/Navbar';
+import Footer from './Footer';
+import Navbar from './Navbar';
 
 interface LayoutProps {
   children: ReactNode;
@@ -10,7 +10,7 @@ interface LayoutProps {
 const MainLayout: React.FC<LayoutProps> = ({ children }) => (
   <>
     <Navbar />
-    <section className="min-h-[80vh] md:mx-[200px] md:my-[30px]">
+    <section className="min-h-[80vh] p-4 m-4 md:mx-8 md:my-[30px]">
       {children}
     </section>
     <Footer />
