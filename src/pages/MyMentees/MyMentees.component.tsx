@@ -16,9 +16,9 @@ const MyMentees: React.FC = () => {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
-      <div className="w-full md:w-1/5 p-4 border-r border-sky-100 bg-blue-50">
+      <div className="hidden md:w-1/5 p-4 border-r border-sky-100 bg-blue-50 md:block">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold">Mentee Applications</h2>
+          <h2 className="text-2xl font-semibold">Mentee Applications</h2>
         </div>
         <h3 className="text-sm font-bold mb-4">
           {menteeApplications?.length} Application(s)
@@ -33,7 +33,7 @@ const MyMentees: React.FC = () => {
               }}
             >
               <div>
-                <p className="font-bold mb-1">
+                <p className="font-semibold mb-1">
                   {applicant.application.firstName}{' '}
                   {applicant.application.lastName}
                 </p>
@@ -55,10 +55,10 @@ const MyMentees: React.FC = () => {
       </div>
 
       <div className="w-full md:w-4/5 p-4 bg-gray-50">
-        <div className="flex items-center mb-10 pb-7 justify-between">
+        <div className="flex items-center mb-5 md:mb-10 md:pb-7 justify-between">
           <Link to={'/mentor/dashboard'} className="flex items-center">
-            <span className="text-3xl">&#8592;</span>
-            <button className="text-xl font-semibold mr-2  bg-transparent px-3 py-1 rounded-md mt-1">
+            <span className="text-xl md:text-3xl">&#8592;</span>
+            <button className="text-md md:text-xl font-semibold mr-2  bg-transparent px-3 py-1 rounded-md mt-1">
               Back
             </button>
           </Link>
@@ -66,7 +66,7 @@ const MyMentees: React.FC = () => {
         {selectedMentee != null ? (
           <MenteeProfile mentee={selectedMentee} />
         ) : (
-          <div className="text-lg font-bold text-gray-600">
+          <div className="text-lg font-semibold text-gray-600">
             Select an application to view details.
           </div>
         )}

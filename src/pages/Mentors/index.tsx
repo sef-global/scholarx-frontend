@@ -58,7 +58,7 @@ const Mentors = () => {
       {!isLoading && (
         <div>
           <div className="mb-4 w-full flex items-center justify-between">
-            <div className="text-2xl font-semibold">Mentors</div>
+            <p className="text-2xl font-semibold">Mentors</p>
           </div>
           <hr className="mb-8" />
           <div className="mb-4 w-full flex items-center justify-between">

@@ -65,7 +65,7 @@ const Navbar: React.FC = () => {
   return (
     <>
       <nav className="bg-white border-gray-200">
-        <div className="flex flex-wrap items-center justify-between mx-8 p-4">
+        <div className="flex flex-wrap items-center justify-between md:mx-8 p-4">
           <Link to="/">
             <img
               src="/scholarx-logo.png"
