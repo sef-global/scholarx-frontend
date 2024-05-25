@@ -1,8 +1,12 @@
 import { ProfileTypes } from '../enums';
-import type { Mentee } from '../types';
+import type { Mentee, Mentor } from '../types';
 import { mentors } from './mentors';
 
-export const mentees: Mentee[] = [
+type MenteeWithoutProfilePic = Omit<Mentee, 'application'> & {
+  application: Omit<Mentee['application'], 'profilePic'>;
+};
+
+export const mentees: MenteeWithoutProfilePic[] = [
   {
     uuid: 'a12aa550-48ba-4ec0-96bd-aca9b54c7e2f',
     state: 'pending',
@@ -23,7 +27,7 @@ export const mentees: Mentee[] = [
       company: 'Tech Corp',
       position: 'Intern',
     },
-    mentor: mentors[0],
+    mentor: mentors[0] as Mentor,
     profile: {
       created_at: new Date('2022-01-05T00:00:00.000Z'),
       updated_at: new Date('2022-01-10T00:00:00.000Z'),
@@ -61,7 +65,7 @@ export const mentees: Mentee[] = [
       company: 'Marketing Inc',
       position: 'Assistant',
     },
-    mentor: mentors[1],
+    mentor: mentors[1] as Mentor,
     profile: {
       created_at: new Date('2022-02-05T00:00:00.000Z'),
       updated_at: new Date('2022-02-10T00:00:00.000Z'),
@@ -99,7 +103,7 @@ export const mentees: Mentee[] = [
       company: 'Creative Agency',
       position: 'Designer',
     },
-    mentor: mentors[0],
+    mentor: mentors[0] as Mentor,
     profile: {
       created_at: new Date('2022-03-05T00:00:00.000Z'),
       updated_at: new Date('2022-03-10T00:00:00.000Z'),
