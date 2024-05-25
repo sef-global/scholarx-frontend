@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { API_URL } from '../../constants';
 import closeIcon from '../../assets/svg/closeIcon.svg';
-import styles from './RegisterModal.module.css';
 import GoogleLoginButton from '../OAuth/Google';
 
 interface RegisterModalProps {
