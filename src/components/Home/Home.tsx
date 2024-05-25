@@ -65,7 +65,7 @@ const Home: React.FC = () => {
           <div className="flex justify-center items-center">
             <a href="#">
               <button className="flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white py-1 px-16 rounded h-9 font-bold">
-                ScholarX Success Stories
+                Alumni
               </button>
             </a>
           </div>
@@ -83,7 +83,7 @@ const Home: React.FC = () => {
           <div className="flex justify-center items-center">
             <a href="#">
               <button className="flex justify-center items-center mr-5 mb-5 bg-blue-500 hover:bg-blue-700 text-white py-1 px-16 rounded h-9 font-bold">
-                ScholarX Archive
+                Archive
               </button>
             </a>
           </div>

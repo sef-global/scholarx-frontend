@@ -39,7 +39,7 @@ const EditProfileForm: React.FC = () => {
 
   return (
     <div className="flex flex-wrap">
-      <div className="w-full md:w-2/3 p-4">
+      <div className="w-full md:w-2/3 p-4 order-2 md:order-1">
         {isUserLoading ? (
           <div className="animate-pulse space-y-4">
             <div className="h-6 bg-gray-300 rounded"></div>
@@ -110,10 +110,10 @@ const EditProfileForm: React.FC = () => {
           </form>
         )}
       </div>
-      <div className="w-full md:w-1/3 p-4 text-center">
+      <div className="w-full md:w-1/3 p-4 text-center order-1 md:order-2">
         {isUserLoading ? (
           <div className="animate-pulse">
-            <div className="w-24 h-24 bg-gray-300 rounded-full mx-auto"></div>
+            <div className="w-32 h-32 bg-gray-300 rounded-full mx-auto"></div>
             <div className="h-6 bg-gray-300 rounded mt-4"></div>
           </div>
         ) : (

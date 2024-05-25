@@ -6,6 +6,14 @@ export const MenteeApplicationSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
   contactNo: z.string().min(1, { message: 'Contact number cannot be empty' }),
   company: z.string().min(1, { message: 'Company cannot be empty' }).optional(),
+  profilePic: z
+    .custom<File>()
+    .refine((files) => files !== undefined, {
+      message: 'The profile picture is required.',
+    })
+    .refine((file) => file && file?.size <= 5 * 1024 * 1024, {
+      message: 'The profile picture must be a maximum of 5MB.',
+    }),
   position: z
     .string()
     .min(1, { message: 'Position cannot be empty' })

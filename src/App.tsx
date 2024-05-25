@@ -6,13 +6,13 @@ import MainLayout from './components/Layout/MainLayout';
 import { UserProvider } from './contexts/UserContext';
 import MenteeApplications from './components/MenteeApplicationsView/MenteeApplications.component.tsx';
 import Dashboard from './pages/Dashboard/Dashboard.tsx';
-import Mentors from './pages/Mentors/index.tsx';
-import MenteeApplicationForm from './pages/MenteeApplication/index.tsx';
+import Mentors from './pages/Mentors';
+import MenteeRegistration from './pages/MenteeRegistration';
 import MentorProfile from './pages/MentorProfile/MentorProfile.component.tsx';
 import MentorRegistrationPage from './pages/MentorRegistration/MentorRegistration.component.tsx';
 import MyMentees from './pages/MyMentees/MyMentees.component.tsx';
 import EditProfileForm from './pages/EditProfileForm/EditProfileForm.component.tsx';
-import MenteeDashboard from './pages/MenteeDashboard/index.tsx';
+import MenteeDashboard from './pages/MenteeDashboard';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const queryClient = new QueryClient();
@@ -31,7 +31,7 @@ const App: React.FC = () => {
               />
               <Route
                 path="/mentee-application/:mentorId"
-                element={<MenteeApplicationForm />}
+                element={<MenteeRegistration />}
               />
               <Route path="/admin/dashboard/*" element={<Dashboard />} />
               <Route
