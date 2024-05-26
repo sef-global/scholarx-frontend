@@ -3,6 +3,7 @@ import { type Mentee } from '../../types';
 import { ApplicationStatus } from '../../enums';
 import { useMentees } from '../../hooks/useMentees';
 import UserIcon from '../../assets/svg/Icons/UserIcon';
+import { getStateColor } from '../../utils';
 
 interface MenteeProfileProps {
   mentee: Mentee;
@@ -14,19 +15,6 @@ const MenteeProfile: React.FC<MenteeProfileProps> = ({ mentee }) => {
   const handleStateUpdate = (state: ApplicationStatus) => {
     if (mentee != null) {
       updateMenteeStatus({ menteeId: mentee.uuid, state });
-    }
-  };
-
-  const getStateColor = (state: string | undefined) => {
-    switch (state) {
-      case 'pending':
-        return 'bg-blue-100 text-blue-700';
-      case 'approved':
-        return 'bg-green-100 text-green-700';
-      case 'rejected':
-        return 'bg-red-100 text-red-700';
-      default:
-        return 'bg-gray-100 text-gray-700';
     }
   };
 
