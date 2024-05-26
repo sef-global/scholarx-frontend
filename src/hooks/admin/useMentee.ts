@@ -13,7 +13,8 @@ const useMentee = (menteeId: string | undefined) => {
     queryFn: async () => {
       if (menteeId != null) {
         const { data } = await axios.get(
-          `${API_URL}/admin/mentees/${menteeId}`
+          `${API_URL}/admin/mentees/${menteeId}`,
+          { withCredentials: true }
         );
         return data.mentee as Mentee;
       }
@@ -27,6 +28,9 @@ const useMentee = (menteeId: string | undefined) => {
           `${API_URL}/admin/mentees/${menteeId}/state`,
           {
             state: newState,
+          },
+          {
+            withCredentials: true,
           }
         );
         return data;
