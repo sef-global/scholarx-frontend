@@ -24,27 +24,31 @@ const MentorProfile: React.FC = () => {
           )}
         </div>
         <div className="w-3/5 md:w-full">
-          <h1 className="text-lg md:text-3xl font-semibold mb-2">
-            {mentor?.application.firstName} {mentor?.application.lastName}
-          </h1>
           <div className="flex flex-row place-content-between w-full">
-            <p className="text-sm ">
-              {mentor?.application.position},{' '}
-              <span className="text-gray-500">
-                {mentor?.application.institution}
-              </span>
-            </p>
-            <Link
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-              to={`/mentee-application/${mentorId as string}`}
-            >
-              Apply
-            </Link>
+            <div>
+              <h1 className="text-lg md:text-3xl font-semibold mb-2">
+                {mentor?.application.firstName} {mentor?.application.lastName}
+              </h1>
+              <p className="text-sm ">
+                {mentor?.application.position},{' '}
+                <span className="text-gray-500">
+                  {mentor?.application.institution}
+                </span>
+              </p>
+            </div>
+            <div className="self-center">
+              <Link
+                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+                to={`/mentee-application/${mentorId as string}`}
+              >
+                Apply
+              </Link>
+            </div>
           </div>
-          <hr className="w-full" />
+          <hr className="w-full mt-5" />
         </div>
       </div>
-      <div className="md:flex flex-row h-1/3 py-9">
+      <div className="md:flex flex-row h-1/3 py-4 md:py-9">
         <div className="grid md:grid-cols-4 md:gap-9 md:w-2/3">
           <div>
             <h2 className="text-lg font-medium  mt-5">Category</h2>
@@ -75,15 +79,15 @@ const MentorProfile: React.FC = () => {
           </a>
         </div>
       </div>
-      <div className="pb-9">
+      <div className="pb-4">
         <h2 className="text-lg font-medium ">Mentoring Philosophy</h2>
         <p className="font-light">{mentor?.application.mentoringPhilosophy}</p>
       </div>
-      <div className="pb-9">
+      <div className="pb-4">
         <h2 className="text-lg font-medium ">Mentee Expectations</h2>
         <p className="font-light">{mentor?.application.menteeExpectations}</p>
       </div>
-      <div className="pb-9">
+      <div className="pb-4">
         <h2 className="text-lg font-medium ">Bio</h2>
         <p className="font-light">{mentor?.application.bio}</p>
       </div>

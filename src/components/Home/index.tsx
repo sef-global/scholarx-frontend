@@ -46,7 +46,7 @@ const Home: React.FC = () => {
 
       <section className="section py-12">
         <div className="text-center">
-          <div className="text-3xl font-bold text-center mb-4 text-[#32325D]">
+          <div className="text-xl md:text-3xl font-bold text-center mb-4 text-[#32325D]">
             Our mentors are from{' '}
             <span className="text-xl align-text-top">*</span>
           </div>
@@ -144,6 +144,11 @@ const Home: React.FC = () => {
           <FAQSection faqs={menteeFAQs} />
         </div>
       </section>
+
+      <p className="text-xs mt-12 mx-3 text-center">
+        *Our mentors engage in mentoring voluntarily in their leisure time and
+        we don&apos;t have a direct affiliation with the mentioned organisations
+      </p>
     </>
   );
 };

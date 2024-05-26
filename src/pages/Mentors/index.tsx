@@ -47,7 +47,7 @@ const Mentors = () => {
           </div>
           <hr className="mb-8" />
           <div className="mb-4 w-full flex items-center justify-between">
-            <div className="flex space-x-2 items-center text-sm">
+            <div className="flex flex-wrap gap-3 items-center text-sm">
               <button
                 onClick={() => {
                   handleCategoryChange(null);
@@ -58,7 +58,7 @@ const Mentors = () => {
               >
                 All
               </button>
-              {categories?.map((category: Category) => (
+              {categories.map((category: Category) => (
                 <button
                   key={category.uuid}
                   onClick={() => {

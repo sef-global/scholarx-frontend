@@ -139,7 +139,7 @@ const Navbar: React.FC = () => {
               <div
                 className={`z-50 ${
                   isDropdownOpen ? 'block' : 'hidden'
-                } my-4 text-base list-none top-5 right-5 bg-white divide-y absolute divide-gray-100 rounded-lg shadow`}
+                } my-4 text-base list-none top-5 md:right-5 right-0 bg-white divide-y absolute divide-gray-100 rounded-lg shadow`}
               >
                 <div className="px-4 py-3">
                   <span className="block text-sm text-gray-900">
