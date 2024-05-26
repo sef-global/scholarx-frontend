@@ -28,6 +28,9 @@ const useMentee = (menteeId: string | undefined) => {
           `${API_URL}/admin/mentees/${menteeId}/state`,
           {
             state: newState,
+          },
+          {
+            withCredentials: true,
           }
         );
         return data;
