@@ -1,5 +1,7 @@
 import React from 'react';
 import { type Mentee } from '../../types';
+import { getStateColor } from '../../utils';
+import UserIcon from '../../assets/svg/Icons/UserIcon';
 
 interface MenteeApplicationProps {
   isLoading: boolean;
@@ -16,19 +18,6 @@ const MenteeApplication: React.FC<MenteeApplicationProps> = ({
     onStateChange(newState);
   };
 
-  const getStateColor = (state: string | undefined) => {
-    switch (state) {
-      case 'pending':
-        return 'bg-blue-100 text-blue-700';
-      case 'approved':
-        return 'bg-green-100 text-green-700';
-      case 'rejected':
-        return 'bg-red-100 text-red-700';
-      default:
-        return 'bg-gray-100 text-gray-700';
-    }
-  };
-
   return (
     <>
       {isLoading ? (
@@ -36,11 +25,17 @@ const MenteeApplication: React.FC<MenteeApplicationProps> = ({
       ) : (
         <div className="w-full space-y-8">
           <div className="flex items-center">
-            <img
-              src={mentee?.profile.image_url}
-              alt=""
-              className="w-28 rounded-full object-fill"
-            />
+            {mentee?.profile.image_url !== '' ? (
+              <img
+                src={mentee?.profile.image_url}
+                alt="Mentee Avatar"
+                className="w-24 h-24 rounded-full mx-auto mb-4"
+              />
+            ) : (
+              <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center">
+                <UserIcon />
+              </div>
+            )}
             <div className="ml-5">
               <div className="flex items-center space-x-3">
                 <span className="text-2xl font-semibold">
@@ -138,7 +133,7 @@ const MenteeApplication: React.FC<MenteeApplicationProps> = ({
                 <div className="rounded-xl border-2 mt-2 border-gray-100 bg-white flex items-start gap-4 p-4">
                   <img
                     src={mentee?.mentor.profile.image_url}
-                    className="w-14 rounded-full object-cover"
+                    className="w-14 h-14 rounded-full object-cover"
                     alt=""
                   />
                   <div>

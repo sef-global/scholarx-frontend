@@ -105,13 +105,13 @@ const Emails: React.FC = () => {
         {view === 'sent' ? (
           <>
             <div className="flex flex-col space-y-2">
-              <div className="p-6 rounded-lg  bg-gray-100 shadow-lg">
+              <div className="p-6 rounded-lg  bg-gray-100">
                 <div className="flex items-center justify-between">
                   <h2 className="text-xl font-bold mb-2 text-blue-500">
                     Write Email here
                   </h2>
                 </div>
-                <div className="bg-white p-4 rounded shadow">
+                <div className="bg-white p-4 rounded">
                   <form onSubmit={handleFormSubmit}>
                     <div className="space-y-4">
                       <label className="block">
