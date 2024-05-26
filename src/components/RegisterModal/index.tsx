@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { API_URL } from '../../constants';
 import closeIcon from '../../assets/svg/closeIcon.svg';
+import GoogleLoginButton from '../OAuth/Google';
 
 interface RegisterModalProps {
   handleClose: () => void;
@@ -150,6 +151,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
                 >
                   Register
                 </button>
+                <GoogleLoginButton />
                 <div className="text-sm font-thin text-center text-gray-900">
                   Already have an account?
                   <p

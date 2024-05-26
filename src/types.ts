@@ -51,3 +51,32 @@ export interface Profile {
   type: ProfileTypes;
   uuid: string;
 }
+
+export interface Email {
+  recipients: string;
+  subject: string;
+  status: string;
+  opened: boolean;
+  sentTime: string;
+  profile: Profile;
+}
+
+export interface EmailData {
+  sender: string;
+  recipients: string[];
+  subject: string;
+  body: string;
+}
+
+export interface SendEmailsResponse {
+  status: string;
+  message: string;
+}
+
+export type SendEmailsFunction = (
+  emailData: EmailData
+) => Promise<SendEmailsResponse>;
+
+export interface MutationData {
+  message: string;
+}
