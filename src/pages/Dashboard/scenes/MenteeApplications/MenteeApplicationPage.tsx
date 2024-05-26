@@ -1,12 +1,12 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import MentorApplication from '../../../../components/MentorApplication/MentorApplication.component';
-import useMentor from '../../../../hooks/admin/useMentor';
+import MenteeApplication from '../../../../components/MenteeApplication/MenteeApplication.component';
 import ChevronRightIcon from '../../../../assets/svg/Icons/ChevronRightIcon';
+import useMentee from '../../../../hooks/admin/useMentee';
 
-const MentorApplicationPage = () => {
-  const { mentorId } = useParams();
-  const { isLoading, data: mentor, changeState } = useMentor(mentorId);
+const MenteeApplicationPage = () => {
+  const { menteeId } = useParams();
+  const { isLoading, data: mentee, changeState } = useMentee(menteeId);
 
   return (
     <div className="p-8 max-w-4xl">
@@ -14,7 +14,7 @@ const MentorApplicationPage = () => {
         <ol className="flex items-center gap-1 text-sm text-gray-600">
           <li>
             <Link
-              to="/admin/dashboard"
+              to="/dashboard"
               className="block transition hover:text-gray-700"
             >
               Dashboard
@@ -25,10 +25,10 @@ const MentorApplicationPage = () => {
           </li>
           <li>
             <Link
-              to="/dashboard/mentor-applications"
+              to="/dashboard/mentee-applications"
               className="block transition hover:text-gray-700"
             >
-              Manage Mentor Applications
+              Manage Mentee Applications
             </Link>
           </li>
           <li>
@@ -36,15 +36,15 @@ const MentorApplicationPage = () => {
           </li>
           <li>
             <span className="block transition">
-              {mentor?.application.firstName} {mentor?.application.lastName}
+              {mentee?.application.firstName} {mentee?.application.lastName}
             </span>
           </li>
         </ol>
       </nav>
       <div className="mt-10 flex justify-center">
-        <MentorApplication
+        <MenteeApplication
           isLoading={isLoading}
-          mentor={mentor}
+          mentee={mentee}
           onStateChange={changeState}
         />
       </div>
@@ -52,4 +52,4 @@ const MentorApplicationPage = () => {
   );
 };
 
-export default MentorApplicationPage;
+export default MenteeApplicationPage;

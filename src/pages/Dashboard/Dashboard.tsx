@@ -7,6 +7,7 @@ import ManageUsers from './scenes/ManageUsers/ManageUsers';
 import Emails from './scenes/Emails/Emails';
 import MentorApplications from './scenes/MentorApplications/MentorApplications';
 import MentorApplicationPage from './scenes/MentorApplications/MentorApplicationPage';
+import MenteeApplicationPage from './scenes/MenteeApplications/MenteeApplicationPage.tsx';
 
 const Dashboard: React.FC = () => {
   return (
@@ -73,6 +74,10 @@ const Dashboard: React.FC = () => {
             element={<MentorApplicationPage />}
           />
           <Route path="/mentee-applications" element={<MenteeApplications />} />
+          <Route
+            path="/mentee-applications/:menteeId"
+            element={<MenteeApplicationPage />}
+          />
           <Route
             path="/ongoing-mentorship-programs"
             element={<OngoingMentorshipPrograms />}
