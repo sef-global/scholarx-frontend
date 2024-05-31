@@ -3,6 +3,7 @@ import axios from 'axios';
 import { API_URL } from '../../constants';
 import closeIcon from '../../assets/svg/closeIcon.svg';
 import GoogleLoginButton from '../OAuth/Google';
+import useProfile from '../../hooks/useProfile';
 
 interface RegisterModalProps {
   handleClose: () => void;
@@ -18,6 +19,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const { refetch } = useProfile();
 
   const handleRegister = (e: React.FormEvent): void => {
     e.preventDefault();
@@ -36,7 +38,8 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
           withCredentials: true,
         }
       )
-      .then(() => {
+      .then(async () => {
+        await refetch();
         handleClose();
       })
       .catch((error) => {

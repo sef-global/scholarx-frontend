@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 import useMyMentees from '../../hooks/useMyMentees';
 import { ApplicationStatus } from '../../enums';
-import MenteeCard from '../MenteeCard';
 import useMentor from '../../hooks/useMentor';
 import { UserContext, type UserContextType } from '../../contexts/UserContext';
+import MenteeCard from '../../components/MenteeCard';
 
 const MenteeApplications: React.FC = () => {
   const { mentor } = useContext(UserContext) as UserContextType;

@@ -13,9 +13,9 @@ const MentorApplications: React.FC = () => {
   const queryClient = useQueryClient();
   const { isLoading, data: mentors, updateStatus } = useMentors(categoryFilter);
 
-  const handleStatusUpdate = async (mentorId: string, newStatus: string) => {
+  const handleStatusUpdate = async (mentorId: string, state: string) => {
     try {
-      await updateStatus({ mentorId, newStatus });
+      await updateStatus({ mentorId, state });
     } catch (error) {
       console.error('Error updating mentor status:', error);
     }
