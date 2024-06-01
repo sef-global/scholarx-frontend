@@ -18,12 +18,19 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { refetch } = useProfile();
 
   const handleRegister = (e: React.FormEvent): void => {
     e.preventDefault();
     setError(null);
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
 
     axios
       .post(
@@ -124,9 +131,9 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
                     required
                   />
                 </div>
-                <div>
+                <div className="relative">
                   <input
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     name="password"
                     id="password"
                     placeholder="Password"
@@ -134,6 +141,29 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
                     value={password}
                     onChange={(e) => {
                       setPassword(e.target.value);
+                    }}
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 px-3 py-1 text-gray-700 hover:text-gray-900 focus:outline-none"
+                    onClick={() => {
+                      setShowPassword(!showPassword);
+                    }}
+                  >
+                    {showPassword ? 'Hide' : 'Show'}
+                  </button>
+                </div>
+                <div className="relative">
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    name="confirmPassword"
+                    id="confirmPassword"
+                    placeholder="Confirm Password"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    value={confirmPassword}
+                    onChange={(e) => {
+                      setConfirmPassword(e.target.value);
                     }}
                     required
                   />

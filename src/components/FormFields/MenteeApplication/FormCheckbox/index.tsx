@@ -16,9 +16,9 @@ const FormCheckbox: React.FC<FormCheckboxProps> = ({
   label,
 }) => {
   return (
-    <div className="mb-4 flex justify-between">
-      <label className="block text-sm font-medium text-gray-600">{label}</label>
+    <div className="mb-4 flex gap-4">
       <input type="checkbox" {...register(name)} />
+      <label className="block text-sm font-medium text-gray-600">{label}</label>
       {error != null && <span className="text-red-500">{error.message}</span>}
     </div>
   );

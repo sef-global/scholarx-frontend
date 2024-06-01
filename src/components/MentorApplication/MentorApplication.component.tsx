@@ -2,18 +2,32 @@ import React from 'react';
 import { getStateColor } from '../../utils';
 import { useParams } from 'react-router-dom';
 import useMentor from '../../hooks/admin/useMentor';
+import Toast from '../Toast';
 
 const MentorApplication: React.FC = () => {
   const { mentorId } = useParams();
-  const { isFetching, data: mentor, changeState } = useMentor(mentorId);
+  const {
+    isFetching,
+    data: mentor,
+    changeState,
+    isSuccess,
+    isPending,
+    isError,
+  } = useMentor(mentorId);
   const handleStateChange = (newState: string) => {
     changeState(newState);
   };
 
   return (
     <>
+      {isSuccess && (
+        <Toast message={'Status updated successfully'} type={'success'} />
+      )}
+      {isError && (
+        <Toast message={'Oops something went wrong'} type={'error'} />
+      )}
       {isFetching ? (
-        <div>Skeleton</div>
+        <div>Loading</div>
       ) : (
         <div className="w-full space-y-8">
           <div className="flex items-center">
@@ -47,7 +61,7 @@ const MentorApplication: React.FC = () => {
                   handleStateChange('approved');
                 }}
               >
-                Approve
+                {isPending ? 'Loading...' : 'Approve'}
               </button>
               <button
                 className="inline-block rounded border px-10 py-2 my-2 mx-2 text-sm font-medium text-red-500 border-red-500 focus:outline-none focus:ring"
@@ -55,7 +69,7 @@ const MentorApplication: React.FC = () => {
                   handleStateChange('rejected');
                 }}
               >
-                Reject
+                {isPending ? 'Loading...' : 'Reject'}
               </button>
             </div>
           </div>

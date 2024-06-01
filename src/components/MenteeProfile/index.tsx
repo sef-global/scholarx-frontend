@@ -148,7 +148,7 @@ const MenteeProfile: React.FC = () => {
             </div>
           </div>
           <div className="col-span-2 pl-8 border-l">
-            <div className="hidden md:grid grid-cols-2 gap-1">
+            <div className="hidden md:grid gap-1">
               <a
                 href={mentee?.application.email}
                 target="_blank"

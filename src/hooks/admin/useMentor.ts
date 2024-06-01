@@ -21,7 +21,12 @@ const useMentor = (mentorId: string | undefined) => {
     },
   });
 
-  const { mutate: changeState } = useMutation({
+  const {
+    mutate: changeState,
+    isSuccess,
+    isError,
+    isPending,
+  } = useMutation({
     mutationFn: async (newState: string) => {
       if (mentorId != null) {
         const { data } = await axios.put(
@@ -44,6 +49,9 @@ const useMentor = (mentorId: string | undefined) => {
     error,
     data,
     changeState,
+    isSuccess,
+    isError,
+    isPending,
   };
 };
 
