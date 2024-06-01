@@ -6,7 +6,7 @@ import useMentee from '../../../../hooks/admin/useMentee';
 
 const MenteeApplicationPage = () => {
   const { menteeId } = useParams();
-  const { isLoading, data: mentee, changeState } = useMentee(menteeId);
+  const { data: mentee } = useMentee(menteeId);
 
   return (
     <div className="p-8 max-w-4xl">
@@ -42,11 +42,7 @@ const MenteeApplicationPage = () => {
         </ol>
       </nav>
       <div className="mt-10 flex justify-center">
-        <MenteeApplication
-          isLoading={isLoading}
-          mentee={mentee}
-          onStateChange={changeState}
-        />
+        <MenteeApplication />
       </div>
     </div>
   );

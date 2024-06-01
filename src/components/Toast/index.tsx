@@ -32,9 +32,7 @@ const Toast = ({
           {type === 'success' ? <SuccessIcon /> : <ErrorIcon />}
         </div>
         <div className="ms-3">
-          <p className="text-sm text-gray-700 dark:text-neutral-400">
-            {message}
-          </p>
+          <p className="text-sm text-gray-700">{message}</p>
         </div>
       </div>
     </div>

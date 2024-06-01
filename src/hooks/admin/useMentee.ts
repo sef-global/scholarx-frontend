@@ -6,7 +6,7 @@ import { type Mentee } from '../../types';
 const useMentee = (menteeId: string | undefined) => {
   const queryClient = useQueryClient();
 
-  const { isLoading, error, data } = useQuery({
+  const { isFetching, error, data } = useQuery({
     queryKey: ['mentee', menteeId],
     initialData: null,
     enabled: !(menteeId == null),
@@ -21,7 +21,12 @@ const useMentee = (menteeId: string | undefined) => {
     },
   });
 
-  const { mutate: changeState } = useMutation({
+  const {
+    mutate: changeState,
+    isSuccess,
+    isError,
+    isPending,
+  } = useMutation({
     mutationFn: async (newState: string) => {
       if (menteeId != null) {
         const { data } = await axios.put(
@@ -42,10 +47,13 @@ const useMentee = (menteeId: string | undefined) => {
   });
 
   return {
-    isLoading,
+    isFetching,
     error,
     data,
     changeState,
+    isSuccess,
+    isError,
+    isPending,
   };
 };
 

@@ -55,7 +55,6 @@ const MenteeProfile: React.FC = () => {
               </div>
               {mentee?.application.isUndergrad ? (
                 <span className="text-xl font-light">
-                  {mentee?.application.yearOfStudy} year,{' '}
                   {mentee?.application.university}
                 </span>
               ) : (
