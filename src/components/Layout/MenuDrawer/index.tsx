@@ -49,8 +49,9 @@ const MenuDrawer: React.FC<MenuDrawerProps> = ({
             Join Us
           </Link>
           <button
-            className="mr-5 mb-5 w-40 h-9  text-black bg-gray-200 py-1 px-4 rounded"
+            type="button"
             onClick={handleMentorRegistration}
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-m px-5 py-2.5 me-2 mb-2"
           >
             Become a Mentor
           </button>
