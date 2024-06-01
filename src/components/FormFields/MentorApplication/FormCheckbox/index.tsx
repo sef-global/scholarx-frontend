@@ -16,17 +16,6 @@ const FormCheckbox: React.FC<FormCheckboxProps> = ({
   label,
 }) => {
   return (
-    <div className="mb-4 flex-col items-start">
-      <div className="flex items-center">
-        <input
-          type="checkbox"
-          {...register(name)}
-          className="mr-2 items-center h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-        />
-        <label className="block text-sm font-medium text-gray-600">
-          {label}
-        </label>
-      </div>
     <div className="mb-4 flex gap-4">
       <input type="checkbox" {...register(name)} />
       <label className="block text-sm font-medium text-gray-600">{label}</label>
