@@ -5,11 +5,12 @@ import UserIcon from '../../assets/svg/Icons/UserIcon';
 import { getStateColor } from '../../utils';
 import { useParams } from 'react-router-dom';
 import useMentee from '../../hooks/useMentee';
+import Toast from '../Toast';
 
 const MenteeProfile: React.FC = () => {
   const { menteeId } = useParams();
   const { data: mentee } = useMentee(menteeId);
-  const { isLoading, updateMenteeStatus } = useMentees();
+  const { updateMenteeStatus, isSuccess, isPending, isError } = useMentees();
 
   const handleStateUpdate = (state: ApplicationStatus) => {
     if (mentee != null) {
@@ -19,7 +20,13 @@ const MenteeProfile: React.FC = () => {
 
   return (
     <>
-      <div className="w-full space-y-8">
+      {isSuccess && (
+        <Toast message={'Status updated successfully'} type={'success'} />
+      )}
+      {isError && (
+        <Toast message={'Oops something went wrong'} type={'error'} />
+      )}
+      <div className="w-full space-y-5">
         <div className="md:flex items-center">
           <div className="flex">
             {mentee?.profile.image_url !== '' ? (
@@ -65,7 +72,7 @@ const MenteeProfile: React.FC = () => {
                 handleStateUpdate(ApplicationStatus.APPROVED);
               }}
             >
-              {isLoading ? 'Loading...' : 'Approve'}
+              {isPending ? 'Loading...' : 'Approve'}
             </button>
             <button
               className="inline-block rounded border px-10 py-2 my-2 mx-2 text-sm font-medium text-red-500 border-red-500 focus:outline-none focus:ring"
@@ -73,11 +80,11 @@ const MenteeProfile: React.FC = () => {
                 handleStateUpdate(ApplicationStatus.REJECTED);
               }}
             >
-              Reject
+              {isPending ? 'Loading...' : 'Reject'}
             </button>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-1 md:hidden">
+        <div className="md:hidden">
           <a
             href={mentee?.application.email}
             target="_blank"
@@ -86,6 +93,7 @@ const MenteeProfile: React.FC = () => {
           >
             {mentee?.application.email}
           </a>
+          <br />
           <a
             href={mentee?.application.cv}
             target="_blank"

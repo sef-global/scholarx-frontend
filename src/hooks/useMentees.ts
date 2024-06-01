@@ -25,7 +25,13 @@ export const useMentees = () => {
     queryFn: fetchMentees,
   });
 
-  const { mutate: updateMenteeStatus } = useMutation({
+  const {
+    mutate: updateMenteeStatus,
+    isSuccess,
+    isPending,
+    isError,
+    error: updateError,
+  } = useMutation({
     mutationFn: async ({
       menteeId,
       state,
@@ -48,6 +54,10 @@ export const useMentees = () => {
 
   return {
     isLoading,
+    isSuccess,
+    updateError,
+    isError,
+    isPending,
     updateMenteeStatus,
     error,
     data,
