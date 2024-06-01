@@ -1,26 +1,33 @@
 import React from 'react';
-import { type Mentor } from '../../types';
 import { getStateColor } from '../../utils';
+import { useParams } from 'react-router-dom';
+import useMentor from '../../hooks/admin/useMentor';
+import Toast from '../Toast';
 
-interface MentorApplicationProps {
-  isLoading: boolean;
-  mentor: Mentor | null | undefined;
-  onStateChange: (newState: string) => void;
-}
-
-const MentorApplication: React.FC<MentorApplicationProps> = ({
-  isLoading,
-  mentor,
-  onStateChange,
-}) => {
+const MentorApplication: React.FC = () => {
+  const { mentorId } = useParams();
+  const {
+    isFetching,
+    data: mentor,
+    changeState,
+    isSuccess,
+    isPending,
+    isError,
+  } = useMentor(mentorId);
   const handleStateChange = (newState: string) => {
-    onStateChange(newState);
+    changeState(newState);
   };
 
   return (
     <>
-      {isLoading ? (
-        <div>Skeleton</div>
+      {isSuccess && (
+        <Toast message={'Status updated successfully'} type={'success'} />
+      )}
+      {isError && (
+        <Toast message={'Oops something went wrong'} type={'error'} />
+      )}
+      {isFetching ? (
+        <div>Loading</div>
       ) : (
         <div className="w-full space-y-8">
           <div className="flex items-center">
@@ -54,7 +61,7 @@ const MentorApplication: React.FC<MentorApplicationProps> = ({
                   handleStateChange('approved');
                 }}
               >
-                Approve
+                {isPending ? 'Loading...' : 'Approve'}
               </button>
               <button
                 className="inline-block rounded border px-10 py-2 my-2 mx-2 text-sm font-medium text-red-500 border-red-500 focus:outline-none focus:ring"
@@ -62,13 +69,17 @@ const MentorApplication: React.FC<MentorApplicationProps> = ({
                   handleStateChange('rejected');
                 }}
               >
-                Reject
+                {isPending ? 'Loading...' : 'Reject'}
               </button>
             </div>
           </div>
-          <div className="grid grid-cols-5 gap-12">
+          <div className="grid grid-cols-4 gap-10">
             <div className="col-span-3">
               <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <h3 className="text-base font-bold">No of Mentees</h3>
+                  <p>{mentor?.application.noOfMentees}</p>
+                </div>
                 <div>
                   <h3 className="text-base font-bold">Category</h3>
                   <p>{mentor?.category.category}</p>
@@ -83,9 +94,11 @@ const MentorApplication: React.FC<MentorApplicationProps> = ({
                 </div>
                 <div>
                   <h3 className="text-base font-bold">Past Mentor</h3>
-                  <p>
-                    {mentor?.application.isPastMentor === true ? 'Yes' : 'No'}
-                  </p>
+                  <p>{mentor?.application.isPastMentor ? 'Yes' : 'No'}</p>
+                </div>
+                <div>
+                  <h3 className="text-base font-bold">Mentored Year</h3>
+                  <p>{mentor?.application.mentoredYear}</p>
                 </div>
               </div>
             </div>

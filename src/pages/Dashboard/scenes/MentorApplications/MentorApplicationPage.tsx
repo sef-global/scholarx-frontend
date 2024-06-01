@@ -6,7 +6,7 @@ import ChevronRightIcon from '../../../../assets/svg/Icons/ChevronRightIcon';
 
 const MentorApplicationPage = () => {
   const { mentorId } = useParams();
-  const { isLoading, data: mentor, changeState } = useMentor(mentorId);
+  const { data: mentor } = useMentor(mentorId);
 
   return (
     <div className="p-8 max-w-4xl">
@@ -42,11 +42,7 @@ const MentorApplicationPage = () => {
         </ol>
       </nav>
       <div className="mt-10 flex justify-center">
-        <MentorApplication
-          isLoading={isLoading}
-          mentor={mentor}
-          onStateChange={changeState}
-        />
+        <MentorApplication />
       </div>
     </div>
   );

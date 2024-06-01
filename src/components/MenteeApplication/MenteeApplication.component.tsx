@@ -1,27 +1,34 @@
 import React from 'react';
-import { type Mentee } from '../../types';
 import { getStateColor } from '../../utils';
 import UserIcon from '../../assets/svg/Icons/UserIcon';
+import { useParams } from 'react-router-dom';
+import useMentee from '../../hooks/admin/useMentee';
+import Toast from '../Toast';
 
-interface MenteeApplicationProps {
-  isLoading: boolean;
-  mentee: Mentee | null | undefined;
-  onStateChange: (newState: string) => void;
-}
-
-const MenteeApplication: React.FC<MenteeApplicationProps> = ({
-  isLoading,
-  mentee,
-  onStateChange,
-}) => {
+const MenteeApplication: React.FC = () => {
+  const { menteeId } = useParams();
+  const {
+    isFetching,
+    data: mentee,
+    changeState,
+    isSuccess,
+    isError,
+    isPending,
+  } = useMentee(menteeId);
   const handleStateChange = (newState: string) => {
-    onStateChange(newState);
+    changeState(newState);
   };
 
   return (
     <>
-      {isLoading ? (
-        <div>Skeleton</div>
+      {isSuccess && (
+        <Toast message={'Status updated successfully'} type={'success'} />
+      )}
+      {isError && (
+        <Toast message={'Oops something went wrong'} type={'error'} />
+      )}
+      {isFetching ? (
+        <div>Loading</div>
       ) : (
         <div className="w-full space-y-8">
           <div className="flex items-center">
@@ -29,10 +36,10 @@ const MenteeApplication: React.FC<MenteeApplicationProps> = ({
               <img
                 src={mentee?.profile.image_url}
                 alt="Mentee Avatar"
-                className="w-24 h-24 rounded-full mx-auto mb-4"
+                className="w-24 h-24 rounded-full mb-4"
               />
             ) : (
-              <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center">
+              <div className="w-24 h-24 bg-gray-200 rounded-full mb-4 flex items-center justify-center">
                 <UserIcon />
               </div>
             )}
@@ -49,12 +56,15 @@ const MenteeApplication: React.FC<MenteeApplicationProps> = ({
                   {mentee?.state}
                 </span>
               </div>
-              <span className="text-xl font-light">
-                {mentee?.application.isUndergrad === false
-                  ? `${mentee?.application.university ?? ''}`
-                  : `${mentee?.application.position ?? ''}, ${
-                      mentee?.application.company ?? ''
-                    }`}
+              <span className="text-lg font-light">
+                {mentee?.application.isUndergrad ? (
+                  <>{mentee?.application.university}</>
+                ) : (
+                  <>
+                    {mentee?.application.position},{' '}
+                    {mentee?.application.company}
+                  </>
+                )}
               </span>
             </div>
             <div className="ml-auto flex overflow-hidden">
@@ -64,7 +74,7 @@ const MenteeApplication: React.FC<MenteeApplicationProps> = ({
                   handleStateChange('approved');
                 }}
               >
-                Approve
+                {isPending ? 'Loading...' : 'Approve'}
               </button>
               <button
                 className="inline-block rounded border px-10 py-2 my-2 mx-2 text-sm font-medium text-red-500 border-red-500 focus:outline-none focus:ring"
@@ -72,7 +82,7 @@ const MenteeApplication: React.FC<MenteeApplicationProps> = ({
                   handleStateChange('rejected');
                 }}
               >
-                Reject
+                {isPending ? 'Loading...' : 'Reject'}
               </button>
             </div>
           </div>

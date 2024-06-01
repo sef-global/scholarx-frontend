@@ -11,7 +11,7 @@ const MenteeCard: React.FC<MenteeCardProps> = ({ mentee }) => {
   return (
     <Link
       className="border border-gray-200 p-4 rounded-md shadow-sm w-52"
-      to={'/mentor/my-mentees'}
+      to={`/mentor/my-mentees/${mentee.uuid}`}
     >
       {mentee.profile.image_url !== '' ? (
         <img
