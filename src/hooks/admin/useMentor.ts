@@ -6,7 +6,7 @@ import { type Mentor } from '../../types';
 const useMentor = (mentorId: string | undefined) => {
   const queryClient = useQueryClient();
 
-  const { isLoading, error, data } = useQuery({
+  const { isFetching, error, data } = useQuery({
     queryKey: ['mentor', mentorId],
     initialData: null,
     enabled: !(mentorId == null),
@@ -21,7 +21,12 @@ const useMentor = (mentorId: string | undefined) => {
     },
   });
 
-  const { mutate: changeState } = useMutation({
+  const {
+    mutate: changeState,
+    isSuccess,
+    isError,
+    isPending,
+  } = useMutation({
     mutationFn: async (newState: string) => {
       if (mentorId != null) {
         const { data } = await axios.put(
@@ -40,10 +45,13 @@ const useMentor = (mentorId: string | undefined) => {
   });
 
   return {
-    isLoading,
+    isFetching,
     error,
     data,
     changeState,
+    isSuccess,
+    isError,
+    isPending,
   };
 };
 

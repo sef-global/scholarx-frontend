@@ -11,7 +11,7 @@ import { type Mentor } from '../../types';
 
 interface MentorStatus {
   mentorId: string;
-  newStatus: string;
+  state: string;
 }
 
 const fetchMentors: QueryFunction<Mentor[], QueryKey> = async ({
@@ -29,10 +29,10 @@ const fetchMentors: QueryFunction<Mentor[], QueryKey> = async ({
 };
 
 const updateMentorStatus = async (mentorStatus: MentorStatus) => {
-  const { mentorId, newStatus } = mentorStatus;
+  const { mentorId, state } = mentorStatus;
   const response = await axios.put(
-    `${API_URL}/admin/mentors/${mentorId}/status`,
-    { status: newStatus },
+    `${API_URL}/admin/mentors/${mentorId}/state`,
+    { state },
     { withCredentials: true }
   );
   return response.data;

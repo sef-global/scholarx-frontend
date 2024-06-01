@@ -1,16 +1,16 @@
 import React from 'react';
-import { type Mentee } from '../../types';
 import { ApplicationStatus } from '../../enums';
 import { useMentees } from '../../hooks/useMentees';
 import UserIcon from '../../assets/svg/Icons/UserIcon';
 import { getStateColor } from '../../utils';
+import { useParams } from 'react-router-dom';
+import useMentee from '../../hooks/useMentee';
+import Toast from '../Toast';
 
-interface MenteeProfileProps {
-  mentee: Mentee;
-}
-
-const MenteeProfile: React.FC<MenteeProfileProps> = ({ mentee }) => {
-  const { isLoading, updateMenteeStatus } = useMentees();
+const MenteeProfile: React.FC = () => {
+  const { menteeId } = useParams();
+  const { data: mentee } = useMentee(menteeId);
+  const { updateMenteeStatus, isSuccess, isPending, isError } = useMentees();
 
   const handleStateUpdate = (state: ApplicationStatus) => {
     if (mentee != null) {
@@ -20,12 +20,18 @@ const MenteeProfile: React.FC<MenteeProfileProps> = ({ mentee }) => {
 
   return (
     <>
-      <div className="w-full space-y-8">
+      {isSuccess && (
+        <Toast message={'Status updated successfully'} type={'success'} />
+      )}
+      {isError && (
+        <Toast message={'Oops something went wrong'} type={'error'} />
+      )}
+      <div className="w-full space-y-5">
         <div className="md:flex items-center">
           <div className="flex">
-            {mentee.profile.image_url !== '' ? (
+            {mentee?.profile.image_url !== '' ? (
               <img
-                src={mentee.profile.image_url}
+                src={mentee?.profile.image_url}
                 alt="Mentee Avatar"
                 className="w-12 h-12 md:w-24 md:h-24 rounded-full mx-auto mb-4"
               />
@@ -37,24 +43,23 @@ const MenteeProfile: React.FC<MenteeProfileProps> = ({ mentee }) => {
             <div className="ml-5">
               <div className="flex items-center space-x-3">
                 <span className="text-lg md:text-2xl font-semibold">
-                  {mentee.application.firstName} {mentee.application.lastName}
+                  {mentee?.application.firstName} {mentee?.application.lastName}
                 </span>
                 <span
                   className={`whitespace-nowrap rounded-full px-2.5 py-0.5 text-sm ${getStateColor(
-                    mentee.state
+                    mentee?.state
                   )}`}
                 >
-                  {mentee.state}
+                  {mentee?.state}
                 </span>
               </div>
-              {mentee.application.isUndergrad ? (
+              {mentee?.application.isUndergrad ? (
                 <span className="text-xl font-light">
-                  {mentee.application.yearOfStudy},{' '}
-                  {mentee.application.university}
+                  {mentee?.application.university}
                 </span>
               ) : (
                 <span className="text-md md:text-xl font-light">
-                  {mentee.application.position}, {mentee.application.company}
+                  {mentee?.application.position}, {mentee?.application.company}
                 </span>
               )}
             </div>
@@ -66,7 +71,7 @@ const MenteeProfile: React.FC<MenteeProfileProps> = ({ mentee }) => {
                 handleStateUpdate(ApplicationStatus.APPROVED);
               }}
             >
-              {isLoading ? 'Loading...' : 'Approve'}
+              {isPending ? 'Loading...' : 'Approve'}
             </button>
             <button
               className="inline-block rounded border px-10 py-2 my-2 mx-2 text-sm font-medium text-red-500 border-red-500 focus:outline-none focus:ring"
@@ -74,21 +79,22 @@ const MenteeProfile: React.FC<MenteeProfileProps> = ({ mentee }) => {
                 handleStateUpdate(ApplicationStatus.REJECTED);
               }}
             >
-              Reject
+              {isPending ? 'Loading...' : 'Reject'}
             </button>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-1 md:hidden">
+        <div className="md:hidden">
           <a
-            href={mentee.application.email}
+            href={mentee?.application.email}
             target="_blank"
             rel="noreferrer"
             className="underline mb-2"
           >
-            {mentee.application.email}
+            {mentee?.application.email}
           </a>
+          <br />
           <a
-            href={mentee.application.cv}
+            href={mentee?.application.cv}
             target="_blank"
             rel="noreferrer"
             className="underline mb-2"
@@ -99,36 +105,59 @@ const MenteeProfile: React.FC<MenteeProfileProps> = ({ mentee }) => {
         <div className="md:grid md:grid-cols-5 md:gap-12">
           <div className="col-span-3">
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <h3 className="text-base font-semibold">Course</h3>
-                <p>{mentee.application.course}</p>
-              </div>
-              <div>
-                <h3 className="text-base font-semibold">Graduated Year</h3>
-                <p>{mentee.application.graduatedYear}</p>
-              </div>
-              <div>
-                <h3 className="text-base font-semibold">Contact No</h3>
-                <p>{mentee.application.contactNo}</p>
-              </div>
-              <div>
-                <h3 className="text-base font-semibold">Undergraduate</h3>
-                <p>{mentee.application.isUndergrad ? 'Yes' : 'No'}</p>
-              </div>
+              {mentee?.application.isUndergrad ? (
+                <>
+                  <div>
+                    <h3 className="text-base font-semibold">Year of Study</h3>
+                    <p>{mentee?.application.yearOfStudy}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-base font-semibold">Course</h3>
+                    <p>{mentee?.application.course}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-base font-semibold">University</h3>
+                    <p>{mentee?.application.university}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-base font-semibold">Contact No</h3>
+                    <p>{mentee?.application.contactNo}</p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div>
+                    <h3 className="text-base font-semibold">Company</h3>
+                    <p>{mentee?.application.company}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-base font-semibold">Position</h3>
+                    <p>{mentee?.application.position}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-base font-semibold">Contact No</h3>
+                    <p>{mentee?.application.contactNo}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-base font-semibold">Undergraduate</h3>
+                    <p>{mentee?.application.graduatedYear}</p>
+                  </div>
+                </>
+              )}
             </div>
           </div>
           <div className="col-span-2 pl-8 border-l">
-            <div className="hidden md:grid grid-cols-2 gap-1">
+            <div className="hidden md:grid gap-1">
               <a
-                href={mentee.application.email}
+                href={mentee?.application.email}
                 target="_blank"
                 rel="noreferrer"
                 className="underline mb-2"
               >
-                {mentee.application.email}
+                {mentee?.application.email}
               </a>
               <a
-                href={mentee.application.cv}
+                href={mentee?.application.cv}
                 target="_blank"
                 rel="noreferrer"
                 className="underline mb-2"
@@ -141,12 +170,12 @@ const MenteeProfile: React.FC<MenteeProfileProps> = ({ mentee }) => {
             <div className="mb-4 mt-8 md:mt-0">
               <h3 className="text-base font-semibold">Video Submission</h3>
               <a
-                href={mentee.application.submission}
+                href={mentee?.application.submission}
                 target="_blank"
                 rel="noreferrer"
                 className="underline mb-2"
               >
-                Link
+                Click here to view
               </a>
             </div>
           </div>

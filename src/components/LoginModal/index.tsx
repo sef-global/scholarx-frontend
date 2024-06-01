@@ -123,13 +123,10 @@ const LoginModal: React.FC<LoginModalProps> = ({
                       Remember this device
                     </label>
                   </div>
-                  <a
-                    href="#"
-                    className="text-sm font-normal text-black hover:underline"
-                  >
-                    Forgot Password?
-                  </a>
                 </div>
+                <p className="text-sm font-normal text-black hover:underline">
+                  Forgot Password?
+                </p>
                 <button
                   type="submit"
                   className="w-full px-5 py-3 text-base font-medium text-center text-white bg-primary-blue rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300"

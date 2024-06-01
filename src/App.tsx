@@ -4,7 +4,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Home from './components/Home';
 import MainLayout from './components/Layout/MainLayout';
 import { UserProvider } from './contexts/UserContext';
-import MenteeApplications from './components/MenteeApplicationsView/MenteeApplications.component.tsx';
 import Dashboard from './pages/Dashboard/Dashboard.tsx';
 import Mentors from './pages/Mentors';
 import MenteeRegistration from './pages/MenteeRegistration';
@@ -14,6 +13,7 @@ import MyMentees from './pages/MyMentees/MyMentees.component.tsx';
 import EditProfileForm from './pages/EditProfileForm/EditProfileForm.component.tsx';
 import MenteeDashboard from './pages/MenteeDashboard';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import MenteeApplications from './pages/MenteeApplicationsView/MenteeApplications.component.tsx';
 
 const queryClient = new QueryClient();
 
@@ -39,7 +39,7 @@ const App: React.FC = () => {
                 element={<MenteeApplications />}
               />
               <Route path="/mentee/dashboard" element={<MenteeDashboard />} />
-              <Route path="/mentor/my-mentees" element={<MyMentees />} />
+              <Route path="/mentor/my-mentees/*" element={<MyMentees />} />
               <Route path="/mentors" element={<Mentors />} />
               <Route path="/mentors/:mentorId" element={<MentorProfile />} />
               <Route path="/settings" element={<EditProfileForm />} />
