@@ -1,25 +1,18 @@
 import React from 'react';
-import { type Mentor } from '../../types';
 import { getStateColor } from '../../utils';
+import { useParams } from 'react-router-dom';
+import useMentor from '../../hooks/admin/useMentor';
 
-interface MentorApplicationProps {
-  isLoading: boolean;
-  mentor: Mentor | null | undefined;
-  onStateChange: (newState: string) => void;
-}
-
-const MentorApplication: React.FC<MentorApplicationProps> = ({
-  isLoading,
-  mentor,
-  onStateChange,
-}) => {
+const MentorApplication: React.FC = () => {
+  const { mentorId } = useParams();
+  const { isFetching, data: mentor, changeState } = useMentor(mentorId);
   const handleStateChange = (newState: string) => {
-    onStateChange(newState);
+    changeState(newState);
   };
 
   return (
     <>
-      {isLoading ? (
+      {isFetching ? (
         <div>Skeleton</div>
       ) : (
         <div className="w-full space-y-8">
@@ -66,9 +59,13 @@ const MentorApplication: React.FC<MentorApplicationProps> = ({
               </button>
             </div>
           </div>
-          <div className="grid grid-cols-5 gap-12">
+          <div className="grid grid-cols-4 gap-10">
             <div className="col-span-3">
               <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <h3 className="text-base font-bold">No of Mentees</h3>
+                  <p>{mentor?.application.noOfMentees}</p>
+                </div>
                 <div>
                   <h3 className="text-base font-bold">Category</h3>
                   <p>{mentor?.category.category}</p>
@@ -83,9 +80,11 @@ const MentorApplication: React.FC<MentorApplicationProps> = ({
                 </div>
                 <div>
                   <h3 className="text-base font-bold">Past Mentor</h3>
-                  <p>
-                    {mentor?.application.isPastMentor === true ? 'Yes' : 'No'}
-                  </p>
+                  <p>{mentor?.application.isPastMentor ? 'Yes' : 'No'}</p>
+                </div>
+                <div>
+                  <h3 className="text-base font-bold">Mentored Year</h3>
+                  <p>{mentor?.application.mentoredYear}</p>
                 </div>
               </div>
             </div>

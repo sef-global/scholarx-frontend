@@ -6,7 +6,7 @@ import { type Mentor } from '../../types';
 const useMentor = (mentorId: string | undefined) => {
   const queryClient = useQueryClient();
 
-  const { isLoading, error, data } = useQuery({
+  const { isFetching, error, data } = useQuery({
     queryKey: ['mentor', mentorId],
     initialData: null,
     enabled: !(mentorId == null),
@@ -40,7 +40,7 @@ const useMentor = (mentorId: string | undefined) => {
   });
 
   return {
-    isLoading,
+    isFetching,
     error,
     data,
     changeState,

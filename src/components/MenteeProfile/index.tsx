@@ -55,7 +55,7 @@ const MenteeProfile: React.FC = () => {
               </div>
               {mentee?.application.isUndergrad ? (
                 <span className="text-xl font-light">
-                  {mentee?.application.yearOfStudy},{' '}
+                  {mentee?.application.yearOfStudy} year,{' '}
                   {mentee?.application.university}
                 </span>
               ) : (
@@ -106,22 +106,45 @@ const MenteeProfile: React.FC = () => {
         <div className="md:grid md:grid-cols-5 md:gap-12">
           <div className="col-span-3">
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <h3 className="text-base font-semibold">Course</h3>
-                <p>{mentee?.application.course}</p>
-              </div>
-              <div>
-                <h3 className="text-base font-semibold">Graduated Year</h3>
-                <p>{mentee?.application.graduatedYear}</p>
-              </div>
-              <div>
-                <h3 className="text-base font-semibold">Contact No</h3>
-                <p>{mentee?.application.contactNo}</p>
-              </div>
-              <div>
-                <h3 className="text-base font-semibold">Undergraduate</h3>
-                <p>{mentee?.application.isUndergrad ? 'Yes' : 'No'}</p>
-              </div>
+              {mentee?.application.isUndergrad ? (
+                <>
+                  <div>
+                    <h3 className="text-base font-semibold">Year of Study</h3>
+                    <p>{mentee?.application.yearOfStudy}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-base font-semibold">Course</h3>
+                    <p>{mentee?.application.course}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-base font-semibold">University</h3>
+                    <p>{mentee?.application.university}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-base font-semibold">Contact No</h3>
+                    <p>{mentee?.application.contactNo}</p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div>
+                    <h3 className="text-base font-semibold">Company</h3>
+                    <p>{mentee?.application.company}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-base font-semibold">Position</h3>
+                    <p>{mentee?.application.position}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-base font-semibold">Contact No</h3>
+                    <p>{mentee?.application.contactNo}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-base font-semibold">Undergraduate</h3>
+                    <p>{mentee?.application.graduatedYear}</p>
+                  </div>
+                </>
+              )}
             </div>
           </div>
           <div className="col-span-2 pl-8 border-l">
@@ -153,7 +176,7 @@ const MenteeProfile: React.FC = () => {
                 rel="noreferrer"
                 className="underline mb-2"
               >
-                Link
+                Click here to view
               </a>
             </div>
           </div>
