@@ -7,7 +7,6 @@ import { type Mentor, type EmailData, type Mentee } from '../../../../types';
 import { z } from 'zod';
 import { useMentors } from '../../../../hooks/admin/useMentors';
 import useMentees from '../../../../hooks/admin/useMentees';
-import { mentees } from '../../../../__mocks__/mentees';
 
 const EmailDataSchema = z.object({
   sender: z.string(),
