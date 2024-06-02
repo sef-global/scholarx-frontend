@@ -7,13 +7,8 @@ export const MenteeApplicationSchema = z.object({
   contactNo: z.string().min(1, { message: 'Contact number cannot be empty' }),
   company: z.string().min(1, { message: 'Company cannot be empty' }).optional(),
   profilePic: z
-    .custom<File>()
-    .refine((files) => files !== undefined, {
-      message: 'The profile picture is required.',
-    })
-    .refine((file) => file && file?.size <= 5 * 1024 * 1024, {
-      message: 'The profile picture must be a maximum of 5MB.',
-    }),
+    .string()
+    .min(1, { message: 'The profile picture cannot be empty' }),
   position: z
     .string()
     .min(1, { message: 'Position cannot be empty' })
@@ -70,13 +65,8 @@ export const MentorApplicationSchema = z.object({
     .optional(),
   motivation: z.string().min(1, { message: 'This cannot be empty' }).optional(),
   profilePic: z
-    .custom<File>()
-    .refine((files) => files !== undefined, {
-      message: 'The profile picture is required.',
-    })
-    .refine((file) => file && file?.size <= 5 * 1024 * 1024, {
-      message: 'The profile picture must be a maximum of 5MB.',
-    }),
+    .string()
+    .min(1, { message: 'The profile picture cannot be empty' }),
   cv: z.string().min(1, { message: 'CV cannot be empty' }),
   menteeExpectations: z
     .string()

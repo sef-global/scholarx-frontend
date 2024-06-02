@@ -214,7 +214,7 @@ const Navbar: React.FC = () => {
                           if (isUserMentor) {
                             navigate('/mentor/dashboard');
                           } else if (isUserAdmin) {
-                            navigate('/admin/dashboard');
+                            navigate('/admin/dashboard/mentor-applications');
                           } else {
                             navigate('/mentee/dashboard');
                           }

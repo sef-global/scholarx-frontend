@@ -3,7 +3,7 @@ import {
   type MentorApplicationSchema,
   type MenteeApplicationSchema,
 } from './schemas';
-import { type ProfileTypes } from './enums';
+import { type ApplicationStatus, type ProfileTypes } from './enums';
 
 export interface Category {
   category: string;
@@ -16,7 +16,7 @@ export interface Mentor {
   uuid: string;
   created_at: string;
   updated_at: string;
-  state: string;
+  state: ApplicationStatus;
   category: Category;
   application: MentorApplication;
   availability: boolean;

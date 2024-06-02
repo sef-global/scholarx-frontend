@@ -30,6 +30,8 @@ const MentorRegistrationPage: React.FC = () => {
     handleSubmit,
     watch,
     trigger,
+    clearErrors,
+    setError,
     setValue,
     unregister,
     formState: { errors },
@@ -39,6 +41,7 @@ const MentorRegistrationPage: React.FC = () => {
       firstName: user?.first_name,
       lastName: user?.last_name,
       email: user?.primary_email,
+      profilePic: user?.image_url,
     },
   });
   const { error: categoryError, data: categories } = useCategories();
@@ -112,8 +115,17 @@ const MentorRegistrationPage: React.FC = () => {
     if (event.target.files != null) {
       const file = event.target.files[0];
       setImage(file);
-      setValue('profilePic', file);
       setProfilePic(URL.createObjectURL(file));
+      clearErrors('profilePic');
+      if (file.size > 5 * 1024 * 1024) {
+        setError(
+          'profilePic',
+          { message: 'The profile picture must be a maximum of 5MB.' },
+          { shouldFocus: true }
+        );
+      } else {
+        setValue('profilePic', URL.createObjectURL(file));
+      }
     }
   };
 
@@ -309,7 +321,7 @@ const MentorRegistrationPage: React.FC = () => {
             <div className="text-xl font-medium mb-2">Mentorship Details</div>
             <FormCheckbox
               name="isPastMentor"
-              label="Are you a past mentor?"
+              label="I'm a past mentor?"
               register={register}
               error={errors.isPastMentor}
             />
