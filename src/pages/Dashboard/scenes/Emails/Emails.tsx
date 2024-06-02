@@ -3,8 +3,11 @@ import EmailHistory from '../../../../components/Dashboard/scenes/Emails/EmailHi
 import { EMAILAPI_SENDER } from '../../../../constants';
 import Loading from '../../../../assets/svg/Loading';
 import { useEmails } from '../../../../hooks/useEmails';
-import { type EmailData } from '../../../../types';
+import { type Mentor, type EmailData, type Mentee } from '../../../../types';
 import { z } from 'zod';
+import { useMentors } from '../../../../hooks/admin/useMentors';
+import useMentees from '../../../../hooks/admin/useMentees';
+import { mentees } from '../../../../__mocks__/mentees';
 
 const EmailDataSchema = z.object({
   sender: z.string(),
@@ -18,6 +21,8 @@ const Emails: React.FC = () => {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const { sendEmail } = useEmails();
+  const { data: mentors } = useMentors();
+  const { data: mentees } = useMentees();
 
   const [formData, setFormData] = useState<EmailData>({
     sender: EMAILAPI_SENDER,
@@ -64,19 +69,65 @@ const Emails: React.FC = () => {
   };
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    let selectedMentors: Mentor[] | undefined = [];
+    let selectedMentees: Mentee[] | undefined = [];
     switch (e.target.value) {
       case 'allMentors':
-        break;
-      case 'allMentees':
+        selectedMentors = mentors;
         break;
       case 'acceptedMentors':
+        selectedMentors = mentors?.filter(
+          (mentor) => mentor.state === 'approved'
+        );
+        break;
+      case 'pendingMentors':
+        selectedMentors = mentors?.filter(
+          (mentor) => mentor.state === 'pending'
+        );
+        break;
+      case 'rejectedMentors':
+        selectedMentors = mentors?.filter(
+          (mentor) => mentor.state === 'rejected'
+        );
+        break;
+      case 'allMentees':
+        selectedMentees = mentees?.filter(
+          (mentee) =>
+            mentee.state === 'approved' ||
+            mentee.state === 'pending' ||
+            mentee.state === 'rejected'
+        );
         break;
       case 'acceptedMentees':
+        selectedMentees = mentees?.filter(
+          (mentee) => mentee.state === 'approved'
+        );
+        break;
+      case 'pendingMentees':
+        selectedMentees = mentees?.filter(
+          (mentee) => mentee.state === 'pending'
+        );
         break;
       case 'rejectedMentees':
+        selectedMentees = mentees?.filter(
+          (mentee) => mentee.state === 'rejected'
+        );
         break;
       default:
     }
+
+    const selectedMentorEmails = selectedMentors
+      ? selectedMentors.map((mentor) => mentor.application.email)
+      : [];
+
+    const selectedMenteeEmails = selectedMentees
+      ? selectedMentees.map((mentee) => mentee.application.email)
+      : [];
+
+    setFormData((prevState) => ({
+      ...prevState,
+      recipients: [...selectedMentorEmails, ...selectedMenteeEmails],
+    }));
   };
 
   return (
@@ -133,12 +184,21 @@ const Emails: React.FC = () => {
                         >
                           <option value="">Select recipient group</option>
                           <option value="allMentors">All Mentors</option>
-                          <option value="allMentees">All Mentees</option>
                           <option value="acceptedMentors">
                             Accepted Mentors
                           </option>
+                          <option value="pendingMentors">
+                            Pending Mentors
+                          </option>
+                          <option value="rejectedMentors">
+                            Rejected Mentors
+                          </option>
+                          <option value="allMentees">All Mentees</option>
                           <option value="acceptedMentees">
                             Accepted Mentees
+                          </option>
+                          <option value="pendingMentees">
+                            Pending Mentees
                           </option>
                           <option value="rejectedMentees">
                             Rejected Mentees
