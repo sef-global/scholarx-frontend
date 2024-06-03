@@ -102,7 +102,7 @@ const Navbar: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="https://handbook.sefglobal.org/"
                   className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 "
                 >
                   About
@@ -110,7 +110,7 @@ const Navbar: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="https://sefglobal.org/#projects"
                   className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 "
                 >
                   Initiatives
@@ -118,7 +118,7 @@ const Navbar: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="https://sefglobal.org/join-us.html"
                   className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 "
                 >
                   Join Us
