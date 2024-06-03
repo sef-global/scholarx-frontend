@@ -1,16 +1,20 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import useMentor from '../../hooks/useMentor';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import UserIcon from '../../assets/svg/Icons/UserIcon';
 import { useLoginModalContext } from '../../contexts/LoginModalContext';
 import { UserContext, type UserContextType } from '../../contexts/UserContext';
+import Toast from '../../components/Toast';
+import ShareIcon from '../../assets/svg/Icons/ShareIcon';
 
 const MentorProfile: React.FC = () => {
   const { mentorId } = useParams();
   const navigate = useNavigate();
   const { handleLoginModalOpen } = useLoginModalContext();
-  const { user } = useContext(UserContext) as UserContextType;
+  const { user, isUserMentor } = useContext(UserContext) as UserContextType;
+  const [isURLCopied, setIsURLCopied] = useState(false);
+  const shareUrl = `${window.location.origin}${location.pathname}`;
 
   const onApply = () => {
     if (user) {
@@ -21,28 +25,48 @@ const MentorProfile: React.FC = () => {
   };
 
   const { data: mentor } = useMentor(mentorId);
+
+  const copyToClipboard = () => {
+    navigator.clipboard
+      .writeText(shareUrl)
+      .then(() => {
+        setIsURLCopied(true);
+      })
+      .catch(() => {});
+  };
+
   return (
     <>
+      {isURLCopied && (
+        <Toast message={'Profile link copied successfully'} type={'success'} />
+      )}
+
       <div className="flex items-center gap-4 w-full">
-        <div className="w-1/3 md:w-28">
+        <div className="md:w-28">
           {mentor?.profile.image_url !== '' ? (
             <img
               src={mentor?.profile.image_url}
               alt="Mentor Avatar"
-              className="w-24 h-24 rounded-full mb-4"
+              className="w-12 h-12 md:w-24 md:h-24 rounded-full mb-4"
             />
           ) : (
-            <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center">
+            <div className="w-12 h-12 md:w-24 md:h-24 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center">
               <UserIcon />
             </div>
           )}
         </div>
-        <div className="w-3/5 md:w-full">
+        <div className="w-full">
           <div className="flex flex-row place-content-between w-full">
             <div>
-              <h1 className="text-lg md:text-3xl font-semibold mb-2">
-                {mentor?.application.firstName} {mentor?.application.lastName}
-              </h1>
+              <div className="flex gap-4 items-center mb-2">
+                <h1 className="text-lg md:text-3xl font-semibold">
+                  {mentor?.application.firstName} {mentor?.application.lastName}
+                </h1>
+                <span onClick={copyToClipboard}>
+                  <ShareIcon />
+                </span>
+              </div>
+
               <p className="text-sm ">
                 {mentor?.application.position},{' '}
                 <span className="text-gray-500">
@@ -51,12 +75,14 @@ const MentorProfile: React.FC = () => {
               </p>
             </div>
             <div className="self-center">
-              <button
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-                onClick={onApply}
-              >
-                Apply
-              </button>
+              {!isUserMentor && (
+                <button
+                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+                  onClick={onApply}
+                >
+                  Apply
+                </button>
+              )}
             </div>
           </div>
           <hr className="w-full mt-5" />

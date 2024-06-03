@@ -19,7 +19,15 @@ const steps = [
   },
   {
     id: 'Step 2',
-    fields: ['position', 'institution', 'expertise', 'cv', 'bio'],
+    fields: [
+      'position',
+      'institution',
+      'expertise',
+      'cv',
+      'bio',
+      'linkedin',
+      'website',
+    ],
   },
 ];
 

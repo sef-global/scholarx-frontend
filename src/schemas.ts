@@ -19,7 +19,7 @@ export const MenteeApplicationSchema = z.object({
     message: 'You must give your consent to proceed.',
   }),
   graduatedYear: z
-    .number()
+    .number({ invalid_type_error: 'Graduated year is required' })
     .refine(
       (data) => {
         return data === undefined || (!isNaN(data) && data >= 1980);
@@ -34,10 +34,9 @@ export const MenteeApplicationSchema = z.object({
     .min(1, { message: 'University cannot be empty' })
     .optional(),
   yearOfStudy: z
-    .number()
-    .min(1, { message: 'Year of study cannot be empty' })
-    .gte(1)
-    .lte(4)
+    .number({ invalid_type_error: 'Year of study is required' })
+    .gte(1, { message: 'Year must be greater than 0' })
+    .lte(4, { message: 'Year must be less than or equal 4' })
     .optional(),
   course: z.string().min(1, { message: 'Course cannot be empty' }).optional(),
   mentorId: z.string().min(1, { message: 'Mentor cannot be empty' }),

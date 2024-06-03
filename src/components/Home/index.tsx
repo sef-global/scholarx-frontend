@@ -44,13 +44,13 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      <section className="section py-12">
+      <section className="py-12">
         <div className="text-center">
           <div className="text-xl md:text-3xl font-bold text-center mb-4 text-[#32325D]">
             Our mentors are from{' '}
             <span className="text-xl align-text-top">*</span>
           </div>
-          <div className="grid justify-center pb-3 grid-cols-2 md:grid-cols-5 gap-10">
+          <div className="grid justify-center pb-3 grid-cols-2 md:grid-cols-5 gap-5">
             {logos.map((logo, index) => (
               <div key={index} className="p-2 w-40">
                 <img

@@ -271,7 +271,7 @@ const MenteeRegistration: React.FC = () => {
               <>
                 <div className="mb-4">
                   <label className="block text-sm font-medium text-gray-600">
-                    Graduated year?
+                    Graduated year
                   </label>
                   <input
                     placeholder="2024"
