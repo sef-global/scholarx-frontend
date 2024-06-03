@@ -135,7 +135,7 @@ const MenteeProfile: React.FC = () => {
                     <p>{mentee?.application.contactNo}</p>
                   </div>
                   <div>
-                    <h3 className="text-base font-semibold">Undergraduate</h3>
+                    <h3 className="text-base font-semibold">Graduated year</h3>
                     <p>{mentee?.application.graduatedYear}</p>
                   </div>
                 </>

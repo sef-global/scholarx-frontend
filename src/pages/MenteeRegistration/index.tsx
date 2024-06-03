@@ -227,7 +227,7 @@ const MenteeRegistration: React.FC = () => {
             </div>
             <FormCheckbox
               name="isUndergrad"
-              label="I'm a university student?"
+              label="I'm a university student"
               register={register}
               error={errors.isUndergrad}
             />

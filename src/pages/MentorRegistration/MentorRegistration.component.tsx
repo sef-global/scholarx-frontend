@@ -321,7 +321,7 @@ const MentorRegistrationPage: React.FC = () => {
             <div className="text-xl font-medium mb-2">Mentorship Details</div>
             <FormCheckbox
               name="isPastMentor"
-              label="I'm a past mentor?"
+              label="I'm a past mentor"
               register={register}
               error={errors.isPastMentor}
             />
