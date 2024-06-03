@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import OngoingMentorshipPrograms from './scenes/OngoingMentorshipPrograms/OngoingMentorshipPrograms';
-import PlatformSettings from './scenes/PlatformSettings/PlatformSettings';
 import MenteeApplications from './scenes/MenteeApplications/MenteeApplications';
 import ManageUsers from './scenes/ManageUsers/ManageUsers';
 import Emails from './scenes/Emails/Emails';
@@ -41,14 +40,6 @@ const Dashboard: React.FC = () => {
             </li>
             <li>
               <Link
-                to="/admin/dashboard/platform-settings"
-                className="block py-2 px-4 rounded hover:bg-gray-200"
-              >
-                Platform Settings
-              </Link>
-            </li>
-            <li>
-              <Link
                 to="/admin/dashboard/manage-users"
                 className="block py-2 px-4 rounded hover:bg-gray-200"
               >
@@ -82,7 +73,6 @@ const Dashboard: React.FC = () => {
             path="/ongoing-mentorship-programs"
             element={<OngoingMentorshipPrograms />}
           />
-          <Route path="/platform-settings" element={<PlatformSettings />} />
           <Route path="/manage-users" element={<ManageUsers />} />
           <Route path="/emails" element={<Emails />} />
         </Routes>
