@@ -25,7 +25,7 @@ const MentorApplicationPage = () => {
           </li>
           <li>
             <Link
-              to="/dashboard/mentor-applications"
+              to="/admin/dashboard/mentor-applications"
               className="block transition hover:text-gray-700"
             >
               Manage Mentor Applications

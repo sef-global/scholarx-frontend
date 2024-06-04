@@ -7,13 +7,8 @@ export const MenteeApplicationSchema = z.object({
   contactNo: z.string().min(1, { message: 'Contact number cannot be empty' }),
   company: z.string().min(1, { message: 'Company cannot be empty' }).optional(),
   profilePic: z
-    .custom<File>()
-    .refine((files) => files !== undefined, {
-      message: 'The profile picture is required.',
-    })
-    .refine((file) => file && file?.size <= 5 * 1024 * 1024, {
-      message: 'The profile picture must be a maximum of 5MB.',
-    }),
+    .string()
+    .min(1, { message: 'The profile picture cannot be empty' }),
   position: z
     .string()
     .min(1, { message: 'Position cannot be empty' })
@@ -24,7 +19,7 @@ export const MenteeApplicationSchema = z.object({
     message: 'You must give your consent to proceed.',
   }),
   graduatedYear: z
-    .number()
+    .number({ invalid_type_error: 'Graduated year is required' })
     .refine(
       (data) => {
         return data === undefined || (!isNaN(data) && data >= 1980);
@@ -39,10 +34,9 @@ export const MenteeApplicationSchema = z.object({
     .min(1, { message: 'University cannot be empty' })
     .optional(),
   yearOfStudy: z
-    .number()
-    .min(1, { message: 'Year of study cannot be empty' })
-    .gte(1)
-    .lte(4)
+    .number({ invalid_type_error: 'Year of study is required' })
+    .gte(1, { message: 'Year must be greater than 0' })
+    .lte(4, { message: 'Year must be less than or equal 4' })
     .optional(),
   course: z.string().min(1, { message: 'Course cannot be empty' }).optional(),
   mentorId: z.string().min(1, { message: 'Mentor cannot be empty' }),
@@ -66,17 +60,11 @@ export const MentorApplicationSchema = z.object({
   isPastMentor: z.boolean(),
   reasonToMentor: z
     .string()
-    .min(1, { message: 'This cannot be empty' })
-    .optional(),
+    .min(1, { message: 'Reason to become a mentor cannot be empty' }),
   motivation: z.string().min(1, { message: 'This cannot be empty' }).optional(),
   profilePic: z
-    .custom<File>()
-    .refine((files) => files !== undefined, {
-      message: 'The profile picture is required.',
-    })
-    .refine((file) => file && file?.size <= 5 * 1024 * 1024, {
-      message: 'The profile picture must be a maximum of 5MB.',
-    }),
+    .string()
+    .min(1, { message: 'The profile picture cannot be empty' }),
   cv: z.string().min(1, { message: 'CV cannot be empty' }),
   menteeExpectations: z
     .string()
@@ -90,7 +78,10 @@ export const MentorApplicationSchema = z.object({
   canCommit: z.boolean().refine((val) => val, {
     message: 'You must mention if you can commit',
   }),
-  mentoredYear: z.number().or(z.number().min(0)).optional(),
+  mentoredYear: z
+    .number({ invalid_type_error: 'Mentored year is required' })
+    .or(z.number().min(0))
+    .optional(),
   category: z.string().min(1, { message: 'Category cannot be empty' }),
   institution: z.string().min(1, { message: 'Institution cannot be empty' }),
   linkedin: z

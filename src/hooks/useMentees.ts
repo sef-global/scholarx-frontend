@@ -48,7 +48,7 @@ export const useMentees = () => {
       );
     },
     onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: ['mentees'] });
+      void queryClient.invalidateQueries({ queryKey: ['mentee'] });
     },
   });
 

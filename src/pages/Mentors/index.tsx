@@ -5,7 +5,7 @@ import { usePublicMentors } from '../../hooks/usePublicMentors';
 import MentorCard from '../../components/MentorCard/MentorCard.component';
 
 const Mentors = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>('');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortedMentors, setSortedMentors] = useState<Mentor[]>([]);
   const {
     data: mentors,

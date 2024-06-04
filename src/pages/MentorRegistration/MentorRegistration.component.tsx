@@ -19,7 +19,15 @@ const steps = [
   },
   {
     id: 'Step 2',
-    fields: ['position', 'institution', 'expertise', 'cv', 'bio'],
+    fields: [
+      'position',
+      'institution',
+      'expertise',
+      'cv',
+      'bio',
+      'linkedin',
+      'website',
+    ],
   },
 ];
 
@@ -30,6 +38,8 @@ const MentorRegistrationPage: React.FC = () => {
     handleSubmit,
     watch,
     trigger,
+    clearErrors,
+    setError,
     setValue,
     unregister,
     formState: { errors },
@@ -39,6 +49,7 @@ const MentorRegistrationPage: React.FC = () => {
       firstName: user?.first_name,
       lastName: user?.last_name,
       email: user?.primary_email,
+      profilePic: user?.image_url,
     },
   });
   const { error: categoryError, data: categories } = useCategories();
@@ -74,19 +85,21 @@ const MentorRegistrationPage: React.FC = () => {
   useEffect(() => {
     if (watch('isPastMentor')) {
       async () => {
-        await trigger(['mentoredYear', 'motivation', 'reasonToMentor'], {
+        await trigger(['mentoredYear', 'motivation'], {
           shouldFocus: true,
         });
       };
     } else {
-      unregister(['mentoredYear', 'motivation', 'reasonToMentor']);
+      unregister(['mentoredYear', 'motivation']);
     }
   }, [watch('isPastMentor')]);
 
   const onSubmit: SubmitHandler<MentorApplication> = async (data) => {
     const { profilePic, ...application } = data;
     createMentorApplication(application as MentorApplication);
-    updateProfile({ profile: null, image });
+    if (image) {
+      updateProfile({ profile: null, image });
+    }
   };
 
   const {
@@ -112,8 +125,17 @@ const MentorRegistrationPage: React.FC = () => {
     if (event.target.files != null) {
       const file = event.target.files[0];
       setImage(file);
-      setValue('profilePic', file);
       setProfilePic(URL.createObjectURL(file));
+      clearErrors('profilePic');
+      if (file.size > 5 * 1024 * 1024) {
+        setError(
+          'profilePic',
+          { message: 'The profile picture must be a maximum of 5MB.' },
+          { shouldFocus: true }
+        );
+      } else {
+        setValue('profilePic', URL.createObjectURL(file));
+      }
     }
   };
 
@@ -298,7 +320,7 @@ const MentorRegistrationPage: React.FC = () => {
               type="text"
               placeholder=""
               name="cv"
-              label="CV"
+              label="CV (Google Doc link, Google Drive link)"
               register={register}
               error={errors.cv}
             />
@@ -309,7 +331,7 @@ const MentorRegistrationPage: React.FC = () => {
             <div className="text-xl font-medium mb-2">Mentorship Details</div>
             <FormCheckbox
               name="isPastMentor"
-              label="Are you a past mentor?"
+              label="I'm a past mentor"
               register={register}
               error={errors.isPastMentor}
             />
@@ -324,6 +346,12 @@ const MentorRegistrationPage: React.FC = () => {
                     {...register('mentoredYear', { valueAsNumber: true })}
                     className="mt-1 p-2 border rounded-md"
                   />
+                  <br />
+                  {errors != null && (
+                    <span className="text-red-500">
+                      {errors.mentoredYear?.message}
+                    </span>
+                  )}
                 </div>
                 <FormTextarea
                   placeholder="Seeing mentees succeed and make meaningful contributions to the field inspires me."
@@ -332,15 +360,15 @@ const MentorRegistrationPage: React.FC = () => {
                   register={register}
                   error={errors.motivation}
                 />
-                <FormTextarea
-                  placeholder="I believe in nurturing the next generation of engineers and entrepreneurs."
-                  name="reasonToMentor"
-                  label="Why would like to be a ScholarX mentor?"
-                  register={register}
-                  error={errors.reasonToMentor}
-                />
               </>
             )}
+            <FormTextarea
+              placeholder="I believe in nurturing the next generation of engineers and entrepreneurs."
+              name="reasonToMentor"
+              label="Why would like to be a ScholarX mentor?"
+              register={register}
+              error={errors.reasonToMentor}
+            />
             <FormTextarea
               placeholder="I expect mentees to be passionate about engineering and committed to learning."
               name="menteeExpectations"

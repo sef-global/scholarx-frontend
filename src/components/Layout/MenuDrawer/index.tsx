@@ -39,15 +39,24 @@ const MenuDrawer: React.FC<MenuDrawerProps> = ({
           <Link to="/" className="text-lg text-black">
             Home
           </Link>
-          <Link to="/about" className="text-lg text-black">
+          <a
+            href="https://handbook.sefglobal.org/"
+            className="text-lg text-black"
+          >
             About
-          </Link>
-          <Link to="/initiatives" className="text-lg text-black">
+          </a>
+          <a
+            href="https://sefglobal.org/#projects"
+            className="text-lg text-black"
+          >
             Initiatives
-          </Link>
-          <Link to="/join-us" className="text-lg text-black">
+          </a>
+          <a
+            href="https://sefglobal.org/join-us.html"
+            className="text-lg text-black"
+          >
             Join Us
-          </Link>
+          </a>
           <button
             type="button"
             onClick={handleMentorRegistration}

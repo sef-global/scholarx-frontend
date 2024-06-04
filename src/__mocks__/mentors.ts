@@ -1,4 +1,4 @@
-import { ProfileTypes } from '../enums';
+import { ApplicationStatus, ProfileTypes } from '../enums';
 import type { Mentor } from '../types';
 
 type MentorWithoutProfilePic = Omit<Mentor, 'application'> & {
@@ -10,7 +10,7 @@ export const mentors: MentorWithoutProfilePic[] = [
     uuid: '0d22aa50-48ba-4ec0-96bd-aca9b54c7e2f',
     created_at: '2023-07-01',
     updated_at: '2023-07-10',
-    state: 'approved',
+    state: ApplicationStatus.APPROVED,
     category: {
       category: 'Computer Science',
       uuid: 'fef68adb-e710-4d9e-8772-dc4905885088',
@@ -56,7 +56,7 @@ export const mentors: MentorWithoutProfilePic[] = [
     uuid: '0d22aa50-48ba-4ec0-96bd-aca9b54c7e2e',
     created_at: '2023-07-02',
     updated_at: '2023-07-12',
-    state: 'approved',
+    state: ApplicationStatus.APPROVED,
     category: {
       category: 'Business',
       uuid: 'fef68adb-e710-4d9e-8772-dc4905885088',
@@ -100,7 +100,7 @@ export const mentors: MentorWithoutProfilePic[] = [
     uuid: '0d22aa50-48ba-4ec0-96bd-aca9b54c7e2b',
     created_at: '2023-07-03',
     updated_at: '2023-07-12',
-    state: 'approved',
+    state: ApplicationStatus.APPROVED,
     category: {
       category: 'Design',
       uuid: 'fef68acb-e710-4d9e-8772-dc4905885088',

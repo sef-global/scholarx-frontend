@@ -26,6 +26,7 @@ const FormInput: React.FC<FormInputProps> = ({
       <label className="block text-sm font-medium text-gray-600">{label}</label>
       <input
         type={type}
+        key={name}
         placeholder={placeholder}
         {...register(name, { valueAsNumber })}
         className="mt-1 p-2 w-full border rounded-md"

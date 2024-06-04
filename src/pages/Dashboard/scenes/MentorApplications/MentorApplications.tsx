@@ -4,6 +4,7 @@ import { useMentors } from '../../../../hooks/admin/useMentors';
 import useCategories from '../../../../hooks/useCategories';
 import { useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
+import { ApplicationStatus } from '../../../../enums';
 
 const MentorApplications: React.FC = () => {
   const [filter, setFilter] = useState('');
@@ -140,7 +141,7 @@ const MentorApplications: React.FC = () => {
           <tbody className="bg-white">
             {filteredMentorsByName.map((mentor) => (
               <tr key={mentor.uuid}>
-                <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/4">
+                <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/4 text-blue-500">
                   <Link
                     to={`/admin/dashboard/mentor-applications/${mentor.uuid}`}
                   >
@@ -156,6 +157,7 @@ const MentorApplications: React.FC = () => {
                 <td className="py-2 whitespace-no-wrap border-b border-gray-200 w-1/4">
                   <select
                     value={mentor.state}
+                    disabled={mentor.state !== ApplicationStatus.PENDING}
                     onChange={async (e) => {
                       await handleStatusUpdate(mentor.uuid, e.target.value);
                     }}
