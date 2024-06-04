@@ -32,6 +32,8 @@ const MenteeRegistration: React.FC = () => {
     handleSubmit,
     watch,
     setValue,
+    setError,
+    clearErrors,
     trigger,
     formState: { errors },
   } = useForm<MenteeApplication>({
@@ -40,6 +42,7 @@ const MenteeRegistration: React.FC = () => {
       firstName: user?.first_name,
       lastName: user?.last_name,
       email: user?.primary_email,
+      profilePic: user?.image_url,
       mentorId,
     },
   });
@@ -52,8 +55,17 @@ const MenteeRegistration: React.FC = () => {
     if (event.target.files != null) {
       const file = event.target.files[0];
       setImage(file);
-      setValue('profilePic', file);
       setProfilePic(URL.createObjectURL(file));
+      clearErrors('profilePic');
+      if (file.size > 5 * 1024 * 1024) {
+        setError(
+          'profilePic',
+          { message: 'The profile picture must be a maximum of 5MB.' },
+          { shouldFocus: true }
+        );
+      } else {
+        setValue('profilePic', URL.createObjectURL(file));
+      }
     }
   };
 
@@ -64,7 +76,7 @@ const MenteeRegistration: React.FC = () => {
   const handleNext = async (): Promise<void> => {
     let fields = steps[currentStep].fields;
 
-    if (currentStep === 0 && !profilePic) {
+    if (currentStep === 0 && !user?.image_url) {
       fields.push('profilePic');
     } else if (currentStep === 1) {
       if (watch('isUndergrad')) {
@@ -90,7 +102,9 @@ const MenteeRegistration: React.FC = () => {
 
   const onSubmit: SubmitHandler<MenteeApplication> = async (data) => {
     applyForMentor(data);
-    updateProfile({ profile: null, image });
+    if (image) {
+      updateProfile({ profile: null, image });
+    }
   };
 
   const {
@@ -215,7 +229,7 @@ const MenteeRegistration: React.FC = () => {
             </div>
             <FormCheckbox
               name="isUndergrad"
-              label="Are you a university student?"
+              label="I'm a university student"
               register={register}
               error={errors.isUndergrad}
             />
@@ -259,7 +273,7 @@ const MenteeRegistration: React.FC = () => {
               <>
                 <div className="mb-4">
                   <label className="block text-sm font-medium text-gray-600">
-                    Graduated year?
+                    Graduated year
                   </label>
                   <input
                     placeholder="2024"
@@ -316,7 +330,7 @@ const MenteeRegistration: React.FC = () => {
               type="text"
               placeholder=""
               name="cv"
-              label="CV"
+              label="CV (Google Doc link, Google Drive link)"
               register={register}
               error={errors.cv}
             />

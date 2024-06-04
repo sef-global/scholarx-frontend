@@ -44,13 +44,13 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      <section className="section py-12">
+      <section className="py-12">
         <div className="text-center">
           <div className="text-xl md:text-3xl font-bold text-center mb-4 text-[#32325D]">
             Our mentors are from{' '}
             <span className="text-xl align-text-top">*</span>
           </div>
-          <div className="grid justify-center pb-3 grid-cols-2 md:grid-cols-5 gap-10">
+          <div className="grid justify-center pb-3 grid-cols-2 md:grid-cols-5 gap-5">
             {logos.map((logo, index) => (
               <div key={index} className="p-2 w-40">
                 <img
@@ -61,22 +61,6 @@ const Home: React.FC = () => {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Statistics container */}
-      <section className="flex justify-evenly p-[4%] m-0 items-center flex-col md:flex-row flex-wrap bg-[#F7F8FA] ">
-        <div className="ContainerOne text-center">
-          <div className="text-3xl font-bold text-[#1D1D1F]">100,000+</div>
-          <div className="font-normal text-[20px] text-[#1D1D1F]">Mentees</div>
-        </div>
-        <div className="ContainerTwo  text-center">
-          <div className="text-3xl font-bold text-[#1D1D1F]">500+</div>
-          <div className="font-normal text-[20px] text-[#1D1D1F]">Mentors</div>
-        </div>
-        <div className="ContainerThree  text-center">
-          <div className="text-3xl font-bold text-[#1D1D1F]">70%</div>
-          <div className="font-normal  text-[20px] text-[#1D1D1F]">Growth</div>
         </div>
       </section>
 
@@ -110,7 +94,7 @@ const Home: React.FC = () => {
             <br /> mentors and mentees
           </div>
           <div className="flex justify-center items-center">
-            <a href="#">
+            <a href="https://sefglobal.org/scholarx/archive/">
               <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
                 ScholarX Archive
               </button>

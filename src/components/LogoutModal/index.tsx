@@ -58,7 +58,7 @@ const LogoutModal: React.FC<LogoutModalProps> = ({ onClose }) => {
 
             <h3 className="mb-2 text-2xl font-bold text-gray-800">Log out</h3>
             <p className="text-gray-500">
-              Are you sure you would like to sign out of your account?
+              Are you sure you would like to log out of your account?
             </p>
 
             <div className="mt-6 flex justify-center gap-x-4">

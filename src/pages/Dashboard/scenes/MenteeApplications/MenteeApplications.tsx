@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { type Mentee } from '../../../../types';
 import useMentees from '../../../../hooks/admin/useMentees';
-import { type ApplicationStatus } from '../../../../enums';
+import { ApplicationStatus } from '../../../../enums';
 import { Link } from 'react-router-dom';
 
 const MenteeApplications: React.FC = () => {
@@ -113,7 +113,7 @@ const MenteeApplications: React.FC = () => {
           <tbody className="bg-white">
             {filteredMentorsByName.map((mentee) => (
               <tr key={mentee.uuid}>
-                <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/5">
+                <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/5 text-blue-500">
                   <Link
                     to={`/admin/dashboard/mentee-applications/${mentee.uuid}`}
                   >
@@ -140,6 +140,7 @@ const MenteeApplications: React.FC = () => {
                 <td className="py-2 whitespace-no-wrap border-b border-gray-200 w-1/5">
                   <select
                     value={mentee.state}
+                    disabled={mentee.state !== ApplicationStatus.PENDING}
                     onChange={async (e) => {
                       await handleStatusUpdate(
                         mentee.uuid,

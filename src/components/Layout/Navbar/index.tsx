@@ -16,12 +16,21 @@ import {
 } from '../../../contexts/UserContext';
 import LogoutModal from '../../LogoutModal';
 import { Link, useNavigate } from 'react-router-dom';
+import { useLoginModalContext } from '../../../contexts/LoginModalContext';
 
 const Navbar: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
-  const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
-  const [isRegisterModalVisible, setIsRegisterModalVisible] = useState(false);
-  const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
+  const {
+    isLoginModalVisible,
+    isRegisterModalVisible,
+    isLogoutModalVisible,
+    handleLoginModalClose,
+    handleLoginModalOpen,
+    handleRegisterModalClose,
+    handleRegisterModalOpen,
+    handleLogoutModalClose,
+    handleLogoutModalOpen,
+  } = useLoginModalContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -30,28 +39,8 @@ const Navbar: React.FC = () => {
     UserContext
   ) as UserContextType;
 
-  const handleLoginModalClose = (): void => {
-    setIsLoginModalVisible(false);
-  };
-
-  const handleLoginModalOpen = (): void => {
-    setIsLoginModalVisible(true);
-  };
-
-  const handleRegisterModalClose = (): void => {
-    setIsRegisterModalVisible(false);
-  };
-
-  const handleRegisterModalOpen = (): void => {
-    setIsRegisterModalVisible(true);
-  };
-
-  const handleLogoutModalClose = (): void => {
-    setIsLogoutModalVisible(false);
-  };
-
-  const handleLogoutModalOpen = (): void => {
-    setIsLogoutModalVisible(true);
+  const logoutModalOpen = (): void => {
+    handleLogoutModalOpen();
     toggleDropdown();
   };
 
@@ -113,7 +102,7 @@ const Navbar: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="https://handbook.sefglobal.org/"
                   className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 "
                 >
                   About
@@ -121,7 +110,7 @@ const Navbar: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="https://sefglobal.org/#projects"
                   className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 "
                 >
                   Initiatives
@@ -129,7 +118,7 @@ const Navbar: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="https://sefglobal.org/join-us.html"
                   className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 "
                 >
                   Join Us
@@ -214,7 +203,7 @@ const Navbar: React.FC = () => {
                           if (isUserMentor) {
                             navigate('/mentor/dashboard');
                           } else if (isUserAdmin) {
-                            navigate('/admin/dashboard');
+                            navigate('/admin/dashboard/mentor-applications');
                           } else {
                             navigate('/mentee/dashboard');
                           }
@@ -237,7 +226,7 @@ const Navbar: React.FC = () => {
 
                     <li>
                       <p
-                        onClick={handleLogoutModalOpen}
+                        onClick={logoutModalOpen}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                       >
                         Log out
