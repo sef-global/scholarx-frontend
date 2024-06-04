@@ -7,6 +7,7 @@ import { type Mentor, type EmailData, type Mentee } from '../../../../types';
 import { z } from 'zod';
 import { useMentors } from '../../../../hooks/admin/useMentors';
 import useMentees from '../../../../hooks/admin/useMentees';
+import { ApplicationStatus } from '../../../../enums';
 
 const EmailDataSchema = z.object({
   sender: z.string(),
@@ -68,49 +69,50 @@ const Emails: React.FC = () => {
   };
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    let selectedMentors: Mentor[] | undefined = [];
-    let selectedMentees: Mentee[] | undefined = [];
+    let selectedMentors: Mentor[] = [];
+    let selectedMentees: Mentee[] = [];
     switch (e.target.value) {
       case 'allMentors':
-        selectedMentors = mentors;
+        selectedMentors = mentors ?? [];
         break;
       case 'acceptedMentors':
-        selectedMentors = mentors?.filter(
-          (mentor) => mentor.state === 'approved'
-        );
+        selectedMentors =
+          mentors?.filter(
+            (mentor) => mentor.state === ApplicationStatus.APPROVED
+          ) ?? [];
         break;
       case 'pendingMentors':
-        selectedMentors = mentors?.filter(
-          (mentor) => mentor.state === 'pending'
-        );
+        selectedMentors =
+          mentors?.filter(
+            (mentor) => mentor.state === ApplicationStatus.PENDING
+          ) ?? [];
         break;
       case 'rejectedMentors':
-        selectedMentors = mentors?.filter(
-          (mentor) => mentor.state === 'rejected'
-        );
+        selectedMentors =
+          mentors?.filter(
+            (mentor) => mentor.state === ApplicationStatus.REJECTED
+          ) ?? [];
         break;
       case 'allMentees':
-        selectedMentees = mentees?.filter(
-          (mentee) =>
-            mentee.state === 'approved' ||
-            mentee.state === 'pending' ||
-            mentee.state === 'rejected'
-        );
+        selectedMentees = mentees ?? [];
         break;
       case 'acceptedMentees':
-        selectedMentees = mentees?.filter(
-          (mentee) => mentee.state === 'approved'
-        );
+        selectedMentees =
+          mentees?.filter(
+            (mentee) => mentee.state === ApplicationStatus.APPROVED
+          ) ?? [];
         break;
       case 'pendingMentees':
-        selectedMentees = mentees?.filter(
-          (mentee) => mentee.state === 'pending'
-        );
+        selectedMentees =
+          mentees?.filter(
+            (mentee) => mentee.state === ApplicationStatus.PENDING
+          ) ?? [];
         break;
       case 'rejectedMentees':
-        selectedMentees = mentees?.filter(
-          (mentee) => mentee.state === 'rejected'
-        );
+        selectedMentees =
+          mentees?.filter(
+            (mentee) => mentee.state === ApplicationStatus.REJECTED
+          ) ?? [];
         break;
       default:
     }
@@ -123,10 +125,14 @@ const Emails: React.FC = () => {
       ? selectedMentees.map((mentee) => mentee.application.email)
       : [];
 
-    setFormData((prevState) => ({
-      ...prevState,
-      recipients: [...selectedMentorEmails, ...selectedMenteeEmails],
-    }));
+    setFormData((prevState) => {
+      const recipients = [...selectedMentorEmails, ...selectedMenteeEmails];
+      return {
+        ...prevState,
+        recipients:
+          recipients.length > 0 ? recipients : ['No emails available'],
+      };
+    });
   };
 
   return (
