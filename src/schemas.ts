@@ -60,8 +60,7 @@ export const MentorApplicationSchema = z.object({
   isPastMentor: z.boolean(),
   reasonToMentor: z
     .string()
-    .min(1, { message: 'This cannot be empty' })
-    .optional(),
+    .min(1, { message: 'Reason to become a mentor cannot be empty' }),
   motivation: z.string().min(1, { message: 'This cannot be empty' }).optional(),
   profilePic: z
     .string()
@@ -79,7 +78,10 @@ export const MentorApplicationSchema = z.object({
   canCommit: z.boolean().refine((val) => val, {
     message: 'You must mention if you can commit',
   }),
-  mentoredYear: z.number().or(z.number().min(0)).optional(),
+  mentoredYear: z
+    .number({ invalid_type_error: 'Mentored year is required' })
+    .or(z.number().min(0))
+    .optional(),
   category: z.string().min(1, { message: 'Category cannot be empty' }),
   institution: z.string().min(1, { message: 'Institution cannot be empty' }),
   linkedin: z

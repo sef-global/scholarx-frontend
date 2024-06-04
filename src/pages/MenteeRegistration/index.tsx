@@ -102,7 +102,9 @@ const MenteeRegistration: React.FC = () => {
 
   const onSubmit: SubmitHandler<MenteeApplication> = async (data) => {
     applyForMentor(data);
-    updateProfile({ profile: null, image });
+    if (image) {
+      updateProfile({ profile: null, image });
+    }
   };
 
   const {
@@ -328,7 +330,7 @@ const MenteeRegistration: React.FC = () => {
               type="text"
               placeholder=""
               name="cv"
-              label="CV"
+              label="CV (Google Doc link, Google Drive link)"
               register={register}
               error={errors.cv}
             />
