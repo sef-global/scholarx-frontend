@@ -4,6 +4,7 @@ import { type PasswordResetData } from '../../types';
 import { z } from 'zod';
 import Loading from '../../assets/svg/Loading';
 import closeIcon from '../../assets/svg/closeIcon.svg';
+import { useNavigate } from 'react-router-dom';
 
 const ForgotPasswordDataSchema = z.object({
   email: z.string(),
@@ -20,7 +21,7 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
   const [message, setMessage] = useState('');
   const { requestPasswordReset } = useResetPassword();
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<PasswordResetData>({
     email: '',
   });
@@ -33,9 +34,12 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
     requestPasswordReset(validatedData, {
       onSuccess: () => {
         setMessage(
-          `A password reset link has been sent to ${email}. Please check your email and follow the instructions to reset your password.`
+          `A password reset link has been sent to ${email}. Please check your email and follow the instructions to reset your password. You may now close this dialog if you wish.`
         );
         setLoading(false);
+        setTimeout(() => {
+          navigate('/');
+        }, 500);
       },
       onError: () => {
         setMessage('Error sending email, Check your email and try again.');
@@ -100,7 +104,7 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
                     </button>
                   )}
                   {message.length > 0 && (
-                    <div className=" text-red-500 px-4 py-3 my-3">
+                    <div className=" text-green-500 px-4 py-3 my-3">
                       {message}
                     </div>
                   )}
