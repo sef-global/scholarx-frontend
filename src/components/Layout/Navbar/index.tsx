@@ -17,6 +17,7 @@ import {
 import LogoutModal from '../../LogoutModal';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLoginModalContext } from '../../../contexts/LoginModalContext';
+import ForgotPasswordModal from '../../ForgotPasswordModal';
 
 const Navbar: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -24,12 +25,15 @@ const Navbar: React.FC = () => {
     isLoginModalVisible,
     isRegisterModalVisible,
     isLogoutModalVisible,
+    isForgotPasswordModalVisible,
     handleLoginModalClose,
     handleLoginModalOpen,
     handleRegisterModalClose,
     handleRegisterModalOpen,
     handleLogoutModalClose,
     handleLogoutModalOpen,
+    handleForgotPasswordModalOpen,
+    handleForgotPasswordModalClose,
   } = useLoginModalContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
@@ -285,6 +289,7 @@ const Navbar: React.FC = () => {
         <LoginModal
           handleClose={handleLoginModalClose}
           onRegistrationClick={handleRegisterModalOpen}
+          onForgotPasswordClick={handleForgotPasswordModalOpen}
         />
       ) : null}
       {isRegisterModalVisible ? (
@@ -294,6 +299,9 @@ const Navbar: React.FC = () => {
         />
       ) : null}
       {isLogoutModalVisible && <LogoutModal onClose={handleLogoutModalClose} />}
+      {isForgotPasswordModalVisible ? (
+        <ForgotPasswordModal handleClose={handleForgotPasswordModalClose} />
+      ) : null}
     </>
   );
 };

@@ -80,3 +80,12 @@ export type SendEmailsFunction = (
 export interface MutationData {
   message: string;
 }
+
+export interface PasswordResetData {
+  email: string;
+}
+
+export interface PasswordResetResponse {
+  status: string;
+  message: string;
+}
