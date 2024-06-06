@@ -1,6 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
-import { type PasswordResetData, type PasswordResetResponse } from '../types';
+import {
+  type PasswordUpdateData,
+  type PasswordResetData,
+  type PasswordResetResponse,
+} from '../types';
 import { API_URL } from '../constants';
 
 export const useResetPassword = () => {
@@ -21,9 +25,9 @@ export const useResetPassword = () => {
   const updateMutation = useMutation<
     PasswordResetResponse,
     unknown,
-    { token: string; newPassword: string }
+    PasswordUpdateData
   >({
-    mutationFn: async ({ token, newPassword }) => {
+    mutationFn: async ({ token, newPassword }: PasswordUpdateData) => {
       const response = await axios.put(`${API_URL}/auth/passwordreset`, {
         token,
         newPassword,
@@ -47,7 +51,7 @@ export const useResetPassword = () => {
   };
 
   const updatePassword = (
-    data: { token: string; newPassword: string },
+    data: PasswordUpdateData,
     { onSuccess, onError }: { onSuccess: () => void; onError: () => void }
   ) => {
     updateMutation.mutate(data, {

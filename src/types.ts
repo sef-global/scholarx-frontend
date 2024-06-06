@@ -89,3 +89,8 @@ export interface PasswordResetResponse {
   status: string;
   message: string;
 }
+
+export interface PasswordUpdateData {
+  token: string;
+  newPassword: string;
+}

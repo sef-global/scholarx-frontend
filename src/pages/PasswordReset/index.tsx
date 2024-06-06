@@ -4,6 +4,8 @@ import { z } from 'zod';
 import Loading from '../../assets/svg/Loading';
 import closeIcon from '../../assets/svg/closeIcon.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { type SubmitHandler, useForm } from 'react-hook-form';
+import { type PasswordUpdateData } from '../../types';
 
 const SetNewPasswordDataSchema = z.object({
   newPassword: z.string(),
@@ -11,32 +13,35 @@ const SetNewPasswordDataSchema = z.object({
 });
 
 const NewPasswordModal: React.FC = () => {
-  const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
   const { updatePassword } = useResetPassword();
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
-
-  const [formData, setFormData] = useState({
-    newPassword: '',
-    token: '',
-  });
+  const { register, handleSubmit, setValue } = useForm<PasswordUpdateData>();
 
   const location = useLocation();
   const navigate = useNavigate();
   const token = new URLSearchParams(location.search).get('token') ?? '';
 
+  const handleConfirmPasswordChange = (event: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
+    setConfirmPassword(event.target.value);
+  };
   useEffect(() => {
-    setFormData({ ...formData, token });
-  }, [token]);
+    setValue('token', token);
+  }, [token, setValue]);
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const onSubmit: SubmitHandler<PasswordUpdateData> = async (data) => {
     setLoading(true);
-
-    const validatedData = SetNewPasswordDataSchema.parse(formData);
+    const validatedData = SetNewPasswordDataSchema.parse(data);
+    if (validatedData.newPassword !== confirmPassword) {
+      setMessage('Passwords do not match. Please try again.');
+      setLoading(false);
+      return;
+    }
+    setMessage('');
     updatePassword(validatedData, {
       onSuccess: () => {
         setMessage('Your password has been reset successfully.');
@@ -50,23 +55,6 @@ const NewPasswordModal: React.FC = () => {
         setLoading(false);
       },
     });
-  };
-
-  const handleNewPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewPassword(e.target.value);
-    setFormData({ ...formData, newPassword: e.target.value });
-  };
-
-  const handleConfirmPasswordChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setConfirmPassword(e.target.value);
-    if (e.target.value !== newPassword) {
-      setMessage('Passwords do not match');
-    } else {
-      setMessage('');
-    }
-    setFormData({ ...formData, newPassword: e.target.value });
   };
 
   const handleClose = (
@@ -101,14 +89,13 @@ const NewPasswordModal: React.FC = () => {
                 <h2 className="text-2xl mb-5 font-semibold text-gray-900 text-center">
                   Create a New Password
                 </h2>
-                <form onSubmit={handleFormSubmit}>
+                <form onSubmit={handleSubmit(onSubmit)}>
                   <input
+                    {...register('newPassword')}
                     type="password"
-                    name="password"
+                    name="newPassword"
                     placeholder="Enter your new password"
-                    value={newPassword}
                     className="bg-gray-50 border mb-5 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    onChange={handleNewPasswordChange}
                     pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,20}$"
                     title="Please include at least 1 uppercase character, 1 lowercase character, and 1 number."
                     required
@@ -117,7 +104,6 @@ const NewPasswordModal: React.FC = () => {
                     type="password"
                     name="confirmPassword"
                     placeholder="Confirm your new password"
-                    value={confirmPassword}
                     className="bg-gray-50 border mb-5 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     onChange={handleConfirmPasswordChange}
                     pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,20}$"
@@ -137,21 +123,23 @@ const NewPasswordModal: React.FC = () => {
                         </>
                       </div>
                     ) : (
-                      <button
-                        type="submit"
-                        className="w-full px-4 py-2 text-base font-semibold text-center text-white bg-blue-500 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 cursor-pointer"
-                      >
-                        Update
-                      </button>
+                      <div className="flex justify-center items-center">
+                        <button
+                          type="submit"
+                          className="w-full px-4 py-2 text-base font-semibold text-center text-white bg-blue-500 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 cursor-pointer shadow-md transition-all md:w-auto"
+                        >
+                          Update
+                        </button>
+                      </div>
                     )}
                     {message.length > 0 && (
                       <div className=" text-black px-4 py-3 my-3">
                         <div
                           className={`${
                             message === 'Passwords do not match'
-                              ? 'text-red-500 text-center'
-                              : 'text-green-500 text-center'
-                          }`}
+                              ? 'text-red-500'
+                              : 'text-green-500'
+                          }text-center`}
                         >
                           {message}
                         </div>
