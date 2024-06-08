@@ -20,6 +20,7 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
   const { register, handleSubmit } = useForm<PasswordResetData>();
 
   const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState('default');
   const { requestPasswordReset } = useResetPassword();
   const [loading, setLoading] = useState(false);
 
@@ -30,15 +31,14 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
     requestPasswordReset(validatedData, {
       onSuccess: () => {
         setMessage(
-          `A password reset link has been sent to your email address. Please check your email and follow the instructions to reset your password. You may now close this dialog if you wish.`
+          `A password reset link has been sent to your email address. Please check your email and follow the instructions to reset your password. `
         );
+        setMessageType('success');
         setLoading(false);
-        setTimeout(() => {
-          handleClose();
-        }, 1000);
       },
       onError: () => {
         setMessage('Error sending email, Check your email and try again.');
+        setMessageType('error');
         setLoading(false);
       },
     });
@@ -67,7 +67,7 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
           <div className="bg-white p-6 space-y-8 rounded-lg shadow-xl">
             <div className="m-5">
               <h2 className="text-2xl mb-5 font-semibold text-gray-900 text-center">
-                Forgot Your Password ?
+                Reset Password
               </h2>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <input
@@ -77,6 +77,17 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
                   className="bg-gray-50 border mb-5 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   required
                 />
+                {message.length > 0 && (
+                  <div
+                    className={`px-4 py-3 my-3 text-center ${
+                      messageType === 'success'
+                        ? 'text-green-500'
+                        : 'text-red-500'
+                    }`}
+                  >
+                    {message}
+                  </div>
+                )}
                 <div>
                   {loading ? (
                     <div className="flex justify-center items-center px-4 py-2">
@@ -85,19 +96,16 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
                       </>
                     </div>
                   ) : (
-                    <div className="flex justify-center items-center">
-                      <button
-                        type="submit"
-                        className="w-full px-4 py-2 text-base font-semibold text-center text-white bg-blue-500 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 cursor-pointer shadow-md transition-all md:w-auto"
-                      >
-                        Submit
-                      </button>
-                    </div>
-                  )}
-                  {message.length > 0 && (
-                    <div className=" text-green-500 px-4 py-3 my-3">
-                      {message}
-                    </div>
+                    messageType !== 'success' && (
+                      <div className="flex justify-center items-center">
+                        <button
+                          type="submit"
+                          className="w-full px-4 py-2 text-base font-semibold text-center text-white bg-blue-500 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 cursor-pointer shadow-md transition-all md:w-auto"
+                        >
+                          Submit
+                        </button>
+                      </div>
+                    )
                   )}
                 </div>
               </form>

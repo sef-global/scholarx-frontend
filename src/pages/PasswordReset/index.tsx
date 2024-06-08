@@ -19,6 +19,7 @@ const NewPasswordModal: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
   const { register, handleSubmit, setValue } = useForm<PasswordUpdateData>();
+  const [messageType, setMessageType] = useState('default');
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ const NewPasswordModal: React.FC = () => {
     const validatedData = SetNewPasswordDataSchema.parse(data);
     if (validatedData.newPassword !== confirmPassword) {
       setMessage('Passwords do not match. Please try again.');
+      setMessageType('error');
       setLoading(false);
       return;
     }
@@ -46,12 +48,11 @@ const NewPasswordModal: React.FC = () => {
       onSuccess: () => {
         setMessage('Your password has been reset successfully.');
         setLoading(false);
-        setTimeout(() => {
-          navigate('/');
-        }, 1000);
+        setMessageType('success');
       },
       onError: () => {
         setMessage('Error resetting password. Please try again.');
+        setMessageType('error');
         setLoading(false);
       },
     });
@@ -61,6 +62,7 @@ const NewPasswordModal: React.FC = () => {
     _event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
     setIsOpen(false);
+    navigate('/');
   };
 
   return (
@@ -115,6 +117,17 @@ const NewPasswordModal: React.FC = () => {
                     and numbers, and must not contain spaces, special
                     characters, or emoji.
                   </p>
+                  {message.length > 0 && (
+                    <div
+                      className={`px-4 py-3 my-3 text-center ${
+                        messageType === 'success'
+                          ? 'text-green-500'
+                          : 'text-red-500'
+                      }`}
+                    >
+                      {message}
+                    </div>
+                  )}
                   <div>
                     {loading ? (
                       <div className="flex justify-center items-center px-4 py-2">
@@ -123,27 +136,16 @@ const NewPasswordModal: React.FC = () => {
                         </>
                       </div>
                     ) : (
-                      <div className="flex justify-center items-center">
-                        <button
-                          type="submit"
-                          className="w-full px-4 py-2 text-base font-semibold text-center text-white bg-blue-500 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 cursor-pointer shadow-md transition-all md:w-auto"
-                        >
-                          Update
-                        </button>
-                      </div>
-                    )}
-                    {message.length > 0 && (
-                      <div className=" text-black px-4 py-3 my-3">
-                        <div
-                          className={`${
-                            message === 'Passwords do not match'
-                              ? 'text-red-500'
-                              : 'text-green-500'
-                          }text-center`}
-                        >
-                          {message}
+                      messageType !== 'success' && (
+                        <div className="flex justify-center items-center">
+                          <button
+                            type="submit"
+                            className="w-full px-4 py-2 text-base font-semibold text-center text-white bg-blue-500 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 cursor-pointer shadow-md transition-all md:w-auto"
+                          >
+                            Update
+                          </button>
                         </div>
-                      </div>
+                      )
                     )}
                   </div>
                 </form>
