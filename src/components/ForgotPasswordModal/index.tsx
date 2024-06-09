@@ -91,9 +91,7 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
                 <div>
                   {loading ? (
                     <div className="flex justify-center items-center px-4 py-2">
-                      <>
-                        <Loading />
-                      </>
+                      <Loading />
                     </div>
                   ) : (
                     messageType !== 'success' && (

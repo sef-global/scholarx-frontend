@@ -20,7 +20,7 @@ const NewPasswordModal: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const { register, handleSubmit, setValue } = useForm<PasswordUpdateData>();
   const [messageType, setMessageType] = useState('default');
-
+  const [showPassword, setShowPassword] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const token = new URLSearchParams(location.search).get('token') ?? '';
@@ -58,9 +58,7 @@ const NewPasswordModal: React.FC = () => {
     });
   };
 
-  const handleClose = (
-    _event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
+  const handleClose = (): void => {
     setIsOpen(false);
     navigate('/');
   };
@@ -92,26 +90,39 @@ const NewPasswordModal: React.FC = () => {
                   Create a New Password
                 </h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <input
-                    {...register('newPassword')}
-                    type="password"
-                    name="newPassword"
-                    placeholder="Enter your new password"
-                    className="bg-gray-50 border mb-5 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,20}$"
-                    title="Please include at least 1 uppercase character, 1 lowercase character, and 1 number."
-                    required
-                  />
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    placeholder="Confirm your new password"
-                    className="bg-gray-50 border mb-5 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    onChange={handleConfirmPasswordChange}
-                    pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,20}$"
-                    title="Please include at least 1 uppercase character, 1 lowercase character, and 1 number."
-                    required
-                  />
+                  <div className="relative">
+                    <input
+                      {...register('newPassword')}
+                      type={showPassword ? 'text' : 'password'}
+                      name="newPassword"
+                      placeholder="Enter your new password"
+                      className="bg-gray-50 border mb-5 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                      pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,20}$"
+                      title="Please include at least 1 uppercase character, 1 lowercase character, and 1 number."
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="absolute inset-y-0 right-0 px-3 py-1 text-gray-700 hover:text-gray-900 focus:outline-none"
+                      onClick={() => {
+                        setShowPassword(!showPassword);
+                      }}
+                    >
+                      {showPassword ? 'Hide' : 'Show'}
+                    </button>
+                  </div>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      name="confirmPassword"
+                      placeholder="Confirm your new password"
+                      className="bg-gray-50 border mb-5 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                      onChange={handleConfirmPasswordChange}
+                      pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,20}$"
+                      title="Please include at least 1 uppercase character, 1 lowercase character, and 1 number."
+                      required
+                    />
+                  </div>
                   <p className="text-gray-600 mb-5">
                     Your password must be 8-20 characters long, contain letters
                     and numbers, and must not contain spaces, special
