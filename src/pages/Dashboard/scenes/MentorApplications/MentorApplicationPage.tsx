@@ -9,7 +9,7 @@ const MentorApplicationPage = () => {
   const { data: mentor } = useMentor(mentorId);
 
   return (
-    <div className="p-8 max-w-4xl">
+    <div className="p-8">
       <nav aria-label="Breadcrumb">
         <ol className="flex items-center gap-1 text-sm text-gray-600">
           <li>
