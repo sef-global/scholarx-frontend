@@ -9,7 +9,7 @@ const MenteeApplicationPage = () => {
   const { data: mentee } = useMentee(menteeId);
 
   return (
-    <div className="p-8">
+    <div className="p-8 max-w-4xl">
       <nav aria-label="Breadcrumb">
         <ol className="flex items-center gap-1 text-sm text-gray-600">
           <li>

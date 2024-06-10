@@ -65,19 +65,19 @@ const MenteeProfile: React.FC = () => {
               )}
             </div>
           </div>
-          <div className="ml-auto flex overflow-hidden mt-5 md:mt-0">
-            {mentee?.state === ApplicationStatus.PENDING && (
-              <ApproveRejectButtons
-                isLoading={isPending}
-                approve={() => {
-                  handleStateUpdate(ApplicationStatus.APPROVED);
-                }}
-                reject={() => {
-                  handleStateUpdate(ApplicationStatus.REJECTED);
-                }}
-              />
-            )}
-          </div>
+        </div>
+        <div className="ml-auto flex overflow-hidden mt-4 md:mt-0">
+          {mentee?.state === ApplicationStatus.PENDING && (
+            <ApproveRejectButtons
+              isLoading={isPending}
+              approve={() => {
+                handleStateUpdate(ApplicationStatus.APPROVED);
+              }}
+              reject={() => {
+                handleStateUpdate(ApplicationStatus.REJECTED);
+              }}
+            />
+          )}
         </div>
         <div className="md:hidden">
           <a

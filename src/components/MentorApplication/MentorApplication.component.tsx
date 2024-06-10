@@ -56,19 +56,19 @@ const MentorApplication: React.FC = () => {
                 {mentor?.application.institution}
               </span>
             </div>
-            <div className="ml-auto flex overflow-hidden">
-              {mentor?.state === ApplicationStatus.PENDING && (
-                <ApproveRejectButtons
-                  isLoading={isPending}
-                  approve={() => {
-                    handleStateChange('approved');
-                  }}
-                  reject={() => {
-                    handleStateChange('rejected');
-                  }}
-                />
-              )}
-            </div>
+          </div>
+          <div className="ml-auto flex overflow-hidden">
+            {mentor?.state === ApplicationStatus.PENDING && (
+              <ApproveRejectButtons
+                isLoading={isPending}
+                approve={() => {
+                  handleStateChange('approved');
+                }}
+                reject={() => {
+                  handleStateChange('rejected');
+                }}
+              />
+            )}
           </div>
           <div className="grid grid-cols-4 gap-10">
             <div className="col-span-3">
