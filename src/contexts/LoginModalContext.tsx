@@ -7,19 +7,25 @@ const LoginModalContext = createContext<{
   handleRegisterModalOpen: () => void;
   handleRegisterModalClose: () => void;
   handleLogoutModalOpen: () => void;
+  handleForgotPasswordModalOpen: () => void;
+  handleForgotPasswordModalClose: () => void;
   isLoginModalVisible: boolean;
   isRegisterModalVisible: boolean;
   isLogoutModalVisible: boolean;
+  isForgotPasswordModalVisible: boolean;
 }>({
   isLogoutModalVisible: false,
   isRegisterModalVisible: false,
   isLoginModalVisible: false,
+  isForgotPasswordModalVisible: false,
   handleLoginModalOpen: () => {},
   handleLoginModalClose: () => {},
   handleLogoutModalClose: () => {},
   handleRegisterModalOpen: () => {},
   handleRegisterModalClose: () => {},
   handleLogoutModalOpen: () => {},
+  handleForgotPasswordModalOpen: () => {},
+  handleForgotPasswordModalClose: () => {},
 });
 
 export const LoginModalProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -28,6 +34,8 @@ export const LoginModalProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const [isRegisterModalVisible, setIsRegisterModalVisible] = useState(false);
   const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
+  const [isForgotPasswordModalVisible, setIsForgotPasswordModalVisible] =
+    useState(false);
 
   const handleLoginModalClose = () => {
     setIsLoginModalVisible(false);
@@ -53,18 +61,29 @@ export const LoginModalProvider: React.FC<{ children: React.ReactNode }> = ({
     setIsLogoutModalVisible(true);
   };
 
+  const handleForgotPasswordModalClose = () => {
+    setIsForgotPasswordModalVisible(false);
+  };
+
+  const handleForgotPasswordModalOpen = () => {
+    setIsForgotPasswordModalVisible(true);
+  };
+
   return (
     <LoginModalContext.Provider
       value={{
         isLoginModalVisible,
         isRegisterModalVisible,
         isLogoutModalVisible,
+        isForgotPasswordModalVisible,
         handleLoginModalClose,
         handleLoginModalOpen,
         handleRegisterModalClose,
         handleRegisterModalOpen,
         handleLogoutModalClose,
         handleLogoutModalOpen,
+        handleForgotPasswordModalClose,
+        handleForgotPasswordModalOpen,
       }}
     >
       {children}

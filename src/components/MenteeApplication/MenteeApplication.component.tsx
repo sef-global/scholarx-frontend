@@ -69,19 +69,19 @@ const MenteeApplication: React.FC = () => {
                 )}
               </span>
             </div>
-            <div className="ml-auto flex overflow-hidden">
-              {mentee?.state === ApplicationStatus.PENDING && (
-                <ApproveRejectButtons
-                  isLoading={isPending}
-                  approve={() => {
-                    handleStateChange('approved');
-                  }}
-                  reject={() => {
-                    handleStateChange('rejected');
-                  }}
-                />
-              )}
-            </div>
+          </div>
+          <div className="ml-auto flex overflow-hidden">
+            {mentee?.state === ApplicationStatus.PENDING && (
+              <ApproveRejectButtons
+                isLoading={isPending}
+                approve={() => {
+                  handleStateChange('approved');
+                }}
+                reject={() => {
+                  handleStateChange('rejected');
+                }}
+              />
+            )}
           </div>
           <div className="grid grid-cols-5 gap-10">
             <div className="col-span-3">

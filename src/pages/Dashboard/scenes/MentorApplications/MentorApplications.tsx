@@ -4,7 +4,6 @@ import { useMentors } from '../../../../hooks/admin/useMentors';
 import useCategories from '../../../../hooks/useCategories';
 import { useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { ApplicationStatus } from '../../../../enums';
 
 const MentorApplications: React.FC = () => {
   const [filter, setFilter] = useState('');
@@ -12,15 +11,7 @@ const MentorApplications: React.FC = () => {
   const { data: categories } = useCategories();
   const [categoryFilter, setCategoryFilter] = useState<string>('');
   const queryClient = useQueryClient();
-  const { isLoading, data: mentors, updateStatus } = useMentors(categoryFilter);
-
-  const handleStatusUpdate = async (mentorId: string, state: string) => {
-    try {
-      await updateStatus({ mentorId, state });
-    } catch (error) {
-      console.error('Error updating mentor status:', error);
-    }
-  };
+  const { isLoading, data: mentors } = useMentors(categoryFilter);
 
   const handleCategoryChange = async (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -124,49 +115,32 @@ const MentorApplications: React.FC = () => {
         <table className="w-full">
           <thead>
             <tr>
-              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 w-1/4">
+              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 w-1/3">
                 Name
               </th>
-              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 w-1/4">
+              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 w-1/3">
                 Profession
               </th>
-              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 w-1/4">
+              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 w-1/3">
                 Category
-              </th>
-              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 w-1/4">
-                Status
               </th>
             </tr>
           </thead>
           <tbody className="bg-white">
             {filteredMentorsByName.map((mentor) => (
               <tr key={mentor.uuid}>
-                <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/4 text-blue-500">
+                <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/3 text-blue-500">
                   <Link
                     to={`/admin/dashboard/mentor-applications/${mentor.uuid}`}
                   >
                     {mentor.application.firstName} {mentor.application.lastName}
                   </Link>
                 </td>
-                <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/4">
+                <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/3">
                   {mentor.application.position}
                 </td>
-                <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/4">
+                <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/3">
                   {mentor.category.category}
-                </td>
-                <td className="py-2 whitespace-no-wrap border-b border-gray-200 w-1/4">
-                  <select
-                    value={mentor.state}
-                    disabled={mentor.state !== ApplicationStatus.PENDING}
-                    onChange={async (e) => {
-                      await handleStatusUpdate(mentor.uuid, e.target.value);
-                    }}
-                    className="py-1.5 px-5 border border-gray-300 rounded-md"
-                  >
-                    <option value="pending">Pending</option>
-                    <option value="rejected">Rejected</option>
-                    <option value="approved">Approved</option>
-                  </select>
                 </td>
               </tr>
             ))}

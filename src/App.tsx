@@ -15,6 +15,7 @@ import MenteeDashboard from './pages/MenteeDashboard';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import MenteeApplications from './pages/MenteeApplicationsView/MenteeApplications.component.tsx';
 import { LoginModalProvider } from './contexts/LoginModalContext.tsx';
+import PasswordReset from './pages/PasswordReset/index.tsx';
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,7 @@ const App: React.FC = () => {
                 <Route path="/mentors" element={<Mentors />} />
                 <Route path="/mentors/:mentorId" element={<MentorProfile />} />
                 <Route path="/settings" element={<EditProfileForm />} />
+                <Route path="/resetpassword" element={<PasswordReset />} />
               </Routes>
             </MainLayout>
           </BrowserRouter>

@@ -1,24 +1,12 @@
 import React, { useState } from 'react';
 import { type Mentee } from '../../../../types';
 import useMentees from '../../../../hooks/admin/useMentees';
-import { ApplicationStatus } from '../../../../enums';
 import { Link } from 'react-router-dom';
 
 const MenteeApplications: React.FC = () => {
   const [filter, setFilter] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const { isLoading, data: mentees, updateStatus } = useMentees();
-
-  const handleStatusUpdate = async (
-    menteeId: string,
-    status: ApplicationStatus
-  ) => {
-    try {
-      await updateStatus({ menteeId, status });
-    } catch (error) {
-      console.error('Error updating mentor status:', error);
-    }
-  };
+  const { isLoading, data: mentees } = useMentees();
 
   const renderFilters = () => {
     const filters = [
@@ -93,42 +81,39 @@ const MenteeApplications: React.FC = () => {
         <table className="w-full">
           <thead>
             <tr>
-              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 w-1/5">
+              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 w-1/4">
                 Name
               </th>
-              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 w-1/5">
+              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 w-1/4">
                 Company / University
               </th>
-              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 w-1/5">
+              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 w-1/4">
                 Mentor
               </th>
-              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 w-1/5">
+              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 w-1/4">
                 Video Submission
-              </th>
-              <th className="px-6 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 w-1/5">
-                Status
               </th>
             </tr>
           </thead>
           <tbody className="bg-white">
             {filteredMentorsByName.map((mentee) => (
               <tr key={mentee.uuid}>
-                <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/5 text-blue-500">
+                <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/4 text-blue-500">
                   <Link
                     to={`/admin/dashboard/mentee-applications/${mentee.uuid}`}
                   >
                     {mentee.application.firstName} {mentee.application.lastName}
                   </Link>
                 </td>
-                <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/5">
+                <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/4">
                   {mentee.application.company}
                   {mentee.application.university}
                 </td>
-                <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/5">
+                <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/4">
                   {mentee.mentor.application.firstName}{' '}
                   {mentee.mentor.application.lastName}
                 </td>
-                <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/5">
+                <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-200 w-1/4">
                   <a
                     href={mentee.application.submission}
                     target="_blank"
@@ -136,23 +121,6 @@ const MenteeApplications: React.FC = () => {
                   >
                     Link
                   </a>
-                </td>
-                <td className="py-2 whitespace-no-wrap border-b border-gray-200 w-1/5">
-                  <select
-                    value={mentee.state}
-                    disabled={mentee.state !== ApplicationStatus.PENDING}
-                    onChange={async (e) => {
-                      await handleStatusUpdate(
-                        mentee.uuid,
-                        e.target.value as ApplicationStatus
-                      );
-                    }}
-                    className="py-1.5 px-5 border border-gray-300 rounded-md"
-                  >
-                    <option value="pending">Pending</option>
-                    <option value="rejected">Rejected</option>
-                    <option value="approved">Approved</option>
-                  </select>
                 </td>
               </tr>
             ))}
