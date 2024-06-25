@@ -14,6 +14,7 @@ const MenteeApplications: React.FC = () => {
       { label: 'Approved', status: 'approved' },
       { label: 'Pending', status: 'pending' },
       { label: 'Rejected', status: 'rejected' },
+      { label: 'Completed', status: 'completed' },
     ];
 
     return (
@@ -34,7 +35,7 @@ const MenteeApplications: React.FC = () => {
                   } ${
                     label === 'All'
                       ? 'rounded-l-md'
-                      : label === 'Rejected'
+                      : label === 'Completed'
                       ? 'rounded-r-md'
                       : 'rounded-none'
                   }`}
