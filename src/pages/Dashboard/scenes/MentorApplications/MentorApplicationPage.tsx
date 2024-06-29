@@ -1,4 +1,3 @@
-import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import MentorApplication from '../../../../components/MentorApplication/MentorApplication.component';
 import useMentor from '../../../../hooks/admin/useMentor';

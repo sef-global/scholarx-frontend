@@ -37,7 +37,7 @@ const Home: React.FC = () => {
         </div>
         <div className="col mt-[40px] flex justify-right">
           <img
-            src="/new-findmentor.png"
+            src="/new-findmentor.webp"
             alt="find-mentor"
             className="w-[40rem]"
           />
@@ -68,7 +68,7 @@ const Home: React.FC = () => {
         <div className="mb-2">
           <img
             className="max-w-[300px] mx-auto  w-[100%]"
-            src="/success.png"
+            src="/success.webp"
             alt="success-image"
           />
         </div>
@@ -78,7 +78,7 @@ const Home: React.FC = () => {
             <br /> ScholarX Alumni
           </div>
           <div className="flex justify-center items-center">
-            <a href="#">
+            <a href="https://sefglobal.org/scholarx/archive/">
               <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
                 ScholarX Alumni
               </button>
@@ -104,7 +104,7 @@ const Home: React.FC = () => {
         <div>
           <img
             className="max-w-[360px] mx-auto w-full"
-            src="/scholarX-archive.png"
+            src="/scholarX-archive.webp"
             alt="scholarX-archive-image"
           />
         </div>

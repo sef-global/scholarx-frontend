@@ -85,8 +85,8 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <nav className="bg-white border-gray-200">
-        <div className="flex flex-wrap items-center justify-between md:mx-8 p-4">
+      <nav className="bg-white border-gray-200 container mx-auto">
+        <div className="flex flex-wrap items-center justify-between p-4">
           <Link to="/">
             <img
               src="/scholarx-logo.png"
@@ -94,7 +94,7 @@ const Navbar: React.FC = () => {
               alt="ScholarX Logo"
             />
           </Link>
-          <div className="flex items-center">
+          <div className="flex items-center md:items-start">
             <ul className="items-baseline hidden md:flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
               <li>
                 <Link
@@ -154,7 +154,7 @@ const Navbar: React.FC = () => {
             </ul>
             {user != null && (
               <div
-                className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse relative"
+                className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse relative"
                 ref={dropdownRef}
               >
                 <button

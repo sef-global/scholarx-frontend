@@ -1,16 +1,16 @@
 import React, { type ChangeEvent, useState, useEffect } from 'react';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { API_URL } from '../../constants';
 import useCategories from '../../hooks/useCategories';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
 import { MentorApplicationSchema } from '../../schemas';
 import { type MentorApplication } from '../../types';
 import FormCheckbox from '../../components/FormFields/MentorApplication/FormCheckbox';
 import FormInput from '../../components/FormFields/MentorApplication/FormInput';
 import FormTextarea from '../../components/FormFields/MentorApplication/FormTextarea';
 import useProfile from '../../hooks/useProfile';
+import { useLoginModalContext } from '../../contexts/LoginModalContext';
+import useMentor from '../../hooks/useMentor';
 
 const steps = [
   {
@@ -32,7 +32,7 @@ const steps = [
 ];
 
 const MentorRegistrationPage: React.FC = () => {
-  const { data: user, updateProfile } = useProfile();
+  const { data: user, updateProfile, isUserLoading } = useProfile();
   const {
     register,
     handleSubmit,
@@ -53,6 +53,14 @@ const MentorRegistrationPage: React.FC = () => {
     },
   });
   const { error: categoryError, data: categories } = useCategories();
+  const {
+    createMentorApplication,
+    applicationError,
+    applicationSuccess,
+    isApplicationError,
+    isApplicationSubmitting,
+  } = useMentor(null);
+  const { handleLoginModalOpen } = useLoginModalContext();
   const [image, setImage] = useState<File | null>(null);
   const [profilePic, setProfilePic] = useState(user?.image_url);
   const [currentStep, setCurrentStep] = useState(0);
@@ -78,6 +86,10 @@ const MentorRegistrationPage: React.FC = () => {
     setCurrentStep((prevStep) => prevStep + 1);
   };
 
+  if (!isUserLoading && !user) {
+    handleLoginModalOpen();
+  }
+
   const handlePrev = (): void => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
@@ -101,25 +113,6 @@ const MentorRegistrationPage: React.FC = () => {
       updateProfile({ profile: null, image });
     }
   };
-
-  const {
-    mutate: createMentorApplication,
-    error: applicationError,
-    isSuccess: applicationSuccess,
-    isError: isApplicationError,
-    isPending: isApplicationSubmitting,
-  } = useMutation({
-    mutationFn: async (data: MentorApplication) => {
-      await axios.post(
-        `${API_URL}/mentors`,
-        {
-          application: data,
-          categoryId: data.category,
-        },
-        { withCredentials: true }
-      );
-    },
-  });
 
   const handleProfilePicChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files != null) {

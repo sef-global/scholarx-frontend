@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import SuccessIcon from '../../assets/svg/Icons/SuccessIcon';
 import ErrorIcon from '../../assets/svg/Icons/ErrorIcon';
 

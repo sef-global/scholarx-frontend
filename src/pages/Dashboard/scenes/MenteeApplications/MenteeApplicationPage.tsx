@@ -1,4 +1,3 @@
-import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import MenteeApplication from '../../../../components/MenteeApplication/MenteeApplication.component';
 import ChevronRightIcon from '../../../../assets/svg/Icons/ChevronRightIcon';
