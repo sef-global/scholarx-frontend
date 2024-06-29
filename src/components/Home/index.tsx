@@ -52,9 +52,9 @@ const Home: React.FC = () => {
           </div>
           <div className="grid justify-center pb-3 grid-cols-2 md:grid-cols-5 gap-5">
             {logos.map((logo, index) => (
-              <div key={index} className="p-2 w-40">
+              <div key={index} className="p-2">
                 <img
-                  className="mx-auto img-fluid"
+                  className="mx-auto img-fluid w-40"
                   src={`logos/${logo}`}
                   alt={`${logo.split('.')[0]} logo`}
                 />

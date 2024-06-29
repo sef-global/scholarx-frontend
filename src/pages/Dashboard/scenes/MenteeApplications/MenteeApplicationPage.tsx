@@ -11,14 +11,7 @@ const MenteeApplicationPage = () => {
     <div className="p-8 max-w-4xl">
       <nav aria-label="Breadcrumb">
         <ol className="flex items-center gap-1 text-sm text-gray-600">
-          <li>
-            <Link
-              to="/dashboard"
-              className="block transition hover:text-gray-700"
-            >
-              Dashboard
-            </Link>
-          </li>
+          <li>Dashboard</li>
           <li>
             <ChevronRightIcon />
           </li>

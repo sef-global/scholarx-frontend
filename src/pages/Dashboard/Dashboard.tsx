@@ -10,8 +10,8 @@ import MenteeApplicationPage from './scenes/MenteeApplications/MenteeApplication
 
 const Dashboard: React.FC = () => {
   return (
-    <div className="flex h-screen">
-      <aside className="w-64 bg-gray-100 h-full shadow-md">
+    <div className="flex">
+      <aside className="w-64 bg-gray-50 h-full">
         <nav className="h-full">
           <ul className="space-y-2 p-4">
             <li>
@@ -57,7 +57,7 @@ const Dashboard: React.FC = () => {
           </ul>
         </nav>
       </aside>
-      <main className="flex-1 p-6 overflow-y-auto">
+      <main className="flex-1 p-6">
         <Routes>
           <Route path="/mentor-applications" element={<MentorApplications />} />
           <Route
