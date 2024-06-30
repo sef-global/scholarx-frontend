@@ -57,6 +57,13 @@ const MenteeApplication: React.FC = () => {
                 >
                   {mentee?.state}
                 </span>
+                {mentee?.state !== ApplicationStatus.PENDING &&
+                  mentee?.status_updated_date && (
+                    <span>
+                      by {mentee?.status_updated_by} on{' '}
+                      {new Date(mentee?.status_updated_date).toDateString()}
+                    </span>
+                  )}
               </div>
               <span className="text-lg font-light">
                 {mentee?.application.isUndergrad ? (

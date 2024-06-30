@@ -17,7 +17,7 @@ const MenteeApplicationPage = () => {
           </li>
           <li>
             <Link
-              to="/dashboard/mentee-applications"
+              to="/admin/dashboard/mentee-applications"
               className="block transition hover:text-gray-700"
             >
               Manage Mentee Applications

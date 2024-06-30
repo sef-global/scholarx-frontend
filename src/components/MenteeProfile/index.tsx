@@ -53,6 +53,15 @@ const MenteeProfile: React.FC = () => {
                 >
                   {mentee?.state}
                 </span>
+                {mentee?.state !== ApplicationStatus.PENDING &&
+                  mentee?.status_updated_date && (
+                    <span>
+                      {mentee?.status_updated_by === 'admin'
+                        ? 'by ScholarX team'
+                        : ''}{' '}
+                      on {new Date(mentee?.status_updated_date).toDateString()}
+                    </span>
+                  )}
               </div>
               {mentee?.application.isUndergrad ? (
                 <span className="text-xl font-light">
