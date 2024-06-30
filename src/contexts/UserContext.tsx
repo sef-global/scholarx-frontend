@@ -17,7 +17,7 @@ export const UserContext = createContext<UserContextType | null>(null);
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const { data: user, isLoading: isUserLoading } = useProfile();
+  const { data: user, isUserLoading } = useProfile();
   const isUserAdmin = user?.type === ProfileTypes.ADMIN;
   const isUserMentor =
     user?.mentor?.some(

@@ -3,7 +3,7 @@ import { API_URL } from '../constants';
 import axios from 'axios';
 import { type MentorApplication, type Mentor } from '../types';
 
-const useMentor = (mentorId: string | null) => {
+const useMentor = (mentorId: string | null | undefined) => {
   const queryClient = useQueryClient();
 
   const { isLoading, error, data } = useQuery({
