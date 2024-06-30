@@ -3,7 +3,11 @@ import {
   type MentorApplicationSchema,
   type MenteeApplicationSchema,
 } from './schemas';
-import { type ApplicationStatus, type ProfileTypes } from './enums';
+import {
+  type StatusUpdatedBy,
+  type ApplicationStatus,
+  type ProfileTypes,
+} from './enums';
 
 export interface Category {
   category: string;
@@ -36,6 +40,8 @@ export interface Mentee {
   created_at: Date;
   updated_at: Date;
   certificate_id: string;
+  status_updated_by?: StatusUpdatedBy;
+  status_updated_date?: Date;
   journal: string;
 }
 

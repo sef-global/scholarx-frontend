@@ -1,9 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { API_URL } from '../constants';
 import axios from 'axios';
-import { type Mentor } from '../types';
+import { type MentorApplication, type Mentor } from '../types';
 
-const useMentor = (mentorId: string | undefined) => {
+const useMentor = (mentorId: string | null | undefined) => {
   const queryClient = useQueryClient();
 
   const { isLoading, error, data } = useQuery({
@@ -36,10 +36,37 @@ const useMentor = (mentorId: string | undefined) => {
     },
   });
 
+  const {
+    mutate: createMentorApplication,
+    error: applicationError,
+    isSuccess: applicationSuccess,
+    isError: isApplicationError,
+    isPending: isApplicationSubmitting,
+  } = useMutation({
+    mutationFn: async (data: MentorApplication) => {
+      await axios.post(
+        `${API_URL}/mentors`,
+        {
+          application: data,
+          categoryId: data.category,
+        },
+        { withCredentials: true }
+      );
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['mentor', mentorId] });
+    },
+  });
+
   return {
     isLoading,
     error,
     updateAvailability,
+    createMentorApplication,
+    applicationSuccess,
+    isApplicationSubmitting,
+    applicationError,
+    isApplicationError,
     data,
   };
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { useMentees } from '../../hooks/useMentees';
 import { Link, Route, Routes } from 'react-router-dom';
 import MenteeProfile from '../../components/MenteeProfile';

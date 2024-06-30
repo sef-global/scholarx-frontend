@@ -6,7 +6,11 @@ import { type Profile } from '../types';
 const useProfile = () => {
   const queryClient = useQueryClient();
 
-  const { isLoading, error, data } = useQuery({
+  const {
+    isFetching: isUserLoading,
+    error,
+    data,
+  } = useQuery({
     queryKey: ['profile'],
     initialData: null,
     queryFn: async () => {
@@ -56,7 +60,7 @@ const useProfile = () => {
 
   return {
     isPending,
-    isLoading,
+    isUserLoading,
     error,
     data,
     refetch: async () => {

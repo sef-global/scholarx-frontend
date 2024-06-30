@@ -1,4 +1,5 @@
-import React, { type ChangeEvent, useContext, useState } from 'react';
+import type React from 'react';
+import { type ChangeEvent, useContext, useState } from 'react';
 import { UserContext, type UserContextType } from '../../contexts/UserContext';
 import useProfile from '../../hooks/useProfile';
 import { type Profile } from '../../types';

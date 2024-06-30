@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { type Mentee } from '../../types.ts';
 import { Link } from 'react-router-dom';
 import UserIcon from '../../assets/svg/Icons/UserIcon.tsx';
@@ -28,9 +28,18 @@ const MenteeCard: React.FC<MenteeCardProps> = ({ mentee }) => {
         <h5 className="text-lg font-bold">
           {mentee.application.firstName} {mentee.application.lastName}
         </h5>
-        <p className="text-sm">{mentee.application.position}</p>
-        <p className="text-xs text-gray-500">{mentee.application.company}</p>
-        <p className="text-xs text-gray-500">{mentee.application.university}</p>
+        {mentee.application.isUndergrad ? (
+          <p className="text-xs text-gray-500">
+            {mentee.application.university}
+          </p>
+        ) : (
+          <>
+            <p className="text-sm">{mentee.application.position}</p>,
+            <p className="text-xs text-gray-500">
+              {mentee.application.company}
+            </p>
+          </>
+        )}
       </div>
     </Link>
   );

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import type React from 'react';
+import { useState } from 'react';
 import { type Mentee } from '../../../../types';
 import useMentees from '../../../../hooks/admin/useMentees';
 import { Link } from 'react-router-dom';

@@ -1,16 +1,18 @@
-import React, { type ChangeEvent, useState, useEffect } from 'react';
-import axios, { AxiosError } from 'axios';
+import type React from 'react';
+import { type ChangeEvent, useState, useEffect } from 'react';
+import { AxiosError } from 'axios';
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { API_URL } from '../../constants';
 import useCategories from '../../hooks/useCategories';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
 import { MentorApplicationSchema } from '../../schemas';
 import { type MentorApplication } from '../../types';
 import FormCheckbox from '../../components/FormFields/MentorApplication/FormCheckbox';
 import FormInput from '../../components/FormFields/MentorApplication/FormInput';
 import FormTextarea from '../../components/FormFields/MentorApplication/FormTextarea';
 import useProfile from '../../hooks/useProfile';
+import { useLoginModalContext } from '../../contexts/LoginModalContext';
+import useMentor from '../../hooks/useMentor';
+import { Link } from 'react-router-dom';
 
 const steps = [
   {
@@ -32,7 +34,7 @@ const steps = [
 ];
 
 const MentorRegistrationPage: React.FC = () => {
-  const { data: user, updateProfile } = useProfile();
+  const { data: user, updateProfile, isUserLoading } = useProfile();
   const {
     register,
     handleSubmit,
@@ -53,6 +55,14 @@ const MentorRegistrationPage: React.FC = () => {
     },
   });
   const { error: categoryError, data: categories } = useCategories();
+  const {
+    createMentorApplication,
+    applicationError,
+    applicationSuccess,
+    isApplicationError,
+    isApplicationSubmitting,
+  } = useMentor(null);
+  const { handleLoginModalOpen } = useLoginModalContext();
   const [image, setImage] = useState<File | null>(null);
   const [profilePic, setProfilePic] = useState(user?.image_url);
   const [currentStep, setCurrentStep] = useState(0);
@@ -78,6 +88,10 @@ const MentorRegistrationPage: React.FC = () => {
     setCurrentStep((prevStep) => prevStep + 1);
   };
 
+  if (!isUserLoading && !user) {
+    handleLoginModalOpen();
+  }
+
   const handlePrev = (): void => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
@@ -101,25 +115,6 @@ const MentorRegistrationPage: React.FC = () => {
       updateProfile({ profile: null, image });
     }
   };
-
-  const {
-    mutate: createMentorApplication,
-    error: applicationError,
-    isSuccess: applicationSuccess,
-    isError: isApplicationError,
-    isPending: isApplicationSubmitting,
-  } = useMutation({
-    mutationFn: async (data: MentorApplication) => {
-      await axios.post(
-        `${API_URL}/mentors`,
-        {
-          application: data,
-          categoryId: data.category,
-        },
-        { withCredentials: true }
-      );
-    },
-  });
 
   const handleProfilePicChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files != null) {
@@ -436,8 +431,12 @@ const MentorRegistrationPage: React.FC = () => {
           </div>
         ) : null}
         <hr className="border-t border-gray-300 my-6" />
-        <div className="flex justify-between">
-          {currentStep > 0 && (
+        <div
+          className={`flex ${
+            applicationSuccess ? 'justify-end' : 'justify-between'
+          }`}
+        >
+          {currentStep > 0 && !applicationSuccess && (
             <button
               type="button"
               onClick={handlePrev}
@@ -455,13 +454,21 @@ const MentorRegistrationPage: React.FC = () => {
               Next
             </button>
           )}
-          {currentStep === 2 && (
+          {currentStep === 2 && !applicationSuccess && (
             <button
               type="submit"
               className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-1 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-small rounded-md text-sm inline-flex items-center px-3 py-1.5 text-center me-2"
             >
               {isApplicationSubmitting ? 'Submitting...' : 'Submit'}
             </button>
+          )}
+          {applicationSuccess && (
+            <Link
+              to="/"
+              className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-1 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-small rounded-md text-sm inline-flex items-center px-3 py-1.5 text-center me-2"
+            >
+              Back to home
+            </Link>
           )}
         </div>
       </form>
