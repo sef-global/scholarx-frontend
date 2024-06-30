@@ -11,6 +11,7 @@ import FormTextarea from '../../components/FormFields/MentorApplication/FormText
 import useProfile from '../../hooks/useProfile';
 import { useLoginModalContext } from '../../contexts/LoginModalContext';
 import useMentor from '../../hooks/useMentor';
+import { Link } from 'react-router-dom';
 
 const steps = [
   {
@@ -429,8 +430,12 @@ const MentorRegistrationPage: React.FC = () => {
           </div>
         ) : null}
         <hr className="border-t border-gray-300 my-6" />
-        <div className="flex justify-between">
-          {currentStep > 0 && (
+        <div
+          className={`flex ${
+            applicationSuccess ? 'justify-end' : 'justify-between'
+          }`}
+        >
+          {currentStep > 0 && !applicationSuccess && (
             <button
               type="button"
               onClick={handlePrev}
@@ -448,13 +453,21 @@ const MentorRegistrationPage: React.FC = () => {
               Next
             </button>
           )}
-          {currentStep === 2 && (
+          {currentStep === 2 && !applicationSuccess && (
             <button
               type="submit"
               className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-1 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-small rounded-md text-sm inline-flex items-center px-3 py-1.5 text-center me-2"
             >
               {isApplicationSubmitting ? 'Submitting...' : 'Submit'}
             </button>
+          )}
+          {applicationSuccess && (
+            <Link
+              to="/"
+              className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-1 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-small rounded-md text-sm inline-flex items-center px-3 py-1.5 text-center me-2"
+            >
+              Back to home
+            </Link>
           )}
         </div>
       </form>

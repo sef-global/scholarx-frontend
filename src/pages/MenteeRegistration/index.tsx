@@ -10,7 +10,7 @@ import { MenteeApplicationSchema } from '../../schemas';
 import FormCheckbox from '../../components/FormFields/MenteeApplication/FormCheckbox';
 import FormInput from '../../components/FormFields/MenteeApplication/FormInput';
 import useProfile from '../../hooks/useProfile';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const steps = [
   {
@@ -401,8 +401,12 @@ const MenteeRegistration: React.FC = () => {
           </div>
         ) : null}
         <hr className="border-t border-gray-300 my-6" />
-        <div className="flex justify-between">
-          {currentStep > 0 && (
+        <div
+          className={`flex ${
+            applicationSuccess ? 'justify-end' : 'justify-between'
+          }`}
+        >
+          {currentStep > 0 && !applicationSuccess && (
             <button
               type="button"
               onClick={handlePrev}
@@ -420,13 +424,21 @@ const MenteeRegistration: React.FC = () => {
               Next
             </button>
           )}
-          {currentStep === 2 && (
+          {currentStep === 2 && !applicationSuccess && (
             <button
               type="submit"
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
             >
               {isApplicationPending ? 'Submitting...' : 'Submit'}
             </button>
+          )}
+          {applicationSuccess && (
+            <Link
+              to="/"
+              className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-1 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-small rounded-md text-sm inline-flex items-center px-3 py-1.5 text-center me-2"
+            >
+              Back to home
+            </Link>
           )}
         </div>
       </form>
