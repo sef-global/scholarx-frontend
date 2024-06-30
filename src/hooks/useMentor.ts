@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { API_URL } from '../constants';
 import axios from 'axios';
-import { MentorApplication, type Mentor } from '../types';
+import { type MentorApplication, type Mentor } from '../types';
 
 const useMentor = (mentorId: string | null) => {
   const queryClient = useQueryClient();

@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { ApplicationStatus } from '../../enums';
 import useMyApplications from '../../hooks/useMyApplications';
 import MentorCard from '../../components/MentorCard/MentorCard.component';

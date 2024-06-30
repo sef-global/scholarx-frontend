@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { getStateColor } from '../../utils';
 import { useParams } from 'react-router-dom';
 import useMentor from '../../hooks/admin/useMentor';

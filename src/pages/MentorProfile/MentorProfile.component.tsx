@@ -1,4 +1,5 @@
-import React, { useContext, useState } from 'react';
+import type React from 'react';
+import { useContext, useState } from 'react';
 import useMentor from '../../hooks/useMentor';
 import { useParams } from 'react-router';
 import { Link, useNavigate } from 'react-router-dom';

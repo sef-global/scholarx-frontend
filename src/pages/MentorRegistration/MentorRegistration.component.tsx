@@ -1,4 +1,5 @@
-import React, { type ChangeEvent, useState, useEffect } from 'react';
+import type React from 'react';
+import { type ChangeEvent, useState, useEffect } from 'react';
 import { AxiosError } from 'axios';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import useCategories from '../../hooks/useCategories';

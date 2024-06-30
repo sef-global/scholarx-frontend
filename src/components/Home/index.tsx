@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import type React from 'react';
+import { useContext } from 'react';
 import FAQSection from '../FAQ';
 import menteeFAQs from '../FAQ/MenteeFAQs.json';
 import mentorFAQs from '../FAQ/MentorFAQs.json';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLoginModalContext } from '../../contexts/LoginModalContext';
-import { UserContext, UserContextType } from '../../contexts/UserContext';
+import { UserContext, type UserContextType } from '../../contexts/UserContext';
 
 const logos = [
   'google.png',

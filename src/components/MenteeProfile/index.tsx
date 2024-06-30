@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { ApplicationStatus } from '../../enums';
 import { useMentees } from '../../hooks/useMentees';
 import UserIcon from '../../assets/svg/Icons/UserIcon';

@@ -1,10 +1,5 @@
-import React, {
-  type RefObject,
-  useContext,
-  useRef,
-  useState,
-  useEffect,
-} from 'react';
+import type React from 'react';
+import { type RefObject, useContext, useRef, useState, useEffect } from 'react';
 
 import MenuDrawer from '../MenuDrawer';
 import LoginModal from '../../LoginModal';

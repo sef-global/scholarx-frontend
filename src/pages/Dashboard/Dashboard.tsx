@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import OngoingMentorshipPrograms from './scenes/OngoingMentorshipPrograms/OngoingMentorshipPrograms';
 import MenteeApplications from './scenes/MenteeApplications/MenteeApplications';

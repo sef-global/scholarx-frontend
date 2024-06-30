@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { getStateColor } from '../../utils';
 import UserIcon from '../../assets/svg/Icons/UserIcon';
 import { useParams } from 'react-router-dom';

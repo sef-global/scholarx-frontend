@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { type Mentee } from '../../types.ts';
 import { Link } from 'react-router-dom';
 import UserIcon from '../../assets/svg/Icons/UserIcon.tsx';

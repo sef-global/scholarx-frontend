@@ -1,4 +1,5 @@
-import React, { type ChangeEvent, useState } from 'react';
+import type React from 'react';
+import { type ChangeEvent, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { API_URL } from '../../constants';

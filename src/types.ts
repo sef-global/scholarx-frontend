@@ -4,7 +4,7 @@ import {
   type MenteeApplicationSchema,
 } from './schemas';
 import {
-  StatusUpdatedBy,
+  type StatusUpdatedBy,
   type ApplicationStatus,
   type ProfileTypes,
 } from './enums';
