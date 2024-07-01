@@ -1,12 +1,14 @@
-import React, { useContext, useState } from 'react';
+import type React from 'react';
+import { useContext, useState } from 'react';
 import useMentor from '../../hooks/useMentor';
 import { useParams } from 'react-router';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import UserIcon from '../../assets/svg/Icons/UserIcon';
 import { useLoginModalContext } from '../../contexts/LoginModalContext';
 import { UserContext, type UserContextType } from '../../contexts/UserContext';
 import Toast from '../../components/Toast';
 import ShareIcon from '../../assets/svg/Icons/ShareIcon';
+import ChevronRightIcon from '../../assets/svg/Icons/ChevronRightIcon';
 
 const MentorProfile: React.FC = () => {
   const { mentorId } = useParams();
@@ -24,7 +26,7 @@ const MentorProfile: React.FC = () => {
     }
   };
 
-  const { data: mentor } = useMentor(mentorId);
+  const { data: mentor } = useMentor(mentorId as string);
 
   const copyToClipboard = () => {
     navigator.clipboard
@@ -37,12 +39,32 @@ const MentorProfile: React.FC = () => {
 
   return (
     <>
+      <nav aria-label="Breadcrumb">
+        <ol className="flex items-center gap-1 text-sm text-gray-600">
+          <li>
+            <Link
+              to="/mentors"
+              className="block transition hover:text-gray-700"
+            >
+              Mentors
+            </Link>
+          </li>
+          <li>
+            <ChevronRightIcon />
+          </li>
+          <li>
+            <span className="block transition">
+              {mentor?.application.firstName} {mentor?.application.lastName}
+            </span>
+          </li>
+        </ol>
+      </nav>
       {isURLCopied && (
         <Toast message={'Profile link copied successfully'} type={'success'} />
       )}
 
-      <div className="flex items-center gap-4 w-full">
-        <div className="md:w-28">
+      <div className="flex items-center gap-4 w-full mt-4">
+        <div className="w-16 md:w-28">
           {mentor?.profile.image_url !== '' ? (
             <img
               src={mentor?.profile.image_url}
@@ -140,6 +162,10 @@ const MentorProfile: React.FC = () => {
       <div className="pb-4">
         <h2 className="text-lg font-medium ">Bio</h2>
         <p className="font-light">{mentor?.application.bio}</p>
+      </div>
+      <div className="pb-4">
+        <h2 className="text-lg font-medium ">Available mentee slots</h2>
+        <p className="font-light">{mentor?.application.noOfMentees}</p>
       </div>
     </>
   );

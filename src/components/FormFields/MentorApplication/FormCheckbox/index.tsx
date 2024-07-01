@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import type { FieldError, UseFormRegister } from 'react-hook-form';
 import { type MentorApplication } from '../../../../types';
 

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 import { useResetPassword } from '../../hooks/useForgotPassword';
 import { z } from 'zod';
 import Loading from '../../assets/svg/Loading';

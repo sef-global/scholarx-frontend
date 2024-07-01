@@ -2,11 +2,7 @@ import { ProfileTypes } from '../enums';
 import type { Mentee, Mentor } from '../types';
 import { mentors } from './mentors';
 
-type MenteeWithoutProfilePic = Omit<Mentee, 'application'> & {
-  application: Omit<Mentee['application'], 'profilePic'>;
-};
-
-export const mentees: MenteeWithoutProfilePic[] = [
+export const mentees: Mentee[] = [
   {
     uuid: 'a12aa550-48ba-4ec0-96bd-aca9b54c7e2f',
     state: 'pending',
@@ -18,14 +14,15 @@ export const mentees: MenteeWithoutProfilePic[] = [
       cv: 'https://example.com/cv',
       isUndergrad: true,
       consentGiven: true,
-      graduatedYear: 2023,
+      graduatedYear: undefined,
       university: 'Example University',
       yearOfStudy: 2,
       course: 'Computer Science',
       mentorId: '0d22aa50-48ba-4ec0-96bd-aca9b54c7e2f',
       submission: 'https://example.com/submission',
-      company: 'Tech Corp',
-      position: 'Intern',
+      company: '',
+      position: '',
+      profilePic: '',
     },
     mentor: mentors[0] as Mentor,
     profile: {
@@ -64,6 +61,7 @@ export const mentees: MenteeWithoutProfilePic[] = [
       submission: 'https://example.com/submission',
       company: 'Marketing Inc',
       position: 'Assistant',
+      profilePic: '',
     },
     mentor: mentors[1] as Mentor,
     profile: {
@@ -102,6 +100,7 @@ export const mentees: MenteeWithoutProfilePic[] = [
       submission: 'https://example.com/submission',
       company: 'Creative Agency',
       position: 'Designer',
+      profilePic: '',
     },
     mentor: mentors[0] as Mentor,
     profile: {

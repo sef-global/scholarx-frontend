@@ -9,3 +9,8 @@ export enum ApplicationStatus {
   APPROVED = 'approved',
   COMPLATED = 'completed',
 }
+
+export enum StatusUpdatedBy {
+  ADMIN = 'admin',
+  MENTOR = 'mentor',
+}

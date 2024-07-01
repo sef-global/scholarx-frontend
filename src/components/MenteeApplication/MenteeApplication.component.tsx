@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { getStateColor } from '../../utils';
 import UserIcon from '../../assets/svg/Icons/UserIcon';
 import { useParams } from 'react-router-dom';
@@ -58,6 +58,13 @@ const MenteeApplication: React.FC = () => {
                 >
                   {mentee?.state}
                 </span>
+                {mentee?.state !== ApplicationStatus.PENDING &&
+                  mentee?.status_updated_date && (
+                    <span>
+                      by {mentee?.status_updated_by} on{' '}
+                      {new Date(mentee?.status_updated_date).toDateString()}
+                    </span>
+                  )}
               </div>
               <span className="text-lg font-light">
                 {mentee?.application.isUndergrad ? (

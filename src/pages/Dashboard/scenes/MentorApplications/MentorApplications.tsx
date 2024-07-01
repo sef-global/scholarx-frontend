@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import type React from 'react';
+import { useMemo, useState } from 'react';
 import { type Mentor } from '../../../../types';
 import { useMentors } from '../../../../hooks/admin/useMentors';
 import useCategories from '../../../../hooks/useCategories';
@@ -22,6 +23,16 @@ const MentorApplications: React.FC = () => {
       queryKey: ['mentors', selectedCategory],
     });
   };
+
+  const totalMentees = useMemo(() => {
+    let total = 0;
+    for (const mentor of mentors.filter(
+      (mentor) => mentor.state === 'approved'
+    )) {
+      total += mentor.application.noOfMentees;
+    }
+    return total;
+  }, [mentors]);
 
   const renderFilters = () => {
     const filters = [
@@ -91,27 +102,35 @@ const MentorApplications: React.FC = () => {
 
     return (
       <>
-        <input
-          type="text"
-          placeholder="Search by name"
-          value={searchTerm}
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-          }}
-          className="p-2 my-4 border border-gray-300 rounded-md"
-        />
-        <select
-          value={categoryFilter}
-          onChange={handleCategoryChange}
-          className="p-2 mb-4 border border-gray-300 rounded-md ml-4"
-        >
-          <option value="">All Categories</option>
-          {categories.map((category: { uuid: string; category: string }) => (
-            <option key={category.uuid} value={category.uuid}>
-              {category.category}
-            </option>
-          ))}
-        </select>
+        <div className="flex justify-between items-center">
+          <div>
+            <input
+              type="text"
+              placeholder="Search by name"
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+              }}
+              className="p-2 my-4 border border-gray-300 rounded-md"
+            />
+            <select
+              value={categoryFilter}
+              onChange={handleCategoryChange}
+              className="p-2 mb-4 border border-gray-300 rounded-md ml-4"
+            >
+              <option value="">All Categories</option>
+              {categories.map(
+                (category: { uuid: string; category: string }) => (
+                  <option key={category.uuid} value={category.uuid}>
+                    {category.category}
+                  </option>
+                )
+              )}
+            </select>
+          </div>
+          <p className="text-md m-4">Total Mentee Slots: {totalMentees}</p>
+        </div>
+
         <table className="w-full">
           <thead>
             <tr>

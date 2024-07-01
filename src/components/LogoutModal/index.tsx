@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import axios from 'axios';
 import { API_URL } from '../../constants';
 import { useNavigate } from 'react-router-dom';

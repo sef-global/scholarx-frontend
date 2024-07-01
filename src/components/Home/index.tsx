@@ -1,8 +1,11 @@
-import React from 'react';
+import type React from 'react';
+import { useContext } from 'react';
 import FAQSection from '../FAQ';
 import menteeFAQs from '../FAQ/MenteeFAQs.json';
 import mentorFAQs from '../FAQ/MentorFAQs.json';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useLoginModalContext } from '../../contexts/LoginModalContext';
+import { UserContext, type UserContextType } from '../../contexts/UserContext';
 
 const logos = [
   'google.png',
@@ -18,6 +21,19 @@ const logos = [
 ];
 
 const Home: React.FC = () => {
+  const { handleLoginModalOpen } = useLoginModalContext();
+  const navigate = useNavigate();
+
+  const { user } = useContext(UserContext) as UserContextType;
+
+  const handleMentorRegistration = (): void => {
+    if (user === null) {
+      handleLoginModalOpen();
+    } else {
+      navigate('/mentor-registration');
+    }
+  };
+
   return (
     <>
       <section className="flex flex-col md:flex-row items-center justify-between">
@@ -32,12 +48,19 @@ const Home: React.FC = () => {
                   Find a Mentor
                 </button>
               </Link>
+              <button
+                type="button"
+                onClick={handleMentorRegistration}
+                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+              >
+                Become a Mentor
+              </button>
             </div>
           </div>
         </div>
         <div className="col mt-[40px] flex justify-right">
           <img
-            src="/new-findmentor.png"
+            src="/new-findmentor.webp"
             alt="find-mentor"
             className="w-[40rem]"
           />
@@ -52,9 +75,9 @@ const Home: React.FC = () => {
           </div>
           <div className="grid justify-center pb-3 grid-cols-2 md:grid-cols-5 gap-5">
             {logos.map((logo, index) => (
-              <div key={index} className="p-2 w-40">
+              <div key={index} className="p-2">
                 <img
-                  className="mx-auto img-fluid"
+                  className="mx-auto img-fluid w-40"
                   src={`logos/${logo}`}
                   alt={`${logo.split('.')[0]} logo`}
                 />
@@ -68,7 +91,7 @@ const Home: React.FC = () => {
         <div className="mb-2">
           <img
             className="max-w-[300px] mx-auto  w-[100%]"
-            src="/success.png"
+            src="/success.webp"
             alt="success-image"
           />
         </div>
@@ -78,7 +101,7 @@ const Home: React.FC = () => {
             <br /> ScholarX Alumni
           </div>
           <div className="flex justify-center items-center">
-            <a href="#">
+            <a href="https://sefglobal.org/scholarx/archive/">
               <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
                 ScholarX Alumni
               </button>
@@ -94,9 +117,9 @@ const Home: React.FC = () => {
             <br /> mentors and mentees
           </div>
           <div className="flex justify-center items-center">
-            <a href="https://sefglobal.org/scholarx/archive/">
+            <a href="https://sefglobal.org/scholarx/success-stories/">
               <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
-                ScholarX Archive
+                Success Stories
               </button>
             </a>
           </div>
@@ -104,7 +127,7 @@ const Home: React.FC = () => {
         <div>
           <img
             className="max-w-[360px] mx-auto w-full"
-            src="/scholarX-archive.png"
+            src="/scholarX-archive.webp"
             alt="scholarX-archive-image"
           />
         </div>

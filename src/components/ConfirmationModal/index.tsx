@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import WarningIcon from '../../assets/svg/Icons/WarningIcon';
 import CloseIcon from '../../assets/svg/Icons/CloseIcon';
 
