@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 import { type Mentee } from '../../types.ts';
 import { Link } from 'react-router-dom';
 import UserIcon from '../../assets/svg/Icons/UserIcon.tsx';
@@ -10,7 +10,7 @@ interface MenteeCardProps {
 const MenteeCard: React.FC<MenteeCardProps> = ({ mentee }) => {
   return (
     <Link
-      className="border border-gray-200 p-4 rounded-md shadow-sm w-52"
+      className="border border-gray-200 p-4 rounded-md shadow-sm w-52 flex flex-col h-full"
       to={`/mentor/my-mentees/${mentee.uuid}`}
     >
       {mentee.profile.image_url !== '' ? (

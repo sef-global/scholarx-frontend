@@ -5,7 +5,6 @@ export const theme = {
     colors: {
       'primary-blue': '#1677FF',
       'darkmod-blue': '#3D317C',
-      'desatdark-blue': '#6D7893',
     },
   },
 };

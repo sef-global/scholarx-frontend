@@ -18,7 +18,7 @@ const useMentor = (mentorId: string | null | undefined) => {
     },
   });
 
-  const { mutate: updateAvailability } = useMutation({
+  const { mutateAsync: updateAvailability } = useMutation({
     mutationFn: async (availability: boolean) => {
       if (mentorId != null) {
         const { data } = await axios.put(
@@ -37,7 +37,7 @@ const useMentor = (mentorId: string | null | undefined) => {
   });
 
   const {
-    mutate: createMentorApplication,
+    mutateAsync: createMentorApplication,
     error: applicationError,
     isSuccess: applicationSuccess,
     isError: isApplicationError,

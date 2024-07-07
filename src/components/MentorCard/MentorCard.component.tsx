@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 import { type Mentor } from '../../types.ts';
 import { Link } from 'react-router-dom';
 import UserIcon from '../../assets/svg/Icons/UserIcon.tsx';
@@ -10,14 +10,14 @@ interface MentorCardProps {
 const MentorCard: React.FC<MentorCardProps> = ({ mentor }) => {
   return (
     <Link
-      className="border border-gray-200 p-4 rounded-md shadow-md w-52"
+      className="border border-gray-200 p-4 rounded-md shadow-md w-52 flex flex-col h-full"
       to={`/mentors/${mentor.uuid}`}
     >
       {mentor.profile.image_url !== '' ? (
         <img
           src={mentor.profile.image_url}
           alt="Mentor Avatar"
-          className="w-24 h-24 rounded-full mx-auto mb-4"
+          className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
         />
       ) : (
         <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center">

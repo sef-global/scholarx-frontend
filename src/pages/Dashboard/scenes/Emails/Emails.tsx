@@ -1,5 +1,4 @@
-import type React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import EmailHistory from '../../../../components/Dashboard/scenes/Emails/EmailHistory';
 import { EMAILAPI_SENDER } from '../../../../constants';
 import Loading from '../../../../assets/svg/Loading';

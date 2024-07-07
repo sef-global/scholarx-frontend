@@ -1,5 +1,4 @@
-import type React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useResetPassword } from '../../hooks/useForgotPassword';
 import { type PasswordResetData } from '../../types';

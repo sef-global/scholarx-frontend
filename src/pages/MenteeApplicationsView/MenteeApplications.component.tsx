@@ -1,5 +1,4 @@
-import type React from 'react';
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import useMyMentees from '../../hooks/useMyMentees';
 import { ApplicationStatus } from '../../enums';
 import useMentor from '../../hooks/useMentor';
@@ -12,8 +11,8 @@ const MenteeApplications: React.FC = () => {
   const [isAvailable, setIsAvailable] = useState(mentor?.availability);
   const { updateAvailability } = useMentor(mentor?.uuid);
 
-  const handleAvailability = (availability: boolean) => {
-    updateAvailability(availability);
+  const handleAvailability = async (availability: boolean) => {
+    await updateAvailability(availability);
     setIsAvailable(availability);
   };
 
@@ -30,8 +29,8 @@ const MenteeApplications: React.FC = () => {
                     ? 'bg-blue-600 text-white'
                     : 'bg-gray-300 text-gray-800'
                 }`}
-                onClick={() => {
-                  handleAvailability(true);
+                onClick={async () => {
+                  await handleAvailability(true);
                 }}
               >
                 Available
@@ -42,8 +41,8 @@ const MenteeApplications: React.FC = () => {
                     ? 'bg-blue-600 text-white'
                     : 'bg-gray-300 text-gray-800'
                 }`}
-                onClick={() => {
-                  handleAvailability(false);
+                onClick={async () => {
+                  await handleAvailability(false);
                 }}
               >
                 Not Available

@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 import Loading from '../../../../assets/svg/Loading';
 import { useEmails } from '../../../../hooks/useEmails';
 

@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 import { API_URL } from '../../constants';
 
 const handleLoginGoogle = (e: React.FormEvent): void => {

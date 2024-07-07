@@ -1,5 +1,4 @@
-import type React from 'react';
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import useMentor from '../../hooks/useMentor';
 import { useParams } from 'react-router';
 import { Link, useNavigate } from 'react-router-dom';
@@ -69,7 +68,7 @@ const MentorProfile: React.FC = () => {
             <img
               src={mentor?.profile.image_url}
               alt="Mentor Avatar"
-              className="w-12 h-12 md:w-24 md:h-24 rounded-full mb-4"
+              className="w-12 h-12 md:w-24 md:h-24 rounded-full mb-4 object-cover"
             />
           ) : (
             <div className="w-12 h-12 md:w-24 md:h-24 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center">

@@ -1,5 +1,4 @@
-import type React from 'react';
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { type Mentor } from '../../../../types';
 import { useMentors } from '../../../../hooks/admin/useMentors';
 import useCategories from '../../../../hooks/useCategories';

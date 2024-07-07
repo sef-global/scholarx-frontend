@@ -1,5 +1,4 @@
-import type React from 'react';
-import { createContext } from 'react';
+import React, { createContext } from 'react';
 import type { Mentor, Profile } from '../types';
 import { ApplicationStatus, ProfileTypes } from '../enums';
 import useProfile from '../hooks/useProfile';

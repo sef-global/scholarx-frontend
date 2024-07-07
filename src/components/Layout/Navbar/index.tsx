@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 import { type RefObject, useContext, useRef, useState, useEffect } from 'react';
 
 import MenuDrawer from '../MenuDrawer';
