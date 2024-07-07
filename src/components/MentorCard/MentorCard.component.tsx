@@ -10,7 +10,7 @@ interface MentorCardProps {
 const MentorCard: React.FC<MentorCardProps> = ({ mentor }) => {
   return (
     <Link
-      className="border border-gray-200 p-4 rounded-md shadow-md w-52"
+      className="border border-gray-200 p-4 rounded-md shadow-md w-52 flex flex-col h-full"
       to={`/mentors/${mentor.uuid}`}
     >
       {mentor.profile.image_url !== '' ? (
