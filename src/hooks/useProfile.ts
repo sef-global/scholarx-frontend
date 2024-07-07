@@ -26,7 +26,7 @@ const useProfile = () => {
     },
   });
 
-  const { mutate: updateProfile, isPending } = useMutation({
+  const { mutateAsync: updateProfile, isPending } = useMutation({
     mutationFn: async ({
       profile,
       image,

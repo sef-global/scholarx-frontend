@@ -22,7 +22,7 @@ const useMentee = (menteeId: string | undefined) => {
   });
 
   const {
-    mutate: changeState,
+    mutateAsync: changeState,
     isSuccess,
     isError,
     isPending,

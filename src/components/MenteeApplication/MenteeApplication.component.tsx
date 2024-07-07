@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 import { getStateColor } from '../../utils';
 import UserIcon from '../../assets/svg/Icons/UserIcon';
 import { useParams } from 'react-router-dom';
@@ -17,8 +17,8 @@ const MenteeApplication: React.FC = () => {
     isError,
     isPending,
   } = useMentee(menteeId);
-  const handleStateChange = (newState: string) => {
-    changeState(newState);
+  const handleStateChange = async (newState: string) => {
+    await changeState(newState);
   };
 
   return (
@@ -38,7 +38,7 @@ const MenteeApplication: React.FC = () => {
               <img
                 src={mentee?.profile.image_url}
                 alt="Mentee Avatar"
-                className="w-24 h-24 rounded-full mb-4"
+                className="w-24 h-24 rounded-full mb-4 object-cover"
               />
             ) : (
               <div className="w-24 h-24 bg-gray-200 rounded-full mb-4 flex items-center justify-center">
@@ -81,11 +81,11 @@ const MenteeApplication: React.FC = () => {
             {mentee?.state === ApplicationStatus.PENDING && (
               <ApproveRejectButtons
                 isLoading={isPending}
-                approve={() => {
-                  handleStateChange('approved');
+                approve={async () => {
+                  await handleStateChange('approved');
                 }}
-                reject={() => {
-                  handleStateChange('rejected');
+                reject={async () => {
+                  await handleStateChange('rejected');
                 }}
               />
             )}

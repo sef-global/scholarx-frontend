@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import TwitterIcon from '../../../assets/svg/Icons/TwitterIcon';
 import FacebookIcon from '../../../assets/svg/Icons/FacebookIcon';

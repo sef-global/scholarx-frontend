@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 import { type Mentor } from '../../types.ts';
 import { Link } from 'react-router-dom';
 import UserIcon from '../../assets/svg/Icons/UserIcon.tsx';
@@ -17,7 +17,7 @@ const MentorCard: React.FC<MentorCardProps> = ({ mentor }) => {
         <img
           src={mentor.profile.image_url}
           alt="Mentor Avatar"
-          className="w-24 h-24 rounded-full mx-auto mb-4"
+          className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
         />
       ) : (
         <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center">

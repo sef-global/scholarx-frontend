@@ -26,7 +26,7 @@ export const useMentees = () => {
   });
 
   const {
-    mutate: updateMenteeStatus,
+    mutateAsync: updateMenteeStatus,
     isSuccess,
     isPending,
     isError,

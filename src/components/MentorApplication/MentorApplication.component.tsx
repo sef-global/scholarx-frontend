@@ -1,10 +1,11 @@
-import type React from 'react';
+import React from 'react';
 import { getStateColor } from '../../utils';
 import { useParams } from 'react-router-dom';
 import useMentor from '../../hooks/admin/useMentor';
 import Toast from '../Toast';
 import ApproveRejectButtons from '../ApproveRejectButtons';
 import { ApplicationStatus } from '../../enums';
+import UserIcon from '../../assets/svg/Icons/UserIcon';
 
 const MentorApplication: React.FC = () => {
   const { mentorId } = useParams();
@@ -16,8 +17,8 @@ const MentorApplication: React.FC = () => {
     isPending,
     isError,
   } = useMentor(mentorId);
-  const handleStateChange = (newState: string) => {
-    changeState(newState);
+  const handleStateChange = async (newState: string) => {
+    await changeState(newState);
   };
 
   return (
@@ -33,11 +34,17 @@ const MentorApplication: React.FC = () => {
       ) : (
         <div className="w-full space-y-8">
           <div className="flex items-center">
-            <img
-              src={mentor?.profile.image_url}
-              alt=""
-              className="w-24 h-24 rounded-full object-fill"
-            />
+            {mentor?.profile.image_url ? (
+              <img
+                src={mentor?.profile.image_url}
+                alt=""
+                className="w-24 h-24 rounded-full object-cover"
+              />
+            ) : (
+              <div className="w-12 h-12 md:w-24 md:h-24 bg-gray-200 rounded-full flex items-center justify-center">
+                <UserIcon />
+              </div>
+            )}
             <div className="ml-5">
               <div className="flex items-center space-x-3">
                 <span className="text-2xl font-semibold">
@@ -61,11 +68,11 @@ const MentorApplication: React.FC = () => {
             {mentor?.state === ApplicationStatus.PENDING && (
               <ApproveRejectButtons
                 isLoading={isPending}
-                approve={() => {
-                  handleStateChange('approved');
+                approve={async () => {
+                  await handleStateChange('approved');
                 }}
-                reject={() => {
-                  handleStateChange('rejected');
+                reject={async () => {
+                  await handleStateChange('rejected');
                 }}
               />
             )}

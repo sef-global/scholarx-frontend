@@ -21,7 +21,8 @@
     "@typescript-eslint/no-misused-promises": 0,
     "@typescript-eslint/strict-boolean-expressions": 0,
     "@typescript-eslint/no-unused-expressions": 0,
-    "@typescript-eslint/no-empty-function": 0
+    "@typescript-eslint/no-empty-function": 0,
+    "@typescript-eslint/consistent-type-imports": 0
   },
   "settings": {
     "react": {
