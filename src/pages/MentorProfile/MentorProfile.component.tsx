@@ -69,6 +69,7 @@ const MentorProfile: React.FC = () => {
               src={mentor?.profile.image_url}
               alt="Mentor Avatar"
               className="w-12 h-12 md:w-24 md:h-24 rounded-full mb-4 object-cover"
+              referrerPolicy="no-referrer"
             />
           ) : (
             <div className="w-12 h-12 md:w-24 md:h-24 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center">
@@ -96,7 +97,7 @@ const MentorProfile: React.FC = () => {
               </p>
             </div>
             <div className="self-center">
-              {!isUserMentor && (
+              {!isUserMentor && mentor?.availability && (
                 <button
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
                   onClick={onApply}
@@ -104,13 +105,16 @@ const MentorProfile: React.FC = () => {
                   Apply
                 </button>
               )}
+              <span className="text-red-400">
+                {!mentor?.availability && 'Mentor is not currently available'}
+              </span>
             </div>
           </div>
           <hr className="w-full mt-5" />
         </div>
       </div>
       <div className="md:flex flex-row h-1/3 py-4 md:py-9">
-        <div className="grid md:grid-cols-4 md:gap-9 md:w-2/3">
+        <div className="grid md:grid-cols-3 md:gap-9 md:w-3/4">
           <div>
             <h2 className="text-lg font-medium mt-5">Category</h2>
             <ul className="text-sm list-disc ml-4 font-light">
