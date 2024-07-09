@@ -18,7 +18,7 @@ const MentorCard: React.FC<MentorCardProps> = ({ mentor }) => {
           src={mentor.profile.image_url}
           alt="Mentor Avatar"
           className={`w-24 h-24 rounded-full mx-auto my-4 object-cover ${
-            !mentor.availability && 'opacity-60'
+            !mentor.availability ? 'opacity-60' : ''
           }`}
           referrerPolicy="no-referrer"
         />
