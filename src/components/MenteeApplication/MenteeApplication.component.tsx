@@ -93,8 +93,8 @@ const MenteeApplication: React.FC = () => {
             {mentee?.state === ApplicationStatus.APPROVED && (
               <CompleteButton
                 isLoading={isPending}
-                complete={() => {
-                  handleStateChange('completed');
+                complete={async () => {
+                  await handleStateChange('completed');
                 }}
               />
             )}
