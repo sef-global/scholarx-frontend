@@ -1,5 +1,4 @@
-import type React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { API_URL } from '../../constants';
 import closeIcon from '../../assets/svg/closeIcon.svg';

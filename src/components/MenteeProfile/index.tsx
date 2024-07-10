@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 import { ApplicationStatus } from '../../enums';
 import { useMentees } from '../../hooks/useMentees';
 import UserIcon from '../../assets/svg/Icons/UserIcon';
@@ -13,9 +13,9 @@ const MenteeProfile: React.FC = () => {
   const { data: mentee } = useMentee(menteeId);
   const { updateMenteeStatus, isSuccess, isPending, isError } = useMentees();
 
-  const handleStateUpdate = (state: ApplicationStatus) => {
+  const handleStateUpdate = async (state: ApplicationStatus) => {
     if (mentee != null) {
-      updateMenteeStatus({ menteeId: mentee.uuid, state });
+      await updateMenteeStatus({ menteeId: mentee.uuid, state });
     }
   };
 
@@ -79,11 +79,11 @@ const MenteeProfile: React.FC = () => {
           {mentee?.state === ApplicationStatus.PENDING && (
             <ApproveRejectButtons
               isLoading={isPending}
-              approve={() => {
-                handleStateUpdate(ApplicationStatus.APPROVED);
+              approve={async () => {
+                await handleStateUpdate(ApplicationStatus.APPROVED);
               }}
-              reject={() => {
-                handleStateUpdate(ApplicationStatus.REJECTED);
+              reject={async () => {
+                await handleStateUpdate(ApplicationStatus.REJECTED);
               }}
             />
           )}

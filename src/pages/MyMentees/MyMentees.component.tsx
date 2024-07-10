@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 import { useMentees } from '../../hooks/useMentees';
 import { Link, Route, Routes } from 'react-router-dom';
 import MenteeProfile from '../../components/MenteeProfile';
@@ -29,7 +29,7 @@ const MyMentees: React.FC = () => {
                     <img
                       src={mentee.profile.image_url}
                       alt="Mentee Avatar"
-                      className="w-12 h-12 rounded-full mx-auto mr-3"
+                      className="w-12 h-12 rounded-full mx-auto mr-3 object-cover"
                     />
                   ) : (
                     <div className="w-12 h-12 bg-gray-200 rounded-full mx-auto mr-3 flex items-center justify-center">

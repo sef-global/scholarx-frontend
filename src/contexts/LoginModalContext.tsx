@@ -1,5 +1,4 @@
-import type React from 'react';
-import { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext } from 'react';
 
 const LoginModalContext = createContext<{
   handleLoginModalOpen: () => void;

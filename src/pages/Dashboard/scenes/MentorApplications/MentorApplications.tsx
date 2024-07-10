@@ -1,5 +1,4 @@
-import type React from 'react';
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { type Mentor } from '../../../../types';
 import { useMentors } from '../../../../hooks/admin/useMentors';
 import useCategories from '../../../../hooks/useCategories';
@@ -27,7 +26,7 @@ const MentorApplications: React.FC = () => {
   const totalMentees = useMemo(() => {
     let total = 0;
     for (const mentor of mentors.filter(
-      (mentor) => mentor.state === 'approved'
+      (mentor) => mentor.state === 'approved' && mentor.availability
     )) {
       total += mentor.application.noOfMentees;
     }

@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 import { type ChangeEvent, useContext, useState } from 'react';
 import { UserContext, type UserContextType } from '../../contexts/UserContext';
 import useProfile from '../../hooks/useProfile';
@@ -21,14 +21,14 @@ const EditProfileForm: React.FC = () => {
     }
   };
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const profile = {
       first_name: firstName,
       last_name: lastName,
       contact_email: email,
     };
-    updateProfile({
+    await updateProfile({
       profile: profile as Profile,
       image,
     });

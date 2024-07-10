@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 import { type ChangeEvent, useState, useEffect } from 'react';
 import { AxiosError } from 'axios';
 import { useForm, type SubmitHandler } from 'react-hook-form';
@@ -110,9 +110,9 @@ const MentorRegistrationPage: React.FC = () => {
 
   const onSubmit: SubmitHandler<MentorApplication> = async (data) => {
     const { profilePic, ...application } = data;
-    createMentorApplication(application as MentorApplication);
+    await createMentorApplication(application as MentorApplication);
     if (image) {
-      updateProfile({ profile: null, image });
+      await updateProfile({ profile: null, image });
     }
   };
 

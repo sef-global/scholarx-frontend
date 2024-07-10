@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 
 const YoutubeIcon: React.FC = () => {
   return (

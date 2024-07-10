@@ -1,5 +1,4 @@
-import type React from 'react';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import FAQSection from '../FAQ';
 import menteeFAQs from '../FAQ/MenteeFAQs.json';
 import mentorFAQs from '../FAQ/MentorFAQs.json';
