@@ -3,8 +3,14 @@ import { z } from 'zod';
 export const MenteeApplicationSchema = z.object({
   firstName: z.string().min(1, { message: 'First name cannot be empty' }),
   lastName: z.string().min(1, { message: 'Last name cannot be empty' }),
-  email: z.string().email({ message: 'Invalid email address' }),
-  contactNo: z.string().min(1, { message: 'Contact number cannot be empty' }),
+  email: z
+  .string()
+  .email({ message: 'Invalid email address' })
+  .regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, { message: 'Invalid email address format' }),
+contactNo: z
+  .string()
+  .min(1, { message: 'Contact number cannot be empty' })
+  .regex(/^\+?[1-9]\d{1,14}$/, { message: 'Invalid contact number format' }), 
   company: z.string().min(1, { message: 'Company cannot be empty' }).optional(),
   profilePic: z
     .string()
@@ -48,8 +54,14 @@ export const MenteeApplicationSchema = z.object({
 export const MentorApplicationSchema = z.object({
   firstName: z.string().min(1, { message: 'First name cannot be empty' }),
   lastName: z.string().min(1, { message: 'Last name cannot be empty' }),
-  email: z.string().email({ message: 'Invalid email address' }),
-  contactNo: z.string().min(1, { message: 'Contact number cannot be empty' }),
+  email: z
+  .string()
+  .email({ message: 'Invalid email address' })
+  .regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, { message: 'Invalid email address format' }),
+contactNo: z
+  .string()
+  .min(1, { message: 'Contact number cannot be empty' })
+  .regex(/^\+?[1-9]\d{1,14}$/, { message: 'Invalid contact number format' }), 
   country: z.string().min(1, { message: 'Country cannot be empty' }),
   position: z.string().min(1, { message: 'Position cannot be empty' }),
   expertise: z.string().min(1, { message: 'Expertise cannot be empty' }),
