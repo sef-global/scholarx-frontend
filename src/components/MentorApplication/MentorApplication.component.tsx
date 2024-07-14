@@ -74,7 +74,6 @@ const MentorApplication: React.FC = () => {
                 reject={async () => {
                   await handleStateChange('rejected');
                 }}
-                canComplete={false}
               />
             )}
           </div>
