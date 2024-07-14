@@ -6,7 +6,6 @@ interface ApproveRejectButtonsProps {
   approve?: () => void;
   reject?: () => void;
   complete?: () => void;
-  canComplete: boolean;
 }
 
 const ApproveRejectButtons: React.FC<ApproveRejectButtonsProps> = ({
@@ -14,7 +13,6 @@ const ApproveRejectButtons: React.FC<ApproveRejectButtonsProps> = ({
   approve,
   reject,
   complete,
-  canComplete,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
@@ -49,7 +47,7 @@ const ApproveRejectButtons: React.FC<ApproveRejectButtonsProps> = ({
 
   return (
     <>
-      {!canComplete && (
+      {!complete && (
         <>
           <button
             className="inline-block rounded border px-10 py-2 my-2 mx-2 text-sm font-medium text-primary-blue border-primary-blue focus:outline-none focus:ring"
@@ -65,7 +63,7 @@ const ApproveRejectButtons: React.FC<ApproveRejectButtonsProps> = ({
           </button>
         </>
       )}
-      {canComplete && (
+      {complete && (
         <button
           className="inline-block rounded border px-10 py-2 my-2 mx-2 text-sm font-medium text-green-500 border-green-500 focus:outline-none focus:ring"
           onClick={handleComplete}

@@ -87,7 +87,6 @@ const MenteeApplication: React.FC = () => {
                 reject={async () => {
                   await handleStateChange('rejected');
                 }}
-                canComplete={false}
               />
             )}
             {mentee?.state === ApplicationStatus.APPROVED && (
@@ -96,7 +95,6 @@ const MenteeApplication: React.FC = () => {
                 complete={async () => {
                   await handleStateChange('completed');
                 }}
-                canComplete={true}
               />
             )}
           </div>
