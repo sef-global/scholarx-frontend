@@ -6,6 +6,7 @@ import useMentee from '../../hooks/admin/useMentee';
 import Toast from '../Toast';
 import ApproveRejectButtons from '../ApproveRejectButtons';
 import { ApplicationStatus } from '../../enums';
+import CompleteButton from '../CompleteButton';
 
 const MenteeApplication: React.FC = () => {
   const { menteeId } = useParams();
@@ -90,7 +91,7 @@ const MenteeApplication: React.FC = () => {
               />
             )}
             {mentee?.state === ApplicationStatus.APPROVED && (
-              <ApproveRejectButtons
+              <CompleteButton
                 isLoading={isPending}
                 complete={async () => {
                   await handleStateChange('completed');
