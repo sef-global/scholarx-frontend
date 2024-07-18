@@ -40,5 +40,23 @@
       ],
       "list": []
     }
+  },
+  {
+    "question": "Is this a free program?",
+    "answer": {
+      "paragraph": [
+        " Yes, this is a free program."
+      ],
+      "list": []
+    }
+  },
+  {
+    "question": "Who can apply for ScholarX?",
+    "answer": {
+      "paragraph": [
+        "While anyone can apply for ScholarX, priority will be given to undergraduates."
+      ],
+      "list": []
+    }
   }
 ]
