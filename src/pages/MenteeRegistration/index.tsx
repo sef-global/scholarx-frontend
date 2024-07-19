@@ -45,6 +45,7 @@ const MenteeRegistration: React.FC = () => {
       email: user?.primary_email,
       profilePic: user?.image_url,
       mentorId,
+      isUndergrad: true,
     },
   });
   const { error: mentorsError, data: mentors } = usePublicMentors(null);
