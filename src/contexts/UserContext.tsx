@@ -1,5 +1,5 @@
 import React, { createContext } from 'react';
-import type { Mentor, Profile, Mentee } from '../types';
+import type { Mentor, Profile } from '../types';
 import { ApplicationStatus, ProfileTypes } from '../enums';
 import useProfile from '../hooks/useProfile';
 
@@ -27,9 +27,12 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     user?.mentor?.find(
       (mentor) => mentor.state === ApplicationStatus.APPROVED
     ) ?? null;
-  const pendingMenteeApplication = (user?.mentee && user?.mentee?.filter(
-    (mentee) => mentee.state === ApplicationStatus.PENDING
-  ).length > 0) ?? false;
+  const pendingMenteeApplication =
+    (user?.mentee &&
+      user?.mentee?.filter(
+        (mentee) => mentee.state === ApplicationStatus.PENDING
+      ).length > 0) ??
+    false;
 
   return (
     <UserContext.Provider

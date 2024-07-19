@@ -14,7 +14,9 @@ const MentorProfile: React.FC = () => {
   const { mentorId } = useParams();
   const navigate = useNavigate();
   const { handleLoginModalOpen } = useLoginModalContext();
-  const { user, isUserMentor, pendingMenteeApplication } = useContext(UserContext) as UserContextType;
+  const { user, isUserMentor, pendingMenteeApplication } = useContext(
+    UserContext
+  ) as UserContextType;
   const [isURLCopied, setIsURLCopied] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -36,7 +38,7 @@ const MentorProfile: React.FC = () => {
       .then(() => {
         setIsURLCopied(true);
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 
   const handleMouseEnter = () => {
@@ -125,14 +127,17 @@ const MentorProfile: React.FC = () => {
             <div className="self-center">
               {!isUserMentor && mentor?.availability && (
                 <>
-                  <div className="relative inline-block" onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}>
-
+                  <div
+                    className="relative inline-block"
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
                     <button
                       className={`text-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 
-                        ${pendingMenteeApplication
-                          ? 'bg-gray-400'
-                          : 'bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300'
+                        ${
+                          pendingMenteeApplication
+                            ? 'bg-gray-400'
+                            : 'bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300'
                         }`}
                       onClick={onApply}
                       disabled={pendingMenteeApplication}
