@@ -25,6 +25,7 @@ export interface Mentor {
   application: MentorApplication;
   availability: boolean;
   profile: Profile;
+  mentees?: Mentee[];
 }
 
 export type MenteeApplication = z.infer<typeof MenteeApplicationSchema>;
