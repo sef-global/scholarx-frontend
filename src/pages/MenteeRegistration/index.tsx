@@ -45,6 +45,7 @@ const MenteeRegistration: React.FC = () => {
       email: user?.primary_email,
       profilePic: user?.image_url,
       mentorId,
+      isUndergrad: true,
     },
   });
   const { error: mentorsError, data: mentors } = usePublicMentors(null);
@@ -143,6 +144,12 @@ const MenteeRegistration: React.FC = () => {
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         {currentStep === 0 && (
           <>
+            <div className="flex mb-6">
+              <div className="flex-shrink-0 w-1 bg-yellow-500 rounded-l-lg"></div>
+              <div className="bg-yellow-100 text-yellow-800 p-4 rounded-r-lg flex-grow">
+                <p>You can apply only for one mentor at a time.</p>
+              </div>
+            </div>
             <div className="text-xl font-medium mb-2">Personal Information</div>
             <hr />
             <div className="relative">
