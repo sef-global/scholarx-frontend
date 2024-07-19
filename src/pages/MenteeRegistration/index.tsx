@@ -410,8 +410,9 @@ const MenteeRegistration: React.FC = () => {
         ) : null}
         <hr className="border-t border-gray-300 my-6" />
         <div
-          className={`flex ${applicationSuccess ? 'justify-end' : 'justify-between'
-            }`}
+          className={`flex ${
+            applicationSuccess ? 'justify-end' : 'justify-between'
+          }`}
         >
           {currentStep > 0 && !applicationSuccess && (
             <button
