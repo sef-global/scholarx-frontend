@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import useMentor from '../../hooks/useMentor';
 import { useParams } from 'react-router';
 import { Link, useNavigate } from 'react-router-dom';
@@ -14,8 +14,10 @@ const MentorProfile: React.FC = () => {
   const { mentorId } = useParams();
   const navigate = useNavigate();
   const { handleLoginModalOpen } = useLoginModalContext();
-  const { user, isUserMentor } = useContext(UserContext) as UserContextType;
+  const { user, isUserMentor, pendingMenteeApplication } = useContext(UserContext) as UserContextType;
   const [isURLCopied, setIsURLCopied] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const shareUrl = `${window.location.origin}${location.pathname}`;
 
   const onApply = () => {
@@ -34,8 +36,31 @@ const MentorProfile: React.FC = () => {
       .then(() => {
         setIsURLCopied(true);
       })
-      .catch(() => {});
+      .catch(() => { });
   };
+
+  const handleMouseEnter = () => {
+    if (pendingMenteeApplication) {
+      timeoutRef.current = setTimeout(() => {
+        setShowTooltip(true);
+      }, 200);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setShowTooltip(false);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
     <>
@@ -99,12 +124,33 @@ const MentorProfile: React.FC = () => {
             </div>
             <div className="self-center">
               {!isUserMentor && mentor?.availability && (
-                <button
-                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-                  onClick={onApply}
-                >
-                  Apply
-                </button>
+                <>
+                  <div className="relative inline-block" onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}>
+
+                    <button
+                      className={`text-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 
+                        ${pendingMenteeApplication
+                          ? 'bg-gray-400'
+                          : 'bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300'
+                        }`}
+                      onClick={onApply}
+                      disabled={pendingMenteeApplication}
+                      onMouseEnter={handleMouseEnter}
+                      onMouseLeave={handleMouseLeave}
+                    >
+                      Apply
+                    </button>
+                    {showTooltip && pendingMenteeApplication && (
+                      <>
+                        <div className="absolute z-10 px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm whitespace-nowrap -top-12 left-[-90%] transform -translate-x-1/2 transition-opacity duration-300 opacity-100 max-w-xs overflow-hidden text-ellipsis">
+                          You can apply only for one mentor at a time
+                        </div>
+                        <div className="absolute w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-t-8 border-t-gray-900 -top-3 left-1/2 transform -translate-x-1/2"></div>
+                      </>
+                    )}
+                  </div>
+                </>
               )}
               <span className="text-red-400">
                 {!mentor?.availability && 'Mentor is not currently available'}
