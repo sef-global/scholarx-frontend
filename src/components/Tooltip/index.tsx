@@ -1,15 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-interface TooltipHandlerProps {
+interface TooltipProps {
   children: React.ReactNode;
-  showTooltipCondition: boolean;
-  tooltipContent: React.ReactNode;
+  isVisible: boolean;
+  content: React.ReactNode;
 }
 
-const TooltipHandler: React.FC<TooltipHandlerProps> = ({
+const Tooltip: React.FC<TooltipProps> = ({
   children,
-  showTooltipCondition,
-  tooltipContent,
+  isVisible: showTooltipCondition,
+  content: tooltipContent,
 }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -56,4 +56,4 @@ const TooltipHandler: React.FC<TooltipHandlerProps> = ({
   );
 };
 
-export default TooltipHandler;
+export default Tooltip;

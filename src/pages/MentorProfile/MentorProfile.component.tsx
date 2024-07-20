@@ -9,7 +9,7 @@ import Toast from '../../components/Toast';
 import ShareIcon from '../../assets/svg/Icons/ShareIcon';
 import ChevronRightIcon from '../../assets/svg/Icons/ChevronRightIcon';
 import { ApplicationStatus } from '../../enums';
-import TooltipHandler from '../../components/TooltipHandler';
+import Tooltip from '../../components/Tooltip';
 
 const MentorProfile: React.FC = () => {
   const { mentorId } = useParams();
@@ -102,9 +102,9 @@ const MentorProfile: React.FC = () => {
             </div>
             <div className="self-center">
               {!isUserMentor && mentor?.availability && (
-                <TooltipHandler
-                  showTooltipCondition={pendingMenteeApplication}
-                  tooltipContent="You can apply only for one mentor at a time"
+                <Tooltip
+                  isVisible={pendingMenteeApplication}
+                  content="You can apply only for one mentor at a time"
                 >
                   <button
                     className={`text-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 
@@ -118,7 +118,7 @@ const MentorProfile: React.FC = () => {
                   >
                     Apply
                   </button>
-                </TooltipHandler>
+                </Tooltip>
               )}
               <span className="text-red-400">
                 {!mentor?.availability && 'Mentor is not currently available'}

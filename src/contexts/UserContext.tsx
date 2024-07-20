@@ -29,9 +29,9 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     ) ?? null;
   const pendingMenteeApplication =
     (user?.mentee &&
-      user?.mentee?.filter(
+      user.mentee.some(
         (mentee) => mentee.state === ApplicationStatus.PENDING
-      ).length > 0) ??
+      )) ??
     false;
 
   return (
