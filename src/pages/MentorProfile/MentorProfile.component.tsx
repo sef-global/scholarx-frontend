@@ -9,12 +9,15 @@ import Toast from '../../components/Toast';
 import ShareIcon from '../../assets/svg/Icons/ShareIcon';
 import ChevronRightIcon from '../../assets/svg/Icons/ChevronRightIcon';
 import { ApplicationStatus } from '../../enums';
+import Tooltip from '../../components/Tooltip';
 
 const MentorProfile: React.FC = () => {
   const { mentorId } = useParams();
   const navigate = useNavigate();
   const { handleLoginModalOpen } = useLoginModalContext();
-  const { user, isUserMentor } = useContext(UserContext) as UserContextType;
+  const { user, isUserMentor, pendingMenteeApplication } = useContext(
+    UserContext
+  ) as UserContextType;
   const [isURLCopied, setIsURLCopied] = useState(false);
   const shareUrl = `${window.location.origin}${location.pathname}`;
 
@@ -99,12 +102,23 @@ const MentorProfile: React.FC = () => {
             </div>
             <div className="self-center">
               {!isUserMentor && mentor?.availability && (
-                <button
-                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-                  onClick={onApply}
+                <Tooltip
+                  isVisible={pendingMenteeApplication}
+                  content="You can apply only for one mentor at a time"
                 >
-                  Apply
-                </button>
+                  <button
+                    className={`text-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 
+                    ${
+                      pendingMenteeApplication
+                        ? 'bg-gray-400'
+                        : 'bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300'
+                    }`}
+                    onClick={onApply}
+                    disabled={pendingMenteeApplication}
+                  >
+                    Apply
+                  </button>
+                </Tooltip>
               )}
               <span className="text-red-400">
                 {!mentor?.availability && 'Mentor is not currently available'}
