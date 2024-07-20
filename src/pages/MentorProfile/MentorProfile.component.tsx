@@ -170,13 +170,15 @@ const MentorProfile: React.FC = () => {
       <div className="pb-4">
         <h2 className="text-lg font-medium ">Available mentee slots</h2>
         <p className="font-light">
-          {(mentor?.application.noOfMentees &&
-            mentor.mentees &&
-            mentor?.application.noOfMentees -
-              mentor?.mentees?.filter(
-                (mentee) => mentee.state === ApplicationStatus.APPROVED
-              ).length) ??
-            'Not mentioned.'}
+          {mentor?.application.noOfMentees && mentor.mentees
+            ? Math.max(
+                0,
+                mentor.application.noOfMentees -
+                  mentor.mentees.filter(
+                    (mentee) => mentee.state === ApplicationStatus.APPROVED
+                  ).length
+              )
+            : 'Not mentioned'}
         </p>
       </div>
     </>
