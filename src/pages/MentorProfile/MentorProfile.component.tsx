@@ -8,6 +8,7 @@ import { UserContext, type UserContextType } from '../../contexts/UserContext';
 import Toast from '../../components/Toast';
 import ShareIcon from '../../assets/svg/Icons/ShareIcon';
 import ChevronRightIcon from '../../assets/svg/Icons/ChevronRightIcon';
+import { ApplicationStatus } from '../../enums';
 
 const MentorProfile: React.FC = () => {
   const { mentorId } = useParams();
@@ -168,7 +169,17 @@ const MentorProfile: React.FC = () => {
       </div>
       <div className="pb-4">
         <h2 className="text-lg font-medium ">Available mentee slots</h2>
-        <p className="font-light">{mentor?.application.noOfMentees}</p>
+        <p className="font-light">
+          {mentor?.application.noOfMentees && mentor.mentees
+            ? Math.max(
+                0,
+                mentor.application.noOfMentees -
+                  mentor.mentees.filter(
+                    (mentee) => mentee.state === ApplicationStatus.APPROVED
+                  ).length
+              )
+            : 'Not mentioned'}
+        </p>
       </div>
     </>
   );
