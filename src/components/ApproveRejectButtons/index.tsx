@@ -39,7 +39,6 @@ const ApproveRejectButtons: React.FC<ApproveRejectButtonsProps> = ({
 
   return (
     <>
-      {' '}
       <>
         <button
           className="inline-block rounded border px-10 py-2 my-2 mx-2 text-sm font-medium text-primary-blue border-primary-blue focus:outline-none focus:ring"
