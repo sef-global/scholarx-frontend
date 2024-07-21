@@ -10,6 +10,7 @@ import ShareIcon from '../../assets/svg/Icons/ShareIcon';
 import ChevronRightIcon from '../../assets/svg/Icons/ChevronRightIcon';
 import { ApplicationStatus } from '../../enums';
 import Tooltip from '../../components/Tooltip';
+import Loading from '../../assets/svg/Loading';
 
 const MentorProfile: React.FC = () => {
   const { mentorId } = useParams();
@@ -29,7 +30,15 @@ const MentorProfile: React.FC = () => {
     }
   };
 
-  const { data: mentor } = useMentor(mentorId as string);
+  const { data: mentor, isLoading } = useMentor(mentorId as string);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loading />
+      </div>
+    );
+  }
 
   const copyToClipboard = () => {
     navigator.clipboard
@@ -132,21 +141,17 @@ const MentorProfile: React.FC = () => {
         <div className="grid md:grid-cols-3 md:gap-9 md:w-3/4">
           <div>
             <h2 className="text-lg font-medium mt-5">Category</h2>
-            <ul className="text-sm list-disc ml-4 font-light">
-              <li>{mentor?.category.category}</li>
-            </ul>
+            <p className="text-sm font-light">{mentor?.category.category}</p>
           </div>
           <div>
             <h2 className="text-lg font-medium  mt-5">Expertise</h2>
-            <ul className="text-sm list-disc ml-4 font-light">
-              <li>{mentor?.application.expertise}</li>
-            </ul>
+            <p className="text-sm font-light">
+              {mentor?.application.expertise}
+            </p>
           </div>
           <div>
             <h2 className="text-lg font-medium  mt-5">Country</h2>
-            <ul className="text-sm list-disc ml-4 font-light">
-              <li>{mentor?.application.country}</li>
-            </ul>
+            <p className="text-sm font-light">{mentor?.application.country}</p>
           </div>
         </div>
         <div className="flex flex-row md:gap-9 md:m-5 gap-4 mt-4">

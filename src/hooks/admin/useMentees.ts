@@ -23,7 +23,6 @@ const useMentees = () => {
 
   const { isLoading, error, data } = useQuery({
     queryKey: ['admin-mentees'],
-    initialData: null,
     queryFn: async () => {
       const { data } = await axios.get(
         `${API_URL}/admin/mentees/applications`,

@@ -7,12 +7,11 @@ const useProfile = () => {
   const queryClient = useQueryClient();
 
   const {
-    isFetching: isUserLoading,
+    isLoading: isUserLoading,
     error,
     data,
   } = useQuery({
     queryKey: ['profile'],
-    initialData: null,
     queryFn: async () => {
       try {
         const { data } = await axios.get(`${API_URL}/me/profile`, {

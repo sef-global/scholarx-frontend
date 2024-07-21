@@ -25,10 +25,12 @@ const MentorApplications: React.FC = () => {
 
   const totalMentees = useMemo(() => {
     let total = 0;
-    for (const mentor of mentors.filter(
-      (mentor) => mentor.state === 'approved' && mentor.availability
-    )) {
-      total += mentor.application.noOfMentees;
+    if (mentors?.length) {
+      for (const mentor of mentors.filter(
+        (mentor) => mentor.state === 'approved' && mentor.availability
+      )) {
+        total += mentor.application.noOfMentees;
+      }
     }
     return total;
   }, [mentors]);

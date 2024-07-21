@@ -34,7 +34,7 @@ const Navbar: React.FC = () => {
   const dropdownRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
-  const { user, isUserMentor, isUserAdmin } = useContext(
+  const { user, isUserMentor, isUserAdmin, isUserMentee } = useContext(
     UserContext
   ) as UserContextType;
 
@@ -213,6 +213,30 @@ const Navbar: React.FC = () => {
                         Dashboard
                       </p>
                     </li>
+                    {!isUserAdmin && isUserMentor && (
+                      <li>
+                        <a
+                          href="https://docs.google.com/document/d/1uMMcGWJ35nblOj1zZ1XzJuYm-LOi1Lyj02yYRNsaOkY/edit?usp=sharing"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                        >
+                          Mentor Guide
+                        </a>
+                      </li>
+                    )}
+                    {!isUserAdmin && isUserMentee && (
+                      <li>
+                        <a
+                          href="https://docs.google.com/document/d/1gIYte14FIQtqUhGiMErZRovhNErdUrFdQ0LnCFFnfag/edit?usp=sharing"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                        >
+                          Mentee Guide
+                        </a>
+                      </li>
+                    )}
                     <li>
                       <Link
                         to="/settings"
