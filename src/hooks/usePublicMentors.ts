@@ -25,7 +25,6 @@ export const usePublicMentors = (categoryId: string | null) => {
   const { isLoading, error, data } = useQuery<Mentor[], AxiosError>({
     queryKey: ['public-mentors', categoryId],
     queryFn: fetchPublicMentors,
-    initialData: [],
   });
 
   return {

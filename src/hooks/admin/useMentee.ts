@@ -6,9 +6,8 @@ import { type Mentee } from '../../types';
 const useMentee = (menteeId: string | undefined) => {
   const queryClient = useQueryClient();
 
-  const { isFetching, error, data } = useQuery({
+  const { isLoading, error, data } = useQuery({
     queryKey: ['mentee', menteeId],
-    initialData: null,
     enabled: !(menteeId == null),
     queryFn: async () => {
       if (menteeId != null) {
@@ -47,7 +46,7 @@ const useMentee = (menteeId: string | undefined) => {
   });
 
   return {
-    isFetching,
+    isLoading,
     error,
     data,
     changeState,
