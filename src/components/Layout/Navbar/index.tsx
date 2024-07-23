@@ -293,9 +293,9 @@ const Navbar: React.FC = () => {
             </button>
           </div>
         </div>
-        {location.pathname === '/' && (
+        {location.pathname === '/' && !isUserAdmin && (
           <>
-            {!isUserAdmin && isUserMentor && (
+            {isUserMentor && (
               <StickyBanner>
                 <p className="flex items-center text-md font-normal text-gray-500">
                   <span>
@@ -312,7 +312,7 @@ const Navbar: React.FC = () => {
                 </p>
               </StickyBanner>
             )}
-            {!isUserAdmin && isUserMentee && (
+            {isUserMentee && (
               <StickyBanner>
                 <p className="flex items-center text-md font-normal text-gray-500">
                   <span>
