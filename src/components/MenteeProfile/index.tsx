@@ -1,12 +1,13 @@
 import React from 'react';
-import { ApplicationStatus } from '../../enums';
-import { useMentees } from '../../hooks/useMentees';
-import UserIcon from '../../assets/svg/Icons/UserIcon';
-import { getStateColor } from '../../utils';
 import { useParams } from 'react-router-dom';
+
+import UserIcon from '../../assets/svg/Icons/UserIcon';
+import { ApplicationStatus } from '../../enums';
 import useMentee from '../../hooks/useMentee';
-import Toast from '../Toast';
+import { useMentees } from '../../hooks/useMentees';
+import { getStateColor } from '../../utils';
 import ApproveRejectButtons from '../ApproveRejectButtons';
+import Toast from '../Toast';
 
 const MenteeProfile: React.FC = () => {
   const { menteeId } = useParams();
@@ -34,7 +35,7 @@ const MenteeProfile: React.FC = () => {
               <img
                 src={mentee?.profile.image_url}
                 alt="Mentee Avatar"
-                className="w-12 h-12 md:w-24 md:h-24 rounded-full mx-auto mb-4"
+                className="w-12 h-12 md:w-24 md:h-24 rounded-full mx-auto mb-4 object-cover"
               />
             ) : (
               <div className="w-12 h-12 md:w-24 md:h-24 bg-gray-200 rounded-full flex items-center justify-center">

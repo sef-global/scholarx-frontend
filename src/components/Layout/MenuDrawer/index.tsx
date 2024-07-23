@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import TwitterIcon from '../../../assets/svg/Icons/TwitterIcon';
+
 import FacebookIcon from '../../../assets/svg/Icons/FacebookIcon';
-import LinkedinIcon from '../../../assets/svg/Icons/LinkedinIcon';
 import InstagramIcon from '../../../assets/svg/Icons/InstagramIcon';
+import LinkedinIcon from '../../../assets/svg/Icons/LinkedinIcon';
+import TwitterIcon from '../../../assets/svg/Icons/TwitterIcon';
 
 interface MenuDrawerProps {
   openMenu: boolean;

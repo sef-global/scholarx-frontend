@@ -1,7 +1,8 @@
 import React from 'react';
-import { type Mentee } from '../../types.ts';
 import { Link } from 'react-router-dom';
+
 import UserIcon from '../../assets/svg/Icons/UserIcon.tsx';
+import { Mentee } from '../../types.ts';
 
 interface MenteeCardProps {
   mentee: Mentee;
@@ -17,7 +18,7 @@ const MenteeCard: React.FC<MenteeCardProps> = ({ mentee }) => {
         <img
           src={mentee.profile.image_url}
           alt="Mentee Avatar"
-          className="w-24 h-24 rounded-full mx-auto mb-4"
+          className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
         />
       ) : (
         <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center">
