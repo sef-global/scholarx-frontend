@@ -1,18 +1,14 @@
-import React from 'react';
-import { type RefObject, useContext, useRef, useState, useEffect } from 'react';
+import { RefObject, useContext, useEffect, useRef, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import MenuDrawer from '../MenuDrawer';
-import LoginModal from '../../LoginModal';
-import RegisterModal from '../../RegisterModal';
-
-import {
-  UserContext,
-  type UserContextType,
-} from '../../../contexts/UserContext';
-import LogoutModal from '../../LogoutModal';
-import { Link, useNavigate } from 'react-router-dom';
 import { useLoginModalContext } from '../../../contexts/LoginModalContext';
+import { UserContext, UserContextType } from '../../../contexts/UserContext';
+import StickyBanner from '../../Banner/StickyBanner';
 import ForgotPasswordModal from '../../ForgotPasswordModal';
+import LoginModal from '../../LoginModal';
+import LogoutModal from '../../LogoutModal';
+import RegisterModal from '../../RegisterModal';
+import MenuDrawer from '../MenuDrawer';
 
 const Navbar: React.FC = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -33,6 +29,7 @@ const Navbar: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { user, isUserMentor, isUserAdmin, isUserMentee } = useContext(
     UserContext
@@ -79,7 +76,7 @@ const Navbar: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <div className="fixed top-0 start-0 flex justify-between w-full">
       <nav className="bg-white border-gray-200 container mx-auto">
         <div className="flex flex-wrap items-center justify-between p-4">
           <Link to="/">
@@ -296,6 +293,44 @@ const Navbar: React.FC = () => {
             </button>
           </div>
         </div>
+        {location.pathname === '/' && (
+          <>
+            {!isUserAdmin && isUserMentor && (
+              <StickyBanner>
+                <p className="flex items-center text-md font-normal text-gray-500">
+                  <span>
+                    Please checkout our{' '}
+                    <a
+                      href="https://docs.google.com/document/d/1uMMcGWJ35nblOj1zZ1XzJuYm-LOi1Lyj02yYRNsaOkY/edit?usp=sharing"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-blue-600 underline py-2 cursor-pointer"
+                    >
+                      Mentor Guide
+                    </a>
+                  </span>
+                </p>
+              </StickyBanner>
+            )}
+            {!isUserAdmin && isUserMentee && (
+              <StickyBanner>
+                <p className="flex items-center text-md font-normal text-gray-500">
+                  <span>
+                    Please checkout our{' '}
+                    <a
+                      href="https://docs.google.com/document/d/1gIYte14FIQtqUhGiMErZRovhNErdUrFdQ0LnCFFnfag/edit?usp=sharing"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-blue-600 underline py-2 cursor-pointer"
+                    >
+                      Mentee Guide
+                    </a>
+                  </span>
+                </p>
+              </StickyBanner>
+            )}
+          </>
+        )}
       </nav>
 
       <MenuDrawer
@@ -321,7 +356,7 @@ const Navbar: React.FC = () => {
       {isForgotPasswordModalVisible ? (
         <ForgotPasswordModal handleClose={handleForgotPasswordModalClose} />
       ) : null}
-    </>
+    </div>
   );
 };
 
