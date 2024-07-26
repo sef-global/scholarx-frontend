@@ -6,7 +6,7 @@ const LinkedinColorIcon: React.FC = () => {
       <svg
         width="1rem"
         height="1rem"
-        viewBox="0 -2 44 44"
+        viewBox="0 0 48 48"
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
       >
