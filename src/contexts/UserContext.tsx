@@ -10,7 +10,7 @@ export interface UserContextType {
   isUserAdmin: boolean;
   isUserMentee: boolean;
   mentor: Mentor | null;
-  pendingMenteeApplication: boolean;
+  isMenteeApplicationsDisabled: boolean;
 }
 
 export const UserContext = createContext<UserContextType | null>(null);
@@ -28,9 +28,11 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     user?.mentor?.find(
       (mentor) => mentor.state === ApplicationStatus.APPROVED
     ) ?? null;
-  const pendingMenteeApplication =
+  const isMenteeApplicationsDisabled =
     user?.mentee?.some(
-      (mentee) => mentee.state === ApplicationStatus.PENDING
+      (mentee) =>
+        mentee.state === ApplicationStatus.PENDING ||
+        mentee.state === ApplicationStatus.APPROVED
     ) ?? false;
   const isUserMentee =
     user?.mentee?.some(
@@ -46,7 +48,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         isUserAdmin,
         isUserMentee,
         mentor,
-        pendingMenteeApplication,
+        isMenteeApplicationsDisabled,
       }}
     >
       {children}
