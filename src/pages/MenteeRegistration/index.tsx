@@ -25,7 +25,7 @@ const steps = [
 ];
 
 const MenteeRegistration: React.FC = () => {
-  const { data: user, updateProfile } = useProfile();
+  const { data: user, updateProfile, refetch } = useProfile();
   const { mentorId } = useParams();
   const {
     register,
@@ -125,6 +125,9 @@ const MenteeRegistration: React.FC = () => {
         },
         { withCredentials: true }
       );
+    },
+    onSuccess: async () => {
+      await refetch();
     },
   });
 
