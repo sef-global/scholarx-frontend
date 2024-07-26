@@ -76,7 +76,7 @@ const Navbar: React.FC = () => {
   }, []);
 
   return (
-    <div className="fixed top-0 start-0 flex justify-between w-full">
+    <div className="fixed top-0 start-0 flex justify-between w-full z-20">
       <nav className="bg-white border-gray-200 container mx-auto">
         <div className="flex flex-wrap items-center justify-between p-4">
           <Link to="/">
