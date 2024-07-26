@@ -4,6 +4,7 @@ import { API_URL } from '../../constants';
 import closeIcon from '../../assets/svg/closeIcon.svg';
 import GoogleLoginButton from '../OAuth/Google';
 import useProfile from '../../hooks/useProfile';
+import LinkedInLoginButton from '../OAuth/LinkedIn';
 
 interface RegisterModalProps {
   handleClose: () => void;
@@ -185,6 +186,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
                   Register
                 </button>
                 <GoogleLoginButton />
+                <LinkedInLoginButton />
                 <div className="text-sm font-thin text-center text-gray-900">
                   Already have an account?
                   <p
