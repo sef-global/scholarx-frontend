@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD
 
 on:
   push:
@@ -32,3 +32,23 @@ jobs:
 
       - name: Build
         run: npm run build
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Deploy to server
+        env:
+          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          apt-get update
+          apt-get install -y sshpass
+          sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no root@107.172.60.74 << 'EOF'
+            cd scholarx-frontend
+            git pull
+            npm install
+            npm run build
+            sudo cp -r dist/* /var/www/scholarx/
+            sudo systemctl restart nginx
+          EOF
