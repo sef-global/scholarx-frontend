@@ -43,8 +43,8 @@ jobs:
         env:
           SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
         run: |
-          apt-get update
-          apt-get install -y sshpass
+          sudo apt-get update
+          sudo apt-get install -y sshpass
           sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no root@107.172.60.74 << 'EOF'
             cd scholarx-frontend
             git pull
