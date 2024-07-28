@@ -11,19 +11,17 @@ const CompleteButton: React.FC<CompleteButtonProps> = ({
   complete,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [onConfirmAction, setOnConfirmAction] = useState<() => void>(() => {});
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
 
   const handleConfirm = () => {
-    onConfirmAction();
+    complete();
     setIsModalOpen(false);
   };
 
   const handleComplete = () => {
-    setOnConfirmAction(() => complete);
     setIsModalOpen(true);
   };
 
