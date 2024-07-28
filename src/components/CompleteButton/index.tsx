@@ -11,28 +11,27 @@ const CompleteButton: React.FC<CompleteButtonProps> = ({
   complete,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
-
-  const handleComplate = () => {
-    setModalMessage('Are you sure you want to complete?');
-    setOnConfirmAction(() => complete);
-    setIsModalOpen(true);
-  };
+  const [onConfirmAction, setOnConfirmAction] = useState<() => void>(() => {});
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
 
   const handleConfirm = () => {
-    complete();
+    onConfirmAction();
     setIsModalOpen(false);
+  };
+
+  const handleComplete = () => {
+    setOnConfirmAction(() => complete);
+    setIsModalOpen(true);
   };
 
   return (
     <>
       <button
         className="inline-block rounded border px-10 py-2 my-2 mx-2 text-sm font-medium text-green-500 border-green-500 focus:outline-none focus:ring"
-        onClick={handleComplate}
+        onClick={handleComplete}
       >
         {isLoading ? 'Loading...' : 'Complete Mentorship'}
       </button>
@@ -40,7 +39,7 @@ const CompleteButton: React.FC<CompleteButtonProps> = ({
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onConfirm={handleConfirm}
-        message={modalMessage}
+        message="Are you sure you want to complete?"
       />
     </>
   );
