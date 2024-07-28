@@ -81,7 +81,6 @@ const MenteeApplication: React.FC = () => {
           <div className="ml-auto flex overflow-hidden">
             {mentee?.state === ApplicationStatus.PENDING && (
               <ApproveRejectButtons
-                isLoading={isPending}
                 approve={async () => {
                   await handleStateChange('approved');
                 }}
@@ -92,7 +91,6 @@ const MenteeApplication: React.FC = () => {
             )}
             {mentee?.state === ApplicationStatus.APPROVED && (
               <CompleteButton
-                isLoading={isPending}
                 complete={async () => {
                   await handleStateChange('completed');
                 }}

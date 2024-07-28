@@ -2,19 +2,21 @@ import React, { useState } from 'react';
 import ConfirmationModal from '../ConfirmationModal';
 
 interface ApproveRejectButtonsProps {
-  isLoading: boolean;
-  approve: () => void;
-  reject: () => void;
+  approve: () => Promise<void>;
+  reject: () => Promise<void>;
 }
 
 const ApproveRejectButtons: React.FC<ApproveRejectButtonsProps> = ({
-  isLoading,
   approve,
   reject,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
-  const [onConfirmAction, setOnConfirmAction] = useState<() => void>(() => {});
+  const [onConfirmAction, setOnConfirmAction] = useState<() => Promise<void>>(
+    async () => {
+      await Promise.resolve();
+    }
+  );
 
   const handleApprove = () => {
     setModalMessage('Are you sure you want to approve?');
@@ -32,8 +34,8 @@ const ApproveRejectButtons: React.FC<ApproveRejectButtonsProps> = ({
     setIsModalOpen(false);
   };
 
-  const handleConfirm = () => {
-    onConfirmAction();
+  const handleConfirm = async () => {
+    await onConfirmAction();
     setIsModalOpen(false);
   };
 
@@ -44,13 +46,13 @@ const ApproveRejectButtons: React.FC<ApproveRejectButtonsProps> = ({
           className="inline-block rounded border px-10 py-2 my-2 mx-2 text-sm font-medium text-primary-blue border-primary-blue focus:outline-none focus:ring"
           onClick={handleApprove}
         >
-          {isLoading ? 'Loading...' : 'Approve'}
+          Approve
         </button>
         <button
           className="inline-block rounded border px-10 py-2 my-2 mx-2 text-sm font-medium text-red-500 border-red-500 focus:outline-none focus:ring"
           onClick={handleReject}
         >
-          {isLoading ? 'Loading...' : 'Reject'}
+          Reject
         </button>
       </>
       <ConfirmationModal
