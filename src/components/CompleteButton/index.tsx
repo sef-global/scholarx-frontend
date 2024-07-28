@@ -3,7 +3,7 @@ import ConfirmationModal from '../ConfirmationModal';
 
 interface CompleteButtonProps {
   isLoading: boolean;
-  complete: () => void;
+  complete: () => Promise<void>;
 }
 
 const CompleteButton: React.FC<CompleteButtonProps> = ({
@@ -16,8 +16,8 @@ const CompleteButton: React.FC<CompleteButtonProps> = ({
     setIsModalOpen(false);
   };
 
-  const handleConfirm = () => {
-    complete();
+  const handleConfirm = async () => {
+    await complete();
     setIsModalOpen(false);
   };
 
