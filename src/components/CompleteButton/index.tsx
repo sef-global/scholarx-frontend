@@ -12,7 +12,6 @@ const CompleteButton: React.FC<CompleteButtonProps> = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
-  const [onConfirmAction, setOnConfirmAction] = useState<() => void>(() => {});
 
   const handleComplate = () => {
     setModalMessage('Are you sure you want to complete?');
