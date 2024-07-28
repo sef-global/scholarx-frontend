@@ -3,9 +3,8 @@ import { getStateColor } from '../../utils';
 import { useParams } from 'react-router-dom';
 import useMentor from '../../hooks/admin/useMentor';
 import Toast from '../Toast';
-import ApproveRejectButtons from '../ApproveRejectButtons';
-import { ApplicationStatus } from '../../enums';
 import UserIcon from '../../assets/svg/Icons/UserIcon';
+import ActionButtons from '../ActionButtons';
 
 const MentorApplication: React.FC = () => {
   const { mentorId } = useParams();
@@ -64,16 +63,15 @@ const MentorApplication: React.FC = () => {
             </div>
           </div>
           <div className="ml-auto flex overflow-hidden">
-            {mentor?.state === ApplicationStatus.PENDING && (
-              <ApproveRejectButtons
-                approve={async () => {
-                  await handleStateChange('approved');
-                }}
-                reject={async () => {
-                  await handleStateChange('rejected');
-                }}
-              />
-            )}
+            <ActionButtons
+              state={mentor?.state}
+              handleApprove={async () => {
+                await handleStateChange('approved');
+              }}
+              handleReject={async () => {
+                await handleStateChange('rejected');
+              }}
+            />
           </div>
           <div className="grid grid-cols-4 gap-10">
             <div className="col-span-3">

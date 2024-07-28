@@ -4,9 +4,8 @@ import UserIcon from '../../assets/svg/Icons/UserIcon';
 import { useParams } from 'react-router-dom';
 import useMentee from '../../hooks/admin/useMentee';
 import Toast from '../Toast';
-import ApproveRejectButtons from '../ApproveRejectButtons';
 import { ApplicationStatus } from '../../enums';
-import CompleteButton from '../CompleteButton';
+import ActionButtons from '../ActionButtons';
 
 const MenteeApplication: React.FC = () => {
   const { menteeId } = useParams();
@@ -78,23 +77,18 @@ const MenteeApplication: React.FC = () => {
             </div>
           </div>
           <div className="ml-auto flex overflow-hidden">
-            {mentee?.state === ApplicationStatus.PENDING && (
-              <ApproveRejectButtons
-                approve={async () => {
-                  await handleStateChange('approved');
-                }}
-                reject={async () => {
-                  await handleStateChange('rejected');
-                }}
-              />
-            )}
-            {mentee?.state === ApplicationStatus.APPROVED && (
-              <CompleteButton
-                complete={async () => {
-                  await handleStateChange('completed');
-                }}
-              />
-            )}
+            <ActionButtons
+              state={mentee?.state}
+              handleApprove={async () => {
+                await handleStateChange('approved');
+              }}
+              handleReject={async () => {
+                await handleStateChange('rejected');
+              }}
+              handleComplete={async () => {
+                await handleStateChange('completed');
+              }}
+            />
           </div>
           <div className="grid grid-cols-5 gap-10">
             <div className="col-span-3">
