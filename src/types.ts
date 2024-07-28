@@ -25,6 +25,7 @@ export interface Mentor {
   application: MentorApplication;
   availability: boolean;
   profile: Profile;
+  mentees?: Mentee[];
 }
 
 export type MenteeApplication = z.infer<typeof MenteeApplicationSchema>;
@@ -48,6 +49,7 @@ export interface Mentee {
 export interface Profile {
   created_at: Date;
   mentor: Mentor[];
+  mentee?: Mentee[];
   updated_at: Date;
   primary_email: string;
   contact_email: string;

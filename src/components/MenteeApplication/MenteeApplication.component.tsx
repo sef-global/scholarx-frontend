@@ -11,7 +11,7 @@ import CompleteButton from '../CompleteButton';
 const MenteeApplication: React.FC = () => {
   const { menteeId } = useParams();
   const {
-    isFetching,
+    isLoading,
     data: mentee,
     changeState,
     isSuccess,
@@ -30,7 +30,7 @@ const MenteeApplication: React.FC = () => {
       {isError && (
         <Toast message={'Oops something went wrong'} type={'error'} />
       )}
-      {isFetching ? (
+      {isLoading ? (
         <div>Loading</div>
       ) : (
         <div className="w-full space-y-8">

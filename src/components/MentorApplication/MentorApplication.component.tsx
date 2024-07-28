@@ -10,7 +10,7 @@ import UserIcon from '../../assets/svg/Icons/UserIcon';
 const MentorApplication: React.FC = () => {
   const { mentorId } = useParams();
   const {
-    isFetching,
+    isLoading,
     data: mentor,
     changeState,
     isSuccess,
@@ -29,7 +29,7 @@ const MentorApplication: React.FC = () => {
       {isError && (
         <Toast message={'Oops something went wrong'} type={'error'} />
       )}
-      {isFetching ? (
+      {isLoading ? (
         <div>Loading</div>
       ) : (
         <div className="w-full space-y-8">

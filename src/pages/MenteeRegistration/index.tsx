@@ -1,17 +1,17 @@
-import React from 'react';
-import { type ChangeEvent, useState } from 'react';
-import axios, { AxiosError } from 'axios';
-import { useForm, type SubmitHandler } from 'react-hook-form';
-import { API_URL } from '../../constants';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { usePublicMentors } from '../../hooks/usePublicMentors';
-import { type MenteeApplication } from '../../types';
-import { MenteeApplicationSchema } from '../../schemas';
+import axios, { AxiosError } from 'axios';
+import { ChangeEvent, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { Link, useParams } from 'react-router-dom';
+
 import FormCheckbox from '../../components/FormFields/MenteeApplication/FormCheckbox';
 import FormInput from '../../components/FormFields/MenteeApplication/FormInput';
+import { API_URL } from '../../constants';
 import useProfile from '../../hooks/useProfile';
-import { Link, useParams } from 'react-router-dom';
+import { usePublicMentors } from '../../hooks/usePublicMentors';
+import { MenteeApplicationSchema } from '../../schemas';
+import { MenteeApplication } from '../../types';
 
 const steps = [
   {
@@ -25,7 +25,7 @@ const steps = [
 ];
 
 const MenteeRegistration: React.FC = () => {
-  const { data: user, updateProfile } = useProfile();
+  const { data: user, updateProfile, refetch } = useProfile();
   const { mentorId } = useParams();
   const {
     register,
@@ -45,6 +45,7 @@ const MenteeRegistration: React.FC = () => {
       email: user?.primary_email,
       profilePic: user?.image_url,
       mentorId,
+      isUndergrad: true,
     },
   });
   const { error: mentorsError, data: mentors } = usePublicMentors(null);
@@ -125,6 +126,9 @@ const MenteeRegistration: React.FC = () => {
         { withCredentials: true }
       );
     },
+    onSuccess: async () => {
+      await refetch();
+    },
   });
 
   return (
@@ -143,6 +147,15 @@ const MenteeRegistration: React.FC = () => {
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         {currentStep === 0 && (
           <>
+            <div className="flex mb-6">
+              <div className="flex-shrink-0 w-1 bg-yellow-100 rounded-l-lg"></div>
+              <div className="bg-yellow-50 text-yellow-800 p-4 rounded-r-lg flex-grow">
+                <p>
+                  You can apply for only one mentor at a time. Please choose
+                  your preferred mentor before submitting your application.
+                </p>
+              </div>
+            </div>
             <div className="text-xl font-medium mb-2">Personal Information</div>
             <hr />
             <div className="relative">

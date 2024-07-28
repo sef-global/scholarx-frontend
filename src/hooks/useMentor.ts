@@ -8,7 +8,6 @@ const useMentor = (mentorId: string | null | undefined) => {
 
   const { isLoading, error, data } = useQuery({
     queryKey: ['mentor', mentorId],
-    initialData: null,
     enabled: !(mentorId == null),
     queryFn: async () => {
       if (mentorId != null) {

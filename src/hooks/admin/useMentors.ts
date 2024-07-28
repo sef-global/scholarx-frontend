@@ -42,7 +42,6 @@ export const useMentors = (categoryId?: string) => {
   const queryClient = useQueryClient();
 
   const { isLoading, error, data } = useQuery<Mentor[], AxiosError>({
-    initialData: [],
     queryKey: ['mentors', categoryId],
     queryFn: fetchMentors,
   });
