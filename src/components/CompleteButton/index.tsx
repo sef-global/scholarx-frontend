@@ -24,7 +24,7 @@ const CompleteButton: React.FC<CompleteButtonProps> = ({
   };
 
   const handleConfirm = () => {
-    onConfirmAction();
+    complete();
     setIsModalOpen(false);
   };
 
