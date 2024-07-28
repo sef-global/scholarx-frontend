@@ -16,7 +16,6 @@ const MenteeApplication: React.FC = () => {
     changeState,
     isSuccess,
     isError,
-    isPending,
   } = useMentee(menteeId);
   const handleStateChange = async (newState: string) => {
     await changeState(newState);
