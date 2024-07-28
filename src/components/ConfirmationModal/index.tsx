@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import WarningIcon from '../../assets/svg/Icons/WarningIcon';
 import CloseIcon from '../../assets/svg/Icons/CloseIcon';
 
 interface ConfirmationModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm: () => Promise<void>;
   message: string;
 }
 
@@ -16,6 +16,13 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   message,
 }) => {
   if (!isOpen) return null;
+  const [buttonText, setButtonText] = useState('Confirm');
+
+  const handleConfirmClick = async () => {
+    setButtonText('Loading...');
+    await onConfirm();
+    setButtonText('Confirm');
+  };
 
   return (
     <div className="fixed z-50 inset-0 overflow-y-auto">
@@ -62,10 +69,10 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
           <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
             <button
               type="button"
-              onClick={onConfirm}
+              onClick={handleConfirmClick}
               className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
             >
-              Confirm
+              {buttonText}
             </button>
             <button
               type="button"
