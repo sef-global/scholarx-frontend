@@ -12,7 +12,7 @@ import Toast from '../Toast';
 const MenteeProfile: React.FC = () => {
   const { menteeId } = useParams();
   const { data: mentee } = useMentee(menteeId);
-  const { updateMenteeStatus, isSuccess, isPending, isError } = useMentees();
+  const { updateMenteeStatus, isSuccess, isError } = useMentees();
 
   const handleStateUpdate = async (state: ApplicationStatus) => {
     if (mentee != null) {
@@ -79,7 +79,6 @@ const MenteeProfile: React.FC = () => {
         <div className="ml-auto flex overflow-hidden mt-4 md:mt-0">
           {mentee?.state === ApplicationStatus.PENDING && (
             <ApproveRejectButtons
-              isLoading={isPending}
               approve={async () => {
                 await handleStateUpdate(ApplicationStatus.APPROVED);
               }}

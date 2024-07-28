@@ -14,7 +14,6 @@ const MentorApplication: React.FC = () => {
     data: mentor,
     changeState,
     isSuccess,
-    isPending,
     isError,
   } = useMentor(mentorId);
   const handleStateChange = async (newState: string) => {
@@ -67,7 +66,6 @@ const MentorApplication: React.FC = () => {
           <div className="ml-auto flex overflow-hidden">
             {mentor?.state === ApplicationStatus.PENDING && (
               <ApproveRejectButtons
-                isLoading={isPending}
                 approve={async () => {
                   await handleStateChange('approved');
                 }}
