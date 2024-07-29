@@ -80,13 +80,13 @@ const MenteeApplication: React.FC = () => {
             <ActionButtons
               state={mentee?.state}
               handleApprove={async () => {
-                await handleStateChange('approved');
+                await handleStateChange(ApplicationStatus.APPROVED);
               }}
               handleReject={async () => {
-                await handleStateChange('rejected');
+                await handleStateChange(ApplicationStatus.REJECTED);
               }}
               handleComplete={async () => {
-                await handleStateChange('completed');
+                await handleStateChange(ApplicationStatus.COMPLETED);
               }}
             />
           </div>

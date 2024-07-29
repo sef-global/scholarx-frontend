@@ -5,6 +5,7 @@ import useMentor from '../../hooks/admin/useMentor';
 import Toast from '../Toast';
 import UserIcon from '../../assets/svg/Icons/UserIcon';
 import ActionButtons from '../ActionButtons';
+import { ApplicationStatus } from '../../enums';
 
 const MentorApplication: React.FC = () => {
   const { mentorId } = useParams();
@@ -66,10 +67,10 @@ const MentorApplication: React.FC = () => {
             <ActionButtons
               state={mentor?.state}
               handleApprove={async () => {
-                await handleStateChange('approved');
+                await handleStateChange(ApplicationStatus.APPROVED);
               }}
               handleReject={async () => {
-                await handleStateChange('rejected');
+                await handleStateChange(ApplicationStatus.REJECTED);
               }}
             />
           </div>

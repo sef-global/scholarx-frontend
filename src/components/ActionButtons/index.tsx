@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import ConfirmationModal from '../ConfirmationModal';
+import React from 'react';
 import { ApplicationStatus } from '../../enums';
+import ConfirmButton from '../ConfirmButton';
 
 interface ActionButtonsProps {
   state?: string;
@@ -15,67 +15,32 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
   handleReject,
   handleComplete,
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
-  const [onConfirmAction, setOnConfirmAction] = useState<() => Promise<void>>(
-    async () => {
-      await Promise.resolve();
-    }
-  );
-
-  const openModal = (message: string, action: () => Promise<void>) => {
-    setModalMessage(message);
-    setOnConfirmAction(() => action);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleConfirm = async () => {
-    await onConfirmAction();
-    setIsModalOpen(false);
-  };
-
   return (
     <>
       {state === ApplicationStatus.PENDING && (
         <>
-          <button
-            className="inline-block rounded border px-10 py-2 my-2 mx-2 text-sm font-medium text-primary-blue border-primary-blue focus:outline-none focus:ring"
-            onClick={() => {
-              openModal('Are you sure you want to approve?', handleApprove);
-            }}
-          >
-            Approve
-          </button>
-          <button
-            className="inline-block rounded border px-10 py-2 my-2 mx-2 text-sm font-medium text-red-500 border-red-500 focus:outline-none focus:ring"
-            onClick={() => {
-              openModal('Are you sure you want to reject?', handleReject);
-            }}
-          >
-            Reject
-          </button>
+          <ConfirmButton
+            buttonText="Approve"
+            buttonStyle="inline-block rounded border px-10 py-2 my-2 mx-2 text-sm font-medium text-green-500 border-green-500 focus:outline-none focus:ring"
+            onConfirm={handleApprove}
+            confirmMessage="Are you sure you want to approve?"
+          />
+          <ConfirmButton
+            buttonText="Reject"
+            buttonStyle="inline-block rounded border px-10 py-2 my-2 mx-2 text-sm font-medium text-red-500 border-red-500 focus:outline-none focus:ring"
+            onConfirm={handleReject}
+            confirmMessage="Are you sure you want to reject?"
+          />
         </>
       )}
       {state === ApplicationStatus.APPROVED && handleComplete && (
-        <button
-          className="inline-block rounded border px-10 py-2 my-2 mx-2 text-sm font-medium text-green-500 border-green-500 focus:outline-none focus:ring"
-          onClick={() => {
-            openModal('Are you sure you want to complete?', handleComplete);
-          }}
-        >
-          Complete Mentorship
-        </button>
+        <ConfirmButton
+          buttonText="Complete"
+          buttonStyle="inline-block rounded border px-10 py-2 my-2 mx-2 text-sm font-medium text-blue-500 border-blue-500 focus:outline-none focus:ring"
+          onConfirm={handleComplete}
+          confirmMessage="Are you sure you want to complete?"
+        />
       )}
-      <ConfirmationModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        onConfirm={handleConfirm}
-        message={modalMessage}
-      />
     </>
   );
 };
