@@ -85,9 +85,6 @@ const MenteeProfile: React.FC = () => {
             handleReject={async () => {
               await handleStateUpdate(ApplicationStatus.REJECTED);
             }}
-            handleComplete={async () => {
-              await handleStateUpdate(ApplicationStatus.COMPLETED);
-            }}
           />
         </div>
         <div className="md:hidden">
