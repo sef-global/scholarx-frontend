@@ -3,9 +3,9 @@ import { getStateColor } from '../../utils';
 import { useParams } from 'react-router-dom';
 import useMentor from '../../hooks/admin/useMentor';
 import Toast from '../Toast';
-import ApproveRejectButtons from '../ApproveRejectButtons';
-import { ApplicationStatus } from '../../enums';
 import UserIcon from '../../assets/svg/Icons/UserIcon';
+import ActionButtons from '../ActionButtons';
+import { ApplicationStatus } from '../../enums';
 
 const MentorApplication: React.FC = () => {
   const { mentorId } = useParams();
@@ -14,7 +14,6 @@ const MentorApplication: React.FC = () => {
     data: mentor,
     changeState,
     isSuccess,
-    isPending,
     isError,
   } = useMentor(mentorId);
   const handleStateChange = async (newState: string) => {
@@ -65,17 +64,15 @@ const MentorApplication: React.FC = () => {
             </div>
           </div>
           <div className="ml-auto flex overflow-hidden">
-            {mentor?.state === ApplicationStatus.PENDING && (
-              <ApproveRejectButtons
-                isLoading={isPending}
-                approve={async () => {
-                  await handleStateChange('approved');
-                }}
-                reject={async () => {
-                  await handleStateChange('rejected');
-                }}
-              />
-            )}
+            <ActionButtons
+              state={mentor?.state}
+              handleApprove={async () => {
+                await handleStateChange(ApplicationStatus.APPROVED);
+              }}
+              handleReject={async () => {
+                await handleStateChange(ApplicationStatus.REJECTED);
+              }}
+            />
           </div>
           <div className="grid grid-cols-4 gap-10">
             <div className="col-span-3">

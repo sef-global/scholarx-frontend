@@ -6,13 +6,13 @@ import { ApplicationStatus } from '../../enums';
 import useMentee from '../../hooks/useMentee';
 import { useMentees } from '../../hooks/useMentees';
 import { getStateColor } from '../../utils';
-import ApproveRejectButtons from '../ApproveRejectButtons';
 import Toast from '../Toast';
+import ActionButtons from '../ActionButtons';
 
 const MenteeProfile: React.FC = () => {
   const { menteeId } = useParams();
   const { data: mentee } = useMentee(menteeId);
-  const { updateMenteeStatus, isSuccess, isPending, isError } = useMentees();
+  const { updateMenteeStatus, isSuccess, isError } = useMentees();
 
   const handleStateUpdate = async (state: ApplicationStatus) => {
     if (mentee != null) {
@@ -77,17 +77,15 @@ const MenteeProfile: React.FC = () => {
           </div>
         </div>
         <div className="ml-auto flex overflow-hidden mt-4 md:mt-0">
-          {mentee?.state === ApplicationStatus.PENDING && (
-            <ApproveRejectButtons
-              isLoading={isPending}
-              approve={async () => {
-                await handleStateUpdate(ApplicationStatus.APPROVED);
-              }}
-              reject={async () => {
-                await handleStateUpdate(ApplicationStatus.REJECTED);
-              }}
-            />
-          )}
+          <ActionButtons
+            state={mentee?.state}
+            handleApprove={async () => {
+              await handleStateUpdate(ApplicationStatus.APPROVED);
+            }}
+            handleReject={async () => {
+              await handleStateUpdate(ApplicationStatus.REJECTED);
+            }}
+          />
         </div>
         <div className="md:hidden">
           <a

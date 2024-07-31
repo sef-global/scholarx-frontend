@@ -4,8 +4,8 @@ import UserIcon from '../../assets/svg/Icons/UserIcon';
 import { useParams } from 'react-router-dom';
 import useMentee from '../../hooks/admin/useMentee';
 import Toast from '../Toast';
-import ApproveRejectButtons from '../ApproveRejectButtons';
 import { ApplicationStatus } from '../../enums';
+import ActionButtons from '../ActionButtons';
 
 const MenteeApplication: React.FC = () => {
   const { menteeId } = useParams();
@@ -15,7 +15,6 @@ const MenteeApplication: React.FC = () => {
     changeState,
     isSuccess,
     isError,
-    isPending,
   } = useMentee(menteeId);
   const handleStateChange = async (newState: string) => {
     await changeState(newState);
@@ -78,17 +77,18 @@ const MenteeApplication: React.FC = () => {
             </div>
           </div>
           <div className="ml-auto flex overflow-hidden">
-            {mentee?.state === ApplicationStatus.PENDING && (
-              <ApproveRejectButtons
-                isLoading={isPending}
-                approve={async () => {
-                  await handleStateChange('approved');
-                }}
-                reject={async () => {
-                  await handleStateChange('rejected');
-                }}
-              />
-            )}
+            <ActionButtons
+              state={mentee?.state}
+              handleApprove={async () => {
+                await handleStateChange(ApplicationStatus.APPROVED);
+              }}
+              handleReject={async () => {
+                await handleStateChange(ApplicationStatus.REJECTED);
+              }}
+              handleComplete={async () => {
+                await handleStateChange(ApplicationStatus.COMPLETED);
+              }}
+            />
           </div>
           <div className="grid grid-cols-5 gap-10">
             <div className="col-span-3">

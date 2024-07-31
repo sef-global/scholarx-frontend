@@ -129,9 +129,11 @@ const MentorProfile: React.FC = () => {
                   </button>
                 </Tooltip>
               )}
-              <span className="text-red-400">
-                {!mentor?.availability && 'Mentor is not currently available'}
-              </span>
+              {!mentor?.availability && (
+                <span className="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300">
+                  This mentor is not accepting new applications at the moment.
+                </span>
+              )}
             </div>
           </div>
           <hr className="w-full mt-5" />
