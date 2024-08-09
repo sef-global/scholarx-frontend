@@ -11,6 +11,7 @@ import ChevronRightIcon from '../../assets/svg/Icons/ChevronRightIcon';
 import { ApplicationStatus } from '../../enums';
 import Tooltip from '../../components/Tooltip';
 import Loading from '../../assets/svg/Loading';
+import MenteesList from '../../components/MenteeList';
 
 const MentorProfile: React.FC = () => {
   const { mentorId } = useParams();
@@ -202,6 +203,12 @@ const MentorProfile: React.FC = () => {
             : 'Not mentioned'}
         </p>
       </div>
+      {mentor?.mentees && (
+        <div className="pb-4">
+          <h2 className="text-lg font-medium mb-2 ">Mentees</h2>
+          <MenteesList mentees={mentor?.mentees} />
+        </div>
+      )}
     </>
   );
 };
