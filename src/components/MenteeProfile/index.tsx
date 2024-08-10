@@ -1,13 +1,13 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import UserIcon from '../../assets/svg/Icons/UserIcon';
 import { ApplicationStatus } from '../../enums';
 import useMentee from '../../hooks/useMentee';
 import { useMentees } from '../../hooks/useMentees';
 import { getStateColor } from '../../utils';
 import Toast from '../Toast';
 import ActionButtons from '../ActionButtons';
+import ProfilePic from '../ProfilePic';
 
 const MenteeProfile: React.FC = () => {
   const { menteeId } = useParams();
@@ -31,17 +31,15 @@ const MenteeProfile: React.FC = () => {
       <div className="w-full space-y-5">
         <div className="md:flex items-center">
           <div className="flex">
-            {mentee?.profile.image_url !== '' ? (
-              <img
-                src={mentee?.profile.image_url}
+            <div className="mx-auto mb-4">
+              <ProfilePic
+                src={
+                  mentee?.profile?.image_url ?? mentee?.application?.profilePic
+                }
                 alt="Mentee Avatar"
-                className="w-12 h-12 md:w-24 md:h-24 rounded-full mx-auto mb-4 object-cover"
+                size="6rem"
               />
-            ) : (
-              <div className="w-12 h-12 md:w-24 md:h-24 bg-gray-200 rounded-full flex items-center justify-center">
-                <UserIcon />
-              </div>
-            )}
+            </div>
             <div className="ml-5">
               <div className="flex items-center space-x-3">
                 <span className="text-lg md:text-2xl font-semibold">

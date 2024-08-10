@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import UserIcon from '../../assets/svg/Icons/UserIcon';
 
-const ProfilePic: React.FC<{ src: string; alt: string; size: string }> = ({
-  src,
-  alt,
-  size,
-}) => {
+const ProfilePic: React.FC<{
+  src: string | undefined;
+  alt: string;
+  size: string;
+}> = ({ src, alt, size }) => {
   const [isError, setIsError] = useState(false);
 
   return isError || !src ? (
