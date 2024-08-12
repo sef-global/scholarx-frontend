@@ -198,31 +198,32 @@ const MentorProfile: React.FC = () => {
             : 'Not mentioned'}
         </p>
       </div>
-      {mentor?.mentees && mentor?.mentees.some(mentee => mentee.state === ApplicationStatus.APPROVED) && (
-        <div className="pb-4">
-          <div className="flex flex-wrap gap-2 items-baseline">
-            <h2 className="text-lg font-medium mb-2 ">Mentees</h2>
+      {mentor?.mentees &&
+        mentor?.mentees.some(
+          (mentee) => mentee.state === ApplicationStatus.APPROVED
+        ) && (
+          <div className="pb-4">
+            <div className="flex flex-wrap gap-2 items-baseline">
+              <h2 className="text-lg font-medium mb-2 ">Mentees</h2>
               <p className="text-slate-400 mb-2">
-                &#40;{' '}
-                {
-                  mentor.mentees.length
-                }{' '}
-                total applications &#41;
+                &#40; {mentor.mentees.length} total applications &#41;
               </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {mentor.mentees
+                ?.filter(
+                  (mentee) => mentee.state === ApplicationStatus.APPROVED
+                )
+                .map((mentee) => (
+                  <MenteeCard
+                    key={mentee?.uuid}
+                    mentee={mentee}
+                    showPublicProfile={true}
+                  />
+                ))}
+            </div>
           </div>
-          <div className="flex flex-wrap gap-2">
-            {mentor.mentees
-              ?.filter((mentee) => mentee.state === ApplicationStatus.APPROVED)
-              .map((mentee) => (
-                <MenteeCard
-                  key={mentee?.uuid}
-                  mentee={mentee}
-                  showPublicProfile={true}
-                />
-              ))}
-          </div>
-        </div>
-      )}
+        )}
     </>
   );
 };
