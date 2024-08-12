@@ -112,7 +112,7 @@ const MentorProfile: React.FC = () => {
                   content="You can apply only for one mentor at a time"
                 >
                   <button
-                    className={`text-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 
+                    className={`text-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2
                     ${
                       isMenteeApplicationsDisabled
                         ? 'bg-gray-400'
@@ -126,7 +126,7 @@ const MentorProfile: React.FC = () => {
                 </Tooltip>
               )}
               {!mentor?.availability && (
-                <span className="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300">
+                <span className="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50">
                   This mentor is not accepting new applications at the moment.
                 </span>
               )}
@@ -198,10 +198,19 @@ const MentorProfile: React.FC = () => {
             : 'Not mentioned'}
         </p>
       </div>
-      {mentor?.mentees && (
+      {mentor?.mentees && mentor?.mentees.some(mentee => mentee.state === ApplicationStatus.APPROVED) && (
         <div className="pb-4">
-          <h2 className="text-lg font-medium mb-2 ">Mentees</h2>
-          <div className="flex flex-wrap gap-1">
+          <div className="flex flex-wrap gap-2 items-baseline">
+            <h2 className="text-lg font-medium mb-2 ">Mentees</h2>
+              <p className="text-slate-400 mb-2">
+                &#40;{' '}
+                {
+                  mentor.mentees.length
+                }{' '}
+                total applications &#41;
+              </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
             {mentor.mentees
               ?.filter((mentee) => mentee.state === ApplicationStatus.APPROVED)
               .map((mentee) => (

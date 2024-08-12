@@ -1,14 +1,15 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import useMentee from '../../hooks/useMentee';
 import { getStateColor } from '../../utils';
 import ProfilePic from '../../components/ProfilePic';
 import ChevronRightIcon from '../../assets/svg/Icons/ChevronRightIcon';
+import { ApplicationStatus } from '../../enums';
+import usePublicMentee from '../../hooks/usePublicMentee';
 
 const MenteeProfile: React.FC = () => {
   const { menteeId } = useParams();
-  const { data: mentee } = useMentee(menteeId);
+  const { data: mentee } = usePublicMentee(menteeId);
 
   return (
     <>
@@ -57,9 +58,7 @@ const MenteeProfile: React.FC = () => {
           <div className="flex mt-10">
             <div className="mx-auto mb-4">
               <ProfilePic
-                src={
-                  mentee?.profile?.image_url ?? mentee?.application?.profilePic
-                }
+                src={mentee?.profile?.image_url}
                 alt="Mentee Avatar"
                 size="7rem"
               />
@@ -69,13 +68,15 @@ const MenteeProfile: React.FC = () => {
                 <span className="text-lg md:text-2xl font-semibold">
                   {mentee?.application.firstName} {mentee?.application.lastName}
                 </span>
-                <span
-                  className={`whitespace-nowrap rounded-full px-2.5 py-0.5 text-sm ${getStateColor(
-                    mentee?.state
-                  )}`}
-                >
-                  {mentee?.state}
-                </span>
+                {mentee?.state !== ApplicationStatus.APPROVED && (
+                  <span
+                    className={`whitespace-nowrap rounded-full px-2.5 py-0.5 text-sm ${getStateColor(
+                      mentee?.state
+                    )}`}
+                  >
+                    {mentee?.state}
+                  </span>
+                )}
               </div>
               {mentee?.application.isUndergrad ? (
                 <span className="text-xl font-light">

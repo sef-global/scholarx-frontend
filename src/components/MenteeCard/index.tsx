@@ -24,7 +24,7 @@ const MenteeCard: React.FC<MenteeCardProps> = ({
     >
       <div className="mx-auto mb-4">
         <ProfilePic
-          src={mentee.profile?.image_url ?? mentee.application.profilePic}
+          src={mentee.profile?.image_url}
           alt="Mentee Avatar"
           size="6rem"
         />
