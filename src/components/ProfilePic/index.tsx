@@ -8,14 +8,17 @@ const ProfilePic: React.FC<{
 }> = ({ src, alt, size }) => {
   const [isError, setIsError] = useState(false);
 
-  return isError || !src ? (
-    <div
-      style={{ height: size, width: size }}
-      className="inline-block bg-gray-200 rounded-full ring-2 ring-white flex items-center justify-center"
-    >
-      <UserIcon />
-    </div>
-  ) : (
+  if (isError || !src) {
+    return (
+      <div
+        style={{ height: size, width: size }}
+        className="inline-block bg-gray-200 rounded-full ring-2 ring-white flex items-center justify-center"
+      >
+        <UserIcon />
+      </div>
+    );
+  }
+  return (
     <img
       src={src}
       alt={alt}
