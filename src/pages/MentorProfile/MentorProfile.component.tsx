@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react';
 import useMentor from '../../hooks/useMentor';
 import { useParams } from 'react-router';
 import { Link, useNavigate } from 'react-router-dom';
-import UserIcon from '../../assets/svg/Icons/UserIcon';
 import { useLoginModalContext } from '../../contexts/LoginModalContext';
 import { UserContext, type UserContextType } from '../../contexts/UserContext';
 import Toast from '../../components/Toast';
@@ -11,6 +10,8 @@ import ChevronRightIcon from '../../assets/svg/Icons/ChevronRightIcon';
 import { ApplicationStatus } from '../../enums';
 import Tooltip from '../../components/Tooltip';
 import Loading from '../../assets/svg/Loading';
+import MenteeCard from '../../components/MenteeCard';
+import ProfilePic from '../../components/ProfilePic';
 
 const MentorProfile: React.FC = () => {
   const { mentorId } = useParams();
@@ -77,18 +78,13 @@ const MentorProfile: React.FC = () => {
 
       <div className="flex items-center gap-4 w-full mt-4">
         <div className="w-16 md:w-28">
-          {mentor?.profile.image_url !== '' ? (
-            <img
+          <div className="mx-auto mb-4">
+            <ProfilePic
               src={mentor?.profile.image_url}
               alt="Mentor Avatar"
-              className="w-12 h-12 md:w-24 md:h-24 rounded-full mb-4 object-cover"
-              referrerPolicy="no-referrer"
+              size="6rem"
             />
-          ) : (
-            <div className="w-12 h-12 md:w-24 md:h-24 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center">
-              <UserIcon />
-            </div>
-          )}
+          </div>
         </div>
         <div className="w-full">
           <div className="flex flex-row place-content-between w-full">
@@ -116,7 +112,7 @@ const MentorProfile: React.FC = () => {
                   content="You can apply only for one mentor at a time"
                 >
                   <button
-                    className={`text-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 
+                    className={`text-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2
                     ${
                       isMenteeApplicationsDisabled
                         ? 'bg-gray-400'
@@ -130,7 +126,7 @@ const MentorProfile: React.FC = () => {
                 </Tooltip>
               )}
               {!mentor?.availability && (
-                <span className="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300">
+                <span className="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50">
                   This mentor is not accepting new applications at the moment.
                 </span>
               )}
@@ -202,6 +198,32 @@ const MentorProfile: React.FC = () => {
             : 'Not mentioned'}
         </p>
       </div>
+      {mentor?.mentees &&
+        mentor?.mentees.some(
+          (mentee) => mentee.state === ApplicationStatus.APPROVED
+        ) && (
+          <div className="pb-4">
+            <div className="flex flex-wrap gap-2 items-baseline">
+              <h2 className="text-lg font-medium mb-2 ">Mentees</h2>
+              <p className="text-slate-400 mb-2">
+                &#40; {mentor.mentees.length} total applications &#41;
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {mentor.mentees
+                ?.filter(
+                  (mentee) => mentee.state === ApplicationStatus.APPROVED
+                )
+                .map((mentee) => (
+                  <MenteeCard
+                    key={mentee?.uuid}
+                    mentee={mentee}
+                    showPublicProfile={true}
+                  />
+                ))}
+            </div>
+          </div>
+        )}
     </>
   );
 };

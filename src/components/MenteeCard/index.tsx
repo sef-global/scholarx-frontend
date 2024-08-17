@@ -1,30 +1,34 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import UserIcon from '../../assets/svg/Icons/UserIcon.tsx';
 import { Mentee } from '../../types.ts';
+import ProfilePic from '../ProfilePic/index.tsx';
 
 interface MenteeCardProps {
   mentee: Mentee;
+  showPublicProfile?: boolean;
 }
 
-const MenteeCard: React.FC<MenteeCardProps> = ({ mentee }) => {
+const MenteeCard: React.FC<MenteeCardProps> = ({
+  mentee,
+  showPublicProfile = false,
+}) => {
   return (
     <Link
       className="border border-gray-200 p-4 rounded-md shadow-sm w-52 flex flex-col h-full"
-      to={`/mentor/my-mentees/${mentee.uuid}`}
+      to={
+        showPublicProfile
+          ? `/mentees/${mentee.uuid}`
+          : `/mentor/my-mentees/${mentee.uuid}`
+      }
     >
-      {mentee.profile.image_url !== '' ? (
-        <img
-          src={mentee.profile.image_url}
+      <div className="mx-auto mb-4">
+        <ProfilePic
+          src={mentee.profile?.image_url}
           alt="Mentee Avatar"
-          className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
+          size="6rem"
         />
-      ) : (
-        <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center">
-          <UserIcon />
-        </div>
-      )}
+      </div>
       <div className="text-center">
         <h5 className="text-lg font-bold">
           {mentee.application.firstName} {mentee.application.lastName}
