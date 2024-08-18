@@ -8,7 +8,7 @@ import { UserContext, type UserContextType } from '../../contexts/UserContext';
 
 const logos = [
   'google.png',
-  'facebook.png',
+  'meta.png',
   'microsoft.png',
   'apple.png',
   'linkedin.png',
