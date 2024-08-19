@@ -46,7 +46,7 @@ const Tooltip: React.FC<TooltipProps> = ({
       {children}
       {showTooltip && showTooltipCondition && (
         <>
-          <div className="absolute z-10 px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm whitespace-nowrap -top-12 left-[-90%] transform -translate-x-1/2 transition-opacity duration-300 opacity-100 max-w-xs overflow-hidden text-ellipsis">
+          <div className="absolute z-10 px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm whitespace-nowrap -top-12 left-[-90%] transform translate-x-28 md:-translate-x-1/2 transition-opacity duration-300 opacity-100 max-w-xs overflow-hidden text-ellipsis">
             {tooltipContent}
           </div>
           <div className="absolute w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-t-8 border-t-gray-900 -top-3 left-1/2 transform -translate-x-1/2"></div>

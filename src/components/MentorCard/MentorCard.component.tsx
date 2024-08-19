@@ -1,7 +1,7 @@
 import React from 'react';
 import { type Mentor } from '../../types.ts';
 import { Link } from 'react-router-dom';
-import UserIcon from '../../assets/svg/Icons/UserIcon.tsx';
+import ProfilePic from '../ProfilePic/index.tsx';
 
 interface MentorCardProps {
   mentor: Mentor;
@@ -13,20 +13,14 @@ const MentorCard: React.FC<MentorCardProps> = ({ mentor }) => {
       className="border border-gray-200 p-4 rounded-md shadow-md w-52 flex flex-col h-full relative"
       to={`/mentors/${mentor.uuid}`}
     >
-      {mentor.profile.image_url !== '' ? (
-        <img
+      <div className="mx-auto mb-4">
+        <ProfilePic
           src={mentor.profile.image_url}
-          alt="Mentor Avatar"
-          className={`w-24 h-24 rounded-full mx-auto my-4 object-cover ${
-            !mentor.availability ? 'opacity-60' : ''
-          }`}
-          referrerPolicy="no-referrer"
+          alt="Mentee Avatar"
+          size="6rem"
+          availability={mentor.availability}
         />
-      ) : (
-        <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto my-4 flex items-center justify-center">
-          <UserIcon />
-        </div>
-      )}
+      </div>
       {!mentor.availability && (
         <div className="absolute top-0 left-0 bg-white bg-opacity-75 text-gray-600 px-2 py-1 rounded-md">
           <span className="text-xs font-semibold">Unavailable</span>

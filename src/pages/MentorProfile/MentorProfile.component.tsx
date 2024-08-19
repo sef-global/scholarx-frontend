@@ -76,65 +76,63 @@ const MentorProfile: React.FC = () => {
         <Toast message={'Profile link copied successfully'} type={'success'} />
       )}
 
-      <div className="flex items-center gap-4 w-full mt-4">
-        <div className="w-16 md:w-28">
-          <div className="mx-auto mb-4">
+      <div className="flex flex-col md:flex-row flex-wrap items-center mt-6 md:mt-7 gap-4">
+        <div className="flex flex-col md:flex-row items-center flex-grow gap-4 text-center md:text-left">
+          <div className="flex-shrink-0">
             <ProfilePic
               src={mentor?.profile.image_url}
               alt="Mentor Avatar"
               size="6rem"
+              availability={mentor?.availability}
             />
           </div>
-        </div>
-        <div className="w-full">
-          <div className="flex flex-row place-content-between w-full">
-            <div>
-              <div className="flex gap-4 items-center mb-2">
-                <h1 className="text-lg md:text-3xl font-semibold">
-                  {mentor?.application.firstName} {mentor?.application.lastName}
-                </h1>
-                <span onClick={copyToClipboard}>
-                  <ShareIcon />
-                </span>
-              </div>
-
-              <p className="text-sm ">
-                {mentor?.application.position},{' '}
-                <span className="text-gray-500">
-                  {mentor?.application.institution}
-                </span>
-              </p>
+          <div className="flex-grow">
+            <div className="flex items-center gap-4 mb-2 justify-center md:justify-start">
+              <h1 className="text-lg md:text-3xl font-semibold">
+                {mentor?.application.firstName} {mentor?.application.lastName}
+              </h1>
+              <span onClick={copyToClipboard}>
+                <ShareIcon />
+              </span>
             </div>
-            <div className="self-center">
-              {!isUserMentor && mentor?.availability && (
-                <Tooltip
-                  isVisible={isMenteeApplicationsDisabled}
-                  content="You can apply only for one mentor at a time"
-                >
-                  <button
-                    className={`text-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2
-                    ${
-                      isMenteeApplicationsDisabled
-                        ? 'bg-gray-400'
-                        : 'bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300'
-                    }`}
-                    onClick={onApply}
-                    disabled={isMenteeApplicationsDisabled}
-                  >
-                    Apply
-                  </button>
-                </Tooltip>
-              )}
-              {!mentor?.availability && (
-                <span className="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50">
-                  This mentor is not accepting new applications at the moment.
-                </span>
-              )}
-            </div>
+            <p className="text-sm">
+              {mentor?.application.position},{' '}
+              <span className="text-gray-500">
+                {mentor?.application.institution}
+              </span>
+            </p>
           </div>
-          <hr className="w-full mt-5" />
         </div>
+
+        <div className="flex-shrink-0 md:mt-4 md:mt-0">
+          {!isUserMentor && mentor?.availability && (
+            <Tooltip
+              isVisible={isMenteeApplicationsDisabled}
+              content="You can apply only for one mentor at a time"
+            >
+              <button
+                className={`text-white font-medium rounded-lg text-sm px-20 md:px-5 py-2.5
+                            ${
+                              isMenteeApplicationsDisabled
+                                ? 'bg-gray-400'
+                                : 'bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300'
+                            }`}
+                onClick={onApply}
+                disabled={isMenteeApplicationsDisabled}
+              >
+                Apply
+              </button>
+            </Tooltip>
+          )}
+          {!mentor?.availability && (
+            <span className="p-4 text-xs sm:text-sm text-yellow-800 rounded-lg bg-yellow-50">
+              This mentor is not accepting new applications at the moment.
+            </span>
+          )}
+        </div>
+        <hr className="w-full mt-5" />
       </div>
+
       <div className="md:flex flex-row h-1/3 py-4 md:py-9">
         <div className="grid md:grid-cols-3 md:gap-9 md:w-3/4">
           <div>
