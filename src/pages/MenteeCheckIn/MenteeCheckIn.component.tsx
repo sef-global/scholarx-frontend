@@ -2,15 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-
-const MenteeCheckInSchema = z.object({
-  generalUpdate: z.string().min(1, 'Please provide general updates'),
-  progressUpdate: z.string().min(1, 'Please summarize your progress'),
-  mediaLink: z
-    .string()
-    .url('Please provide a valid URL')
-    .min(1, 'Please provide a media link'),
-});
+import { MenteeCheckInSchema } from '../../schemas';
 
 type MenteeCheckInForm = z.infer<typeof MenteeCheckInSchema>;
 
@@ -26,7 +18,7 @@ const MenteeCheckIn: React.FC = () => {
 
   const onSubmit = async (data: MenteeCheckInForm) => {
     console.log(data);
-    // TODO: Handle form submission
+    //! TODO : Handle form submission
   };
 
   return (
@@ -38,7 +30,7 @@ const MenteeCheckIn: React.FC = () => {
         <div>
           <label
             htmlFor="generalUpdate"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-semibold text-gray-700 mb-1"
           >
             General Updates and Feedback
           </label>
@@ -58,7 +50,7 @@ const MenteeCheckIn: React.FC = () => {
         <div>
           <label
             htmlFor="progressUpdate"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-semibold text-gray-700 mb-1"
           >
             Progress Towards Goals
           </label>
@@ -78,14 +70,16 @@ const MenteeCheckIn: React.FC = () => {
         <div>
           <label
             htmlFor="mediaLink"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-semibold text-gray-700 mb-1"
           >
-            Media Content Link{' '}
-            <span className="text-gray-400">
-              (Link to your media content. A minimum of three submissions are
-              required, as detailed in the mentee guide.)
-            </span>
+            Media Content Link
           </label>
+          <div>
+            <p className="text-sm font-medium text-gray-400 mb-1">
+              Link to your media content. A minimum of three submissions are
+              required, as detailed in the mentee guide.
+            </p>
+          </div>
           <div className="relative">
             <input
               {...register('mediaLink')}

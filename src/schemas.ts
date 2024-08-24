@@ -95,3 +95,12 @@ export const MentorApplicationSchema = z.object({
     .optional()
     .or(z.literal('')),
 });
+
+export const MenteeCheckInSchema = z.object({
+  generalUpdate: z.string().min(1, 'Please provide general updates'),
+  progressUpdate: z.string().min(1, 'Please summarize your progress'),
+  mediaLink: z
+    .string()
+    .url('Please provide a valid URL')
+    .min(1, 'Please provide a media link'),
+});
