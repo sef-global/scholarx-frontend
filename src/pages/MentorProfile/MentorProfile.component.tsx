@@ -203,20 +203,6 @@ const MentorProfile: React.FC = () => {
         <h2 className="text-lg font-medium ">Bio</h2>
         <p className="font-light">{mentor?.application.bio}</p>
       </div>
-      <div className="pb-4">
-        <h2 className="text-lg font-medium ">Available mentee slots</h2>
-        <p className="font-light">
-          {mentor?.application.noOfMentees && mentor.mentees
-            ? Math.max(
-                0,
-                mentor.application.noOfMentees -
-                  mentor.mentees.filter(
-                    (mentee) => mentee.state === ApplicationStatus.APPROVED
-                  ).length
-              )
-            : 'Not mentioned'}
-        </p>
-      </div>
       {mentor?.mentees &&
         mentor?.mentees.some(
           (mentee) => mentee.state === ApplicationStatus.APPROVED
@@ -224,9 +210,6 @@ const MentorProfile: React.FC = () => {
           <div className="pb-4">
             <div className="flex flex-wrap gap-2 items-baseline">
               <h2 className="text-lg font-medium mb-2 ">Mentees</h2>
-              <p className="text-slate-400 mb-2">
-                &#40; {mentor.mentees.length} total applications &#41;
-              </p>
             </div>
             <div className="flex flex-wrap gap-2">
               {mentor.mentees
