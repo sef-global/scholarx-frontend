@@ -117,7 +117,7 @@ const MentorProfile: React.FC = () => {
                   (mentee) => mentee.state === ApplicationStatus.APPROVED
                 ) && (
                   <span className="block sm:inline sm:ml-2 text-md">
-                  {mentor.mentees.length} Mentees Have Applied
+                    {mentor.mentees.length} Mentees Have Applied
                   </span>
                 )}
             </p>
@@ -150,7 +150,6 @@ const MentorProfile: React.FC = () => {
             </span>
           )}
         </div>
-
         <hr className="w-full mt-5" />
       </div>
 
