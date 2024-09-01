@@ -30,9 +30,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     ) ?? null;
   const isMenteeApplicationsDisabled =
     user?.mentee?.some(
-      (mentee) =>
-        mentee.state === ApplicationStatus.PENDING ||
-        mentee.state === ApplicationStatus.APPROVED
+      (mentee) => mentee.state === ApplicationStatus.PENDING
     ) ?? false;
   const isUserMentee =
     user?.mentee?.some(

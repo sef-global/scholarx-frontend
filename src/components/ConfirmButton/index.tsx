@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ConfirmationModal from '../ConfirmationModal';
+import InformationModal from '../InformationModal';
 
 interface ConfirmButtonProps {
   buttonText: string;
@@ -35,10 +35,11 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = ({
         {buttonText}
       </button>
       {isModalOpen && (
-        <ConfirmationModal
+        <InformationModal
           isOpen={isModalOpen}
-          message={confirmMessage}
+          headline={confirmMessage}
           onConfirm={handleConfirm}
+          body="An email will be sent to the applicant."
           onClose={handleCloseModal}
         />
       )}
