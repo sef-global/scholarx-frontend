@@ -37,7 +37,7 @@ const MentorProfile: React.FC = () => {
   };
 
   const { data: mentor, isLoading } = useMentor(mentorId as string);
-  const { revokeApplication } = useMentee(mentorId);
+  const { revokeApplication } = useMentee();
 
   if (isLoading) {
     return (
