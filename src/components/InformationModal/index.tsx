@@ -2,18 +2,20 @@ import React, { useState } from 'react';
 import WarningIcon from '../../assets/svg/Icons/WarningIcon';
 import CloseIcon from '../../assets/svg/Icons/CloseIcon';
 
-interface ConfirmationModalProps {
+interface InformationModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => Promise<void>;
-  message: string;
+  headline: string;
+  body: string;
 }
 
-const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
+const InformationModal: React.FC<InformationModalProps> = ({
   isOpen,
   onClose,
   onConfirm,
-  message,
+  headline,
+  body,
 }) => {
   if (!isOpen) return null;
   const [isLoading, setIsLoading] = useState(false);
@@ -22,6 +24,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
     setIsLoading(true);
     await onConfirm();
     setIsLoading(false);
+    onClose();
   };
 
   return (
@@ -57,12 +60,10 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
                 className="text-lg leading-6 font-medium text-gray-900"
                 id="modal-headline"
               >
-                {message}
+                {headline}
               </h3>
               <div className="mt-2">
-                <p className="text-sm text-gray-500">
-                  An email will be sent to the applicant.
-                </p>
+                <p className="text-sm text-gray-500">{body}</p>
               </div>
             </div>
           </div>
@@ -88,4 +89,4 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   );
 };
 
-export default ConfirmationModal;
+export default InformationModal;
