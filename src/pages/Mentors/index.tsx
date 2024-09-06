@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import useCategories from '../../hooks/useCategories';
 import { usePublicMentors } from '../../hooks/usePublicMentors';
@@ -14,13 +14,8 @@ const Mentors = () => {
 
   const { ref, inView } = useInView();
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    status,
-  } = usePublicMentors(selectedCategory, pageSize);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
+    usePublicMentors(selectedCategory, pageSize);
 
   const {
     data: categoriesData,
@@ -32,24 +27,29 @@ const Mentors = () => {
 
   useEffect(() => {
     if (inView && hasNextPage) {
-      fetchNextPage();
+      void fetchNextPage();
     }
   }, [inView, fetchNextPage, hasNextPage]);
 
   useEffect(() => {
     if (data) {
-      const allMentors = data.pages.flatMap(page => page.items);
+      const allMentors = data.pages.flatMap((page) => page.items);
       setSortedMentors(allMentors);
     }
   }, [data]);
 
   useEffect(() => {
     if (categoriesData) {
-      const fetchedCategories = categoriesData.pages.flatMap(page => page.items);
-      setAllCategories(prevCategories => [...prevCategories, ...fetchedCategories]);
+      const fetchedCategories = categoriesData.pages.flatMap(
+        (page) => page.items
+      );
+      setAllCategories((prevCategories) => [
+        ...prevCategories,
+        ...fetchedCategories,
+      ]);
 
       if (hasNextCategoriesPage) {
-        fetchNextCategories();
+        void fetchNextCategories();
       }
     }
   }, [categoriesData, hasNextCategoriesPage, fetchNextCategories]);
@@ -88,7 +88,9 @@ const Mentors = () => {
         <div className="mb-4 w-full flex items-center justify-between">
           <div className="flex flex-wrap gap-3 items-center text-sm">
             <button
-              onClick={() => handleCategoryChange(null)}
+              onClick={() => {
+                handleCategoryChange(null);
+              }}
               className={`bg-blue text-black px-4 py-1 rounded-full border border-blue-500 ${
                 selectedCategory === null ? 'bg-blue-500 text-white' : ''
               }`}
@@ -98,9 +100,13 @@ const Mentors = () => {
             {allCategories.map((category: Category) => (
               <button
                 key={category.uuid}
-                onClick={() => handleCategoryChange(category.uuid)}
+                onClick={() => {
+                  handleCategoryChange(category.uuid);
+                }}
                 className={`bg-blue text-black px-4 py-1 rounded-full border border-blue-500 ${
-                  selectedCategory === category.uuid ? 'bg-blue-500 text-white' : ''
+                  selectedCategory === category.uuid
+                    ? 'bg-blue-500 text-white'
+                    : ''
                 }`}
               >
                 {category.category}

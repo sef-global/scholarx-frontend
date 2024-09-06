@@ -10,17 +10,27 @@ interface MentorsResponse {
   pageSize: number;
 }
 
-const fetchPublicMentors = async ({ pageParam, queryKey }: { pageParam: number; queryKey: (string | number | null)[] }): Promise<MentorsResponse> => {
+const fetchPublicMentors = async ({
+  pageParam,
+  queryKey,
+}: {
+  pageParam: number;
+  queryKey: Array<string | number | null>;
+}): Promise<MentorsResponse> => {
   const [, category, pageSize] = queryKey;
-  let url = `${API_URL}/mentors?pageNumber=${pageParam}&pageSize=${pageSize}`;
+  let url = `${API_URL}/mentors?pageNumber=${pageParam}&pageSize=${
+    pageSize ?? ''
+  }`;
   if (category != null) {
     url += `&categoryId=${category}`;
   }
-  const response = await axios.get<MentorsResponse>(url, { withCredentials: true });
+  const response = await axios.get<MentorsResponse>(url, {
+    withCredentials: true,
+  });
   return response.data;
 };
 
-export const usePublicMentors = (categoryId: string | null, pageSize: number = 10) => {
+export const usePublicMentors = (categoryId: string | null, pageSize = 10) => {
   return useInfiniteQuery({
     queryKey: ['public-mentors', categoryId, pageSize],
     queryFn: fetchPublicMentors,
