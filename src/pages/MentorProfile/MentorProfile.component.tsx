@@ -95,28 +95,26 @@ const MentorProfile: React.FC = () => {
                 <ShareIcon />
               </span>
             </div>
-            <p className="text-sm mb-2">
-              {mentor?.application.position},{' '}
-              <span className="text-gray-500">
-                {mentor?.application.institution}
-              </span>
-            </p>
-            <p className="text-md">
-              {mentor?.application.noOfMentees && mentor.mentees
-                ? Math.max(
+            <p className="text-md flex flex-col sm:flex-row sm:items-center">
+              {mentor?.application.noOfMentees && mentor.mentees ? (
+                <span className="inline-block bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full mb-2 sm:mb-0 sm:mr-2">
+                  {Math.max(
                     0,
                     mentor.application.noOfMentees -
                       mentor.mentees.filter(
                         (mentee) => mentee.state === ApplicationStatus.APPROVED
                       ).length
-                  )
-                : 'Not mentioned'}{' '}
-              Mentee Slots Available{' '}
+                  )}{' '}
+                  Mentee Slots Available
+                </span>
+              ) : (
+                'Not mentioned'
+              )}
               {mentor?.mentees &&
                 mentor?.mentees.some(
                   (mentee) => mentee.state === ApplicationStatus.APPROVED
                 ) && (
-                  <span className="block sm:inline sm:ml-2 text-md">
+                  <span className="inline-block bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">
                     {mentor.mentees.length} Mentees Have Applied
                   </span>
                 )}
