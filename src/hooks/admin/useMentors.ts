@@ -64,7 +64,7 @@ export const useMentors = (categoryId?: string, pageSize = 10) => {
     queryKey: ['mentors', categoryId, pageSize],
     queryFn: fetchMentors,
     initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) => {
+    getNextPageParam: (lastPage) => {
       const nextPage = lastPage.pageNumber + 1;
       return nextPage <= Math.ceil(lastPage.totalItemCount / lastPage.pageSize)
         ? nextPage
