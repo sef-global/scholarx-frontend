@@ -1,9 +1,10 @@
 import {
-  useQuery,
+  useInfiniteQuery,
   useMutation,
   useQueryClient,
-  type QueryFunction,
-  type QueryKey,
+  type InfiniteData,
+  type QueryFunctionContext,
+  type UseInfiniteQueryOptions,
 } from '@tanstack/react-query';
 import axios, { type AxiosError } from 'axios';
 import { API_URL } from '../../constants';
@@ -14,18 +15,29 @@ interface MentorStatus {
   state: string;
 }
 
-const fetchMentors: QueryFunction<Mentor[], QueryKey> = async ({
+interface MentorResponse {
+  items: Mentor[];
+  message: string;
+  pageNumber: number;
+  pageSize: number;
+  totalItemCount: number;
+}
+
+type MentorsQueryKey = ['mentors', string | undefined, number];
+
+const fetchMentors = async ({
+  pageParam = 1,
   queryKey,
-}) => {
-  const [, category]: [string, string] = queryKey as [string, string];
-  let url = `${API_URL}/admin/mentors`;
+}: QueryFunctionContext<MentorsQueryKey, number>): Promise<MentorResponse> => {
+  const [, category, pageSize] = queryKey;
+  let url = `${API_URL}/admin/mentors?pageNumber=${pageParam}&pageSize=${pageSize}`;
   if (category !== '' && category != null) {
-    url += `?categoryId=${category}`;
+    url += `&categoryId=${category}`;
   }
   const response = await axios.get(url, {
     withCredentials: true,
   });
-  return response.data.mentors;
+  return response.data;
 };
 
 const updateMentorStatus = async (mentorStatus: MentorStatus) => {
@@ -38,13 +50,30 @@ const updateMentorStatus = async (mentorStatus: MentorStatus) => {
   return response.data;
 };
 
-export const useMentors = (categoryId?: string) => {
+export const useMentors = (categoryId?: string, pageSize = 10) => {
   const queryClient = useQueryClient();
 
-  const { isLoading, error, data } = useQuery<Mentor[], AxiosError>({
-    queryKey: ['mentors', categoryId],
+  const infiniteQueryOptions: UseInfiniteQueryOptions<
+    MentorResponse,
+    AxiosError,
+    InfiniteData<MentorResponse, number>,
+    MentorResponse,
+    MentorsQueryKey,
+    number
+  > = {
+    queryKey: ['mentors', categoryId, pageSize],
     queryFn: fetchMentors,
-  });
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      const nextPage = lastPage.pageNumber + 1;
+      return nextPage <= Math.ceil(lastPage.totalItemCount / lastPage.pageSize)
+        ? nextPage
+        : undefined;
+    },
+  };
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
+    useInfiniteQuery(infiniteQueryOptions);
 
   const { mutateAsync: updateStatus } = useMutation<
     unknown,
@@ -57,10 +86,14 @@ export const useMentors = (categoryId?: string) => {
     },
   });
 
+  const mentors = data?.pages.flatMap((page) => page.items) ?? [];
+
   return {
-    isLoading,
-    error,
-    data,
+    data: mentors,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    status,
     updateStatus,
   };
 };

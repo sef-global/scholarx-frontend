@@ -43,10 +43,15 @@ const Mentors = () => {
       const fetchedCategories = categoriesData.pages.flatMap(
         (page) => page.items
       );
-      setAllCategories((prevCategories) => [
-        ...prevCategories,
-        ...fetchedCategories,
-      ]);
+      setAllCategories((prevCategories) => {
+        const uniqueCategories = [...prevCategories];
+        fetchedCategories.forEach((category) => {
+          if (!uniqueCategories.some((c) => c.uuid === category.uuid)) {
+            uniqueCategories.push(category);
+          }
+        });
+        return uniqueCategories;
+      });
 
       if (hasNextCategoriesPage) {
         void fetchNextCategories();
