@@ -1,35 +1,35 @@
-import {
-  useQuery,
-  type QueryFunction,
-  type QueryKey,
-} from '@tanstack/react-query';
-import axios, { type AxiosError } from 'axios';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import { API_URL } from '../constants';
 import { type Mentor } from '../types';
 
-const fetchPublicMentors: QueryFunction<Mentor[], QueryKey> = async ({
-  queryKey,
-}) => {
-  const [, category]: [string, string] = queryKey as [string, string];
-  let url = `${API_URL}/mentors`;
+interface MentorsResponse {
+  items: Mentor[];
+  totalItemCount: number;
+  pageNumber: number;
+  pageSize: number;
+}
+
+const fetchPublicMentors = async ({ pageParam, queryKey }: { pageParam: number; queryKey: (string | number | null)[] }): Promise<MentorsResponse> => {
+  const [, category, pageSize] = queryKey;
+  let url = `${API_URL}/mentors?pageNumber=${pageParam}&pageSize=${pageSize}`;
   if (category != null) {
-    url += `?categoryId=${category}`;
+    url += `&categoryId=${category}`;
   }
-  const response = await axios.get(url, {
-    withCredentials: true,
-  });
-  return response.data.mentors;
+  const response = await axios.get<MentorsResponse>(url, { withCredentials: true });
+  return response.data;
 };
 
-export const usePublicMentors = (categoryId: string | null) => {
-  const { isLoading, error, data } = useQuery<Mentor[], AxiosError>({
-    queryKey: ['public-mentors', categoryId],
+export const usePublicMentors = (categoryId: string | null, pageSize: number = 10) => {
+  return useInfiniteQuery({
+    queryKey: ['public-mentors', categoryId, pageSize],
     queryFn: fetchPublicMentors,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages) => {
+      if (lastPage.items.length < pageSize) {
+        return undefined;
+      }
+      return pages.length + 1;
+    },
   });
-
-  return {
-    isLoading,
-    error,
-    data,
-  };
 };
