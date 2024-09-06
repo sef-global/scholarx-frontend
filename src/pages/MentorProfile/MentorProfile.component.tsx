@@ -95,43 +95,45 @@ const MentorProfile: React.FC = () => {
                 <ShareIcon />
               </span>
             </div>
-            <p className="text-md flex flex-col sm:flex-row sm:items-center">
-              {mentor?.application.noOfMentees && mentor.mentees ? (
-                <span
-                  className={`inline-block text-sm font-medium px-3 py-1 rounded-full mb-2 sm:mb-0 sm:mr-2 ${
-                    Math.max(
-                      0,
-                      mentor.application.noOfMentees -
-                        mentor.mentees.filter(
-                          (mentee) =>
-                            mentee.state === ApplicationStatus.APPROVED
-                        ).length
-                    ) === 0
-                      ? 'bg-gray-100 text-gray-800'
-                      : 'bg-green-100 text-green-800'
-                  }`}
-                >
-                  {Math.max(
-                    0,
-                    mentor.application.noOfMentees -
-                      mentor.mentees.filter(
-                        (mentee) => mentee.state === ApplicationStatus.APPROVED
-                      ).length
-                  )}{' '}
-                  Mentee Slots Available
-                </span>
-              ) : (
-                'Not mentioned'
-              )}
-              {mentor?.mentees &&
-                mentor?.mentees.some(
-                  (mentee) => mentee.state === ApplicationStatus.APPROVED
-                ) && (
-                  <span className="inline-block bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">
-                    {mentor.mentees.length} Mentees Have Applied
-                  </span>
-                )}
-            </p>
+            <p className="text-md flex flex-wrap items-center">
+  {mentor?.application.noOfMentees && mentor.mentees ? (
+    <span
+      className={`inline-block text-sm font-medium px-3 py-1 rounded-full mt-2 sm:mt-0 mr-2 ${
+        Math.max(
+          0,
+          mentor.application.noOfMentees -
+            mentor.mentees.filter(
+              (mentee) => mentee.state === ApplicationStatus.APPROVED
+            ).length
+        ) === 0
+          ? 'bg-gray-100 text-gray-800'
+          : 'bg-green-100 text-green-800'
+      }`}
+    >
+      {Math.max(
+        0,
+        mentor.application.noOfMentees -
+          mentor.mentees.filter(
+            (mentee) => mentee.state === ApplicationStatus.APPROVED
+          ).length
+      )}{' '}
+      Slots Available
+    </span>
+  ) : (
+    'Not mentioned'
+  )}
+  {mentor?.mentees &&
+    mentor?.mentees.some(
+      (mentee) => mentee.state === ApplicationStatus.APPROVED
+    ) && (
+      <span className="inline-block bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full mt-2 sm:mt-0">
+        {mentor.mentees.length} Applied
+      </span>
+    )}
+</p>
+
+
+
           </div>
         </div>
 
