@@ -18,7 +18,7 @@ const MenteeApplications: React.FC = () => {
     hasNextPage,
     isFetchingNextPage,
     status: menteesStatus,
-  } = useMentees(pageSize);
+  } = useMentees(filter, pageSize);
 
   useEffect(() => {
     if (inView && hasNextPage) {

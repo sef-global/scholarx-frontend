@@ -23,16 +23,19 @@ interface MentorResponse {
   totalItemCount: number;
 }
 
-type MentorsQueryKey = ['mentors', string | undefined, number];
+type MentorsQueryKey = ['mentors', string | null, string | null, number];
 
 const fetchMentors = async ({
   pageParam = 1,
   queryKey,
 }: QueryFunctionContext<MentorsQueryKey, number>): Promise<MentorResponse> => {
-  const [, category, pageSize] = queryKey;
+  const [, category, mentorStatus, pageSize] = queryKey;
   let url = `${API_URL}/admin/mentors?pageNumber=${pageParam}&pageSize=${pageSize}`;
   if (category !== '' && category != null) {
     url += `&categoryId=${category}`;
+  }
+  if (mentorStatus !== null && mentorStatus !== '') {
+    url += `&status=${mentorStatus}`;
   }
   const response = await axios.get(url, {
     withCredentials: true,
@@ -50,7 +53,7 @@ const updateMentorStatus = async (mentorStatus: MentorStatus) => {
   return response.data;
 };
 
-export const useMentors = (categoryId?: string, pageSize = 10) => {
+export const useMentors = (categoryId: string| null, mentorStatus: string| null, pageSize = 10) => {
   const queryClient = useQueryClient();
 
   const infiniteQueryOptions: UseInfiniteQueryOptions<
@@ -61,7 +64,7 @@ export const useMentors = (categoryId?: string, pageSize = 10) => {
     MentorsQueryKey,
     number
   > = {
-    queryKey: ['mentors', categoryId, pageSize],
+    queryKey: ['mentors', categoryId, mentorStatus, pageSize],
     queryFn: fetchMentors,
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {

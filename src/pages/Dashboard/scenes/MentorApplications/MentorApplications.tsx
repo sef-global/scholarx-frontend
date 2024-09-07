@@ -24,7 +24,7 @@ const MentorApplications: React.FC = () => {
     hasNextPage,
     isFetchingNextPage,
     status: mentorsStatus,
-  } = useMentors(categoryFilter, pageSize);
+  } = useMentors(categoryFilter, filter, pageSize);
 
   const {
     data: categoriesData,

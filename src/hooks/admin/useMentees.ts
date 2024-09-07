@@ -24,14 +24,17 @@ interface MenteeResponse {
   totalItemCount: number;
 }
 
-type MenteesQueryKey = ['admin-mentees', number];
+type MenteesQueryKey = ['admin-mentees', string | null, number];
 
 const fetchMentees = async ({
   pageParam = 1,
   queryKey,
 }: QueryFunctionContext<MenteesQueryKey, number>): Promise<MenteeResponse> => {
-  const [, pageSize] = queryKey;
-  const url = `${API_URL}/admin/mentees/applications?pageNumber=${pageParam}&pageSize=${pageSize}`;
+  const [, menteeStatus, pageSize] = queryKey;
+  let url = `${API_URL}/admin/mentees/applications?pageNumber=${pageParam}&pageSize=${pageSize}`;
+  if (menteeStatus !== null || menteeStatus !== '') {
+    url += `&status=${menteeStatus}`;
+  }
   const response = await axios.get(url, {
     withCredentials: true,
   });
@@ -47,7 +50,7 @@ const updateMenteeStatus = async ({ menteeId, status }: MenteeStatus) => {
   return response.data;
 };
 
-const useMentees = (pageSize = 10) => {
+const useMentees = (menteeStatus: string | null, pageSize = 10) => {
   const queryClient = useQueryClient();
 
   const infiniteQueryOptions: UseInfiniteQueryOptions<
@@ -58,7 +61,7 @@ const useMentees = (pageSize = 10) => {
     MenteesQueryKey,
     number
   > = {
-    queryKey: ['admin-mentees', pageSize],
+    queryKey: ['admin-mentees', menteeStatus, pageSize],
     queryFn: fetchMentees,
     getNextPageParam: (lastPage) => {
       const nextPage = lastPage.pageNumber + 1;
