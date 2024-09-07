@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useParams } from 'react-router-dom';
 
@@ -9,9 +9,9 @@ import FormCheckbox from '../../components/FormFields/MenteeApplication/FormChec
 import FormInput from '../../components/FormFields/MenteeApplication/FormInput';
 import { API_URL } from '../../constants';
 import useProfile from '../../hooks/useProfile';
-import { usePublicMentors } from '../../hooks/usePublicMentors';
 import { MenteeApplicationSchema } from '../../schemas';
-import { MenteeApplication, Mentor } from '../../types';
+import { MenteeApplication } from '../../types';
+import useMentor from '../../hooks/useMentor';
 
 const steps = [
   {
@@ -48,19 +48,11 @@ const MenteeRegistration: React.FC = () => {
       isUndergrad: true,
     },
   });
-  const [allMentors, setAllMentors] = useState<Mentor[]>([]);
-
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    // isFetchingNextPage,
-    // status: mentorsStatus,
-  } = usePublicMentors(null, 10);
 
   const [currentStep, setCurrentStep] = useState(0);
   const [image, setImage] = useState<File | null>(null);
   const [profilePic, setProfilePic] = useState(user?.image_url);
+  const { data: mentor, isLoading: isMentorLoading } = useMentor(mentorId);
 
   const handleProfilePicChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files != null) {
@@ -139,17 +131,6 @@ const MenteeRegistration: React.FC = () => {
       await refetch();
     },
   });
-
-  useEffect(() => {
-    if (data) {
-      const allMentors = data.pages.flatMap((page) => page.items);
-      setAllMentors(allMentors);
-    }
-
-    if (hasNextPage) {
-      void fetchNextPage();
-    }
-  }, [data]);
 
   return (
     <div className="relative w-full">
@@ -349,19 +330,12 @@ const MenteeRegistration: React.FC = () => {
               <label className="block text-sm font-medium text-gray-600">
                 Mentor
               </label>
-              <select
-                className="mt-1 p-2 w-1/2 border rounded-md"
-                {...register('mentorId')}
-              >
-                {allMentors
-                  ?.filter((mentor: Mentor) => mentor.availability)
-                  .map((mentor: Mentor) => (
-                    <option key={mentor.uuid} value={mentor.uuid}>
-                      {mentor.application.firstName}{' '}
-                      {mentor.application.lastName}
-                    </option>
-                  ))}
-              </select>
+              <p>
+                {isMentorLoading &&
+                  `${mentor?.application?.firstName ?? ''} ${
+                    mentor?.application?.lastName ?? ''
+                  }`}
+              </p>
             </div>
             <FormInput
               type="text"

@@ -19,6 +19,24 @@ const MenteeApplications: React.FC = () => {
     isFetchingNextPage,
     status: menteesStatus,
   } = useMentees(filter, pageSize);
+  const { status: allMenteesStatus, totalItemCount: totalAllItemCount } =
+    useMentees(null, 1);
+  const {
+    status: approvedMenteesStatus,
+    totalItemCount: totalApprovedItemCount,
+  } = useMentees('approved', 1);
+  const {
+    status: pendingMenteesStatus,
+    totalItemCount: totalPendingItemCount,
+  } = useMentees('pending', 1);
+  const {
+    status: rejectedMenteesStatus,
+    totalItemCount: totalRejectedItemCount,
+  } = useMentees('rejected', 1);
+  const {
+    status: completedMenteesStatus,
+    totalItemCount: totalCompletedItemCount,
+  } = useMentees('completed', 1);
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -28,21 +46,43 @@ const MenteeApplications: React.FC = () => {
 
   const renderFilters = () => {
     const filters = [
-      { label: 'All', status: '' },
-      { label: 'Approved', status: 'approved' },
-      { label: 'Pending', status: 'pending' },
-      { label: 'Rejected', status: 'rejected' },
-      { label: 'Completed', status: 'completed' },
+      {
+        label: 'All',
+        status: '',
+        count: totalAllItemCount,
+        isLoaded: allMenteesStatus === 'success',
+      },
+      {
+        label: 'Approved',
+        status: 'approved',
+        count: totalApprovedItemCount,
+        isLoaded: approvedMenteesStatus === 'success',
+      },
+      {
+        label: 'Pending',
+        status: 'pending',
+        count: totalPendingItemCount,
+        isLoaded: pendingMenteesStatus === 'success',
+      },
+      {
+        label: 'Rejected',
+        status: 'rejected',
+        count: totalRejectedItemCount,
+        isLoaded: rejectedMenteesStatus === 'success',
+      },
+      {
+        label: 'Completed',
+        status: 'completed',
+        count: totalCompletedItemCount,
+        isLoaded: completedMenteesStatus === 'success',
+      },
     ];
 
     return (
       <>
         {mentees !== undefined && (
           <div className="flex mb-3">
-            {filters.map(({ label, status }) => {
-              const count = mentees?.filter((mentee) =>
-                status.length > 0 ? mentee.state === status : true
-              ).length;
+            {filters.map(({ label, status, count, isLoaded }) => {
               return (
                 <button
                   key={label}
@@ -61,7 +101,7 @@ const MenteeApplications: React.FC = () => {
                     setFilter(status);
                   }}
                 >
-                  {label} ({count})
+                  {label} {isLoaded && `(${count})`}
                 </button>
               );
             })}

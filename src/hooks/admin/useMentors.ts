@@ -94,6 +94,7 @@ export const useMentors = (
   });
 
   const mentors = data?.pages.flatMap((page) => page.items) ?? [];
+  const totalItemCount = data?.pages[0]?.totalItemCount ?? 0;
 
   return {
     data: mentors,
@@ -102,5 +103,6 @@ export const useMentors = (
     isFetchingNextPage,
     status,
     updateStatus,
+    totalItemCount,
   };
 };

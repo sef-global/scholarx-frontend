@@ -87,6 +87,7 @@ const useMentees = (menteeStatus: string | null, pageSize = 10) => {
   });
 
   const mentees = data?.pages.flatMap((page) => page.items) ?? [];
+  const totalItemCount = data?.pages[0]?.totalItemCount ?? 0;
 
   return {
     data: mentees,
@@ -95,6 +96,7 @@ const useMentees = (menteeStatus: string | null, pageSize = 10) => {
     isFetchingNextPage,
     status,
     updateStatus,
+    totalItemCount,
   };
 };
 

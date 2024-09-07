@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Category, type Mentor } from '../../../../types';
+import { type Mentor } from '../../../../types';
 import { useMentors } from '../../../../hooks/admin/useMentors';
 import useCategories from '../../../../hooks/useCategories';
 import { useQueryClient } from '@tanstack/react-query';
@@ -10,7 +10,6 @@ import Loading from '../../../../assets/svg/Loading';
 const MentorApplications: React.FC = () => {
   const [filter, setFilter] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [allCategories, setAllCategories] = useState<Category[]>([]);
   const pageSize = 10;
 
   const { ref, inView } = useInView();
@@ -26,40 +25,32 @@ const MentorApplications: React.FC = () => {
     status: mentorsStatus,
   } = useMentors(categoryFilter, filter, pageSize);
 
+  const { status: allMentorsStatus, totalItemCount: totalAllItemCount } =
+    useMentors(categoryFilter, null, 1);
+  const {
+    status: approvedMentorsStatus,
+    totalItemCount: totalApprovedItemCount,
+  } = useMentors(categoryFilter, 'approved', 1);
+  const {
+    status: pendingMentorsStatus,
+    totalItemCount: totalPendingItemCount,
+  } = useMentors(categoryFilter, 'pending', 1);
+  const {
+    status: rejectedMentorsStatus,
+    totalItemCount: totalRejectedItemCount,
+  } = useMentors(categoryFilter, 'rejected', 1);
+
   const {
     data: categoriesData,
     isLoading: categoriesLoading,
     error: categoriesError,
-    fetchNextPage: fetchNextCategories,
-    hasNextPage: hasNextCategoriesPage,
-  } = useCategories(pageSize);
+  } = useCategories(100);
 
   useEffect(() => {
     if (inView && hasNextPage) {
       void fetchNextPage();
     }
   }, [inView, fetchNextPage, hasNextPage]);
-
-  useEffect(() => {
-    if (categoriesData) {
-      const fetchedCategories = categoriesData.pages.flatMap(
-        (page) => page.items
-      );
-      setAllCategories((prevCategories) => {
-        const uniqueCategories = [...prevCategories];
-        fetchedCategories.forEach((category) => {
-          if (!uniqueCategories.some((c) => c.uuid === category.uuid)) {
-            uniqueCategories.push(category);
-          }
-        });
-        return uniqueCategories;
-      });
-
-      if (hasNextCategoriesPage) {
-        void fetchNextCategories();
-      }
-    }
-  }, [categoriesData, hasNextCategoriesPage, fetchNextCategories]);
 
   const handleCategoryChange = async (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -85,20 +76,37 @@ const MentorApplications: React.FC = () => {
 
   const renderFilters = () => {
     const filters = [
-      { label: 'All', status: '' },
-      { label: 'Approved', status: 'approved' },
-      { label: 'Pending', status: 'pending' },
-      { label: 'Rejected', status: 'rejected' },
+      {
+        label: 'All',
+        status: '',
+        count: totalAllItemCount,
+        isLoaded: allMentorsStatus === 'success',
+      },
+      {
+        label: 'Approved',
+        status: 'approved',
+        count: totalApprovedItemCount,
+        isLoaded: approvedMentorsStatus === 'success',
+      },
+      {
+        label: 'Pending',
+        status: 'pending',
+        count: totalPendingItemCount,
+        isLoaded: pendingMentorsStatus === 'success',
+      },
+      {
+        label: 'Rejected',
+        status: 'rejected',
+        count: totalRejectedItemCount,
+        isLoaded: rejectedMentorsStatus === 'success',
+      },
     ];
 
     return (
       <>
         {mentors && (
           <div className="flex mb-3">
-            {filters.map(({ label, status }) => {
-              const count = mentors.filter((mentor) =>
-                status.length > 0 ? mentor.state === status : true
-              ).length;
+            {filters.map(({ label, status, count, isLoaded }) => {
               return (
                 <button
                   key={label}
@@ -117,7 +125,7 @@ const MentorApplications: React.FC = () => {
                     setFilter(status);
                   }}
                 >
-                  {label} ({count})
+                  {label} {isLoaded ? `(${count})` : ''}
                 </button>
               );
             })}
@@ -168,13 +176,13 @@ const MentorApplications: React.FC = () => {
               className="p-2 mb-4 border border-gray-300 rounded-md ml-4"
             >
               <option value="">All Categories</option>
-              {allCategories.map(
-                (category: { uuid: string; category: string }) => (
+              {categoriesData?.pages
+                ?.flatMap((page) => page.items)
+                .map((category: { uuid: string; category: string }) => (
                   <option key={category.uuid} value={category.uuid}>
                     {category.category}
                   </option>
-                )
-              )}
+                ))}
             </select>
           </div>
           <p className="text-md m-4">Total Mentee Slots: {totalMentees}</p>
