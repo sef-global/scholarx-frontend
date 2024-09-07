@@ -32,7 +32,7 @@ const fetchMentees = async ({
 }: QueryFunctionContext<MenteesQueryKey, number>): Promise<MenteeResponse> => {
   const [, menteeStatus, pageSize] = queryKey;
   let url = `${API_URL}/admin/mentees/applications?pageNumber=${pageParam}&pageSize=${pageSize}`;
-  if (menteeStatus !== null || menteeStatus !== '') {
+  if (menteeStatus !== null && menteeStatus !== '') {
     url += `&status=${menteeStatus}`;
   }
   const response = await axios.get(url, {

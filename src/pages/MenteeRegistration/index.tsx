@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useParams } from 'react-router-dom';
 
@@ -11,7 +11,7 @@ import { API_URL } from '../../constants';
 import useProfile from '../../hooks/useProfile';
 import { usePublicMentors } from '../../hooks/usePublicMentors';
 import { MenteeApplicationSchema } from '../../schemas';
-import { MenteeApplication } from '../../types';
+import { MenteeApplication, Mentor } from '../../types';
 
 const steps = [
   {
@@ -48,7 +48,16 @@ const MenteeRegistration: React.FC = () => {
       isUndergrad: true,
     },
   });
-  const { error: mentorsError, data: mentors } = usePublicMentors(null);
+  const [allMentors, setAllMentors] = useState<Mentor[]>([]);
+
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    // isFetchingNextPage,
+    // status: mentorsStatus,
+  } = usePublicMentors(null, 10);
+
   const [currentStep, setCurrentStep] = useState(0);
   const [image, setImage] = useState<File | null>(null);
   const [profilePic, setProfilePic] = useState(user?.image_url);
@@ -130,6 +139,17 @@ const MenteeRegistration: React.FC = () => {
       await refetch();
     },
   });
+
+  useEffect(() => {
+    if (data) {
+      const allMentors = data.pages.flatMap((page) => page.items);
+      setAllMentors(allMentors);
+    }
+
+    if (hasNextPage) {
+      void fetchNextPage();
+    }
+  }, [data]);
 
   return (
     <div className="relative w-full">
@@ -333,9 +353,9 @@ const MenteeRegistration: React.FC = () => {
                 className="mt-1 p-2 w-1/2 border rounded-md"
                 {...register('mentorId')}
               >
-                {mentors
-                  ?.filter((mentor) => mentor.availability)
-                  .map((mentor) => (
+                {allMentors
+                  ?.filter((mentor: Mentor) => mentor.availability)
+                  .map((mentor: Mentor) => (
                     <option key={mentor.uuid} value={mentor.uuid}>
                       {mentor.application.firstName}{' '}
                       {mentor.application.lastName}
@@ -392,12 +412,12 @@ const MenteeRegistration: React.FC = () => {
             </p>
           </>
         )}
-        {mentorsError !== null ? (
+        {status === 'error' ? (
           <div
             className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 "
             role="alert"
           >
-            {mentorsError.message}
+            {'An error occurred. Please try again later.'}
           </div>
         ) : null}
         {isApplicationError && applicationError instanceof AxiosError ? (

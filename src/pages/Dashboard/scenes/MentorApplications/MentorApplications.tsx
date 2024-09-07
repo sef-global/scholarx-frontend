@@ -32,7 +32,7 @@ const MentorApplications: React.FC = () => {
     error: categoriesError,
     fetchNextPage: fetchNextCategories,
     hasNextPage: hasNextCategoriesPage,
-  } = useCategories(100);
+  } = useCategories(pageSize);
 
   useEffect(() => {
     if (inView && hasNextPage) {

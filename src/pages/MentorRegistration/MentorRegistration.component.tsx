@@ -5,7 +5,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import useCategories from '../../hooks/useCategories';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MentorApplicationSchema } from '../../schemas';
-import { type MentorApplication } from '../../types';
+import { Category, type MentorApplication } from '../../types';
 import FormCheckbox from '../../components/FormFields/MentorApplication/FormCheckbox';
 import FormInput from '../../components/FormFields/MentorApplication/FormInput';
 import FormTextarea from '../../components/FormFields/MentorApplication/FormTextarea';
@@ -54,7 +54,17 @@ const MentorRegistrationPage: React.FC = () => {
       profilePic: user?.image_url,
     },
   });
-  const { error: categoryError, data: categories } = useCategories();
+
+  const [allCategories, setAllCategories] = useState<Category[]>([]);
+
+  const {
+    data: categoriesData,
+    // isLoading: categoriesLoading,
+    error: categoriesError,
+    fetchNextPage: fetchNextCategories,
+    hasNextPage: hasNextCategoriesPage,
+  } = useCategories(10);
+
   const {
     createMentorApplication,
     applicationError,
@@ -62,6 +72,7 @@ const MentorRegistrationPage: React.FC = () => {
     isApplicationError,
     isApplicationSubmitting,
   } = useMentor(null);
+
   const { handleLoginModalOpen } = useLoginModalContext();
   const [image, setImage] = useState<File | null>(null);
   const [profilePic, setProfilePic] = useState(user?.image_url);
@@ -95,6 +106,27 @@ const MentorRegistrationPage: React.FC = () => {
   const handlePrev = (): void => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
+
+  useEffect(() => {
+    if (categoriesData) {
+      const fetchedCategories = categoriesData.pages.flatMap(
+        (page) => page.items
+      );
+      setAllCategories((prevCategories) => {
+        const uniqueCategories = [...prevCategories];
+        fetchedCategories.forEach((category) => {
+          if (!uniqueCategories.some((c) => c.uuid === category.uuid)) {
+            uniqueCategories.push(category);
+          }
+        });
+        return uniqueCategories;
+      });
+
+      if (hasNextCategoriesPage) {
+        void fetchNextCategories();
+      }
+    }
+  }, [categoriesData, hasNextCategoriesPage, fetchNextCategories]);
 
   useEffect(() => {
     if (watch('isPastMentor')) {
@@ -272,7 +304,7 @@ const MentorRegistrationPage: React.FC = () => {
                 className="mt-1 p-2 w-1/2 border rounded-md"
                 {...register('category')}
               >
-                {categories.map(
+                {allCategories.map(
                   (category: { uuid: string; category: string }) => (
                     <option key={category.uuid} value={category.uuid}>
                       {category.category}
@@ -405,12 +437,12 @@ const MentorRegistrationPage: React.FC = () => {
             />
           </>
         )}
-        {categoryError !== null ? (
+        {categoriesError !== null ? (
           <div
             className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 "
             role="alert"
           >
-            {categoryError.message}
+            {categoriesError.message}
           </div>
         ) : null}
         {isApplicationError && applicationError instanceof AxiosError ? (

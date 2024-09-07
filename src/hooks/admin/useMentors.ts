@@ -53,7 +53,11 @@ const updateMentorStatus = async (mentorStatus: MentorStatus) => {
   return response.data;
 };
 
-export const useMentors = (categoryId: string| null, mentorStatus: string| null, pageSize = 10) => {
+export const useMentors = (
+  categoryId: string | null,
+  mentorStatus: string | null,
+  pageSize = 10
+) => {
   const queryClient = useQueryClient();
 
   const infiniteQueryOptions: UseInfiniteQueryOptions<
