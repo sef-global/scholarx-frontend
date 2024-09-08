@@ -78,7 +78,7 @@ const Navbar: React.FC = () => {
   return (
     <div className="fixed top-0 start-0 flex justify-between w-full z-20">
       <nav className="bg-white border-gray-200 container mx-auto">
-        <div className="flex flex-wrap items-center justify-between p-4">
+        <div className="flex gap-1  flex-nowrap items-center justify-between p-4">
           <Link to="/">
             <img
               src="/scholarx-logo.png"
@@ -87,7 +87,7 @@ const Navbar: React.FC = () => {
             />
           </Link>
           <div className="flex items-center md:items-start">
-            <ul className="items-baseline hidden md:flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
+            <ul className="items-center hidden md:flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-2 text-nowrap rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
               <li>
                 <Link
                   className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 cursor-pointer"

@@ -333,11 +333,14 @@ const MenteeRegistration: React.FC = () => {
                 className="mt-1 p-2 w-1/2 border rounded-md"
                 {...register('mentorId')}
               >
-                {mentors?.map((mentor) => (
-                  <option key={mentor.uuid} value={mentor.uuid}>
-                    {mentor.application.firstName} {mentor.application.lastName}
-                  </option>
-                ))}
+                {mentors
+                  ?.filter((mentor) => mentor.availability)
+                  .map((mentor) => (
+                    <option key={mentor.uuid} value={mentor.uuid}>
+                      {mentor.application.firstName}{' '}
+                      {mentor.application.lastName}
+                    </option>
+                  ))}
               </select>
             </div>
             <FormInput
