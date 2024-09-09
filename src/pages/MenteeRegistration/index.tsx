@@ -391,7 +391,7 @@ const MenteeRegistration: React.FC = () => {
             className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 "
             role="alert"
           >
-            {'An error occurred. Please try again later.'}
+            An error occurred. Please try again later.
           </div>
         ) : null}
         {isApplicationError && applicationError instanceof AxiosError ? (
