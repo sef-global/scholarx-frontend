@@ -2,7 +2,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { API_URL } from '../constants';
 import axios from 'axios';
 import { type Profile } from '../types';
-import { useEffect, useState } from 'react';
 
 const useProfile = () => {
   const queryClient = useQueryClient();
