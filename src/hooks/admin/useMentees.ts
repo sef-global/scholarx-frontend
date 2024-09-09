@@ -1,4 +1,11 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  InfiniteData,
+  QueryFunctionContext,
+  useInfiniteQuery,
+  UseInfiniteQueryOptions,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { API_URL } from '../../constants';
 import axios, { type AxiosError } from 'axios';
 import { type Mentee } from '../../types';
@@ -9,6 +16,31 @@ interface MenteeStatus {
   status: ApplicationStatus;
 }
 
+interface MenteeResponse {
+  items: Mentee[];
+  message: string;
+  pageNumber: number;
+  pageSize: number;
+  totalItemCount: number;
+}
+
+type MenteesQueryKey = ['admin-mentees', string | null, number];
+
+const fetchMentees = async ({
+  pageParam = 1,
+  queryKey,
+}: QueryFunctionContext<MenteesQueryKey, number>): Promise<MenteeResponse> => {
+  const [, menteeStatus, pageSize] = queryKey;
+  let url = `${API_URL}/admin/mentees/applications?pageNumber=${pageParam}&pageSize=${pageSize}`;
+  if (menteeStatus !== null && menteeStatus !== '') {
+    url += `&status=${menteeStatus}`;
+  }
+  const response = await axios.get(url, {
+    withCredentials: true,
+  });
+  return response.data;
+};
+
 const updateMenteeStatus = async ({ menteeId, status }: MenteeStatus) => {
   const response = await axios.put(
     `${API_URL}/admin/mentees/${menteeId}/status`,
@@ -18,21 +50,30 @@ const updateMenteeStatus = async ({ menteeId, status }: MenteeStatus) => {
   return response.data;
 };
 
-const useMentees = () => {
+const useMentees = (menteeStatus: string | null, pageSize = 10) => {
   const queryClient = useQueryClient();
 
-  const { isLoading, error, data } = useQuery({
-    queryKey: ['admin-mentees'],
-    queryFn: async () => {
-      const { data } = await axios.get(
-        `${API_URL}/admin/mentees/applications`,
-        {
-          withCredentials: true,
-        }
-      );
-      return data.mentees as Mentee[];
+  const infiniteQueryOptions: UseInfiniteQueryOptions<
+    MenteeResponse,
+    AxiosError,
+    InfiniteData<MenteeResponse, number>,
+    MenteeResponse,
+    MenteesQueryKey,
+    number
+  > = {
+    queryKey: ['admin-mentees', menteeStatus, pageSize],
+    queryFn: fetchMentees,
+    getNextPageParam: (lastPage) => {
+      const nextPage = lastPage.pageNumber + 1;
+      return nextPage <= Math.ceil(lastPage.totalItemCount / lastPage.pageSize)
+        ? nextPage
+        : undefined;
     },
-  });
+    initialPageParam: 1,
+  };
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
+    useInfiniteQuery(infiniteQueryOptions);
 
   const { mutateAsync: updateStatus } = useMutation<
     unknown,
@@ -45,11 +86,17 @@ const useMentees = () => {
     },
   });
 
+  const mentees = data?.pages.flatMap((page) => page.items) ?? [];
+  const totalItemCount = data?.pages[0]?.totalItemCount ?? 0;
+
   return {
-    isLoading,
-    error,
-    data,
+    data: mentees,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    status,
     updateStatus,
+    totalItemCount,
   };
 };
 

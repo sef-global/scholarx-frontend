@@ -54,7 +54,13 @@ const MentorRegistrationPage: React.FC = () => {
       profilePic: user?.image_url,
     },
   });
-  const { error: categoryError, data: categories } = useCategories();
+
+  const {
+    data: allCategories,
+    isLoading: categoriesLoading,
+    error: categoriesError,
+  } = useCategories();
+
   const {
     createMentorApplication,
     applicationError,
@@ -62,6 +68,7 @@ const MentorRegistrationPage: React.FC = () => {
     isApplicationError,
     isApplicationSubmitting,
   } = useMentor(null);
+
   const { handleLoginModalOpen } = useLoginModalContext();
   const [image, setImage] = useState<File | null>(null);
   const [profilePic, setProfilePic] = useState(user?.image_url);
@@ -268,18 +275,20 @@ const MentorRegistrationPage: React.FC = () => {
               <label className="block text-sm font-medium text-gray-600">
                 Category
               </label>
-              <select
-                className="mt-1 p-2 w-1/2 border rounded-md"
-                {...register('category')}
-              >
-                {categories.map(
-                  (category: { uuid: string; category: string }) => (
-                    <option key={category.uuid} value={category.uuid}>
-                      {category.category}
-                    </option>
-                  )
-                )}
-              </select>
+              {!categoriesLoading && (
+                <select
+                  className="mt-1 p-2 w-1/2 border rounded-md"
+                  {...register('category')}
+                >
+                  {allCategories.map(
+                    (category: { uuid: string; category: string }) => (
+                      <option key={category.uuid} value={category.uuid}>
+                        {category.category}
+                      </option>
+                    )
+                  )}
+                </select>
+              )}
             </div>
             <FormTextarea
               placeholder="Engineering, Mechanical Engineering, Mechanical designing"
@@ -405,12 +414,12 @@ const MentorRegistrationPage: React.FC = () => {
             />
           </>
         )}
-        {categoryError !== null ? (
+        {categoriesError !== null ? (
           <div
             className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 "
             role="alert"
           >
-            {categoryError.message}
+            {categoriesError.message}
           </div>
         ) : null}
         {isApplicationError && applicationError instanceof AxiosError ? (

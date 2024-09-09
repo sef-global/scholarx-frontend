@@ -9,9 +9,9 @@ import FormCheckbox from '../../components/FormFields/MenteeApplication/FormChec
 import FormInput from '../../components/FormFields/MenteeApplication/FormInput';
 import { API_URL } from '../../constants';
 import useProfile from '../../hooks/useProfile';
-import { usePublicMentors } from '../../hooks/usePublicMentors';
 import { MenteeApplicationSchema } from '../../schemas';
 import { MenteeApplication } from '../../types';
+import useMentor from '../../hooks/useMentor';
 
 const steps = [
   {
@@ -48,10 +48,11 @@ const MenteeRegistration: React.FC = () => {
       isUndergrad: true,
     },
   });
-  const { error: mentorsError, data: mentors } = usePublicMentors(null);
+
   const [currentStep, setCurrentStep] = useState(0);
   const [image, setImage] = useState<File | null>(null);
   const [profilePic, setProfilePic] = useState(user?.image_url);
+  const { data: mentor, isLoading: isMentorLoading } = useMentor(mentorId);
 
   const handleProfilePicChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files != null) {
@@ -329,19 +330,12 @@ const MenteeRegistration: React.FC = () => {
               <label className="block text-sm font-medium text-gray-600">
                 Mentor
               </label>
-              <select
-                className="mt-1 p-2 w-1/2 border rounded-md"
-                {...register('mentorId')}
-              >
-                {mentors
-                  ?.filter((mentor) => mentor.availability)
-                  .map((mentor) => (
-                    <option key={mentor.uuid} value={mentor.uuid}>
-                      {mentor.application.firstName}{' '}
-                      {mentor.application.lastName}
-                    </option>
-                  ))}
-              </select>
+              <p>
+                {isMentorLoading &&
+                  `${mentor?.application?.firstName ?? ''} ${
+                    mentor?.application?.lastName ?? ''
+                  }`}
+              </p>
             </div>
             <FormInput
               type="text"
@@ -392,12 +386,12 @@ const MenteeRegistration: React.FC = () => {
             </p>
           </>
         )}
-        {mentorsError !== null ? (
+        {status === 'error' ? (
           <div
             className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 "
             role="alert"
           >
-            {mentorsError.message}
+            An error occurred. Please try again later.
           </div>
         ) : null}
         {isApplicationError && applicationError instanceof AxiosError ? (
