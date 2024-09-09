@@ -1,41 +1,51 @@
 import React from 'react';
-import { type ChangeEvent, useContext, useState } from 'react';
+import { type ChangeEvent, useContext } from 'react';
 import { UserContext, type UserContextType } from '../../contexts/UserContext';
 import useProfile from '../../hooks/useProfile';
+import useUserProfile from '../../hooks/useUserProfile';
 import { type Profile } from '../../types';
+import Toast from '../../components/Toast';
 
 const EditProfileForm: React.FC = () => {
   const { user, isUserLoading } = useContext(UserContext) as UserContextType;
-  const { updateProfile, isPending } = useProfile();
-  const [image, setImage] = useState<File | null>(null);
-  const [profilePic, setProfilePic] = useState(user?.image_url);
-  const [firstName, setFirstName] = useState(user?.first_name);
-  const [lastName, setLastName] = useState(user?.last_name);
-  const [email, setEmail] = useState(user?.primary_email);
-
-  const handleProfilePicChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files != null) {
-      const file = event.target.files[0];
-      setImage(file);
-      setProfilePic(URL.createObjectURL(file));
-    }
-  };
+  const { updateProfile, isPending, error } = useProfile();
+  const { profile, setProfile, image, handleProfilePicChange } =
+    useUserProfile(user);
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const profile = {
-      first_name: firstName,
-      last_name: lastName,
-      contact_email: email,
+    const profileData = {
+      primary_email: user?.primary_email as string,
+      first_name: profile.firstName,
+      last_name: profile.lastName,
+      image_url: profile.profilePic,
     };
     await updateProfile({
-      profile: profile as Profile,
+      profile: profileData as Profile,
       image,
     });
   };
 
   const handleImageClick = () => {
     document.getElementById('profilePic')?.click();
+  };
+
+  const handleProfilePicChangeWithFlag = (e: ChangeEvent<HTMLInputElement>) => {
+    handleProfilePicChange(e);
+  };
+
+  const isInputChnaged =
+    profile.firstName !== user?.first_name ||
+    profile.lastName !== user?.last_name ||
+    profile.profilePic !== user?.image_url ||
+    image !== null;
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setProfile((prevProfile) => ({
+      ...prevProfile,
+      [name]: value,
+    }));
   };
 
   return (
@@ -57,10 +67,9 @@ const EditProfileForm: React.FC = () => {
               <label className="block text-gray-700">First Name</label>
               <input
                 type="text"
-                value={firstName}
-                onChange={(e) => {
-                  setFirstName(e.target.value);
-                }}
+                name="firstName"
+                value={profile.firstName}
+                onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
                 required
               />
@@ -70,10 +79,9 @@ const EditProfileForm: React.FC = () => {
               <label className="block text-gray-700">Last Name</label>
               <input
                 type="text"
-                value={lastName}
-                onChange={(e) => {
-                  setLastName(e.target.value);
-                }}
+                name="lastName"
+                value={profile.lastName}
+                onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
                 required
               />
@@ -88,26 +96,23 @@ const EditProfileForm: React.FC = () => {
                 className="w-full px-4 py-2 border rounded-md bg-gray-100 cursor-not-allowed"
               />
             </div>
-
-            <div className="space-y-1">
-              <label className="block text-gray-700">Contact Email</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
-                required
-              />
-            </div>
-
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className={`px-4 py-2 text-white rounded-md focus:outline-none focus:ring-2 ${
+                isInputChnaged
+                  ? 'bg-blue-600 hover:bg-blue-700 focus:ring-blue-600'
+                  : 'bg-gray-400 cursor-not-allowed focus:ring-gray-400'
+              }`}
+              disabled={!isInputChnaged}
             >
               {isPending ? 'Loading' : 'Save'}
             </button>
+            {isPending && (
+              <Toast message="Successfully updated profile" type={'success'} />
+            )}
+            {error && (
+              <Toast message="Oops something went wrong" type={'error'} />
+            )}
           </form>
         )}
       </div>
@@ -124,16 +129,16 @@ const EditProfileForm: React.FC = () => {
               id="profilePic"
               name="profilePic"
               accept="image/*"
-              onChange={handleProfilePicChange}
+              onChange={handleProfilePicChangeWithFlag}
               className="hidden"
             />
             <div
               onClick={handleImageClick}
               className="cursor-pointer relative group"
             >
-              {profilePic !== '' ? (
+              {profile.profilePic !== '' ? (
                 <img
-                  src={profilePic}
+                  src={profile.profilePic}
                   alt="Profile"
                   className="w-[90px] h-[90px] rounded-full object-cover"
                 />
@@ -156,5 +161,4 @@ const EditProfileForm: React.FC = () => {
     </div>
   );
 };
-
 export default EditProfileForm;
