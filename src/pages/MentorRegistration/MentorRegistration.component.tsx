@@ -275,18 +275,20 @@ const MentorRegistrationPage: React.FC = () => {
               <label className="block text-sm font-medium text-gray-600">
                 Category
               </label>
-              {!categoriesLoading && <select
-                className="mt-1 p-2 w-1/2 border rounded-md"
-                {...register('category')}
-              >
-                {allCategories.map(
-                  (category: { uuid: string; category: string }) => (
-                    <option key={category.uuid} value={category.uuid}>
-                      {category.category}
-                    </option>
-                  )
-                )}
-              </select>}
+              {!categoriesLoading && (
+                <select
+                  className="mt-1 p-2 w-1/2 border rounded-md"
+                  {...register('category')}
+                >
+                  {allCategories.map(
+                    (category: { uuid: string; category: string }) => (
+                      <option key={category.uuid} value={category.uuid}>
+                        {category.category}
+                      </option>
+                    )
+                  )}
+                </select>
+              )}
             </div>
             <FormTextarea
               placeholder="Engineering, Mechanical Engineering, Mechanical designing"

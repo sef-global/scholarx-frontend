@@ -176,11 +176,13 @@ const MentorApplications: React.FC = () => {
               className="p-2 mb-4 border border-gray-300 rounded-md ml-4"
             >
               <option value="">All Categories</option>
-              {categoriesData?.map((category: { uuid: string; category: string }) => (
+              {categoriesData?.map(
+                (category: { uuid: string; category: string }) => (
                   <option key={category.uuid} value={category.uuid}>
                     {category.category}
                   </option>
-                ))}
+                )
+              )}
             </select>
           </div>
           <p className="text-md m-4">Total Mentee Slots: {totalMentees}</p>
