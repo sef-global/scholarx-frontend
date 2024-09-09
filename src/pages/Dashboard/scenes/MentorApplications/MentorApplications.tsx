@@ -44,7 +44,7 @@ const MentorApplications: React.FC = () => {
     data: categoriesData,
     isLoading: categoriesLoading,
     error: categoriesError,
-  } = useCategories(100);
+  } = useCategories();
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -176,9 +176,7 @@ const MentorApplications: React.FC = () => {
               className="p-2 mb-4 border border-gray-300 rounded-md ml-4"
             >
               <option value="">All Categories</option>
-              {categoriesData?.pages
-                ?.flatMap((page) => page.items)
-                .map((category: { uuid: string; category: string }) => (
+              {categoriesData?.map((category: { uuid: string; category: string }) => (
                   <option key={category.uuid} value={category.uuid}>
                     {category.category}
                   </option>

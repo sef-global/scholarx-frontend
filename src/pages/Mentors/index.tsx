@@ -9,7 +9,6 @@ import Loading from '../../assets/svg/Loading';
 const Mentors = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortedMentors, setSortedMentors] = useState<Mentor[]>([]);
-  const [allCategories, setAllCategories] = useState<Category[]>([]);
   const pageSize = 10;
 
   const { ref, inView } = useInView();
@@ -18,12 +17,10 @@ const Mentors = () => {
     usePublicMentors(selectedCategory, pageSize);
 
   const {
-    data: categoriesData,
+    data: allCategories,
     isLoading: categoriesLoading,
     error: categoriesError,
-    fetchNextPage: fetchNextCategories,
-    hasNextPage: hasNextCategoriesPage,
-  } = useCategories(pageSize);
+  } = useCategories();
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -37,27 +34,6 @@ const Mentors = () => {
       setSortedMentors(allMentors);
     }
   }, [data]);
-
-  useEffect(() => {
-    if (categoriesData) {
-      const fetchedCategories = categoriesData.pages.flatMap(
-        (page) => page.items
-      );
-      setAllCategories((prevCategories) => {
-        const uniqueCategories = [...prevCategories];
-        fetchedCategories.forEach((category) => {
-          if (!uniqueCategories.some((c) => c.uuid === category.uuid)) {
-            uniqueCategories.push(category);
-          }
-        });
-        return uniqueCategories;
-      });
-
-      if (hasNextCategoriesPage) {
-        void fetchNextCategories();
-      }
-    }
-  }, [categoriesData, hasNextCategoriesPage, fetchNextCategories]);
 
   const handleSortAZ = () => {
     const sorted = [...sortedMentors].sort((a, b) =>

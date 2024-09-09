@@ -5,7 +5,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import useCategories from '../../hooks/useCategories';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MentorApplicationSchema } from '../../schemas';
-import { Category, type MentorApplication } from '../../types';
+import { type MentorApplication } from '../../types';
 import FormCheckbox from '../../components/FormFields/MentorApplication/FormCheckbox';
 import FormInput from '../../components/FormFields/MentorApplication/FormInput';
 import FormTextarea from '../../components/FormFields/MentorApplication/FormTextarea';
@@ -55,15 +55,11 @@ const MentorRegistrationPage: React.FC = () => {
     },
   });
 
-  const [allCategories, setAllCategories] = useState<Category[]>([]);
-
   const {
-    data: categoriesData,
-    // isLoading: categoriesLoading,
+    data: allCategories,
+    isLoading: categoriesLoading,
     error: categoriesError,
-    fetchNextPage: fetchNextCategories,
-    hasNextPage: hasNextCategoriesPage,
-  } = useCategories(10);
+  } = useCategories();
 
   const {
     createMentorApplication,
@@ -106,27 +102,6 @@ const MentorRegistrationPage: React.FC = () => {
   const handlePrev = (): void => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
-
-  useEffect(() => {
-    if (categoriesData) {
-      const fetchedCategories = categoriesData.pages.flatMap(
-        (page) => page.items
-      );
-      setAllCategories((prevCategories) => {
-        const uniqueCategories = [...prevCategories];
-        fetchedCategories.forEach((category) => {
-          if (!uniqueCategories.some((c) => c.uuid === category.uuid)) {
-            uniqueCategories.push(category);
-          }
-        });
-        return uniqueCategories;
-      });
-
-      if (hasNextCategoriesPage) {
-        void fetchNextCategories();
-      }
-    }
-  }, [categoriesData, hasNextCategoriesPage, fetchNextCategories]);
 
   useEffect(() => {
     if (watch('isPastMentor')) {
@@ -300,7 +275,7 @@ const MentorRegistrationPage: React.FC = () => {
               <label className="block text-sm font-medium text-gray-600">
                 Category
               </label>
-              <select
+              {!categoriesLoading && <select
                 className="mt-1 p-2 w-1/2 border rounded-md"
                 {...register('category')}
               >
@@ -311,7 +286,7 @@ const MentorRegistrationPage: React.FC = () => {
                     </option>
                   )
                 )}
-              </select>
+              </select>}
             </div>
             <FormTextarea
               placeholder="Engineering, Mechanical Engineering, Mechanical designing"
