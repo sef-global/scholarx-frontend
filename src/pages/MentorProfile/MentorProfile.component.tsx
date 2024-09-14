@@ -51,14 +51,13 @@ const MentorProfile: React.FC = () => {
       .catch(() => {});
   };
 
-    // Calculate the number of approved mentees once
+    
     const approvedMenteesCount = mentor?.mentees
     ? mentor.mentees.filter(
         (mentee) => mentee.state === ApplicationStatus.APPROVED
       ).length
     : 0;
 
-  // Calculate available slots
   const availableSlots = mentor?.application.noOfMentees
     ? Math.max(0, mentor.application.noOfMentees - approvedMenteesCount)
     : 0;
