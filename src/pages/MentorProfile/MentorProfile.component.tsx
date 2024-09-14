@@ -39,6 +39,18 @@ const MentorProfile: React.FC = () => {
   const { data: mentor, isLoading } = useMentor(mentorId as string);
   const { revokeApplication } = useMentee();
 
+  // Calculate the number of approved mentees once
+  const approvedMenteesCount = mentor?.mentees
+    ? mentor.mentees.filter(
+        (mentee) => mentee.state === ApplicationStatus.APPROVED
+      ).length
+    : 0;
+
+  // Calculate available slots
+  const availableSlots = mentor?.application.noOfMentees
+    ? Math.max(0, mentor.application.noOfMentees - approvedMenteesCount)
+    : 0;
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -105,34 +117,12 @@ const MentorProfile: React.FC = () => {
               {mentor?.application.noOfMentees && mentor.mentees ? (
                 <span
                   className={`inline-block text-sm font-medium px-3 py-1 rounded-full mt-2 sm:mt-0 mr-2 ${
-                    Math.max(
-                      0,
-                      mentor.application.noOfMentees -
-                        mentor.mentees.filter(
-                          (mentee) =>
-                            mentee.state === ApplicationStatus.APPROVED
-                        ).length
-                    ) === 0
+                    availableSlots === 0
                       ? 'bg-gray-100 text-gray-800'
                       : 'bg-green-100 text-green-800'
                   }`}
                 >
-                  {Math.max(
-                    0,
-                    mentor.application.noOfMentees -
-                      mentor.mentees.filter(
-                        (mentee) => mentee.state === ApplicationStatus.APPROVED
-                      ).length
-                  )}{' '}
-                  {Math.max(
-                    0,
-                    mentor.application.noOfMentees -
-                      mentor.mentees.filter(
-                        (mentee) => mentee.state === ApplicationStatus.APPROVED
-                      ).length
-                  ) <= 1
-                    ? 'Slot'
-                    : 'Slots'}{' '}
+                  {availableSlots} {availableSlots <= 1 ? 'Slot' : 'Slots'}{' '}
                   Available
                 </span>
               ) : (
