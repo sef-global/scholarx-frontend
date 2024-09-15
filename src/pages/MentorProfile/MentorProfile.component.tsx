@@ -12,15 +12,20 @@ import Tooltip from '../../components/Tooltip';
 import Loading from '../../assets/svg/Loading';
 import MenteeCard from '../../components/MenteeCard';
 import ProfilePic from '../../components/ProfilePic';
+import InformationModal from '../../components/InformationModal';
+import useModal from '../../hooks/useModal';
+import useMentee from '../../hooks/useMentee';
 
 const MentorProfile: React.FC = () => {
   const { mentorId } = useParams();
   const navigate = useNavigate();
+
   const { handleLoginModalOpen } = useLoginModalContext();
-  const { user, isUserMentor, isMenteeApplicationsDisabled } = useContext(
-    UserContext
-  ) as UserContextType;
+  const { user, isUserMentor, isMenteeApplicationsDisabled, isUserMentee } =
+    useContext(UserContext) as UserContextType;
   const [isURLCopied, setIsURLCopied] = useState(false);
+  const { isOpen, openModal, closeModal } = useModal();
+
   const shareUrl = `${window.location.origin}${location.pathname}`;
 
   const onApply = () => {
@@ -30,9 +35,9 @@ const MentorProfile: React.FC = () => {
       handleLoginModalOpen();
     }
   };
-  
 
   const { data: mentor, isLoading } = useMentor(mentorId as string);
+  const { revokeApplication } = useMentee();
 
   if (isLoading) {
     return (
@@ -51,14 +56,12 @@ const MentorProfile: React.FC = () => {
       .catch(() => {});
   };
 
-    // Calculate the number of approved mentees once
-    const approvedMenteesCount = mentor?.mentees
+  const approvedMenteesCount = mentor?.mentees
     ? mentor.mentees.filter(
         (mentee) => mentee.state === ApplicationStatus.APPROVED
       ).length
     : 0;
 
-  // Calculate available slots
   const availableSlots = mentor?.application.noOfMentees
     ? Math.max(0, mentor.application.noOfMentees - approvedMenteesCount)
     : 0;
@@ -115,7 +118,7 @@ const MentorProfile: React.FC = () => {
               </span>
             </p>
             <p className="text-md flex flex-wrap items-center justify-center sm:justify-start">
-            {mentor?.application.noOfMentees && mentor.mentees ? (
+              {mentor?.application.noOfMentees && mentor.mentees ? (
                 <span
                   className={`inline-block text-sm font-medium px-3 py-1 rounded-full mt-2 sm:mt-0 mr-2 ${
                     availableSlots === 0
@@ -144,20 +147,21 @@ const MentorProfile: React.FC = () => {
         <div className="flex-shrink-0 md:mt-4 md:mt-0">
           {!isUserMentor && mentor?.availability && (
             <Tooltip
-              isVisible={isMenteeApplicationsDisabled}
+              isVisible={isUserMentee}
               content="You can apply only for one mentor at a time"
             >
               <button
                 className={`text-white font-medium rounded-lg text-sm px-20 md:px-5 py-2.5
                             ${
-                              isMenteeApplicationsDisabled
+                              isUserMentee
                                 ? 'bg-gray-400'
                                 : 'bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300'
                             }`}
-                onClick={onApply}
-                disabled={isMenteeApplicationsDisabled}
+                onClick={isMenteeApplicationsDisabled ? openModal : onApply}
               >
-                Apply
+                {isMenteeApplicationsDisabled
+                  ? 'Withdraw application'
+                  : 'Apply'}
               </button>
             </Tooltip>
           )}
@@ -242,6 +246,15 @@ const MentorProfile: React.FC = () => {
             </div>
           </div>
         )}
+      <InformationModal
+        isOpen={isOpen}
+        headline="Withdraw your current application"
+        body={`Are you sure you want to withdraw your current application and apply for ${
+          mentor?.application.firstName ?? ''
+        } ${mentor?.application.lastName ?? ''}?`}
+        onConfirm={revokeApplication}
+        onClose={closeModal}
+      />
     </>
   );
 };
