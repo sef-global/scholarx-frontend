@@ -14,7 +14,7 @@ const MenteeProfile: React.FC = () => {
   return (
     <>
       <nav aria-label="Breadcrumb">
-        <ol className="flex items-center gap-1 text-sm text-gray-600">
+        <ol className="flex items-center gap-1 text-xs sm:text-sm md:text-base text-gray-600">
           <li>
             <Link
               to="/mentors"
