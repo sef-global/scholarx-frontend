@@ -13,8 +13,24 @@ const MenteeProfile: React.FC = () => {
 
   return (
     <>
-      <nav aria-label="Breadcrumb">
-        <ol className="flex items-center gap-1 text-xs sm:text-sm md:text-base text-gray-600">
+      <nav aria-label="Breadcrumb ">
+      <div className="flex items-center">
+        <button className="transform rotate-180 md:hidden">
+          <Link
+          to={`/mentors/${mentee?.mentor.uuid ?? ''}`}
+          className="block transition hover:text-gray-700 md:hidden ml-2">
+            <ChevronRightIcon />
+          </Link>
+        </button>
+        <Link
+          to={`/mentors/${mentee?.mentor.uuid ?? ''}`}
+          className="block transition hover:text-gray-700 md:hidden ml-2"
+        >
+          Back
+        </Link>
+      </div>
+
+        <ol className="flex items-center gap-1 text-xs sm:text-sm hidden md:flex text-gray-600">
           <li>
             <Link
               to="/mentors"
