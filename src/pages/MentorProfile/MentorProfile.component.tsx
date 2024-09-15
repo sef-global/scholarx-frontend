@@ -56,6 +56,16 @@ const MentorProfile: React.FC = () => {
       .catch(() => {});
   };
 
+  const approvedMenteesCount = mentor?.mentees
+    ? mentor.mentees.filter(
+        (mentee) => mentee.state === ApplicationStatus.APPROVED
+      ).length
+    : 0;
+
+  const availableSlots = mentor?.application.noOfMentees
+    ? Math.max(0, mentor.application.noOfMentees - approvedMenteesCount)
+    : 0;
+
   return (
     <>
       <nav aria-label="Breadcrumb">
@@ -101,16 +111,40 @@ const MentorProfile: React.FC = () => {
                 <ShareIcon />
               </span>
             </div>
-            <p className="text-sm">
+            <p className="text-sm mb-0 md:mb-2 lg:mb-2">
               {mentor?.application.position},{' '}
               <span className="text-gray-500">
                 {mentor?.application.institution}
               </span>
             </p>
+            <p className="text-md flex flex-wrap items-center justify-center sm:justify-start">
+              {mentor?.application.noOfMentees && mentor.mentees ? (
+                <span
+                  className={`inline-block text-sm font-medium px-3 py-1 rounded-full mt-2 sm:mt-0 mr-2 ${
+                    availableSlots === 0
+                      ? 'bg-gray-100 text-gray-800'
+                      : 'bg-green-100 text-green-800'
+                  }`}
+                >
+                  {availableSlots} {availableSlots <= 1 ? 'Slot' : 'Slots'}{' '}
+                  Available
+                </span>
+              ) : (
+                'Not mentioned'
+              )}
+              {mentor?.mentees &&
+                mentor?.mentees.some(
+                  (mentee) => mentee.state === ApplicationStatus.APPROVED
+                ) && (
+                  <span className="inline-block bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full mt-2 sm:mt-0">
+                    {mentor.mentees.length} Applied
+                  </span>
+                )}
+            </p>
           </div>
         </div>
 
-        <div className="flex-shrink-0 md:mt-4">
+        <div className="flex-shrink-0 md:mt-4 md:mt-0">
           {!isUserMentor && mentor?.availability && (
             <Tooltip
               isVisible={isUserMentee}
@@ -189,20 +223,6 @@ const MentorProfile: React.FC = () => {
         <h2 className="text-lg font-medium ">Bio</h2>
         <p className="font-light">{mentor?.application.bio}</p>
       </div>
-      <div className="pb-4">
-        <h2 className="text-lg font-medium ">Available mentee slots</h2>
-        <p className="font-light">
-          {mentor?.application.noOfMentees && mentor.mentees
-            ? Math.max(
-                0,
-                mentor.application.noOfMentees -
-                  mentor.mentees.filter(
-                    (mentee) => mentee.state === ApplicationStatus.APPROVED
-                  ).length
-              )
-            : 'Not mentioned'}
-        </p>
-      </div>
       {mentor?.mentees &&
         mentor?.mentees.some(
           (mentee) => mentee.state === ApplicationStatus.APPROVED
@@ -210,9 +230,6 @@ const MentorProfile: React.FC = () => {
           <div className="pb-4">
             <div className="flex flex-wrap gap-2 items-baseline">
               <h2 className="text-lg font-medium mb-2 ">Mentees</h2>
-              <p className="text-slate-400 mb-2">
-                &#40; {mentor.mentees.length} total applications &#41;
-              </p>
             </div>
             <div className="flex flex-wrap gap-2">
               {mentor.mentees
