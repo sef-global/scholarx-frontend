@@ -56,8 +56,7 @@ const MentorProfile: React.FC = () => {
       .catch(() => {});
   };
 
-    
-    const approvedMenteesCount = mentor?.mentees
+  const approvedMenteesCount = mentor?.mentees
     ? mentor.mentees.filter(
         (mentee) => mentee.state === ApplicationStatus.APPROVED
       ).length
