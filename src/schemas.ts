@@ -15,9 +15,6 @@ export const MenteeApplicationSchema = z.object({
     .optional(),
   cv: z.string().min(1, { message: 'CV cannot be empty' }),
   isUndergrad: z.boolean(),
-  consentGiven: z.boolean().refine((val) => val, {
-    message: 'You must give your consent to proceed.',
-  }),
   graduatedYear: z
     .number({ invalid_type_error: 'Graduated year is required' })
     .refine(

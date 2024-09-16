@@ -11,6 +11,7 @@ import { API_URL } from '../../constants';
 import useProfile from '../../hooks/useProfile';
 import { MenteeApplicationSchema } from '../../schemas';
 import { MenteeApplication } from '../../types';
+import TermsAgreementModal from '../../components/TermsAgreementModal';
 
 const steps = [
   {
@@ -35,9 +36,11 @@ const MenteeRegistration: React.FC = () => {
     setError,
     clearErrors,
     trigger,
+    getValues,
     formState: { errors },
   } = useForm<MenteeApplication>({
     resolver: zodResolver(MenteeApplicationSchema),
+    mode: 'onChange',
     defaultValues: {
       firstName: user?.first_name,
       lastName: user?.last_name,
@@ -51,6 +54,8 @@ const MenteeRegistration: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [image, setImage] = useState<File | null>(null);
   const [profilePic, setProfilePic] = useState(user?.image_url);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleProfilePicChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files != null) {
@@ -89,7 +94,7 @@ const MenteeRegistration: React.FC = () => {
       }
     }
 
-    const output = await trigger(fields as [keyof MenteeApplication], {
+    const output = await trigger(fields as Array<keyof MenteeApplication>, {
       shouldFocus: true,
     });
 
@@ -102,9 +107,30 @@ const MenteeRegistration: React.FC = () => {
   };
 
   const onSubmit: SubmitHandler<MenteeApplication> = async (data) => {
-    await applyForMentor(data);
-    if (image) {
-      await updateProfile({ profile: null, image });
+    setIsModalOpen(true);
+  };
+
+  const handleModalAgree = async (agreedData: {
+    agreed: boolean;
+    consentGiven: boolean;
+  }) => {
+    setIsModalOpen(false);
+    setIsSubmitting(true);
+    const formData = getValues();
+    try {
+      const validatedData = MenteeApplicationSchema.parse({
+        ...formData,
+        ...agreedData,
+      });
+      await applyForMentor(validatedData);
+      if (image) {
+        await updateProfile({ profile: null, image });
+      }
+    } catch (error) {
+      console.error('Error submitting application:', error);
+      // Handle validation errors here if needed
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -130,6 +156,9 @@ const MenteeRegistration: React.FC = () => {
     },
   });
 
+  console.log('Form State:', watch());
+  console.log('Form Errors:', errors);
+  console.log('IsModalOpen', isModalOpen);
   return (
     <div className="relative w-full">
       <div className="text-2xl font-semibold mb-2">Become a Mentee</div>
@@ -355,13 +384,6 @@ const MenteeRegistration: React.FC = () => {
               register={register}
               error={errors.submission}
             />
-            <FormCheckbox
-              name="consentGiven"
-              label="I, hereby grant Sustainable Foundation Education permission to use my video submission solely for the internal evaluation of my application 
-                to ScholarX. I understand that this video will not be used for any other purposes without my explicit consent."
-              register={register}
-              error={errors.consentGiven}
-            />
             <p className="text-md font-semibold">Privacy Statement</p>
             <p>
               Sustainable Foundation Education assures that your video
@@ -425,6 +447,7 @@ const MenteeRegistration: React.FC = () => {
           {currentStep === 2 && !applicationSuccess && (
             <button
               type="submit"
+              disabled={isSubmitting}
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
             >
               {isApplicationPending ? 'Submitting...' : 'Submit'}
@@ -440,6 +463,13 @@ const MenteeRegistration: React.FC = () => {
           )}
         </div>
       </form>
+      <TermsAgreementModal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+        }}
+        onAgree={handleModalAgree}
+      />
     </div>
   );
 };
