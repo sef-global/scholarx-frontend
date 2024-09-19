@@ -48,7 +48,10 @@ const App: React.FC = () => {
                 <Route path="/mentors" element={<Mentors />} />
                 <Route path="/mentors/:mentorId" element={<MentorProfile />} />
                 <Route path="/mentees/:menteeId" element={<MenteeProfile />} />
-                <Route path="/mentee-checkin" element={<MenteeCheckIn />} />
+                {/* <Route
+                  path="/mentee/mentee-checkin"
+                  element={<MenteeCheckIn />}
+                /> */}
                 <Route path="/settings" element={<EditProfileForm />} />
                 <Route path="/resetpassword" element={<PasswordReset />} />
               </Routes>

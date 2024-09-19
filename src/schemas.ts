@@ -97,10 +97,11 @@ export const MentorApplicationSchema = z.object({
 });
 
 export const MenteeCheckInSchema = z.object({
-  generalUpdate: z.string().min(1, 'Please provide general updates'),
-  progressUpdate: z.string().min(1, 'Please summarize your progress'),
-  mediaLink: z
+  generalUpdatesAndFeedback: z
     .string()
-    .url('Please provide a valid URL')
-    .min(1, 'Please provide a media link'),
+    .min(1, 'Please provide general updates'),
+  progressTowardsGoals: z.string().min(1, 'Please summarize your progress'),
+  mediaContentLinks: z
+    .array(z.string().url('Please provide a valid URL'))
+    .min(1, 'Please provide at least 3 media links'),
 });

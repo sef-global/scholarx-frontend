@@ -2,6 +2,7 @@ import { type z } from 'zod';
 import {
   type MentorApplicationSchema,
   type MenteeApplicationSchema,
+  MenteeCheckInSchema,
 } from './schemas';
 import {
   type StatusUpdatedBy,
@@ -102,3 +103,5 @@ export interface PasswordUpdateData {
   token: string;
   newPassword: string;
 }
+
+export type MenteeCheckInForm = z.infer<typeof MenteeCheckInSchema>;
