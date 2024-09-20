@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
 import MonthlyCheckInModal from '../../pages/MenteeCheckIn/MenteeCheckIn.component';
+import { Mentee } from '../../types';
+import { format } from 'date-fns';
 
 interface CheckIn {
   id: string;
   menteeName: string;
   title: string;
-  date: string;
-  links: string[];
-  mentorChecked: boolean;
+  checkInDate: string;
+  mediaContentLinks: string[];
+  isCheckedByMentor: boolean;
+  mentorCheckedDate?: string;
   mentorFeedback?: string;
   generalUpdates?: string;
   progressTowardsGoals?: string;
+  mentee: Mentee;
 }
 
 interface MonthlyCheckingProps {
   checkInHistory: CheckIn[];
   isMentorView: boolean;
+  menteeId: string;
 }
 
 const Spinner: React.FC = () => (
@@ -25,6 +30,7 @@ const Spinner: React.FC = () => (
 const MonthlyChecking: React.FC<MonthlyCheckingProps> = ({
   checkInHistory,
   isMentorView,
+  menteeId,
 }) => {
   const [showGuidelines, setShowGuidelines] = useState(false);
   const [feedback, setFeedback] = useState<Record<string, string>>({});
@@ -120,12 +126,21 @@ const MonthlyChecking: React.FC<MonthlyCheckingProps> = ({
             >
               <div className="flex-grow">
                 <h3 className="font-medium">
-                  {isMentorView
-                    ? checkIn.menteeName
-                    : `${checkIn.menteeName}: ${checkIn.title}`}
+                  {isMentorView ? (
+                    <>
+                      Mentee Name:{' '}
+                      {`${checkIn.mentee.application.firstName} ${checkIn.mentee.application.lastName}`}
+                      <br />
+                      Month: {checkIn.title}
+                    </>
+                  ) : (
+                    'Month: ' + checkIn.title
+                  )}
                 </h3>
-                <p className="text-gray-600">Date: {checkIn.date}</p>
-                {isMentorView && checkIn.mentorChecked ? (
+                <p className="text-gray-600">
+                  {format(new Date(checkIn.checkInDate), 'MMMM dd, yyyy')}
+                </p>
+                {isMentorView && checkIn.isCheckedByMentor ? (
                   <p className="text-green-600">✓ Checked by mentor</p>
                 ) : isMentorView ? (
                   <div>
@@ -141,7 +156,7 @@ const MonthlyChecking: React.FC<MonthlyCheckingProps> = ({
                       <input
                         type="checkbox"
                         className="form-checkbox"
-                        checked={checkIn.mentorChecked}
+                        checked={checkIn.isCheckedByMentor}
                         onChange={() => {
                           handleMarkAsChecked(checkIn.id);
                         }}
@@ -172,7 +187,7 @@ const MonthlyChecking: React.FC<MonthlyCheckingProps> = ({
                 )}
               </div>
               <div className="text-right flex flex-col items-end">
-                {checkIn.links.map((link, index) => (
+                {checkIn.mediaContentLinks.map((link, index) => (
                   <a
                     key={index}
                     href={link}
@@ -185,9 +200,15 @@ const MonthlyChecking: React.FC<MonthlyCheckingProps> = ({
                 ))}
                 {!isMentorView && (
                   <p className="text-sm mt-1">
-                    {checkIn.mentorChecked ? (
+                    {checkIn.isCheckedByMentor ? (
                       <span className="text-green-600">
-                        ✓ Checked by mentor
+                        ✓ Checked by mentor on{' '}
+                        {checkIn.mentorCheckedDate
+                          ? format(
+                              new Date(checkIn.mentorCheckedDate),
+                              'MMMM dd, yyyy'
+                            )
+                          : 'N/A'}
                       </span>
                     ) : (
                       <span className="text-yellow-600">
@@ -211,7 +232,11 @@ const MonthlyChecking: React.FC<MonthlyCheckingProps> = ({
           </div>
         )}
       </div>
-      <MonthlyCheckInModal isOpen={isModalOpen} onClose={closeModal} />
+      <MonthlyCheckInModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        menteeId={menteeId}
+      />
     </div>
   );
 };

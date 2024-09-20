@@ -12,7 +12,8 @@ type MenteeCheckInForm = z.infer<typeof MenteeCheckInSchema>;
 const MonthlyCheckInModal: React.FC<{
   onClose: () => void;
   isOpen: boolean;
-}> = ({ onClose, isOpen }) => {
+  menteeId: string;
+}> = ({ onClose, isOpen, menteeId }) => {
   const [loading, setLoading] = useState(false);
   const {
     register,
@@ -31,16 +32,15 @@ const MonthlyCheckInModal: React.FC<{
   const { submitCheckIn, isSuccess } = useSubmitCheckIn();
 
   const onSubmit = async (data: MenteeCheckInForm) => {
+    const checkInData = {
+      ...data,
+      menteeId,
+    };
     setLoading(true);
-    try {
-      await submitCheckIn(data);
-      console.log('Check-in submitted successfully');
-      onClose();
-    } catch (error) {
-      console.error('An error occurred while submitting the check-in', error);
-    } finally {
-      setLoading(false);
-    }
+    await submitCheckIn(checkInData);
+    console.log('checkInData', checkInData);
+    onClose();
+    setLoading(false);
   };
 
   if (!isOpen) return null;
@@ -55,6 +55,23 @@ const MonthlyCheckInModal: React.FC<{
           </button>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">
+              Title
+            </label>
+            <input
+              type="text"
+              {...register('title', { required: 'Title is required' })}
+              className={`mt-1 block w-full border ${
+                errors.title ? 'border-red-500' : 'border-gray-300'
+              } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
+            />
+            {errors.title && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.title.message}
+              </p>
+            )}
+          </div>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">
               General Updates and Feedback
@@ -73,7 +90,6 @@ const MonthlyCheckInModal: React.FC<{
               </p>
             )}
           </div>
-
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">
               Progress Towards Goals
