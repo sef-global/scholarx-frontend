@@ -15,7 +15,7 @@ const MenteeCard: React.FC<MenteeCardProps> = ({
 }) => {
   return (
     <Link
-      className="border border-gray-200 p-4 rounded-md shadow-sm w-52 flex flex-col h-full"
+      className="border-2 border-gray-300 p-1 rounded-md shadow-sm w-52 flex flex-col h-full"
       to={
         showPublicProfile
           ? `/mentees/${mentee.uuid}`
@@ -26,7 +26,8 @@ const MenteeCard: React.FC<MenteeCardProps> = ({
         <ProfilePic
           src={mentee.profile?.image_url}
           alt="Mentee Avatar"
-          size="6rem"
+          size="12rem"
+          circular={false}
         />
       </div>
       <div className="text-center">

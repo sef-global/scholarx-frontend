@@ -15,6 +15,9 @@ export const theme = {
         '100%': { backgroundPosition: '-100% 0' },
       },
     },
+    spacing: {
+      '2px': '2px', 
+    },
   },
 };
 export const plugins = [];
