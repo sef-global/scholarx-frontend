@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import MonthlyCheckInModal from '../../pages/MenteeCheckIn/MenteeCheckIn.component';
 import { Mentee } from '../../types';
 import { format } from 'date-fns';
+import Spinner from '../Spinner/Spinner.component';
 
 interface CheckIn {
   id: string;
@@ -21,16 +22,16 @@ interface MonthlyCheckingProps {
   checkInHistory: CheckIn[];
   isMentorView: boolean;
   menteeId: string;
+  isLoading: boolean;
+  error: any;
 }
-
-const Spinner: React.FC = () => (
-  <div className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" />
-);
 
 const MonthlyChecking: React.FC<MonthlyCheckingProps> = ({
   checkInHistory,
   isMentorView,
   menteeId,
+  isLoading,
+  error,
 }) => {
   const [showGuidelines, setShowGuidelines] = useState(false);
   const [feedback, setFeedback] = useState<Record<string, string>>({});
@@ -50,6 +51,23 @@ const MonthlyChecking: React.FC<MonthlyCheckingProps> = ({
     setIsModalOpen(false);
   };
 
+  if (isLoading) {
+    return (
+      <div className="text-center py-4">
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-4">
+        <p className="text-red-500">
+          ⚠️ Failed to load check-ins. Please try again later.
+        </p>
+      </div>
+    );
+  }
   const handleFeedbackChange = (id: string, feedback: string) => {
     setFeedback((prev) => ({ ...prev, [id]: feedback }));
   };

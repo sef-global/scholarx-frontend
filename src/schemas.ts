@@ -104,5 +104,5 @@ export const MenteeCheckInSchema = z.object({
   progressTowardsGoals: z.string().min(1, 'Please summarize your progress'),
   mediaContentLinks: z
     .array(z.string().url('Please provide a valid URL'))
-    .min(1, 'Please provide at least 3 media links'),
+    .min(3, 'Please provide at least 3 media links'),
 });

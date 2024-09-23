@@ -73,8 +73,10 @@ const MenteeDashboard: React.FC = () => {
           {isApproved ? (
             <MonthlyChecking
               checkInHistory={checkInHistory}
-              isMentorView={true}
+              isMentorView={false}
               menteeId={menteeId}
+              isLoading={isLoading}
+              error={error}
             />
           ) : (
             <div className="px-2 py-2 mt-4 bg-blue-100 rounded-lg">
