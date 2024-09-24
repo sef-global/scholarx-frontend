@@ -1,30 +1,8 @@
 import React, { useState } from 'react';
 import MonthlyCheckInModal from '../../pages/MenteeCheckIn/MenteeCheckIn.component';
-import { Mentee } from '../../types';
+import { Mentee, MonthlyCheckingProps } from '../../types';
 import { format } from 'date-fns';
 import Spinner from '../Spinner/Spinner.component';
-
-interface CheckIn {
-  id: string;
-  menteeName: string;
-  title: string;
-  checkInDate: string;
-  mediaContentLinks: string[];
-  isCheckedByMentor: boolean;
-  mentorCheckedDate?: string;
-  mentorFeedback?: string;
-  generalUpdates?: string;
-  progressTowardsGoals?: string;
-  mentee: Mentee;
-}
-
-interface MonthlyCheckingProps {
-  checkInHistory: CheckIn[];
-  isMentorView: boolean;
-  menteeId: string;
-  isLoading: boolean;
-  error: any;
-}
 
 const MonthlyChecking: React.FC<MonthlyCheckingProps> = ({
   checkInHistory,

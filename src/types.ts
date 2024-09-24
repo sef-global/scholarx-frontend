@@ -105,3 +105,25 @@ export interface PasswordUpdateData {
 }
 
 export type MenteeCheckInForm = z.infer<typeof MenteeCheckInSchema>;
+
+export interface MonthlyCheckIn {
+  id: string;
+  menteeName: string;
+  title: string;
+  checkInDate: string;
+  mediaContentLinks: string[];
+  isCheckedByMentor: boolean;
+  mentorCheckedDate?: string;
+  mentorFeedback?: string;
+  generalUpdates?: string;
+  progressTowardsGoals?: string;
+  mentee: Mentee;
+}
+
+export interface MonthlyCheckingProps {
+  checkInHistory: MonthlyCheckIn[];
+  isMentorView: boolean;
+  menteeId: string;
+  isLoading: boolean;
+  error: any;
+}

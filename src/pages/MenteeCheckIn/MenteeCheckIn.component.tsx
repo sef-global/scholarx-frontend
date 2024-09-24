@@ -6,6 +6,7 @@ import { MenteeCheckInSchema } from '../../schemas';
 import { useSubmitCheckIn } from '../../hooks/useSubmitCheckIn';
 import closeIcon from '../../assets/svg/closeIcon.svg';
 import Spinner from '../../components/Spinner/Spinner.component';
+import TagInput from '../../components/TagInput';
 
 type MenteeCheckInForm = z.infer<typeof MenteeCheckInSchema>;
 
@@ -19,6 +20,7 @@ const MonthlyCheckInModal: React.FC<{
     control,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<MenteeCheckInForm>({
     resolver: zodResolver(MenteeCheckInSchema),
@@ -27,6 +29,7 @@ const MonthlyCheckInModal: React.FC<{
       progressTowardsGoals: '',
       generalUpdatesAndFeedback: '',
       mediaContentLinks: [],
+      tags: [],
     },
   });
 
@@ -36,11 +39,18 @@ const MonthlyCheckInModal: React.FC<{
   });
   const { submitCheckIn } = useSubmitCheckIn();
   const [loading, setLoading] = useState(false);
+  const [tags, setTags] = useState<string[]>([]);
+  const [tagError, setTagError] = useState<string>('');
+
+  useEffect(() => {
+    setValue('tags', tags);
+  }, [tags, setValue]);
 
   const onSubmit = async (data: MenteeCheckInForm) => {
     const checkInData = {
       ...data,
       menteeId,
+      tags,
     };
     setLoading(true);
     try {
@@ -60,7 +70,7 @@ const MonthlyCheckInModal: React.FC<{
   return (
     <>
       <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-        <div className="bg-white rounded-lg shadow-lg w-11/12 md:w-1/3 p-6">
+        <div className="bg-white rounded-lg shadow-lg w-11/12 md:w-1/3 max-h-full overflow-y-auto p-6">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold">Monthly Check-In</h2>
             <button onClick={onClose} aria-label="Close">
@@ -186,6 +196,35 @@ const MonthlyCheckInModal: React.FC<{
                 >
                   Add Link
                 </button>
+              )}
+              {errors.mediaContentLinks && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.mediaContentLinks.message}
+                </p>
+              )}
+            </div>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                Topics Covered
+              </label>
+              <p className="text-xs text-gray-500">
+                Enter the topics covered in this submission. Separate each topic
+                with a comma. You can add up to 5 topics.
+              </p>
+              <TagInput
+                tags={tags}
+                setTags={setTags}
+                maxTags={5}
+                onValidationError={setTagError}
+                register={register}
+              />
+              {tagError && (
+                <p className="text-red-500 text-xs mt-1">{tagError}</p>
+              )}
+              {errors.tags && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.tags.message}
+                </p>
               )}
             </div>
 

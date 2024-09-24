@@ -2,21 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { API_URL } from '../constants';
 
-import { Mentee, MenteeCheckInForm } from '../types';
-
-interface CheckIn {
-  id: string;
-  menteeId: string;
-  title: string;
-  date: string;
-  links: string[];
-  mentorChecked: boolean;
-  mentorCheckedDate: string;
-  mentorFeedback?: string;
-  generalUpdates?: string;
-  progressTowardsGoals?: string;
-  menteeDetails: Mentee;
-}
+import { Mentee, MenteeCheckInForm, MonthlyCheckIn } from '../types';
 
 const useSubmitCheckIn = () => {
   const queryClient = useQueryClient();
@@ -48,7 +34,7 @@ const useSubmitCheckIn = () => {
 const useMonthlyCheckIns = (menteeId: string) => {
   const queryClient = useQueryClient();
 
-  const { isLoading, error, data } = useQuery<CheckIn[], AxiosError>({
+  const { isLoading, error, data } = useQuery<MonthlyCheckIn[], AxiosError>({
     queryKey: ['menteeCheckIns', menteeId],
     queryFn: async () => {
       if (menteeId != null) {
@@ -59,7 +45,7 @@ const useMonthlyCheckIns = (menteeId: string) => {
               withCredentials: true,
             }
           );
-          return data.checkIns as CheckIn[];
+          return data.checkIns as MonthlyCheckIn[];
         } catch (error) {
           if (axios.isAxiosError(error) && error.response?.status === 401) {
             void queryClient.invalidateQueries({ queryKey: ['currentUser'] });
