@@ -61,7 +61,7 @@ const TagInput: React.FC<TagInputProps> = ({
             key={index}
             className={`${
               colors[index % colors.length]
-            } px-2 py-1 rounded mr-2 mb-2 flex items-center`}
+            } px-2 py-2 rounded-full mr-2 mb-2 flex items-center`}
           >
             {tag}
             <button

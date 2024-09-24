@@ -46,6 +46,15 @@ const MonthlyChecking: React.FC<MonthlyCheckingProps> = ({
       </div>
     );
   }
+
+  const colors = [
+    'bg-orange-100 text-orange-700',
+    'bg-green-100 text-green-700',
+    'bg-yellow-100 text-yellow-700',
+    'bg-red-100 text-red-700',
+    'bg-purple-100 text-purple-700',
+  ];
+
   const handleFeedbackChange = (id: string, feedback: string) => {
     setFeedback((prev) => ({ ...prev, [id]: feedback }));
   };
@@ -133,9 +142,29 @@ const MonthlyChecking: React.FC<MonthlyCheckingProps> = ({
                     'Month: ' + checkIn.title
                   )}
                 </h3>
-                <p className="text-gray-600">
-                  {format(new Date(checkIn.checkInDate), 'MMMM dd, yyyy')}
+                <p className="text-gray-800">
+                  {' '}
+                  Submit Date:
+                  <span className="text-gray-600">
+                    {format(new Date(checkIn.checkInDate), 'MMMM dd, yyyy')}
+                  </span>
                 </p>
+                <div className="flex flex-wrap mt-2">
+                  {Array.isArray(checkIn.tags) && checkIn.tags.length > 0 && (
+                    <div className="flex flex-wrap mt-1">
+                      {checkIn.tags.map((tag, index) => (
+                        <span
+                          key={index}
+                          className={`px-2 py-1 rounded-full mr-2 mb-2 ${
+                            colors[index % colors.length]
+                          }`}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
                 {isMentorView && checkIn.isCheckedByMentor ? (
                   <p className="text-green-600">✓ Checked by mentor</p>
                 ) : isMentorView ? (
@@ -189,9 +218,9 @@ const MonthlyChecking: React.FC<MonthlyCheckingProps> = ({
                     href={link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-800 mb-1"
+                    className="text-blue-600 hover:text-blue-800 mb-1 text-xs"
                   >
-                    View Submission {index + 1}
+                    Submission {index + 1}
                   </a>
                 ))}
                 {!isMentorView && (

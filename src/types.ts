@@ -112,6 +112,7 @@ export interface MonthlyCheckIn {
   title: string;
   checkInDate: string;
   mediaContentLinks: string[];
+  tags: string[];
   isCheckedByMentor: boolean;
   mentorCheckedDate?: string;
   mentorFeedback?: string;
