@@ -2,7 +2,11 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { API_URL } from '../constants';
 
-import { Mentee, MenteeCheckInForm, MonthlyCheckIn } from '../types';
+import {
+  MenteeCheckInForm,
+  MentorFeedbackForm,
+  MonthlyCheckIn,
+} from '../types';
 
 const useSubmitCheckIn = () => {
   const queryClient = useQueryClient();
@@ -62,4 +66,31 @@ const useMonthlyCheckIns = (menteeId: string) => {
   return { isLoading, error, data };
 };
 
-export { useSubmitCheckIn, useMonthlyCheckIns };
+const useMentorFeedback = () => {
+  const queryClient = useQueryClient();
+
+  const {
+    mutateAsync: submitMentorFeedback,
+    isSuccess,
+    isError,
+    error,
+  } = useMutation({
+    mutationFn: async (data: MentorFeedbackForm) => {
+      await axios.put(`${API_URL}/mentors/checkin`, data, {
+        withCredentials: true,
+      });
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['mentorCheckIns'] });
+    },
+  });
+
+  return {
+    submitMentorFeedback,
+    isSuccess,
+    isError,
+    error,
+  };
+};
+
+export { useSubmitCheckIn, useMonthlyCheckIns, useMentorFeedback };

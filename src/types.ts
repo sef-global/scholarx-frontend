@@ -112,7 +112,6 @@ export interface MonthlyCheckIn {
   title: string;
   checkInDate: string;
   mediaContentLinks: string[];
-  tags: string[];
   isCheckedByMentor: boolean;
   mentorCheckedDate?: string;
   mentorFeedback?: string;
@@ -127,4 +126,11 @@ export interface MonthlyCheckingProps {
   menteeId: string;
   isLoading: boolean;
   error: any;
+}
+
+export interface MentorFeedbackForm {
+  checkInId: string;
+  menteeId: string;
+  mentorFeedback: string;
+  isCheckedByMentor: boolean;
 }

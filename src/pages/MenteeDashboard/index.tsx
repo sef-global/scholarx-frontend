@@ -69,7 +69,7 @@ const MenteeDashboard: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="w-full px-2">
+        <div className="w-full">
           {isApproved ? (
             <MonthlyChecking
               checkInHistory={checkInHistory}

@@ -105,5 +105,4 @@ export const MenteeCheckInSchema = z.object({
   mediaContentLinks: z
     .array(z.string().url('Please provide a valid URL'))
     .min(3, 'Please provide at least 3 media links'),
-  tags: z.array(z.string()).min(1, 'Please enter at least one topic'),
 });

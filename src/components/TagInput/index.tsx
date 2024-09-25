@@ -1,4 +1,4 @@
-import React, { useState, KeyboardEvent, useEffect } from 'react';
+import React, { useState, KeyboardEvent } from 'react';
 import { UseFormRegister } from 'react-hook-form';
 
 interface TagInputProps {
@@ -8,14 +8,6 @@ interface TagInputProps {
   register: UseFormRegister<any>;
   onValidationError?: (error: string) => void;
 }
-
-const colors = [
-  'bg-orange-100 text-orange-700',
-  'bg-green-100 text-green-700',
-  'bg-yellow-100 text-yellow-700',
-  'bg-red-100 text-red-700',
-  'bg-purple-100 text-purple-700',
-];
 
 const TagInput: React.FC<TagInputProps> = ({
   tags,
@@ -59,9 +51,9 @@ const TagInput: React.FC<TagInputProps> = ({
         {tags.map((tag, index) => (
           <div
             key={index}
-            className={`${
-              colors[index % colors.length]
-            } px-2 py-2 rounded-full mr-2 mb-2 flex items-center`}
+            className={
+              ' px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full mr-1 mb-1 flex items-center'
+            }
           >
             {tag}
             <button
@@ -69,7 +61,7 @@ const TagInput: React.FC<TagInputProps> = ({
               onClick={() => {
                 handleRemoveTag(index);
               }}
-              className="ml-1 text-red-500"
+              className="ml-1 text-red-500 text-xs"
             >
               &times;
             </button>
@@ -85,7 +77,7 @@ const TagInput: React.FC<TagInputProps> = ({
             setInputValue(e.target.value);
           }}
           onKeyDown={handleKeyDown}
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
           placeholder="Enter a topic and press Enter"
           {...register}
         />

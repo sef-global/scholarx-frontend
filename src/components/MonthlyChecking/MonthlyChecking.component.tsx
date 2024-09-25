@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import MonthlyCheckInModal from '../../pages/MenteeCheckIn/MenteeCheckIn.component';
-import { Mentee, MonthlyCheckingProps } from '../../types';
+import { MonthlyCheckingProps } from '../../types';
 import { format } from 'date-fns';
 import Spinner from '../Spinner/Spinner.component';
+import NoCheckInsIcon from '../../assets/svg/Icons/NoCheckInsIcon';
+import ArrowDownIcon from '../../assets/svg/Icons/ArrowDownIcon';
+import ArrowRightIcon from '../../assets/svg/Icons/ArrowRightIcon';
+import { useMentorFeedback } from '../../hooks/useSubmitCheckIn';
 
 const MonthlyChecking: React.FC<MonthlyCheckingProps> = ({
   checkInHistory,
   isMentorView,
   menteeId,
   isLoading,
-  error,
 }) => {
   const [showGuidelines, setShowGuidelines] = useState(false);
   const [feedback, setFeedback] = useState<Record<string, string>>({});
@@ -17,6 +20,9 @@ const MonthlyChecking: React.FC<MonthlyCheckingProps> = ({
     string | null
   >(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { submitMentorFeedback, isSuccess, isError, error } = useMentorFeedback();
+
   const toggleGuidelines = () => {
     setShowGuidelines((prev) => !prev);
   };
@@ -28,32 +34,6 @@ const MonthlyChecking: React.FC<MonthlyCheckingProps> = ({
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
-  if (isLoading) {
-    return (
-      <div className="text-center py-4">
-        <Spinner />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="text-center py-4">
-        <p className="text-red-500">
-          ⚠️ Failed to load check-ins. Please try again later.
-        </p>
-      </div>
-    );
-  }
-
-  const colors = [
-    'bg-orange-100 text-orange-700',
-    'bg-green-100 text-green-700',
-    'bg-yellow-100 text-yellow-700',
-    'bg-red-100 text-red-700',
-    'bg-purple-100 text-purple-700',
-  ];
 
   const handleFeedbackChange = (id: string, feedback: string) => {
     setFeedback((prev) => ({ ...prev, [id]: feedback }));
@@ -75,188 +55,200 @@ const MonthlyChecking: React.FC<MonthlyCheckingProps> = ({
   };
 
   return (
-    <div className="max-w-lg mx-auto">
-      <div className="flex justify-between items-center mb-2">
-        <h2 className="text-lg font-semibold text-center">Monthly Check-Ins</h2>
+    <div className="w-full">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-bold text-gray-800">Monthly Check-Ins</h2>
         {!isMentorView && (
           <button
             onClick={handleAddCheckIn}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors duration-300 text-sm flex items-center justify-center min-w-[120px]"
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors duration-300 text-sm font-medium"
           >
-            Submit Your Monthly Check-In
+            Submit Monthly Check-In
           </button>
         )}
       </div>
-      <div className="bg-white shadow rounded-lg p-3">
-        <button
-          onClick={toggleGuidelines}
-          className="text-blue-600 hover:text-blue-800 font-medium mb-1 focus:outline-none text-sm"
-        >
-          {showGuidelines ? 'Hide Guidelines' : 'View Guidelines'}
-        </button>
+
+      <div className="bg-white shadow-md overflow-hidden">
+        <div className="p-4 border-b border-gray-200">
+          <button
+            onClick={toggleGuidelines}
+            className="text-blue-600 hover:text-blue-800 font-medium focus:outline-none text-sm flex items-center"
+          >
+            {showGuidelines ? (
+              <>
+                <ArrowDownIcon />
+                Hide Guidelines
+              </>
+            ) : (
+              <>
+                <ArrowRightIcon />
+                View Guidelines
+              </>
+            )}
+          </button>
+        </div>
+
         {showGuidelines && (
-          <div className="mb-3 p-2 bg-gray-100 rounded-md text-sm">
-            <p className="font-semibold">Monthly Check-in Guidelines:</p>
-            <ul className="list-disc pl-4 space-y-1 mt-1">
+          <div className="p-4 bg-blue-50 text-sm">
+            <h3 className="font-semibold text-blue-800 mb-2">
+              Monthly Check-in Guidelines:
+            </h3>
+            <ul className="list-disc pl-5 space-y-1 text-blue-700">
               <li>
-                <strong>Monthly Check-ins:</strong> Submit monthly updates on
-                your progress via the ScholarX platform.
+                Submit monthly updates on your progress via the ScholarX
+                platform.
               </li>
               <li>
-                <strong>Public Sharing:</strong> Make at least 3 media
-                submissions during the 6-month period. Include links in the
-                monthly check-ins.
+                Make at least 3 media submissions during the 6-month period.
+              </li>
+              <li>
+                Include links to your media submissions in the monthly
+                check-ins.
               </li>
             </ul>
-            <p className="font-medium mt-1">Types of Media:</p>
-            <ul className="list-disc pl-4 space-y-1">
-              <li>
-                <strong>Written:</strong> Blogs on personal websites, Medium,
-                Blogspot.
-              </li>
-              <li>
-                <strong>Video:</strong> YouTube, Facebook.
-              </li>
-              <li>
-                <strong>Audio:</strong> Anchor, YouTube, podcasts.
-              </li>
+            <h4 className="font-semibold text-blue-800 mt-3 mb-1">
+              Types of Media:
+            </h4>
+            <ul className="grid grid-cols-2 gap-2 text-blue-700">
+              <li>📝 Written: Blogs, Medium</li>
+              <li>🎥 Video: YouTube, Facebook</li>
+              <li>🎙️ Audio: Podcasts, Anchor</li>
+              <li>💻 Code: GitHub repositories</li>
             </ul>
           </div>
         )}
-        {checkInHistory.length > 0 ? (
-          checkInHistory.map((checkIn) => (
-            <div
-              key={checkIn.id}
-              className="mb-2 last:mb-0 p-2 border-b last:border-b-0 text-sm flex justify-between items-start"
-            >
-              <div className="flex-grow">
-                <h3 className="font-medium">
-                  {isMentorView ? (
-                    <>
-                      Mentee Name:{' '}
-                      {`${checkIn.mentee.application.firstName} ${checkIn.mentee.application.lastName}`}
-                      <br />
-                      Month: {checkIn.title}
-                    </>
-                  ) : (
-                    'Month: ' + checkIn.title
-                  )}
-                </h3>
-                <p className="text-gray-800">
-                  {' '}
-                  Submit Date:
-                  <span className="text-gray-600">
-                    {format(new Date(checkIn.checkInDate), 'MMMM dd, yyyy')}
-                  </span>
-                </p>
-                <div className="flex flex-wrap mt-2">
-                  {Array.isArray(checkIn.tags) && checkIn.tags.length > 0 && (
-                    <div className="flex flex-wrap mt-1">
-                      {checkIn.tags.map((tag, index) => (
-                        <span
-                          key={index}
-                          className={`px-2 py-1 rounded-full mr-2 mb-2 ${
-                            colors[index % colors.length]
-                          }`}
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                {isMentorView && checkIn.isCheckedByMentor ? (
-                  <p className="text-green-600">✓ Checked by mentor</p>
-                ) : isMentorView ? (
+
+        {isLoading ? (
+          <div className="text-center py-4">
+            <Spinner />
+          </div>
+        ) : checkInHistory.length > 0 ? (
+          <div className="divide-y divide-gray-200">
+            {checkInHistory.map((checkIn) => (
+              <div
+                key={checkIn.id}
+                className="p-4 hover:bg-gray-50 transition-colors duration-150"
+              >
+                <div className="flex justify-between items-start">
                   <div>
-                    <textarea
-                      className="mt-2 p-2 border border-gray-300 rounded-md w-full"
-                      placeholder="Enter feedback here"
-                      value={feedback[checkIn.id] || ''}
-                      onChange={(e) => {
-                        handleFeedbackChange(checkIn.id, e.target.value);
-                      }}
-                    />
-                    <label className="inline-flex items-center mt-2">
-                      <input
-                        type="checkbox"
-                        className="form-checkbox"
-                        checked={checkIn.isCheckedByMentor}
-                        onChange={() => {
-                          handleMarkAsChecked(checkIn.id);
-                        }}
-                      />
-                      <span className="ml-2">Mark as Checked</span>
-                    </label>
-                    <button
-                      onClick={async () => {
-                        await handleSubmitFeedback(checkIn.id);
-                      }}
-                      className="mt-2 px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-sm flex items-center justify-center min-w-[80px]"
-                      disabled={submittingFeedbackId === checkIn.id}
-                    >
-                      {submittingFeedbackId === checkIn.id ? (
-                        <Spinner />
-                      ) : (
-                        'Submit'
-                      )}
-                    </button>
-                  </div>
-                ) : (
-                  <div>
-                    <p className="font-medium mt-2">Mentor Feedback:</p>
-                    <p className="text-gray-700">
-                      {checkIn.mentorFeedback ?? 'No feedback yet'}
+                    <h3 className="font-semibold text-gray-800">
+                      {isMentorView
+                        ? `${checkIn.mentee.application.firstName} ${checkIn.mentee.application.lastName}`
+                        : checkIn.title}
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      Submitted on{' '}
+                      {format(new Date(checkIn.checkInDate), 'MMMM dd, yyyy')}
                     </p>
                   </div>
-                )}
-              </div>
-              <div className="text-right flex flex-col items-end">
-                {checkIn.mediaContentLinks.map((link, index) => (
-                  <a
-                    key={index}
-                    href={link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-800 mb-1 text-xs"
-                  >
-                    Submission {index + 1}
-                  </a>
-                ))}
-                {!isMentorView && (
-                  <p className="text-sm mt-1">
-                    {checkIn.isCheckedByMentor ? (
-                      <span className="text-green-600">
-                        ✓ Checked by mentor on{' '}
-                        {checkIn.mentorCheckedDate
-                          ? format(
-                              new Date(checkIn.mentorCheckedDate),
-                              'MMMM dd, yyyy'
-                            )
-                          : 'N/A'}
-                      </span>
-                    ) : (
-                      <span className="text-yellow-600">
-                        Pending mentor review
+                  <div className="flex flex-col items-end">
+                    {checkIn.mediaContentLinks.map((link, index) => (
+                      <a
+                        key={index}
+                        href={link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:text-blue-800 text-sm mb-1"
+                      >
+                        Submission {index + 1}
+                      </a>
+                    ))}
+                    {!isMentorView && (
+                      <span
+                        className={`text-xs font-medium ${
+                          checkIn.isCheckedByMentor
+                            ? 'text-green-600'
+                            : 'text-yellow-600'
+                        }`}
+                      >
+                        {checkIn.isCheckedByMentor
+                          ? `✓ Checked on ${format(
+                              new Date(checkIn.mentorCheckedDate ?? ''),
+                              'MMM dd, yyyy'
+                            )}`
+                          : '⏳ Pending review'}
                       </span>
                     )}
-                  </p>
+                  </div>
+                </div>
+
+                {isMentorView ? (
+                  checkIn.isCheckedByMentor ? (
+                    <p className="mt-2 text-sm text-green-600">
+                      ✓ Checked by mentor
+                    </p>
+                  ) : (
+                    <div className="mt-3">
+                      <textarea
+                        className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                        placeholder="Enter feedback here"
+                        value={feedback[checkIn.id] || ''}
+                        onChange={(e) => {
+                          handleFeedbackChange(checkIn.id, e.target.value);
+                        }}
+                      />
+                      <div className="mt-2 flex items-center justify-between">
+                        <label className="inline-flex items-center">
+                          <input
+                            type="checkbox"
+                            className="form-checkbox text-blue-600"
+                            checked={checkIn.isCheckedByMentor}
+                            onChange={() => {
+                              handleMarkAsChecked(checkIn.id);
+                            }}
+                          />
+                          <span className="ml-2 text-sm text-gray-700">
+                            Mark as Checked
+                          </span>
+                        </label>
+                        <button
+                          onClick={async () => {
+                            await handleSubmitFeedback(checkIn.id);
+                          }}
+                          className="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-sm font-medium"
+                          disabled={submittingFeedbackId === checkIn.id}
+                        >
+                          {submittingFeedbackId === checkIn.id ? (
+                            <Spinner />
+                          ) : (
+                            'Submit'
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                  )
+                ) : (
+                  <div className="mt-3 bg-gray-50 p-3 rounded-md">
+                    <h4 className="font-medium text-gray-700 mb-1">
+                      Mentor Feedback:
+                    </h4>
+                    {checkIn.mentorFeedback ? (
+                      <p className="text-sm text-gray-600">
+                        {checkIn.mentorFeedback}
+                      </p>
+                    ) : (
+                      <p className="text-sm text-gray-600">No feedback yet</p>
+                    )}
+                  </div>
                 )}
               </div>
-            </div>
-          ))
+            ))}
+          </div>
         ) : (
-          <div className="text-center py-4">
-            <p className="text-xl mb-1">📝</p>
-            <p className="font-medium">No monthly submissions yet</p>
+          <div className="text-center py-8">
+            <NoCheckInsIcon />
+            <h3 className="text-xl font-semibold text-gray-800 mb-1">
+              No monthly check-ins yet
+            </h3>
             <p className="text-gray-600">
               {isMentorView
-                ? 'The mentees have not submitted any check-ins yet.'
-                : 'Add your progress to get started!'}
+                ? 'Mentees have not submitted any check-ins yet.'
+                : 'Start by submitting your first monthly check-in!'}
             </p>
           </div>
         )}
       </div>
+
       <MonthlyCheckInModal
         isOpen={isModalOpen}
         onClose={closeModal}
