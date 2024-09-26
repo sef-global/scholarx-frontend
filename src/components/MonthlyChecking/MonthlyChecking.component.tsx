@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MonthlyCheckInModal from '../../pages/MenteeCheckIn/MenteeCheckIn.component';
 import { MonthlyCheckingProps } from '../../types';
 import { format } from 'date-fns';
@@ -6,23 +6,31 @@ import Spinner from '../Spinner/Spinner.component';
 import NoCheckInsIcon from '../../assets/svg/Icons/NoCheckInsIcon';
 import ArrowDownIcon from '../../assets/svg/Icons/ArrowDownIcon';
 import ArrowRightIcon from '../../assets/svg/Icons/ArrowRightIcon';
-import { useMentorFeedback } from '../../hooks/useSubmitCheckIn';
+import {
+  useMentorFeedback,
+  useMonthlyCheckIns,
+} from '../../hooks/useSubmitCheckIn';
+import { z } from 'zod';
+import { MentorFeedbackSchema } from '../../schemas';
+import MentorFeedbackForm from './MentorFeedbackForm.component';
+
+type MentorFeedbackFormData = z.infer<typeof MentorFeedbackSchema>;
 
 const MonthlyChecking: React.FC<MonthlyCheckingProps> = ({
-  checkInHistory,
   isMentorView,
   menteeId,
-  isLoading,
 }) => {
   const [showGuidelines, setShowGuidelines] = useState(false);
-  const [feedback, setFeedback] = useState<Record<string, string>>({});
   const [submittingFeedbackId, setSubmittingFeedbackId] = useState<
     string | null
   >(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { submitMentorFeedback, isSuccess, isError, error } = useMentorFeedback();
+  const { submitMentorFeedback } = useMentorFeedback();
 
+  const { data: checkInHistory = [], isLoading } = useMonthlyCheckIns(menteeId);
+
+  console.log('checkInHistory', checkInHistory);
   const toggleGuidelines = () => {
     setShowGuidelines((prev) => !prev);
   };
@@ -35,20 +43,12 @@ const MonthlyChecking: React.FC<MonthlyCheckingProps> = ({
     setIsModalOpen(false);
   };
 
-  const handleFeedbackChange = (id: string, feedback: string) => {
-    setFeedback((prev) => ({ ...prev, [id]: feedback }));
-  };
-
-  const handleMarkAsChecked = (id: string) => {
-    // Logic to mark as checked
-  };
-
-  const handleSubmitFeedback = async (id: string) => {
-    setSubmittingFeedbackId(id);
+  const handleSubmitFeedback = async (data: MentorFeedbackFormData) => {
+    console.log('submitting feedback');
+    setSubmittingFeedbackId(data.checkInId);
     try {
-      // Simulating an API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      // Add your logic to submit feedback here
+      await submitMentorFeedback(data);
+    } catch (error) {
     } finally {
       setSubmittingFeedbackId(null);
     }
@@ -172,52 +172,33 @@ const MonthlyChecking: React.FC<MonthlyCheckingProps> = ({
                   </div>
                 </div>
 
-                {isMentorView ? (
-                  checkIn.isCheckedByMentor ? (
-                    <p className="mt-2 text-sm text-green-600">
-                      ✓ Checked by mentor
-                    </p>
-                  ) : (
-                    <div className="mt-3">
-                      <textarea
-                        className="w-full p-2 border border-gray-300 rounded-md text-sm"
-                        placeholder="Enter feedback here"
-                        value={feedback[checkIn.id] || ''}
-                        onChange={(e) => {
-                          handleFeedbackChange(checkIn.id, e.target.value);
-                        }}
-                      />
-                      <div className="mt-2 flex items-center justify-between">
-                        <label className="inline-flex items-center">
-                          <input
-                            type="checkbox"
-                            className="form-checkbox text-blue-600"
-                            checked={checkIn.isCheckedByMentor}
-                            onChange={() => {
-                              handleMarkAsChecked(checkIn.id);
-                            }}
-                          />
-                          <span className="ml-2 text-sm text-gray-700">
-                            Mark as Checked
-                          </span>
-                        </label>
-                        <button
-                          onClick={async () => {
-                            await handleSubmitFeedback(checkIn.id);
-                          }}
-                          className="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-sm font-medium"
-                          disabled={submittingFeedbackId === checkIn.id}
-                        >
-                          {submittingFeedbackId === checkIn.id ? (
-                            <Spinner />
-                          ) : (
-                            'Submit'
+                {isMentorView && (
+                  <div className="mt-3">
+                    {checkIn.isCheckedByMentor ? (
+                      <div className="bg-green-50 p-3 rounded-md">
+                        <p className="text-sm text-green-600">
+                          ✓ Checked by mentor on{' '}
+                          {format(
+                            new Date(checkIn.mentorCheckedDate ?? ''),
+                            'MMM dd, yyyy'
                           )}
-                        </button>
+                        </p>
+                        <p className="mt-2 text-sm text-gray-600">
+                          {checkIn.mentorFeedback}
+                        </p>
                       </div>
-                    </div>
-                  )
-                ) : (
+                    ) : (
+                      <MentorFeedbackForm
+                        menteeId={menteeId}
+                        checkInId={checkIn.id}
+                        isSubmitting={submittingFeedbackId === checkIn.id}
+                        onSubmit={handleSubmitFeedback}
+                      />
+                    )}
+                  </div>
+                )}
+
+                {!isMentorView && (
                   <div className="mt-3 bg-gray-50 p-3 rounded-md">
                     <h4 className="font-medium text-gray-700 mb-1">
                       Mentor Feedback:

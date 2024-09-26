@@ -3,7 +3,6 @@ import { ApplicationStatus } from '../../enums';
 import useMyApplications from '../../hooks/useMyApplications';
 import MentorCard from '../../components/MentorCard/MentorCard.component';
 import MonthlyChecking from '../../components/MonthlyChecking/MonthlyChecking.component';
-import { useMonthlyCheckIns } from '../../hooks/useSubmitCheckIn';
 
 const MenteeDashboard: React.FC = () => {
   const { data: mentees } = useMyApplications('mentee');
@@ -18,40 +17,6 @@ const MenteeDashboard: React.FC = () => {
 
   const menteeId = isApproved ? approvedApplications[0].uuid : '';
 
-  console.log('menteeId', menteeId);
-  console.log('mentees', mentees);
-
-  const {
-    data: checkInHistory = [],
-    isLoading,
-    error,
-  } = useMonthlyCheckIns(menteeId);
-
-  console.log('checkInHistory', checkInHistory);
-  // const checkInHistory = [
-  //   {
-  //     id: '1',
-  //     menteeName: 'Jane Doe',
-  //     title: 'Monthly Progress Report - August',
-  //     date: '2024-08-15',
-  //     links: [
-  //       'https://example.com/submission/1',
-  //       'https://example.com/submission/2',
-  //       'https://example.com/submission/3',
-  //     ],
-  //     mentorChecked: false,
-  //     mentorFeedback: null,
-  //   },
-  //   {
-  //     id: '2',
-  //     menteeName: 'John Smith',
-  //     title: 'Monthly Progress Report - August',
-  //     date: '2024-08-18',
-  //     links: ['https://example.com/submission/2'],
-  //     mentorChecked: false,
-  //     mentorFeedback: null,
-  //   },
-  // ];
   return (
     <div className="container mx-auto p-4">
       <div className="flex flex-wrap -mx-2">
@@ -71,13 +36,7 @@ const MenteeDashboard: React.FC = () => {
         </div>
         <div className="w-full">
           {isApproved ? (
-            <MonthlyChecking
-              checkInHistory={checkInHistory}
-              isMentorView={false}
-              menteeId={menteeId}
-              isLoading={isLoading}
-              error={error}
-            />
+            <MonthlyChecking isMentorView={false} menteeId={menteeId} />
           ) : (
             <div className="px-2 py-2 mt-4 bg-blue-100 rounded-lg">
               <p className="text-lg font-medium mb-2 pb-5">

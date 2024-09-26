@@ -121,11 +121,8 @@ export interface MonthlyCheckIn {
 }
 
 export interface MonthlyCheckingProps {
-  checkInHistory: MonthlyCheckIn[];
   isMentorView: boolean;
   menteeId: string;
-  isLoading: boolean;
-  error: any;
 }
 
 export interface MentorFeedbackForm {

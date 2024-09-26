@@ -1,3 +1,4 @@
+import { check } from 'prettier';
 import { z } from 'zod';
 
 export const MenteeApplicationSchema = z.object({
@@ -105,4 +106,11 @@ export const MenteeCheckInSchema = z.object({
   mediaContentLinks: z
     .array(z.string().url('Please provide a valid URL'))
     .min(3, 'Please provide at least 3 media links'),
+});
+
+export const MentorFeedbackSchema = z.object({
+  menteeId: z.string().min(1, 'Mentee ID is required'),
+  checkInId: z.string().min(1, 'Check-in ID is required'),
+  mentorFeedback: z.string().min(1, 'Feedback is required'),
+  isCheckedByMentor: z.boolean(),
 });

@@ -4,12 +4,17 @@ import { ApplicationStatus } from '../../enums';
 import useMentor from '../../hooks/useMentor';
 import { UserContext, type UserContextType } from '../../contexts/UserContext';
 import MenteeCard from '../../components/MenteeCard';
+import MonthlyChecking from '../../components/MonthlyChecking/MonthlyChecking.component';
 
 const MenteeApplications: React.FC = () => {
   const { mentor } = useContext(UserContext) as UserContextType;
   const { data: mentees } = useMyMentees();
   const [isAvailable, setIsAvailable] = useState(mentor?.availability);
   const { updateAvailability } = useMentor(mentor?.uuid);
+
+  const approvedMentees = mentees?.filter(
+    (mentee) => mentee.state === ApplicationStatus.APPROVED
+  );
 
   const handleAvailability = async (availability: boolean) => {
     await updateAvailability(availability);
@@ -72,6 +77,18 @@ const MenteeApplications: React.FC = () => {
               <MenteeCard key={mentee.uuid} mentee={mentee} />
             ))}
         </div>
+      </div>
+      #TODO: Add MonthlyChecking component here
+      <div>
+        {approvedMentees &&
+          approvedMentees.length > 0 &&
+          approvedMentees.map((mentee) => (
+            <MonthlyChecking
+              key={mentee.uuid}
+              isMentorView={true}
+              menteeId={mentee.uuid}
+            />
+          ))}
       </div>
     </div>
   );
