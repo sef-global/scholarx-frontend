@@ -4,12 +4,15 @@ import { ApplicationStatus } from '../../enums';
 import useMentor from '../../hooks/useMentor';
 import { UserContext, type UserContextType } from '../../contexts/UserContext';
 import MenteeCard from '../../components/MenteeCard';
-import MonthlyChecking from '../../components/MonthlyChecking/MonthlyChecking.component';
+import MonthlyCheckInHeader from '../../components/MonthlyChecking/MonthlyCheckingHeader';
+import MentorMonthlyChecking from '../../components/MonthlyChecking/MentorMonthlyChecking';
 
 const MenteeApplications: React.FC = () => {
   const { mentor } = useContext(UserContext) as UserContextType;
   const { data: mentees } = useMyMentees();
   const [isAvailable, setIsAvailable] = useState(mentor?.availability);
+  const [showGuidelines, setShowGuidelines] = useState(false);
+
   const { updateAvailability } = useMentor(mentor?.uuid);
 
   const approvedMentees = mentees?.filter(
@@ -19,6 +22,10 @@ const MenteeApplications: React.FC = () => {
   const handleAvailability = async (availability: boolean) => {
     await updateAvailability(availability);
     setIsAvailable(availability);
+  };
+
+  const toggleGuidelines = () => {
+    setShowGuidelines((prev) => !prev);
   };
 
   return (
@@ -78,16 +85,18 @@ const MenteeApplications: React.FC = () => {
             ))}
         </div>
       </div>
-      #TODO: Add MonthlyChecking component here
       <div>
-        {approvedMentees &&
-          approvedMentees.length > 0 &&
-          approvedMentees.map((mentee) => (
-            <MonthlyChecking
-              key={mentee.uuid}
-              isMentorView={true}
-              menteeId={mentee.uuid}
-            />
+        {approvedMentees && approvedMentees.length > 0 && (
+          <MonthlyCheckInHeader
+            isMentorView={true}
+            toggleGuidelines={toggleGuidelines}
+            showGuidelines={showGuidelines}
+          />
+        )}
+        {mentees
+          ?.filter((mentee) => mentee.state === ApplicationStatus.APPROVED)
+          .map((mentee) => (
+            <MentorMonthlyChecking key={mentee.uuid} mentee={mentee} />
           ))}
       </div>
     </div>

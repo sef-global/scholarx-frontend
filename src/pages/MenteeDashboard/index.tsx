@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ApplicationStatus } from '../../enums';
 import useMyApplications from '../../hooks/useMyApplications';
 import MentorCard from '../../components/MentorCard/MentorCard.component';
-import MonthlyChecking from '../../components/MonthlyChecking/MonthlyChecking.component';
+import MonthlyCheckInHeader from '../../components/MonthlyChecking/MonthlyCheckingHeader';
+import MenteeMonthlyChecking from '../../components/MonthlyChecking/MenteeMonthlyChecking';
 
 const MenteeDashboard: React.FC = () => {
+  const [showGuidelines, setShowGuidelines] = useState(false);
+
   const { data: mentees } = useMyApplications('mentee');
   const approvedApplications =
     mentees?.filter((mentee) => mentee.state === ApplicationStatus.APPROVED) ??
@@ -12,6 +15,10 @@ const MenteeDashboard: React.FC = () => {
   const pendingApplications =
     mentees?.filter((mentee) => mentee.state === ApplicationStatus.PENDING) ??
     [];
+
+  const toggleGuidelines = () => {
+    setShowGuidelines((prev) => !prev);
+  };
 
   const isApproved = approvedApplications.length > 0;
 
@@ -36,7 +43,15 @@ const MenteeDashboard: React.FC = () => {
         </div>
         <div className="w-full">
           {isApproved ? (
-            <MonthlyChecking isMentorView={false} menteeId={menteeId} />
+            <>
+              <MonthlyCheckInHeader
+                isMentorView={false}
+                toggleGuidelines={toggleGuidelines}
+                showGuidelines={showGuidelines}
+                menteeId={menteeId}
+              />
+              <MenteeMonthlyChecking menteeId={menteeId} />
+            </>
           ) : (
             <div className="px-2 py-2 mt-4 bg-blue-100 rounded-lg">
               <p className="text-lg font-medium mb-2 pb-5">

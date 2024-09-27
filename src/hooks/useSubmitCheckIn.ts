@@ -38,7 +38,10 @@ const useSubmitCheckIn = () => {
 const useMonthlyCheckIns = (menteeId: string) => {
   const queryClient = useQueryClient();
 
-  const { isLoading, error, data } = useQuery<MonthlyCheckIn[], AxiosError>({
+  const { isLoading, error, data, refetch } = useQuery<
+    MonthlyCheckIn[],
+    AxiosError
+  >({
     queryKey: ['menteeCheckIns', menteeId],
     queryFn: async () => {
       if (menteeId != null) {
@@ -63,7 +66,7 @@ const useMonthlyCheckIns = (menteeId: string) => {
     initialData: undefined,
   });
 
-  return { isLoading, error, data };
+  return { isLoading, error, data, refetch };
 };
 
 const useMentorFeedback = () => {
@@ -76,7 +79,7 @@ const useMentorFeedback = () => {
     error,
   } = useMutation({
     mutationFn: async (data: MentorFeedbackForm) => {
-      await axios.put(`${API_URL}/mentors/checkin`, data, {
+      await axios.put(`${API_URL}/mentees/checking/feedback`, data, {
         withCredentials: true,
       });
     },

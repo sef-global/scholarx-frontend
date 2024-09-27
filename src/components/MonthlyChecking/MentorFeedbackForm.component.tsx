@@ -1,30 +1,33 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { MentorFeedbackSchema } from '../../schemas';
+import { useMentorFeedback } from '../../hooks/useSubmitCheckIn';
 import Spinner from '../Spinner/Spinner.component';
 
-type MentorFeedbackFormData = z.infer<typeof MentorFeedbackSchema>;
+interface MentorFeedbackFormData {
+  menteeId: string;
+  checkInId: string;
+  mentorFeedback: string;
+  isCheckedByMentor: boolean;
+}
 
 interface MentorFeedbackFormProps {
   menteeId: string;
   checkInId: string;
-  onSubmit: (data: MentorFeedbackFormData) => Promise<void>;
-  isSubmitting: boolean;
+  onSubmit: () => Promise<void>;
 }
 
 const MentorFeedbackForm: React.FC<MentorFeedbackFormProps> = ({
   menteeId,
   checkInId,
   onSubmit,
-  isSubmitting,
 }) => {
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<MentorFeedbackFormData>({
     resolver: zodResolver(MentorFeedbackSchema),
     defaultValues: {
@@ -34,31 +37,25 @@ const MentorFeedbackForm: React.FC<MentorFeedbackFormProps> = ({
       isCheckedByMentor: false,
     },
   });
+  const { submitMentorFeedback, isSuccess, isError, error } =
+    useMentorFeedback();
 
-  const handleFormSubmit = async (data: MentorFeedbackFormData) => {
+  const handleSubmitFeedback = async (data: MentorFeedbackFormData) => {
     try {
-      console.log(data);
-      console.log('submitting feedback');
-      await onSubmit(data);
-      reset({ mentorFeedback: '', isCheckedByMentor: false });
+      await submitMentorFeedback(data);
+      await onSubmit();
+      reset();
     } catch (error) {
       console.error('Error submitting feedback:', error);
+    } finally {
+      reset();
     }
-  };
-
-  const getButtonClass = () => {
-    const baseClass =
-      'px-3 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-colors duration-300 text-sm font-medium ';
-    if (isSubmitting) {
-      return baseClass + 'bg-gray-400 text-white cursor-not-allowed';
-    }
-    return (
-      baseClass + 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500'
-    );
   };
 
   return (
-    <form onSubmit={handleSubmit(handleFormSubmit)} className="mt-3">
+    <form onSubmit={handleSubmit(handleSubmitFeedback)} className="mt-3">
+      <input type="hidden" {...register('menteeId')} />
+      <input type="hidden" {...register('checkInId')} />
       <textarea
         {...register('mentorFeedback')}
         className="w-full p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
@@ -70,7 +67,7 @@ const MentorFeedbackForm: React.FC<MentorFeedbackFormProps> = ({
         </div>
       )}
 
-      <div className="flex items-center mt-2 justify-between">
+      <div className="flex mt-2 justify-between">
         <label className="inline-flex items-center">
           <input
             type="checkbox"
@@ -78,15 +75,37 @@ const MentorFeedbackForm: React.FC<MentorFeedbackFormProps> = ({
             className="form-checkbox h-5 w-5 text-blue-600"
           />
           <span className="ml-2 text-gray-700">Mark as checked</span>
+          {errors.isCheckedByMentor && (
+            <div className="text-red-600 text-sm mt-1 ml-7">
+              {errors.isCheckedByMentor.message}
+            </div>
+          )}
         </label>
         <button
           type="submit"
+          className="px-3 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-colors duration-300 text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500"
           disabled={isSubmitting}
-          className={getButtonClass()}
         >
-          {isSubmitting ? <Spinner /> : 'Submit Feedback'}
+          {isSubmitting ? (
+            <span className="flex items-center">
+              <Spinner />
+              <span>Submitting...</span>
+            </span>
+          ) : (
+            'Submit Feedback'
+          )}
         </button>
       </div>
+      {isSuccess && (
+        <div className="text-green-600 text-sm mt-1">
+          Feedback submitted successfully 🎉
+        </div>
+      )}
+      {isError && (
+        <div className="text-red-600 text-sm mt-2">
+          Error submitting feedback: {error?.message}
+        </div>
+      )}
     </form>
   );
 };

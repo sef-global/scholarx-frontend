@@ -111,6 +111,8 @@ export const MenteeCheckInSchema = z.object({
 export const MentorFeedbackSchema = z.object({
   menteeId: z.string().min(1, 'Mentee ID is required'),
   checkInId: z.string().min(1, 'Check-in ID is required'),
-  mentorFeedback: z.string().min(1, 'Feedback is required'),
-  isCheckedByMentor: z.boolean(),
+  mentorFeedback: z.string().min(1, 'Your Feedback is required'),
+  isCheckedByMentor: z.literal(true, {
+    errorMap: () => ({ message: 'You must mark this as checked' }),
+  }),
 });
