@@ -1,6 +1,6 @@
 import React from 'react';
 import { getStateColor } from '../../utils';
-import UserIcon from '../../assets/svg/Icons/UserIcon';
+import ProfilePic from '../ProfilePic';
 import { useParams } from 'react-router-dom';
 import useMentee from '../../hooks/admin/useMentee';
 import Toast from '../Toast';
@@ -33,17 +33,11 @@ const MenteeApplication: React.FC = () => {
       ) : (
         <div className="w-full space-y-8">
           <div className="flex items-center">
-            {mentee?.profile.image_url !== '' ? (
-              <img
-                src={mentee?.profile.image_url}
-                alt="Mentee Avatar"
-                className="w-24 h-24 rounded-full mb-4 object-cover"
-              />
-            ) : (
-              <div className="w-24 h-24 bg-gray-200 rounded-full mb-4 flex items-center justify-center">
-                <UserIcon />
-              </div>
-            )}
+            <ProfilePic
+              src={mentee?.profile.image_url}
+              alt="Mentee Avatar"
+              size="6rem"
+            />
             <div className="ml-5">
               <div className="flex items-center space-x-3">
                 <span className="text-2xl font-semibold">

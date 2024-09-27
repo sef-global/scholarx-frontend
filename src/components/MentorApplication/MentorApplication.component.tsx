@@ -3,7 +3,7 @@ import { getStateColor } from '../../utils';
 import { useParams } from 'react-router-dom';
 import useMentor from '../../hooks/admin/useMentor';
 import Toast from '../Toast';
-import UserIcon from '../../assets/svg/Icons/UserIcon';
+import ProfilePic from '../ProfilePic';
 import ActionButtons from '../ActionButtons';
 import { ApplicationStatus } from '../../enums';
 
@@ -33,17 +33,11 @@ const MentorApplication: React.FC = () => {
       ) : (
         <div className="w-full space-y-8">
           <div className="flex items-center">
-            {mentor?.profile.image_url ? (
-              <img
-                src={mentor?.profile.image_url}
-                alt=""
-                className="w-24 h-24 rounded-full object-cover"
-              />
-            ) : (
-              <div className="w-12 h-12 md:w-24 md:h-24 bg-gray-200 rounded-full flex items-center justify-center">
-                <UserIcon />
-              </div>
-            )}
+            <ProfilePic
+              src={mentor?.profile.image_url}
+              alt="Mentee Avatar"
+              size="6rem"
+            />
             <div className="ml-5">
               <div className="flex items-center space-x-3">
                 <span className="text-2xl font-semibold">
