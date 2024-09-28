@@ -106,13 +106,14 @@ const MenteeRegistration: React.FC = () => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
 
-  const onSubmit: SubmitHandler<MenteeApplication> = async (data) => {
+  const onSubmit: SubmitHandler<MenteeApplication> = async () => {
     setIsModalOpen(true);
   };
 
   const handleModalAgree = async (agreedData: {
     agreed: boolean;
-    consentGiven: boolean;
+    consentGive?: boolean;
+    canCommit?: boolean;
   }) => {
     setIsModalOpen(false);
     setIsSubmitting(true);
@@ -156,9 +157,6 @@ const MenteeRegistration: React.FC = () => {
     },
   });
 
-  console.log('Form State:', watch());
-  console.log('Form Errors:', errors);
-  console.log('IsModalOpen', isModalOpen);
   return (
     <div className="relative w-full">
       <div className="text-2xl font-semibold mb-2">Become a Mentee</div>
@@ -384,15 +382,6 @@ const MenteeRegistration: React.FC = () => {
               register={register}
               error={errors.submission}
             />
-            <p className="text-md font-semibold">Privacy Statement</p>
-            <p>
-              Sustainable Foundation Education assures that your video
-              submission will be used exclusively for application evaluation
-              purposes. We are committed to protecting your privacy and will not
-              use your video for any other activities, such as general AI
-              training or public distribution. Your personal information and
-              video content will be handled with the utmost confidentiality.
-            </p>
           </>
         )}
         {status === 'error' ? (
@@ -469,6 +458,8 @@ const MenteeRegistration: React.FC = () => {
           setIsModalOpen(false);
         }}
         onAgree={handleModalAgree}
+        isMentor={false}
+        guideUrl="https://docs.google.com/document/d/1gIYte14FIQtqUhGiMErZRovhNErdUrFdQ0LnCFFnfag/"
       />
     </div>
   );

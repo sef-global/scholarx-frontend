@@ -72,9 +72,6 @@ export const MentorApplicationSchema = z.object({
   noOfMentees: z.number().min(0, {
     message: 'Number of mentees must be greater than or equal to 0',
   }),
-  canCommit: z.boolean().refine((val) => val, {
-    message: 'You must mention if you can commit',
-  }),
   mentoredYear: z
     .number({ invalid_type_error: 'Mentored year is required' })
     .or(z.number().min(0))
@@ -100,4 +97,22 @@ export const MenteeCheckInSchema = z.object({
     .string()
     .url('Please provide a valid URL')
     .min(1, 'Please provide a media link'),
+});
+
+export const mentorTermsAgreementModalSchema = z.object({
+  agreed: z.boolean().refine((val) => val, {
+    message: 'You must agree to the ScholarX Mentor Guide 2024',
+  }),
+  canCommit: z.boolean().refine((val) => val, {
+    message: 'You must mention if you can commit',
+  }),
+});
+
+export const menteeTermsAgreementModalSchema = z.object({
+  agreed: z.boolean().refine((val) => val, {
+    message: 'You must agree to the ScholarX Mentee Guide 2024',
+  }),
+  consentGiven: z.boolean().refine((val) => val, {
+    message: 'You must give consent to proceed',
+  }),
 });
