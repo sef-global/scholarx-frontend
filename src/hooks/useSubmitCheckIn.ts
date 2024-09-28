@@ -40,7 +40,8 @@ const useMonthlyCheckIns = (menteeId: string) => {
 
   const { isLoading, error, data, refetch } = useQuery<
     MonthlyCheckIn[],
-    AxiosError
+    AxiosError,
+    MonthlyCheckIn[]
   >({
     queryKey: ['menteeCheckIns', menteeId],
     queryFn: async () => {

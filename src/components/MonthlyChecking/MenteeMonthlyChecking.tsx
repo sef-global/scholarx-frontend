@@ -71,15 +71,18 @@ const MenteeMonthlyChecking: React.FC<MenteeMonthlyCheckingProps> = ({
                   href={link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 hover:text-blue-800 text-md mb-1"
+                  className="text-blue-600 hover:text-blue-800 text-sm mb-1 underline"
                 >
-                  Submission {index + 1}
+                  Click Media Link {index + 1}
                 </a>
               ))}
               <div className="mt-2">
                 <p className="text-sm text-gray-600">
                   Submitted on{' '}
-                  {format(new Date(checkIn.checkInDate), 'MMMM dd, yyyy')}
+                  {format(
+                    new Date(checkIn.checkInDate),
+                    'MMMM dd, yyyy, hh:mm a'
+                  )}
                 </p>
               </div>
             </div>
@@ -105,7 +108,7 @@ const MenteeMonthlyChecking: React.FC<MenteeMonthlyCheckingProps> = ({
                 {checkIn.isCheckedByMentor
                   ? `✓ Checked by mentor on ${format(
                       new Date(checkIn.mentorCheckedDate ?? ''),
-                      'MMM dd, yyyy'
+                      'MMM dd, yyyy, hh:mm a'
                     )}`
                   : '⏳ Pending review'}
               </span>

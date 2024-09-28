@@ -6,6 +6,7 @@ import { MenteeCheckInSchema } from '../../schemas';
 import { useSubmitCheckIn } from '../../hooks/useSubmitCheckIn';
 import closeIcon from '../../assets/svg/closeIcon.svg';
 import Spinner from '../../components/Spinner/Spinner.component';
+import CloseIcon from '../../assets/svg/Icons/CloseIcon';
 
 type MenteeCheckInForm = z.infer<typeof MenteeCheckInSchema>;
 
@@ -167,9 +168,9 @@ const MonthlyCheckInModal: React.FC<{
                       onClick={() => {
                         remove(index);
                       }}
-                      className="ml-2 inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring focus:ring-red-500"
+                      className="ml-2 inline-flex items-center px-1 py-1 border border-transparent text-xs font-medium rounded-sm text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring focus:ring-red-500"
                     >
-                      Remove
+                      <CloseIcon />
                     </button>
                   )}
                 </div>

@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useMentees } from '../../hooks/useMentees';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes, useParams } from 'react-router-dom';
 import MenteeProfile from '../../components/MenteeProfile';
 import UserIcon from '../../assets/svg/Icons/UserIcon';
+import MonthlyCheckInHeader from '../../components/MonthlyChecking/MonthlyCheckingHeader';
+import MentorMonthlyChecking from '../../components/MonthlyChecking/MentorMonthlyChecking';
+import { ApplicationStatus } from '../../enums';
+import { useMonthlyCheckIns } from '../../hooks/useSubmitCheckIn';
+import { Mentee } from '../../types';
 
 const MyMentees: React.FC = () => {
   const { data: menteeApplications } = useMentees();
@@ -18,7 +23,7 @@ const MyMentees: React.FC = () => {
         </h3>
         <div className="h-96 overflow-y-auto md:overflow-y-visible">
           {menteeApplications
-            ?.filter((mentee) => mentee.state !== 'revoked')
+            ?.filter((mentee) => mentee.state !== ApplicationStatus.REVOKED)
             .map((mentee) => (
               <Link
                 key={mentee?.uuid}
@@ -72,8 +77,68 @@ const MyMentees: React.FC = () => {
           </Link>
         </div>
         <Routes>
-          <Route path={'/:menteeId'} element={<MenteeProfile />} />
+          <Route
+            index
+            element={<MenteeList menteeApplications={menteeApplications} />}
+          />
+          <Route path=":menteeId" element={<MenteeDetails />} />
         </Routes>
+      </div>
+    </div>
+  );
+};
+
+const MenteeList: React.FC<{ menteeApplications: Mentee[] }> = ({
+  menteeApplications,
+}) => (
+  <div>
+    <h2 className="text-2xl font-semibold mb-4">
+      Select a mentee to view details
+    </h2>
+    <ul>
+      {menteeApplications?.map((mentee) => (
+        <li key={mentee.uuid} className="mb-2">
+          <Link
+            to={`/mentor/my-mentees/${mentee.uuid}`}
+            className="text-blue-600 hover:text-blue-800"
+          >
+            {mentee.application.firstName} {mentee.application.lastName}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+const MenteeDetails: React.FC = () => {
+  const { menteeId } = useParams<{ menteeId: string }>();
+  const [showGuidelines, setShowGuidelines] = useState(true);
+
+  const toggleGuidelines = () => {
+    setShowGuidelines((prev) => !prev);
+  };
+
+  const {
+    data: checkInHistory = [],
+    isLoading,
+    refetch,
+  } = useMonthlyCheckIns(menteeId ?? '');
+
+  return (
+    <div>
+      <MenteeProfile />
+      <div className="bg-blue-100 rounded-lg p-4 mt-4">
+        <MonthlyCheckInHeader
+          isMentorView={true}
+          toggleGuidelines={toggleGuidelines}
+          showGuidelines={showGuidelines}
+        />
+        <MentorMonthlyChecking
+          menteeId={menteeId ?? ''}
+          checkInHistory={checkInHistory}
+          isLoading={isLoading}
+          refetch={refetch}
+        />
       </div>
     </div>
   );

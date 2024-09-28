@@ -30,20 +30,22 @@ const MonthlyCheckInHeader: React.FC<MonthlyCheckingHeaderProps> = ({
   return (
     <>
       <div className="flex justify-between items-center mb-4 mt-4">
-        <h2 className="text-2xl font-bold text-gray-800">Monthly Check-Ins</h2>
+        <h2 className="text-2xl font-bold text-gray-800">
+          Monthly Check-Ins 📅
+        </h2>
         {!isMentorView && (
           <button
             onClick={openModal}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors duration-300 text-sm font-medium"
+            className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 transition-all duration-300 text-sm font-medium shadow-md hover:shadow-lg"
           >
-            Submit Monthly Check-In
+            Submit Your Monthly Check-In
           </button>
         )}
       </div>
       <div className="p-4 border-b rounded-full border-gray-200">
         <button
           onClick={toggleGuidelines}
-          className="text-blue-600 hover:text-blue-800 font-medium focus:outline-none text-sm flex items-center"
+          className="text-blue-600 hover:text-blue-800 font-medium text-lg focus:outline-none flex items-center"
         >
           {showGuidelines ? (
             <>
@@ -59,9 +61,9 @@ const MonthlyCheckInHeader: React.FC<MonthlyCheckingHeaderProps> = ({
         </button>
       </div>
       {showGuidelines && (
-        <div className="bg-white shadow-md overflow-hidden">
+        <div className="bg-white shadow-md rounded-md overflow-hidden">
           <div className="p-4 bg-blue-50 text-sm">
-            <h3 className="font-semibold text-blue-800 mb-4 text-center text-lg">
+            <h3 className="font-semibold text-blue-800 mb-4 text-center text-lg underline">
               Monthly Check-in Guidelines
             </h3>
             <div className="flex flex-col md:flex-row justify-between">
@@ -104,7 +106,7 @@ const MonthlyCheckInHeader: React.FC<MonthlyCheckingHeaderProps> = ({
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-blue-700">
                   <li>📝 Written: Blogs, Medium</li>
                   <li>🎥 Video: YouTube, Facebook</li>
-                  <li>🎙️ Audio: Podcasts, Anchor</li>
+                  <li>🎙️ Audio: Podcasts, Spotify</li>
                   <li>💻 Code: GitHub repositories</li>
                 </ul>
               </div>

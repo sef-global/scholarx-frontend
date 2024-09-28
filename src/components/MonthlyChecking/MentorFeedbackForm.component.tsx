@@ -83,7 +83,7 @@ const MentorFeedbackForm: React.FC<MentorFeedbackFormProps> = ({
         </label>
         <button
           type="submit"
-          className="px-3 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-colors duration-300 text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500"
+          className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 transition-all duration-300 text-sm font-medium shadow-md hover:shadow-lg"
           disabled={isSubmitting}
         >
           {isSubmitting ? (
