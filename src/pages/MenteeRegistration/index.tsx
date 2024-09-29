@@ -326,14 +326,6 @@ const MenteeRegistration: React.FC = () => {
         {currentStep === 2 && (
           <>
             <div className="text-xl font-medium mb-2">Mentee Application</div>
-            <div className="mb-4">
-              <p>
-                {isMentorLoading &&
-                  `${mentor?.application?.firstName ?? ''} ${
-                    mentor?.application?.lastName ?? ''
-                  }`}
-              </p>
-            </div>
             <FormInput
               type="text"
               placeholder=""
