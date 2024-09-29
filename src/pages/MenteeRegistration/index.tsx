@@ -327,9 +327,6 @@ const MenteeRegistration: React.FC = () => {
           <>
             <div className="text-xl font-medium mb-2">Mentee Application</div>
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-600">
-                Mentor
-              </label>
               <p>
                 {isMentorLoading &&
                   `${mentor?.application?.firstName ?? ''} ${
