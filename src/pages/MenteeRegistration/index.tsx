@@ -11,7 +11,6 @@ import { API_URL } from '../../constants';
 import useProfile from '../../hooks/useProfile';
 import { MenteeApplicationSchema } from '../../schemas';
 import { MenteeApplication } from '../../types';
-import useMentor from '../../hooks/useMentor';
 
 const steps = [
   {
@@ -52,7 +51,6 @@ const MenteeRegistration: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [image, setImage] = useState<File | null>(null);
   const [profilePic, setProfilePic] = useState(user?.image_url);
-  const { data: mentor, isLoading: isMentorLoading } = useMentor(mentorId);
 
   const handleProfilePicChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files != null) {
@@ -326,17 +324,6 @@ const MenteeRegistration: React.FC = () => {
         {currentStep === 2 && (
           <>
             <div className="text-xl font-medium mb-2">Mentee Application</div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-600">
-                Mentor
-              </label>
-              <p>
-                {isMentorLoading &&
-                  `${mentor?.application?.firstName ?? ''} ${
-                    mentor?.application?.lastName ?? ''
-                  }`}
-              </p>
-            </div>
             <FormInput
               type="text"
               placeholder=""
