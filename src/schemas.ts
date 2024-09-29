@@ -103,7 +103,7 @@ export const MenteeCheckInSchema = z.object({
 
 export const mentorTermsAgreementModalSchema = z.object({
   agreed: z.boolean().refine((val) => val, {
-    message: 'You must agree to the ScholarX Mentor Guide 2024',
+    message: 'You must agree to the ScholarX Mentor Guide',
   }),
   canCommit: z.boolean().refine((val) => val, {
     message: 'You must mention if you can commit',
@@ -112,7 +112,7 @@ export const mentorTermsAgreementModalSchema = z.object({
 
 export const menteeTermsAgreementModalSchema = z.object({
   agreed: z.boolean().refine((val) => val, {
-    message: 'You must agree to the ScholarX Mentee Guide 2024',
+    message: 'You must agree to the ScholarX Mentee Guide',
   }),
   consentGiven: z.boolean().refine((val) => val, {
     message: 'You must give consent to proceed',

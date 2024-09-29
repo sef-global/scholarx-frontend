@@ -112,12 +112,12 @@ const TermsAgreementModal: React.FC<TermsAgreementModalProps> = ({
                   className="form-checkbox h-4 w-4 text-blue-600 flex-shrink-0 mt-1"
                 />
                 <span className="text-md">
-                  I have read and agree to the ScholarX {guideType} Guide 2024
+                  I have read and agree to the ScholarX {guideType} Guide
                 </span>
               </label>
               {errors.agreed && (
                 <p className="text-red-500 text-sm ml-6">
-                  {errors.agreed.message as string}
+                  {errors.agreed.message}
                 </p>
               )}
 
@@ -135,10 +135,7 @@ const TermsAgreementModal: React.FC<TermsAgreementModalProps> = ({
               </label>
               {(errors.canCommit ?? errors.consentGiven) && (
                 <p className="text-red-500 text-sm ml-6">
-                  {
-                    (errors.canCommit?.message ??
-                      errors.consentGiven?.message) as string
-                  }
+                  {errors.canCommit?.message ?? errors.consentGiven?.message}
                 </p>
               )}
             </div>
