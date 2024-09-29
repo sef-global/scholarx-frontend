@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ArrowRightIcon from '../../assets/svg/Icons/ArrowRightIcon';
 import ArrowDownIcon from '../../assets/svg/Icons/ArrowDownIcon';
-import MonthlyCheckInModal from '../../pages/MenteeCheckIn/MenteeCheckIn.component';
+import MonthlyCheckInModal from '../MenteeCheckIn/MenteeCheckIn.component';
 
 interface MonthlyCheckingHeaderProps {
   isMentorView: boolean;
@@ -95,6 +95,7 @@ const MonthlyCheckInHeader: React.FC<MonthlyCheckingHeaderProps> = ({
                         Include links to your media submissions in the monthly
                         check-ins.
                       </li>
+                      <li>Share your progress on social media and tag us.</li>
                     </>
                   )}
                 </ul>

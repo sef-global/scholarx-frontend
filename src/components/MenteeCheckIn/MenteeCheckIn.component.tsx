@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { MenteeCheckInSchema } from '../../schemas';
 import { useSubmitCheckIn } from '../../hooks/useSubmitCheckIn';
 import closeIcon from '../../assets/svg/closeIcon.svg';
-import Spinner from '../../components/Spinner/Spinner.component';
+import Spinner from '../Spinner/Spinner.component';
 import CloseIcon from '../../assets/svg/Icons/CloseIcon';
 
 type MenteeCheckInForm = z.infer<typeof MenteeCheckInSchema>;
@@ -150,11 +150,11 @@ const MonthlyCheckInModal: React.FC<{
               </label>
               <p className="text-xs text-gray-500"></p>
               <p className="text-xs text-gray-500">
-                Provide links to any relevant media content. A minimum of three
-                submissions are required.
+                Provide links to any relevant media content. Maximum of 3 links
+                in per check-in.
               </p>
               {fields.map((field, index) => (
-                <div key={field.id} className="flex items-center mt-2">
+                <div key={field.id} className="flex items-center mt-1">
                   <input
                     {...register(`mediaContentLinks.${index}`)}
                     placeholder="Link"

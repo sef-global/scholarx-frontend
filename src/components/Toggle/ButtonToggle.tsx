@@ -34,7 +34,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
         (useNotificationBadge ? (
           <NotificationBadge count={badgeCount} className="ml-2" />
         ) : (
-          <span className=" bg-blue-100 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded-full">
+          <span className="bg-blue-200 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded-full">
             {badgeCount > 99 ? '99+' : `(${badgeCount})`}
           </span>
         ))}
