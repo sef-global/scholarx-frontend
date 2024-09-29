@@ -51,13 +51,6 @@ const MyMentees: React.FC = () => {
               {mentee.application.firstName} {mentee.application.lastName}
             </p>
           </div>
-          <p className="text-sm text-gray-600">
-            {mentee.application.isUndergrad
-              ? mentee.application.university
-              : `${mentee.application.position ?? ''}, ${
-                  mentee.application.company ?? ''
-                }`}
-          </p>
         </div>
       </div>
     </Link>

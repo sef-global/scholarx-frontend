@@ -17,6 +17,7 @@ import MenteeApplications from './pages/MenteeApplicationsView/MenteeApplication
 import { LoginModalProvider } from './contexts/LoginModalContext.tsx';
 import PasswordReset from './pages/PasswordReset/index.tsx';
 import MenteeProfile from './pages/MenteeProfile/MenteeProfile.component.tsx';
+import AdminMenteeView from './components/MonthlyChecking/AdminMenteeView.tsx';
 
 const queryClient = new QueryClient();
 
@@ -38,6 +39,11 @@ const App: React.FC = () => {
                   element={<MenteeRegistration />}
                 />
                 <Route path="/admin/dashboard/*" element={<Dashboard />} />
+                <Route
+                  path="admin/dashboard/ongoing-mentorship-programs/*"
+                  element={<AdminMenteeView />}
+                />{' '}
+                {/* New route */}
                 <Route
                   path="/mentor/dashboard"
                   element={<MenteeApplications />}

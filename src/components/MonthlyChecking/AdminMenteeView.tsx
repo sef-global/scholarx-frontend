@@ -1,15 +1,14 @@
 import React from 'react';
-import { useMentees } from '../../../../hooks/useMentees';
-import { Routes, Route, useParams } from 'react-router';
-import { Link } from 'react-router-dom';
-import UserIcon from '../../../../assets/svg/Icons/UserIcon';
-import MentorMonthlyChecking from '../../../../components/MonthlyChecking/MentorMonthlyChecking';
-import { ApplicationStatus } from '../../../../enums';
-import { useMonthlyCheckIns } from '../../../../hooks/useSubmitCheckIn';
-import { Mentee } from '../../../../types';
-import MenteeProfile from '../../../MenteeProfile/MenteeProfile.component';
+import { useMentees } from '../../hooks/useMentees';
+import { Link, Route, Routes, useParams } from 'react-router-dom';
+import MenteeProfile from '../../components/MenteeProfile';
+import UserIcon from '../../assets/svg/Icons/UserIcon';
+import MentorMonthlyChecking from '../../components/MonthlyChecking/MentorMonthlyChecking';
+import { ApplicationStatus } from '../../enums';
+import { useMonthlyCheckIns } from '../../hooks/useSubmitCheckIn';
+import { Mentee } from '../../types';
 
-const OngoingMentorshipPrograms: React.FC = () => {
+const AdminMenteeView: React.FC = () => {
   const { data: mentees } = useMentees();
 
   const approvedMentees =
@@ -91,4 +90,4 @@ const AdminMenteeDetails: React.FC = () => {
   );
 };
 
-export default OngoingMentorshipPrograms;
+export default AdminMenteeView;
