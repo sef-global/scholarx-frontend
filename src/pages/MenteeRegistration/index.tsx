@@ -11,7 +11,6 @@ import { API_URL } from '../../constants';
 import useProfile from '../../hooks/useProfile';
 import { MenteeApplicationSchema } from '../../schemas';
 import { MenteeApplication } from '../../types';
-import useMentor from '../../hooks/useMentor';
 
 const steps = [
   {
