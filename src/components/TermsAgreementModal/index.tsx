@@ -68,7 +68,7 @@ const TermsAgreementModal: React.FC<TermsAgreementModalProps> = ({
 
             <div className="flex items-center relative">
               <p className="text-md font-semibold mt-4 mb-1 text-gray-900">
-                ScholarX {guideType} Guide 2024
+                ScholarX {guideType} Guide
               </p>
               <div className="flex items-center justify-center absolute left-[14.2rem] top-[18.5px]">
                 <Tooltip content={`Open ${guideType} Guide`} isVisible={true}>
