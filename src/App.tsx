@@ -17,7 +17,6 @@ import MenteeApplications from './pages/MenteeApplicationsView/MenteeApplication
 import { LoginModalProvider } from './contexts/LoginModalContext.tsx';
 import PasswordReset from './pages/PasswordReset/index.tsx';
 import MenteeProfile from './pages/MenteeProfile/MenteeProfile.component.tsx';
-import MenteeCheckIn from './pages/MenteeCheckIn/MenteeCheckIn.component.tsx';
 
 const queryClient = new QueryClient();
 

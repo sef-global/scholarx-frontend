@@ -127,7 +127,7 @@ const MenteeDetails: React.FC = () => {
   return (
     <div>
       <MenteeProfile />
-      <div className="bg-blue-100 rounded-lg p-4 mt-4">
+      <div className="bg-blue-100 rounded-lg p-4 mt-4 mb-4">
         <MonthlyCheckInHeader
           isMentorView={true}
           toggleGuidelines={toggleGuidelines}

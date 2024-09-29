@@ -3,10 +3,9 @@ import MentorFeedbackForm from './MentorFeedbackForm.component';
 import { MonthlyCheckIn } from '../../types';
 import Spinner from '../Spinner/Spinner.component';
 import NoCheckInsIcon from '../../assets/svg/Icons/NoCheckInsIcon';
-import HistoryToggle from '../HistoryToggle';
-import NewSubmissionsIcon from '../../assets/svg/Icons/NewSubmissionsIcon';
+import HistoryToggle from '../Toggle/HistoryToggle';
 import { formatDate } from '../../utils';
-import NotificationBadge from '../NotificationBadge';
+import NewSubmissionsToggle from '../Toggle/NewSubmissionToggle';
 
 interface MentorMonthlyCheckingProps {
   menteeId: string;
@@ -25,6 +24,7 @@ const MentorMonthlyChecking: React.FC<MentorMonthlyCheckingProps> = ({
     Record<string, boolean>
   >({});
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [isNewSubmissionOpen, setNewSubmissionOpen] = useState(false);
 
   const handleFeedbackSubmit = async (checkInId: string) => {
     setSubmittingFeedback((prev) => ({ ...prev, [checkInId]: true }));
@@ -146,33 +146,43 @@ const MentorMonthlyChecking: React.FC<MentorMonthlyCheckingProps> = ({
 
     return (
       <div className="space-y-8">
-        <div>
-          <h2 className="text-xl font-bold text-gray-900 mb-4 mt-4 flex items-center">
-            <NewSubmissionsIcon className="w-6 h-6 mr-2 text-blue-600" />
-            New Submissions
-            <NotificationBadge count={checkedCheckIns.length} />
-          </h2>
-          <div className="bg-white shadow overflow-hidden rounded-md sm:rounded-md">
-            {uncheckedCheckIns.length > 0 ? (
-              uncheckedCheckIns.map((checkIn) => renderCheckIn(checkIn, false))
-            ) : (
-              <p className="p-4 text-gray-600">No new submissions to review.</p>
-            )}
+        <NewSubmissionsToggle
+          isNewSubmissionOpen={isNewSubmissionOpen}
+          toggleNewSubmission={() => {
+            setNewSubmissionOpen(!isNewSubmissionOpen);
+          }}
+          newSubmissionsCount={uncheckedCheckIns.length}
+        />
+
+        {isNewSubmissionOpen && (
+          <div>
+            <div className="bg-white mt-8 shadow overflow-hidden rounded-md sm:rounded-md">
+              {uncheckedCheckIns.length > 0 ? (
+                uncheckedCheckIns.map((checkIn) =>
+                  renderCheckIn(checkIn, false)
+                )
+              ) : (
+                <div className="text-center py-8">
+                  <NoCheckInsIcon />
+                  <p className="text-gray-600">
+                    Your mentee has not submitted new monthly check-ins yet.
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
         <HistoryToggle
           isHistoryOpen={isHistoryOpen}
           toggleHistory={() => {
             setIsHistoryOpen(!isHistoryOpen);
           }}
+          checkingCount={checkedCheckIns.length}
         />
 
         {isHistoryOpen && (
           <div>
-            <h2 className="text-xl font-bold text-gray-900 mb-4">
-              Check-in History
-            </h2>
             <div className="bg-white shadow overflow-hidden sm:rounded-md">
               {checkedCheckIns.length > 0 ? (
                 checkedCheckIns.map((checkIn) => renderCheckIn(checkIn, true))

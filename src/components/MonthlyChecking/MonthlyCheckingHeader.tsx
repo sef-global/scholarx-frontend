@@ -42,7 +42,7 @@ const MonthlyCheckInHeader: React.FC<MonthlyCheckingHeaderProps> = ({
           </button>
         )}
       </div>
-      <div className="p-4 border-b rounded-full border-gray-200">
+      <div className="mb-4">
         <button
           onClick={toggleGuidelines}
           className="text-blue-600 hover:text-blue-800 font-medium text-lg focus:outline-none flex items-center"
@@ -61,7 +61,7 @@ const MonthlyCheckInHeader: React.FC<MonthlyCheckingHeaderProps> = ({
         </button>
       </div>
       {showGuidelines && (
-        <div className="bg-white shadow-md rounded-md overflow-hidden">
+        <div className="bg-white shadow-md rounded-md overflow-hidden mb-10">
           <div className="p-4 bg-blue-50 text-sm">
             <h3 className="font-semibold text-blue-800 mb-4 text-center text-lg underline">
               Monthly Check-in Guidelines
