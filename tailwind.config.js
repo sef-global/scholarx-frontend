@@ -5,6 +5,7 @@ export const theme = {
     colors: {
       'primary-blue': '#1677FF',
       'darkmod-blue': '#3D317C',
+      'light-gray': '#D1D5DB',
     },
     animation: {
       'skeleton': 'skeleton-loading 1.5s infinite',
@@ -15,8 +16,8 @@ export const theme = {
         '100%': { backgroundPosition: '-100% 0' },
       },
     },
-    spacing: {
-      '2px': '2px', 
+    borderRadius: {
+      'custom-5': '5px',
     },
   },
 };

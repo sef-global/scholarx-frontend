@@ -5,9 +5,10 @@ const ProfilePic: React.FC<{
   src: string | undefined;
   alt: string;
   size: string;
+  width?: string;
   availability?: boolean;
-  circular?: boolean; // Add circular prop
-}> = ({ src, alt, size, availability = true, circular = true }) => { // Default circular to true
+  circular?: boolean; 
+}> = ({ src, alt, size, width, availability = true, circular = true }) => { 
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
@@ -20,21 +21,23 @@ const ProfilePic: React.FC<{
     setIsLoading(false);
   };
 
+  const appliedWidth = width || size;
+  
   return (
     <div
-      className="relative inline-block mt-2px"
-      style={{ height: size, width: size }}
+      className="relative inline-block"
+      style={{ height: size, width: appliedWidth }}
     >
       {isLoading && !isError && (
         <div
-          className={`absolute inset-0 bg-gray-200 animate-skeleton bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%] ${circular ? 'rounded-full' : 'rounded-lg'}`} // Conditional rounded class
-          style={{ height: size, width: size }}
+          className={`absolute inset-0 bg-gray-200 animate-skeleton bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%] ${circular ? 'rounded-full' : 'rounded-custom-5'}`} // Conditional rounded class
+          style={{ height: size, width: appliedWidth }}
         />
       )}
       {isError ? (
         <div
-          className={`inline-block bg-gray-200 ring-2 ring-white flex items-center justify-center ${circular ? 'rounded-full' : 'rounded-lg'}`} // Conditional rounded class
-          style={{ height: size, width: size }}
+          className={`inline-block bg-gray-200 ring-2 ring-white flex items-center justify-center ${circular ? 'rounded-full' : 'rounded-custom-5'}`} // Conditional rounded class
+          style={{ height: size, width: appliedWidth }}
         >
           <UserIcon />
         </div>
@@ -42,13 +45,14 @@ const ProfilePic: React.FC<{
         <img
           src={src}
           alt={alt}
-          className={`inline-block ring-2 ring-white object-cover ${circular ? 'rounded-full' : 'rounded-lg'} ${
+          className={`inline-block ring-2 ring-white object-cover ${circular ? 'rounded-full' : 'rounded-custom-5'} ${
             !availability ? 'opacity-60' : ''
-          }`} // Conditional rounded class
-          style={{ height: size, width: size }}
+          } max-w-full`} 
+          style={{ height: size, width: appliedWidth }}
           referrerPolicy="no-referrer"
           onLoad={handleImageLoad}
           onError={handleImageError}
+          
         />
       )}
     </div>
