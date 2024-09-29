@@ -47,9 +47,11 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
+            node -v
             cd scholarx-frontend
             git pull
             npm install
             npm run build
+            echo "build successful"
             sudo cp -r dist/* /var/www/scholarx/
             sudo systemctl restart nginx
