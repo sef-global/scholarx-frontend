@@ -40,6 +40,7 @@ export const MenteeApplicationSchema = z.object({
   submission: z
     .string()
     .url({ message: 'Please submit a valid video submission' }),
+  consentGiven: z.boolean().optional(),
 });
 
 export const MentorApplicationSchema = z.object({
@@ -88,6 +89,7 @@ export const MentorApplicationSchema = z.object({
     .url({ message: 'Invalid website URL' })
     .optional()
     .or(z.literal('')),
+  canCommit: z.boolean().optional(),
 });
 
 export const MenteeCheckInSchema = z.object({

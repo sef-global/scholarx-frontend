@@ -164,7 +164,6 @@ const MentorRegistrationPage: React.FC = () => {
       }
     } catch (error) {
       console.error('Error submitting application:', error);
-      // Handle validation errors here if needed
     } finally {
       setIsSubmitting(false);
     }
