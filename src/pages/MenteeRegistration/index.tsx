@@ -52,7 +52,6 @@ const MenteeRegistration: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [image, setImage] = useState<File | null>(null);
   const [profilePic, setProfilePic] = useState(user?.image_url);
-  const { data: mentor, isLoading: isMentorLoading } = useMentor(mentorId);
 
   const handleProfilePicChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files != null) {
