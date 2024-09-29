@@ -21,7 +21,7 @@ const ProfilePic: React.FC<{
     setIsLoading(false);
   };
 
-  const appliedWidth = width || size;
+  const appliedWidth = width ?? size;
 
   return (
     <div
