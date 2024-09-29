@@ -6,7 +6,7 @@ import Navbar from './Navbar';
 const MainLayout = ({ children }: PropsWithChildren) => (
   <>
     <Navbar />
-    <section className="min-h-[80vh] p-4 container mx-auto mt-32 lg:mt-16">
+    <section className="min-h-[80vh] p-4 container mx-auto mt-16">
       {children}
     </section>
     <Footer />
