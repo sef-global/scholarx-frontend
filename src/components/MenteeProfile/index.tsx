@@ -1,6 +1,5 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-
 import { ApplicationStatus } from '../../enums';
 import useMentee from '../../hooks/useMentee';
 import { useMentees } from '../../hooks/useMentees';

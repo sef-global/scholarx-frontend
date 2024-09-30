@@ -6,6 +6,7 @@ import useMentee from '../../hooks/admin/useMentee';
 import Toast from '../Toast';
 import { ApplicationStatus } from '../../enums';
 import ActionButtons from '../ActionButtons';
+import MentorCardHorizontal from '../MentorCardHorizontal/MentorCardHorizontal.component';
 
 const MenteeApplication: React.FC = () => {
   const { menteeId } = useParams();
@@ -137,31 +138,9 @@ const MenteeApplication: React.FC = () => {
             <div className="col-span-3">
               <div className="mb-4">
                 <h3 className="text-base font-bold">Applied Mentor</h3>
-                {/* TODO: Make this a spearate component */}
-                <div className="rounded-xl border-2 mt-2 border-gray-100 bg-white flex items-start gap-4 p-4">
-                  <img
-                    src={mentee?.mentor.profile.image_url}
-                    className="w-14 h-14 rounded-full object-cover"
-                    alt=""
-                  />
-                  <div>
-                    <h3 className="font-medium sm:text-lg">
-                      <a
-                        href="#"
-                        className="hover:underline"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {mentee?.mentor.application.firstName}{' '}
-                        {mentee?.mentor.application.lastName}
-                      </a>
-                    </h3>
-                    <p className="line-clamp-2 text-sm text-gray-700">
-                      {mentee?.mentor.application.position},{' '}
-                      {mentee?.mentor.application.institution}
-                    </p>
-                  </div>
-                </div>
+                <MentorCardHorizontal
+                  mentor={mentee?.mentor}>
+                </MentorCardHorizontal>
               </div>
             </div>
           </div>
