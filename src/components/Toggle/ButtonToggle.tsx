@@ -1,12 +1,13 @@
 import React, { ReactElement } from 'react';
 import NotificationBadge from '../NotificationBadge';
+import ArrowDownIcon from '../../assets/svg/Icons/ArrowDownIcon';
+import ArrowRightIcon from '../../assets/svg/Icons/ArrowRightIcon';
 
 interface ToggleButtonProps {
   isOpen: boolean;
   toggle: () => void;
-  icon: ReactElement;
-  openText: string;
-  closedText: string;
+  icon?: ReactElement;
+  text: string;
   badgeCount?: number;
   useNotificationBadge?: boolean;
 }
@@ -14,9 +15,7 @@ interface ToggleButtonProps {
 const ToggleButton: React.FC<ToggleButtonProps> = ({
   isOpen,
   toggle,
-  icon,
-  openText,
-  closedText,
+  text,
   badgeCount,
   useNotificationBadge = false,
 }) => (
@@ -25,27 +24,27 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
     className="flex items-center justify-between w-full text-left text-xl font-bold text-gray-900 mb-4 focus:outline-none hover:text-blue-600 transition-colors duration-200"
   >
     <span className="flex items-center">
-      {React.cloneElement(icon, {
-        className: `w-6 h-6 mr-2 ${isOpen ? 'transform rotate-180' : ''}`,
-      })}
-      {isOpen ? openText : closedText}
+      {text}
       {badgeCount !== undefined &&
         badgeCount >= 0 &&
         (useNotificationBadge ? (
           <NotificationBadge count={badgeCount} className="ml-2" />
         ) : (
-          <span className="bg-blue-200 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded-full">
+          <span className="bg-blue-200 text-blue-800 text-sm font-medium px-2.5 py-0.5 ml-2 rounded-full">
             {badgeCount > 99 ? '99+' : `(${badgeCount})`}
           </span>
         ))}
     </span>
-    <span
-      className={`transform transition-transform duration-200 ${
-        isOpen ? 'rotate-180' : ''
-      }`}
-    >
-      ▼
-    </span>
+
+    {isOpen ? (
+      <>
+        <ArrowDownIcon />
+      </>
+    ) : (
+      <>
+        <ArrowRightIcon />
+      </>
+    )}
   </button>
 );
 

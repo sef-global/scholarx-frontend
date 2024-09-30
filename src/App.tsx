@@ -13,11 +13,9 @@ import MyMentees from './pages/MyMentees/MyMentees.component.tsx';
 import EditProfileForm from './pages/EditProfileForm/EditProfileForm.component.tsx';
 import MenteeDashboard from './pages/MenteeDashboard';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import MenteeApplications from './pages/MenteeApplicationsView/MenteeApplications.component.tsx';
 import { LoginModalProvider } from './contexts/LoginModalContext.tsx';
 import PasswordReset from './pages/PasswordReset/index.tsx';
 import MenteeProfile from './pages/MenteeProfile/MenteeProfile.component.tsx';
-import AdminMenteeView from './components/MonthlyChecking/AdminMenteeView.tsx';
 
 const queryClient = new QueryClient();
 
@@ -39,24 +37,12 @@ const App: React.FC = () => {
                   element={<MenteeRegistration />}
                 />
                 <Route path="/admin/dashboard/*" element={<Dashboard />} />
-                <Route
-                  path="admin/dashboard/ongoing-mentorship-programs/*"
-                  element={<AdminMenteeView />}
-                />{' '}
-                {/* New route */}
-                <Route
-                  path="/mentor/dashboard"
-                  element={<MenteeApplications />}
-                />
+                <Route path="/mentor/dashboard/*" element={<MyMentees />} />
                 <Route path="/mentee/dashboard" element={<MenteeDashboard />} />
-                <Route path="/mentor/my-mentees/*" element={<MyMentees />} />
                 <Route path="/mentors" element={<Mentors />} />
                 <Route path="/mentors/:mentorId" element={<MentorProfile />} />
                 <Route path="/mentees/:menteeId" element={<MenteeProfile />} />
-                {/* <Route
-                  path="/mentee/mentee-checkin"
-                  element={<MenteeCheckIn />}
-                /> */}
+
                 <Route path="/settings" element={<EditProfileForm />} />
                 <Route path="/resetpassword" element={<PasswordReset />} />
               </Routes>

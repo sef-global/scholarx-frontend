@@ -158,9 +158,7 @@ const MonthlyCheckInModal: React.FC<{
                   <input
                     {...register(`mediaContentLinks.${index}`)}
                     placeholder="Link"
-                    className={`block w-full border ${
-                      index > 2 ? 'border-red-500' : 'border-gray-300'
-                    } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
+                    className={`block w-full border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
                   />
                   {index >= 0 && (
                     <button
@@ -168,25 +166,22 @@ const MonthlyCheckInModal: React.FC<{
                       onClick={() => {
                         remove(index);
                       }}
-                      className="ml-2 inline-flex items-center px-1 py-1 border border-transparent text-xs font-medium rounded-sm text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring focus:ring-red-500"
+                      className="ml-2 inline-flex items-center px-1 py-1 border border-transparent text-xs font-medium rounded-md bg-red-100 hover:bg-red-200 focus:outline-none focus:ring"
                     >
                       <CloseIcon />
                     </button>
                   )}
                 </div>
               ))}
-              {fields.length < 3 && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    append('');
-                  }}
-                  className="mt-2 inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring focus:ring-blue-500"
-                  disabled={fields.length >= 3}
-                >
-                  Add Link
-                </button>
-              )}
+              <button
+                type="button"
+                onClick={() => {
+                  append('');
+                }}
+                className="mt-2 inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring focus:ring-blue-500"
+              >
+                Add Link
+              </button>
               {errors.mediaContentLinks && (
                 <p className="text-red-500 text-xs mt-1">
                   {errors.mediaContentLinks.message}

@@ -1,4 +1,3 @@
-import { check } from 'prettier';
 import { z } from 'zod';
 
 export const MenteeApplicationSchema = z.object({
@@ -111,7 +110,7 @@ export const MenteeCheckInSchema = z.object({
 export const MentorFeedbackSchema = z.object({
   menteeId: z.string().min(1, 'Mentee ID is required'),
   checkInId: z.string().min(1, 'Check-in ID is required'),
-  mentorFeedback: z.string().min(5, 'Your Feedback is required'),
+  mentorFeedback: z.string().optional(),
   isCheckedByMentor: z.literal(true, {
     errorMap: () => ({ message: 'You must mark this as checked' }),
   }),

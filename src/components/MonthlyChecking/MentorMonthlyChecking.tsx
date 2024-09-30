@@ -12,6 +12,7 @@ interface MentorMonthlyCheckingProps {
   checkInHistory: MonthlyCheckIn[];
   isLoading: boolean;
   refetch: () => Promise<unknown>;
+  isAdmin?: boolean;
 }
 
 const MentorMonthlyChecking: React.FC<MentorMonthlyCheckingProps> = ({
@@ -19,6 +20,7 @@ const MentorMonthlyChecking: React.FC<MentorMonthlyCheckingProps> = ({
   checkInHistory,
   isLoading,
   refetch,
+  isAdmin,
 }) => {
   const [submittingFeedback, setSubmittingFeedback] = useState<
     Record<string, boolean>
@@ -46,8 +48,8 @@ const MentorMonthlyChecking: React.FC<MentorMonthlyCheckingProps> = ({
     >
       <div className="flex justify-between items-start">
         <div>
-          <h4 className="text-lg font-medium text-gray-700 mt-2 mb-4">
-            Month: {checkIn.title}
+          <h4 className="text-lg font-medium text-gray-700 mt-2 mb-4 bg-blue-100 p-2 rounded w-48 h-12 flex items-center justify-center">
+            {checkIn.title}
           </h4>
           <div className="mt-2">
             <h4 className="font-medium text-gray-700">General Updates:</h4>
@@ -65,9 +67,7 @@ const MentorMonthlyChecking: React.FC<MentorMonthlyCheckingProps> = ({
           </div>
         </div>
         <div className="flex flex-col items-end">
-          <h4 className="font-medium text-gray-700">
-            Mentee&apos;s Submissions
-          </h4>
+          <h4 className="font-medium text-gray-700">Media Submissions</h4>
           {checkIn.mediaContentLinks.map((link, index) => (
             <a
               key={index}
@@ -81,7 +81,7 @@ const MentorMonthlyChecking: React.FC<MentorMonthlyCheckingProps> = ({
           ))}
           <div className="mt-2">
             <p className="text-sm text-gray-600">
-              Mentee Submitted on {formatDate(checkIn.checkInDate)}
+              Submitted on {formatDate(checkIn.checkInDate)}
             </p>
           </div>
         </div>
@@ -91,13 +91,13 @@ const MentorMonthlyChecking: React.FC<MentorMonthlyCheckingProps> = ({
         {isHistory ? (
           <div className="bg-green-50 p-3 rounded-md">
             <p className="mt-2 text-lg text-gray-600 font-bold p-1 rounded">
-              Your Given Feedback:
+              Given Feedback:
             </p>
             <p className="mt-2 text-md text-gray-600">
               {checkIn.mentorFeedback}
             </p>
             <p className="text-sm text-green-600 text-right">
-              ✓ Checked by you on {formatDate(checkIn.mentorCheckedDate)}
+              ✓ Checked by on {formatDate(checkIn.mentorCheckedDate)}
             </p>
           </div>
         ) : (
@@ -107,13 +107,15 @@ const MentorMonthlyChecking: React.FC<MentorMonthlyCheckingProps> = ({
                 <Spinner />
               </div>
             ) : (
-              <MentorFeedbackForm
-                menteeId={menteeId}
-                checkInId={checkIn.uuid}
-                onSubmit={async () => {
-                  await handleFeedbackSubmit(checkIn.uuid);
-                }}
-              />
+              !isAdmin && (
+                <MentorFeedbackForm
+                  menteeId={menteeId}
+                  checkInId={checkIn.uuid}
+                  onSubmit={async () => {
+                    await handleFeedbackSubmit(checkIn.uuid);
+                  }}
+                />
+              )
             )}
           </>
         )}
@@ -138,7 +140,7 @@ const MentorMonthlyChecking: React.FC<MentorMonthlyCheckingProps> = ({
             No Check-ins Found
           </h3>
           <p className="text-gray-600">
-            Your mentee has not submitted any monthly check-ins yet.
+            Mentee has not submitted any monthly check-ins yet.
           </p>
         </div>
       );
@@ -165,7 +167,7 @@ const MentorMonthlyChecking: React.FC<MentorMonthlyCheckingProps> = ({
                 <div className="text-center py-8">
                   <NoCheckInsIcon />
                   <p className="text-gray-600">
-                    Your mentee has not submitted new monthly check-ins yet.
+                    Mentee has not submitted new monthly check-ins yet.
                   </p>
                 </div>
               )}

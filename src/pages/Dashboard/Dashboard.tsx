@@ -70,7 +70,7 @@ const Dashboard: React.FC = () => {
             element={<MenteeApplicationPage />}
           />
           <Route
-            path="/ongoing-mentorship-programs"
+            path="/ongoing-mentorship-programs/*"
             element={<OngoingMentorshipPrograms />}
           />
           <Route path="/manage-users" element={<ManageUsers />} />

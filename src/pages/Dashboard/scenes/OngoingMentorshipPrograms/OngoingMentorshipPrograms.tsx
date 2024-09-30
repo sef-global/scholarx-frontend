@@ -79,12 +79,15 @@ const AdminMenteeDetails: React.FC = () => {
   return (
     <div>
       <MenteeProfile />
+      <hr className="w-full pb-10 mt-10" />
+      <h2 className="text-xl font-bold text-gray-800">Monthly Check-Ins</h2>
       <div className="bg-blue-100 rounded-lg p-4 mt-4 mb-4">
         <MentorMonthlyChecking
           menteeId={menteeId ?? ''}
           checkInHistory={checkInHistory}
           isLoading={isLoading}
           refetch={refetch}
+          isAdmin={true}
         />
       </div>
     </div>

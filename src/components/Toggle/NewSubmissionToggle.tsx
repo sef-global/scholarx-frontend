@@ -17,8 +17,7 @@ const NewSubmissionsToggle: React.FC<NewSubmissionsToggleProps> = ({
     isOpen={isNewSubmissionOpen}
     toggle={toggleNewSubmission}
     icon={<NewSubmissionsIcon />}
-    openText="Hide New Submissions"
-    closedText="New Submissions"
+    text="New Submissions"
     badgeCount={newSubmissionsCount}
     useNotificationBadge={true}
   />

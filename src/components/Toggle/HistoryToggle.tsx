@@ -1,5 +1,4 @@
 import React from 'react';
-import HistoryClockIcon from '../../assets/svg/Icons/HistoryClockIcon';
 import ToggleButton from './ButtonToggle';
 
 interface HistoryToggleProps {
@@ -16,9 +15,7 @@ const HistoryToggle: React.FC<HistoryToggleProps> = ({
   <ToggleButton
     isOpen={isHistoryOpen}
     toggle={toggleHistory}
-    icon={<HistoryClockIcon />}
-    openText="Hide Feedback History"
-    closedText="Feedback History"
+    text="Submissions History"
     useNotificationBadge={false}
     badgeCount={checkingCount}
   />

@@ -59,7 +59,7 @@ const MentorFeedbackForm: React.FC<MentorFeedbackFormProps> = ({
       <textarea
         {...register('mentorFeedback')}
         className="w-full p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-        placeholder="Add feedback for your mentee"
+        placeholder="Add feedback for your mentee (optional)"
       ></textarea>
       {errors.mentorFeedback && (
         <div className="text-red-600 text-sm mt-1">
@@ -83,7 +83,7 @@ const MentorFeedbackForm: React.FC<MentorFeedbackFormProps> = ({
         </label>
         <button
           type="submit"
-          className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 transition-all duration-300 text-sm font-medium shadow-md hover:shadow-lg"
+          className="px-4 py-2 bg-blue-500  text-white rounded-full focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-all duration-300 text-sm font-medium shadow-md hover:shadow-lg"
           disabled={isSubmitting}
         >
           {isSubmitting ? (

@@ -16,20 +16,24 @@ const MyMentees: React.FC = () => {
     ApplicationStatus.APPROVED
   );
 
+  const [isMenteeSelected, setIsMenteeSelected] = useState(false);
+
   const filteredApplications =
     menteeApplications?.filter((mentee) => mentee.state === activeTab) || [];
 
   const tabData = [
     { status: ApplicationStatus.APPROVED, label: 'Approved' },
     { status: ApplicationStatus.PENDING, label: 'Pending' },
-    { status: ApplicationStatus.REJECTED, label: 'Rejected' },
   ];
 
   const renderMenteeLink = (mentee: Mentee) => (
     <Link
       key={mentee.uuid}
       className="bg-white border-sky-100 rounded border p-2 text-black flex items-center cursor-pointer mb-2 hover:bg-gray-50 transition-colors duration-200"
-      to={`/mentor/my-mentees/${mentee.uuid}`}
+      to={`/mentor/dashboard/${mentee.uuid}`}
+      onClick={() => {
+        setIsMenteeSelected(true);
+      }}
     >
       <div className="flex items-center w-full">
         <div className="flex-shrink-0 mr-3">
@@ -76,7 +80,7 @@ const MyMentees: React.FC = () => {
               }}
             >
               <span>{tab.label}</span>
-              <span className="px-1 py-1 text-xs font-semibold rounded-full bg-opacity-20 bg-gray-700 text-gray-700">
+              <span className="px-1 py-1 ml-1 p-1 text-xs font-semibold rounded-full bg-opacity-20 bg-gray-700 text-gray-700">
                 {menteeApplications?.filter((m) => m.state === tab.status)
                   .length || 0}
               </span>
@@ -91,48 +95,25 @@ const MyMentees: React.FC = () => {
         </div>
       </div>
       <div className="w-full md:w-4/5 p-4 bg-gray-50">
-        <div className="flex items-center mb-5 md:mb-10 md:pb-7 justify-between">
-          <Link to={'/mentor/dashboard'} className="flex items-center">
-            <span className="text-xl md:text-3xl">&#8592;</span>
-            <button className="text-md md:text-xl font-semibold mr-2 bg-transparent px-3 py-1 rounded-md mt-1">
-              Back
-            </button>
-          </Link>
-        </div>
+        {!isMenteeSelected && (
+          <div className="p-6 mb-6">
+            <h1 className="text-2xl font-semibold mb-4 text-gray-800">
+              Welcome to the ScholarX Mentee Dashboard!
+            </h1>
+            <p className="text-gray-600">
+              Here, you can view your mentees and provide feedback on their
+              monthly check-ins. Click on a mentee to view their profile and
+              their monthly check-in submissions.
+            </p>
+          </div>
+        )}
         <Routes>
-          <Route
-            index
-            element={<MenteeList menteeApplications={filteredApplications} />}
-          />
           <Route path=":menteeId" element={<MenteeDetails />} />
         </Routes>
       </div>
     </div>
   );
 };
-
-const MenteeList: React.FC<{ menteeApplications: Mentee[] }> = ({
-  menteeApplications,
-}) => (
-  <div>
-    {menteeApplications.length === 0 ? (
-      <p className="text-gray-600">No mentee applications available.</p>
-    ) : (
-      <ul>
-        {menteeApplications.map((mentee) => (
-          <li key={mentee.uuid} className="mb-2">
-            <Link
-              to={`/mentor/my-mentees/${mentee.uuid}`}
-              className="text-blue-600 hover:text-blue-800"
-            >
-              {mentee.application.firstName} {mentee.application.lastName}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    )}
-  </div>
-);
 
 const MenteeDetails: React.FC = () => {
   const { menteeId } = useParams<{ menteeId: string }>();

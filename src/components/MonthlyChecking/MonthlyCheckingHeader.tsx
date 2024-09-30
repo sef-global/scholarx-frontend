@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ArrowRightIcon from '../../assets/svg/Icons/ArrowRightIcon';
 import ArrowDownIcon from '../../assets/svg/Icons/ArrowDownIcon';
-import MonthlyCheckInModal from '../MenteeCheckIn/MenteeCheckIn.component';
+import MonthlyCheckInModal from './MenteeCheckInFormModal.component';
 
 interface MonthlyCheckingHeaderProps {
   isMentorView: boolean;
@@ -30,13 +30,11 @@ const MonthlyCheckInHeader: React.FC<MonthlyCheckingHeaderProps> = ({
   return (
     <>
       <div className="flex justify-between items-center mb-4 mt-4">
-        <h2 className="text-2xl font-bold text-gray-800">
-          Monthly Check-Ins 📅
-        </h2>
+        <h2 className="text-2xl font-bold text-gray-800">Monthly Check-Ins</h2>
         {!isMentorView && (
           <button
             onClick={openModal}
-            className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 transition-all duration-300 text-sm font-medium shadow-md hover:shadow-lg"
+            className="px-4 py-2 bg-blue-500  text-white rounded-md focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-all duration-300 text-sm font-medium shadow-md hover:shadow-lg"
           >
             Submit Your Monthly Check-In
           </button>
