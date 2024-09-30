@@ -18,7 +18,7 @@ const CheckInItem: React.FC<CheckInItemProps> = ({ checkIn }) => (
   <div className="p-4 hover:bg-gray-50 transition-colors duration-150">
     <div className="flex justify-between items-start">
       <div>
-        <h4 className="text-lg font-medium text-gray-700 mt-2 mb-4 bg-blue-100 p-2 rounded w-48 h-12 flex items-center justify-center">
+        <h4 className="text-lg font-medium text-gray-700 mt-2 mb-4 bg-blue-100 p-2 rounded w-30 h-12 flex items-center justify-center">
           {' '}
           {checkIn.title}
         </h4>

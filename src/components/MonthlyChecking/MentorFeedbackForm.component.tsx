@@ -83,11 +83,11 @@ const MentorFeedbackForm: React.FC<MentorFeedbackFormProps> = ({
         </label>
         <button
           type="submit"
-          className="px-4 py-2 bg-blue-500  text-white rounded-full focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-all duration-300 text-sm font-medium shadow-md hover:shadow-lg"
+          className="px-4 py-2 bg-blue-500  text-white rounded-full focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-all duration-300 text-sm font-medium shadow-md hover:shadow-lg w-48"
           disabled={isSubmitting}
         >
           {isSubmitting ? (
-            <span className="flex items-center">
+            <span className="flex items-center justify-center">
               <Spinner />
               <span>Submitting...</span>
             </span>

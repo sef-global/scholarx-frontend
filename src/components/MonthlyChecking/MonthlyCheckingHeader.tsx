@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ArrowRightIcon from '../../assets/svg/Icons/ArrowRightIcon';
 import ArrowDownIcon from '../../assets/svg/Icons/ArrowDownIcon';
-import MonthlyCheckInModal from './MenteeCheckInFormModal.component';
 
 interface MonthlyCheckingHeaderProps {
   isMentorView: boolean;
@@ -15,31 +14,9 @@ const MonthlyCheckInHeader: React.FC<MonthlyCheckingHeaderProps> = ({
   isMentorView,
   toggleGuidelines,
   showGuidelines,
-  menteeId = '',
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
   return (
     <>
-      <div className="flex justify-between items-center mb-4 mt-4">
-        <h2 className="text-2xl font-bold text-gray-800">Monthly Check-Ins</h2>
-        {!isMentorView && (
-          <button
-            onClick={openModal}
-            className="px-4 py-2 bg-blue-500  text-white rounded-md focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-all duration-300 text-sm font-medium shadow-md hover:shadow-lg"
-          >
-            Submit Your Monthly Check-In
-          </button>
-        )}
-      </div>
       <div className="mb-4">
         <button
           onClick={toggleGuidelines}
@@ -48,12 +25,12 @@ const MonthlyCheckInHeader: React.FC<MonthlyCheckingHeaderProps> = ({
           {showGuidelines ? (
             <>
               <ArrowDownIcon />
-              Hide Guidelines
+              Guidelines
             </>
           ) : (
             <>
               <ArrowRightIcon />
-              View Guidelines
+              Guidelines
             </>
           )}
         </button>
@@ -113,11 +90,6 @@ const MonthlyCheckInHeader: React.FC<MonthlyCheckingHeaderProps> = ({
           </div>
         </div>
       )}
-      <MonthlyCheckInModal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        menteeId={menteeId}
-      />
     </>
   );
 };

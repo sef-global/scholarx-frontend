@@ -24,6 +24,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
     className="flex items-center justify-between w-full text-left text-xl font-bold text-gray-900 mb-4 focus:outline-none hover:text-blue-600 transition-colors duration-200"
   >
     <span className="flex items-center">
+      {isOpen ? <ArrowDownIcon /> : <ArrowRightIcon />}
       {text}
       {badgeCount !== undefined &&
         badgeCount >= 0 &&
@@ -35,16 +36,6 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
           </span>
         ))}
     </span>
-
-    {isOpen ? (
-      <>
-        <ArrowDownIcon />
-      </>
-    ) : (
-      <>
-        <ArrowRightIcon />
-      </>
-    )}
   </button>
 );
 
