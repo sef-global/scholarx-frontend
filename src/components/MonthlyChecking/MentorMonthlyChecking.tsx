@@ -48,7 +48,7 @@ const MentorMonthlyChecking: React.FC<MentorMonthlyCheckingProps> = ({
     >
       <div className="flex justify-between items-start">
         <div>
-          <h4 className="text-lg font-medium text-gray-700 mt-2 mb-4 bg-blue-100 p-2 rounded w-30 h-12 flex items-center justify-center">
+          <h4 className="text-lg font-medium text-gray-700 mt-2 mb-4 bg-blue-100 p-2 rounded-md w-30 h-12 flex items-center justify-center">
             {checkIn.title}
           </h4>
           <div className="mt-2">
@@ -67,7 +67,7 @@ const MentorMonthlyChecking: React.FC<MentorMonthlyCheckingProps> = ({
           </div>
         </div>
         <div className="flex flex-col items-end">
-          <h4 className="font-medium text-gray-700">Media Submissions</h4>
+          <h4 className="font-medium text-gray-700">Submissions</h4>
           {checkIn.mediaContentLinks.map((link, index) => (
             <a
               key={index}

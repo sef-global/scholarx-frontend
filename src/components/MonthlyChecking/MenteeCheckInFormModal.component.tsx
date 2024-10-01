@@ -17,7 +17,7 @@ const MonthlyCheckInModal: React.FC<{
 }> = ({ onClose, isOpen, menteeId }) => {
   const {
     register,
-    control,
+    setValue,
     handleSubmit,
     reset,
     formState: { errors },
@@ -31,16 +31,32 @@ const MonthlyCheckInModal: React.FC<{
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'mediaContentLinks',
-  });
+  const [mediaLinks, setMediaLinks] = useState<string[]>([]);
+
+  const handleAddLink = () => {
+    setMediaLinks([...mediaLinks, '']);
+    setValue('mediaContentLinks', [...mediaLinks, '']);
+  };
+
+  const handleRemoveLink = (index: number) => {
+    const newLinks = mediaLinks.filter((_, i) => i !== index);
+    setMediaLinks(newLinks);
+    setValue('mediaContentLinks', newLinks);
+  };
+
+  const handleLinkChange = (index: number, value: string) => {
+    const newLinks = mediaLinks.map((link, i) => (i === index ? value : link));
+    setMediaLinks(newLinks);
+    setValue('mediaContentLinks', newLinks);
+  };
+
   const { submitCheckIn } = useSubmitCheckIn();
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data: MenteeCheckInForm) => {
     const checkInData = {
       ...data,
+      mediaLinks: mediaLinks.filter((link) => link.trim() !== ''),
       menteeId,
     };
     setLoading(true);
@@ -153,18 +169,25 @@ const MonthlyCheckInModal: React.FC<{
                 Provide links to any relevant media content. Maximum of 3 links
                 in per check-in.
               </p>
-              {fields.map((field, index) => (
-                <div key={field.id} className="flex items-center mt-1">
+              {mediaLinks.map((link, index) => (
+                <div key={index} className="flex items-center mt-1">
                   <input
-                    {...register(`mediaContentLinks.${index}`)}
-                    placeholder="Link"
-                    className={`block w-full border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
+                    value={link}
+                    onChange={(e) => {
+                      handleLinkChange(index, e.target.value);
+                    }}
+                    placeholder="Media Link"
+                    className={`block w-full border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 ${
+                      errors.mediaContentLinks
+                        ? 'border-red-500'
+                        : 'border-gray-300'
+                    }`}
                   />
                   {index >= 0 && (
                     <button
                       type="button"
                       onClick={() => {
-                        remove(index);
+                        handleRemoveLink(index);
                       }}
                       className="ml-2 inline-flex items-center px-1 py-1 border border-transparent text-xs font-medium rounded-md bg-red-100 hover:bg-red-200 focus:outline-none focus:ring"
                     >
@@ -175,9 +198,7 @@ const MonthlyCheckInModal: React.FC<{
               ))}
               <button
                 type="button"
-                onClick={() => {
-                  append('');
-                }}
+                onClick={handleAddLink}
                 className="mt-2 inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring focus:ring-blue-500"
               >
                 Add Link
