@@ -49,6 +49,7 @@ const MentorMonthlyChecking: React.FC<MentorMonthlyCheckingProps> = ({
       <div className="flex justify-between items-start">
         <div>
           <h4 className="text-lg font-medium text-gray-700 mt-2 mb-4 bg-blue-100 p-2 rounded-md w-30 h-12 flex items-center justify-center">
+            {' '}
             {checkIn.title}
           </h4>
           <div className="mt-2">
