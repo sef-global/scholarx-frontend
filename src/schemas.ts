@@ -7,7 +7,8 @@ export const MenteeApplicationSchema = z.object({
   contactNo: z
     .string()
     .min(1, { message: 'Contact number cannot be empty' })
-    .regex(/^\+[1-9]\d{1,14}$/, 'Invalid contact number'),
+    .startsWith('+', { message: "Must start with '+' for country code" })
+    .regex(/^\+\d{6,14}$/, { message: 'Invalid contact number' }),
   company: z.string().min(1, { message: 'Company cannot be empty' }).optional(),
   profilePic: z
     .string()
