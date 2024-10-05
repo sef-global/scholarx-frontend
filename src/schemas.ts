@@ -15,9 +15,6 @@ export const MenteeApplicationSchema = z.object({
     .optional(),
   cv: z.string().min(1, { message: 'CV cannot be empty' }),
   isUndergrad: z.boolean(),
-  consentGiven: z.boolean().refine((val) => val, {
-    message: 'You must give your consent to proceed.',
-  }),
   graduatedYear: z
     .number({ invalid_type_error: 'Graduated year is required' })
     .refine(
@@ -43,6 +40,7 @@ export const MenteeApplicationSchema = z.object({
   submission: z
     .string()
     .url({ message: 'Please submit a valid video submission' }),
+  consentGiven: z.boolean().optional(),
 });
 
 export const MentorApplicationSchema = z.object({
@@ -75,9 +73,6 @@ export const MentorApplicationSchema = z.object({
   noOfMentees: z.number().min(0, {
     message: 'Number of mentees must be greater than or equal to 0',
   }),
-  canCommit: z.boolean().refine((val) => val, {
-    message: 'You must mention if you can commit',
-  }),
   mentoredYear: z
     .number({ invalid_type_error: 'Mentored year is required' })
     .or(z.number().min(0))
@@ -94,6 +89,7 @@ export const MentorApplicationSchema = z.object({
     .url({ message: 'Invalid website URL' })
     .optional()
     .or(z.literal('')),
+  canCommit: z.boolean().optional(),
 });
 
 export const MenteeCheckInSchema = z.object({
@@ -103,4 +99,22 @@ export const MenteeCheckInSchema = z.object({
     .string()
     .url('Please provide a valid URL')
     .min(1, 'Please provide a media link'),
+});
+
+export const mentorTermsAgreementModalSchema = z.object({
+  agreed: z.boolean().refine((val) => val, {
+    message: 'You must agree to the ScholarX Mentor Guide',
+  }),
+  canCommit: z.boolean().refine((val) => val, {
+    message: 'You must mention if you can commit',
+  }),
+});
+
+export const menteeTermsAgreementModalSchema = z.object({
+  agreed: z.boolean().refine((val) => val, {
+    message: 'You must agree to the ScholarX Mentee Guide',
+  }),
+  consentGiven: z.boolean().refine((val) => val, {
+    message: 'You must give consent to proceed',
+  }),
 });
