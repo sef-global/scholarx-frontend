@@ -106,7 +106,7 @@ const Mentors = () => {
         </div>
 
         {sortedMentors.length > 0 ? (
-          <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-8 items-start">
+          <div className="flex-grow grid grid-cols-[repeat(auto-fit,_minmax(15rem,_1fr))] gap-4 items-start">
             {sortedMentors.map((mentor) => (
               <MentorCard key={mentor.uuid} mentor={mentor} />
             ))}

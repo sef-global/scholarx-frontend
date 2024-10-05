@@ -32,7 +32,7 @@ const ProfilePic: React.FC<{
         <div
           className={`absolute inset-0 bg-gray-200 animate-skeleton bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%] ${
             circular ? 'rounded-full' : 'rounded-custom-5'
-          }`} // Conditional rounded class
+          }`}
           style={{ height: size, width: appliedWidth }}
         />
       )}
@@ -40,7 +40,7 @@ const ProfilePic: React.FC<{
         <div
           className={`inline-block bg-gray-200 ring-2 ring-white flex items-center justify-center ${
             circular ? 'rounded-full' : 'rounded-custom-5'
-          }`} // Conditional rounded class
+          }`}
           style={{ height: size, width: appliedWidth }}
         >
           <UserIcon />

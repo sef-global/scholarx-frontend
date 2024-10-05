@@ -66,6 +66,8 @@ const MentorProfile: React.FC = () => {
     ? Math.max(0, mentor.application.noOfMentees - approvedMenteesCount)
     : 0;
 
+  console.log(mentor);
+
   return (
     <>
       <nav aria-label="Breadcrumb">
