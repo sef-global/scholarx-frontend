@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   build:
@@ -40,18 +41,20 @@ jobs:
 
     steps:
       - name: Deploy to server
-        env:
-          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y sshpass
-          sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no root@107.172.60.74 << 'ENDSSH'
-            set -e
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: ${{ secrets.SERVER_PORT }}
+          script: |
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            npm --help
             cd scholarx-frontend
             git pull
             npm install
             npm run build
+            echo "build successful"
             sudo cp -r dist/* /var/www/scholarx/
             sudo systemctl restart nginx
-            echo "Deployment completed successfully"
-          ENDSSH
