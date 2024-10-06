@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
 import NotificationBadge from '../NotificationBadge';
-import ArrowDownIcon from '../../assets/svg/Icons/ArrowDownIcon';
-import ArrowRightIcon from '../../assets/svg/Icons/ArrowRightIcon';
+import ArrowIcon from '../../assets/svg/Icons/ArrowIcon';
 
 interface ToggleButtonProps {
   isOpen: boolean;
@@ -24,7 +23,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
     className="flex items-center justify-between w-full text-left text-xl font-bold text-gray-900 mb-4 focus:outline-none hover:text-blue-600 transition-colors duration-200"
   >
     <span className="flex items-center">
-      {isOpen ? <ArrowDownIcon /> : <ArrowRightIcon />}
+      <ArrowIcon isExpanded={isOpen} />
       {text}
       {badgeCount !== undefined &&
         badgeCount >= 0 &&

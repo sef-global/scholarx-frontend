@@ -10,6 +10,21 @@ import CloseIcon from '../../assets/svg/Icons/CloseIcon';
 
 type MenteeCheckInForm = z.infer<typeof MenteeCheckInSchema>;
 
+const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
 const MonthlyCheckInModal: React.FC<{
   onClose: () => void;
   isOpen: boolean;
@@ -98,18 +113,11 @@ const MonthlyCheckInModal: React.FC<{
                 } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
               >
                 <option value="">Select a month</option>
-                <option value="January">January</option>
-                <option value="February">February</option>
-                <option value="March">March</option>
-                <option value="April">April</option>
-                <option value="May">May</option>
-                <option value="June">June</option>
-                <option value="July">July</option>
-                <option value="August">August</option>
-                <option value="September">September</option>
-                <option value="October">October</option>
-                <option value="November">November</option>
-                <option value="December">December</option>
+                {months.map((month) => (
+                  <option key={month} value={month}>
+                    {month}
+                  </option>
+                ))}
               </select>
               {errors.title && (
                 <p className="text-red-500 text-xs mt-1">

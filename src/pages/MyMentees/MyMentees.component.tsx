@@ -182,7 +182,8 @@ const MenteeDetails: React.FC<{ onBack: () => void; isMobile: boolean }> = ({
         </button>
       )}
       <MenteeProfile />
-      <div className="bg-blue-100 rounded-lg p-4 mt-4 mb-4 flex-grow overflow-auto -webkit-overflow-scrolling-touch">
+      <hr className="w-full pb-10 mt-10" />
+      <div className=" rounded-lg p-4 mt-4 mb-4 flex-grow overflow-auto -webkit-overflow-scrolling-touch">
         <div className="flex justify-center items-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">
             Monthly Check-Ins

@@ -41,7 +41,7 @@ const MenteeDashboard: React.FC = () => {
           <div className="w-full">
             {isApproved ? (
               <>
-                <div className="bg-blue-100 rounded-lg p-4 mt-4 mb-4 flex-grow overflow-auto">
+                <div className="rounded-lg p-4 mt-4 mb-4 flex-grow overflow-auto">
                   <h2 className="text-xl font-bold text-gray-800 mb-4 text-center items-center">
                     Monthly Check-Ins
                   </h2>

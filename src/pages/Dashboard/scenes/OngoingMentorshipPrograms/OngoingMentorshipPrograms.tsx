@@ -80,8 +80,10 @@ const AdminMenteeDetails: React.FC = () => {
     <div>
       <MenteeProfile />
       <hr className="w-full pb-10 mt-10" />
-      <h2 className="text-xl font-bold text-gray-800">Monthly Check-Ins</h2>
-      <div className="bg-blue-100 rounded-lg p-4 mt-4 mb-4">
+      <h2 className="text-xl font-bold text-gray-800 items-center text-center">
+        Monthly Check-Ins
+      </h2>
+      <div className="rounded-lg p-4 mt-4 mb-4">
         <MentorMonthlyChecking
           menteeId={menteeId ?? ''}
           checkInHistory={checkInHistory}

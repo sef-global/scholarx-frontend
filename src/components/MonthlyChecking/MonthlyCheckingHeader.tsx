@@ -1,6 +1,5 @@
 import React from 'react';
-import ArrowRightIcon from '../../assets/svg/Icons/ArrowRightIcon';
-import ArrowDownIcon from '../../assets/svg/Icons/ArrowDownIcon';
+import ArrowIcon from '../../assets/svg/Icons/ArrowIcon';
 
 interface MonthlyCheckingHeaderProps {
   isMentorView: boolean;
@@ -22,17 +21,8 @@ const MonthlyCheckInHeader: React.FC<MonthlyCheckingHeaderProps> = ({
           onClick={toggleGuidelines}
           className="text-blue-600 hover:text-blue-800 font-medium text-lg focus:outline-none flex items-center"
         >
-          {showGuidelines ? (
-            <>
-              <ArrowDownIcon />
-              Guidelines
-            </>
-          ) : (
-            <>
-              <ArrowRightIcon />
-              Guidelines
-            </>
-          )}
+          <ArrowIcon isExpanded={showGuidelines} />
+          Guidelines
         </button>
       </div>
       {showGuidelines && (

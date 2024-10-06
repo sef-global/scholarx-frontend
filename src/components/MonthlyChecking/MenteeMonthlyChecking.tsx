@@ -6,83 +6,107 @@ import { useMonthlyCheckIns } from '../../hooks/useSubmitCheckIn';
 import { MonthlyCheckIn } from '../../types';
 import NewSubmissionsToggle from '../Toggle/NewSubmissionToggle';
 import HistoryToggle from '../Toggle/HistoryToggle';
+import ArrowIcon from '../../assets/svg/Icons/ArrowIcon';
 
 interface MenteeMonthlyCheckingProps {
   menteeId: string;
 }
+
 interface CheckInItemProps {
   checkIn: MonthlyCheckIn;
 }
 
-const CheckInItem: React.FC<CheckInItemProps> = ({ checkIn }) => (
-  <div className="p-4 hover:bg-gray-50 transition-colors duration-150">
-    <div className="flex justify-between items-start">
-      <div>
-        <h4 className="text-lg font-medium text-gray-700 mt-2 mb-4 bg-blue-100 p-2 rounded-md w-30 h-12 flex items-center justify-center">
-          {' '}
-          {checkIn.title}
-        </h4>
-        <div className="mt-2">
-          <h4 className="font-medium text-gray-700">General Updates:</h4>
-          <p className="text-sm text-gray-600">
-            {checkIn.generalUpdatesAndFeedback ?? 'No updates provided'}
-          </p>
-        </div>
-        <div className="mt-2">
-          <h4 className="font-medium text-gray-700">Progress Towards Goals:</h4>
-          <p className="text-sm text-gray-600">
-            {checkIn.progressTowardsGoals ?? 'No progress updates provided'}
-          </p>
-        </div>
-      </div>
-      <div className="flex flex-col items-end">
-        <h4 className="font-medium text-gray-700">My Submissions</h4>
-        {checkIn.mediaContentLinks.map((link, index) => (
-          <a
-            key={index}
-            href={link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 hover:text-blue-800 text-sm mb-1 underline"
-          >
-            Click Media Link {index + 1}
-          </a>
-        ))}
-        <div className="mt-2">
-          <p className="text-sm text-gray-600">
-            Submitted on{' '}
-            {format(new Date(checkIn.checkInDate), 'MMMM dd, yyyy, hh:mm a')}
-          </p>
-        </div>
-      </div>
-    </div>
+const CheckInItem: React.FC<CheckInItemProps> = ({ checkIn }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
 
-    <div className="mt-3 bg-gray-50 p-3 rounded-md">
-      <h4 className="mt-2 text-lg text-gray-600 font-bold p-1 rounded">
-        Mentor Feedback:
-      </h4>
-      {checkIn.mentorFeedback ? (
-        <p className="text-md text-gray-600">{checkIn.mentorFeedback}</p>
-      ) : (
-        <p className="text-sm text-gray-600">No feedback yet</p>
-      )}
-      <div className="text-right">
-        <span
-          className={`text-sm font-medium ${
-            checkIn.isCheckedByMentor ? 'text-green-600' : 'text-yellow-600'
-          }`}
-        >
-          {checkIn.isCheckedByMentor
-            ? `✓ Checked by mentor on ${format(
-                new Date(checkIn.mentorCheckedDate ?? ''),
-                'MMM dd, yyyy, hh:mm a'
-              )}`
-            : '⏳ Pending review'}
-        </span>
+  return (
+    <div className="border-b border-gray-200 last:border-b-0">
+      <div
+        className="p-4 cursor-pointer hover:bg-gray-50 transition-colors duration-150"
+        onClick={() => {
+          setIsExpanded(!isExpanded);
+        }}
+      >
+        <div className="flex justify-between items-center">
+          <h4 className="text-lg font-medium text-gray-700 truncate flex-1">
+            {checkIn.title}
+          </h4>
+          <ArrowIcon isExpanded={isExpanded} />
+        </div>
+        <p className="text-sm text-gray-500 mt-1">
+          Submitted on {format(new Date(checkIn.checkInDate), 'MMM dd, yyyy')}
+        </p>
       </div>
+
+      {isExpanded && (
+        <div className="px-4 pb-4 md:flex md:space-x-4">
+          <div className="md:w-2/3">
+            <div className="mb-4">
+              <h5 className="font-medium text-gray-700 mb-2">
+                General Updates:
+              </h5>
+              <p className="text-sm text-gray-600">
+                {checkIn.generalUpdatesAndFeedback ?? 'No updates provided'}
+              </p>
+            </div>
+            <div className="mb-4">
+              <h5 className="font-medium text-gray-700 mb-2">
+                Progress Towards Goals:
+              </h5>
+              <p className="text-sm text-gray-600">
+                {checkIn.progressTowardsGoals ?? 'No progress updates provided'}
+              </p>
+            </div>
+            <div className="mb-4">
+              <h5 className="font-medium text-gray-700 mb-2">Submissions:</h5>
+              {checkIn.mediaContentLinks.map((link, index) => (
+                <a
+                  key={index}
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-blue-600 hover:text-blue-800 text-sm mb-1 underline"
+                >
+                  Media Link {index + 1}
+                </a>
+              ))}
+            </div>
+          </div>
+          <div className="md:w-1/3">
+            <div className="bg-gray-50 p-3 rounded-md">
+              <h5 className="font-medium text-gray-700 mb-2">
+                Mentor Feedback:
+              </h5>
+              {checkIn.mentorFeedback ? (
+                <p className="text-sm text-gray-600">
+                  {checkIn.mentorFeedback}
+                </p>
+              ) : (
+                <p className="text-sm text-gray-600">No feedback yet</p>
+              )}
+              <div className="text-right mt-2">
+                <span
+                  className={`text-sm font-medium ${
+                    checkIn.isCheckedByMentor
+                      ? 'text-green-600'
+                      : 'text-yellow-600'
+                  }`}
+                >
+                  {checkIn.isCheckedByMentor
+                    ? `✓ Checked on ${format(
+                        new Date(checkIn.mentorCheckedDate ?? ''),
+                        'MMM dd, yyyy'
+                      )}`
+                    : '⏳ Pending review'}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
-  </div>
-);
+  );
+};
 
 const MenteeMonthlyChecking: React.FC<MenteeMonthlyCheckingProps> = ({
   menteeId,
@@ -93,7 +117,7 @@ const MenteeMonthlyChecking: React.FC<MenteeMonthlyCheckingProps> = ({
 
   if (isLoading) {
     return (
-      <div className="text-center py-4">
+      <div className="flex justify-center items-center h-64">
         <Spinner />
       </div>
     );
@@ -121,7 +145,7 @@ const MenteeMonthlyChecking: React.FC<MenteeMonthlyCheckingProps> = ({
   );
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <NewSubmissionsToggle
         isNewSubmissionOpen={isNewSubmissionOpen}
         toggleNewSubmission={() => {

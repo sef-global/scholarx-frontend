@@ -75,11 +75,6 @@ const MentorFeedbackForm: React.FC<MentorFeedbackFormProps> = ({
             className="form-checkbox h-5 w-5 text-blue-600"
           />
           <span className="ml-2 text-gray-700">Mark as checked</span>
-          {errors.isCheckedByMentor && (
-            <div className="text-red-600 text-sm mt-1 ml-7">
-              {errors.isCheckedByMentor.message}
-            </div>
-          )}
         </label>
         <button
           type="submit"
@@ -96,6 +91,11 @@ const MentorFeedbackForm: React.FC<MentorFeedbackFormProps> = ({
           )}
         </button>
       </div>
+      {errors.isCheckedByMentor && (
+        <div className="text-red-600 text-sm mt-1 ml-7">
+          {errors.isCheckedByMentor.message}
+        </div>
+      )}
       {isSuccess && (
         <div className="text-green-600 text-sm mt-1">
           Feedback submitted successfully 🎉
