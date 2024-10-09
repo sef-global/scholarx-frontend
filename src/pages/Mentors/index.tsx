@@ -1,33 +1,43 @@
 import { useState, useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
 import useCategories from '../../hooks/useCategories';
-import { type Mentor, type Category } from '../../types';
 import { usePublicMentors } from '../../hooks/usePublicMentors';
+import { type Mentor, type Category } from '../../types';
 import MentorCard from '../../components/MentorCard/MentorCard.component';
 import Loading from '../../assets/svg/Loading';
 
 const Mentors = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortedMentors, setSortedMentors] = useState<Mentor[]>([]);
+  const pageSize = 10;
+
+  const { ref, inView } = useInView();
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
+    usePublicMentors(selectedCategory, pageSize);
+
   const {
-    data: mentors,
-    isLoading: mentorsLoading,
-    error: mentorsError,
-  } = usePublicMentors(selectedCategory);
-  const {
-    data: categories,
+    data: allCategories,
     isLoading: categoriesLoading,
     error: categoriesError,
   } = useCategories();
 
   useEffect(() => {
-    if (mentors) {
-      setSortedMentors([...mentors]);
+    if (inView && hasNextPage) {
+      void fetchNextPage();
     }
-  }, [mentors]);
+  }, [inView, fetchNextPage, hasNextPage]);
+
+  useEffect(() => {
+    if (data) {
+      const allMentors = data.pages.flatMap((page) => page.items);
+      setSortedMentors(allMentors);
+    }
+  }, [data]);
 
   const handleSortAZ = () => {
     const sorted = [...sortedMentors].sort((a, b) =>
-      b.profile.first_name.localeCompare(a.profile.first_name)
+      a.application.firstName.localeCompare(b.application.firstName)
     );
     setSortedMentors(sorted);
   };
@@ -36,16 +46,18 @@ const Mentors = () => {
     setSelectedCategory(category);
   };
 
-  const isLoading = mentorsLoading || categoriesLoading;
-  const error = mentorsError != null || categoriesError;
-
-  if (isLoading) {
+  if (status === 'pending' || categoriesLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
         <Loading />
       </div>
     );
   }
+
+  if (status === 'error' || categoriesError) {
+    return <p>An error occurred.</p>;
+  }
+
   return (
     <div className="w-full">
       <div>
@@ -53,6 +65,7 @@ const Mentors = () => {
           <p className="text-2xl font-semibold">Mentors</p>
         </div>
         <hr className="mb-8" />
+
         <div className="mb-4 w-full flex items-center justify-between">
           <div className="flex flex-wrap gap-3 items-center text-sm">
             <button
@@ -65,7 +78,7 @@ const Mentors = () => {
             >
               All
             </button>
-            {categories.map((category: Category) => (
+            {allCategories.map((category: Category) => (
               <button
                 key={category.uuid}
                 onClick={() => {
@@ -86,29 +99,29 @@ const Mentors = () => {
         <div className="mb-4 w-full flex justify-end">
           <button
             onClick={handleSortAZ}
-            className={`bg-blue-500 text-white px-2 py-1 rounded border border-blue-500 text-xs mr-6`}
+            className="bg-blue-500 text-white px-2 py-1 rounded border border-blue-500 text-xs mr-6"
           >
             Sort A-Z
           </button>
         </div>
 
-        {error !== undefined && error !== null && <p>{'An error occurred.'}</p>}
-
-        {(error === undefined || error === null) && (
-          <>
-            {sortedMentors.length > 0 && (
-              <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-8 items-start">
-                {sortedMentors.map((mentor) => (
-                  <MentorCard key={mentor.uuid} mentor={mentor} />
-                ))}
-              </div>
-            )}
-
-            {sortedMentors.length === 0 && (
-              <p>No mentors found for this category.</p>
-            )}
-          </>
+        {sortedMentors.length > 0 ? (
+          <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-8 items-start">
+            {sortedMentors.map((mentor) => (
+              <MentorCard key={mentor.uuid} mentor={mentor} />
+            ))}
+          </div>
+        ) : (
+          <p>No mentors found for this category.</p>
         )}
+
+        {isFetchingNextPage && (
+          <div className="flex justify-center mt-4">
+            <Loading />
+          </div>
+        )}
+
+        <div ref={ref} style={{ height: '20px' }} />
       </div>
     </div>
   );

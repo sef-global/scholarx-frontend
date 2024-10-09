@@ -9,9 +9,9 @@ import FormCheckbox from '../../components/FormFields/MenteeApplication/FormChec
 import FormInput from '../../components/FormFields/MenteeApplication/FormInput';
 import { API_URL } from '../../constants';
 import useProfile from '../../hooks/useProfile';
-import { usePublicMentors } from '../../hooks/usePublicMentors';
 import { MenteeApplicationSchema } from '../../schemas';
 import { MenteeApplication } from '../../types';
+import TermsAgreementModal from '../../components/TermsAgreementModal';
 
 const steps = [
   {
@@ -36,9 +36,11 @@ const MenteeRegistration: React.FC = () => {
     setError,
     clearErrors,
     trigger,
+    getValues,
     formState: { errors },
   } = useForm<MenteeApplication>({
     resolver: zodResolver(MenteeApplicationSchema),
+    mode: 'onChange',
     defaultValues: {
       firstName: user?.first_name,
       lastName: user?.last_name,
@@ -48,10 +50,12 @@ const MenteeRegistration: React.FC = () => {
       isUndergrad: true,
     },
   });
-  const { error: mentorsError, data: mentors } = usePublicMentors(null);
+
   const [currentStep, setCurrentStep] = useState(0);
   const [image, setImage] = useState<File | null>(null);
   const [profilePic, setProfilePic] = useState(user?.image_url);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleProfilePicChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files != null) {
@@ -90,7 +94,7 @@ const MenteeRegistration: React.FC = () => {
       }
     }
 
-    const output = await trigger(fields as [keyof MenteeApplication], {
+    const output = await trigger(fields as Array<keyof MenteeApplication>, {
       shouldFocus: true,
     });
 
@@ -102,10 +106,31 @@ const MenteeRegistration: React.FC = () => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
 
-  const onSubmit: SubmitHandler<MenteeApplication> = async (data) => {
-    await applyForMentor(data);
-    if (image) {
-      await updateProfile({ profile: null, image });
+  const onSubmit: SubmitHandler<MenteeApplication> = async () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalAgree = async (agreedData: {
+    agreed: boolean;
+    consentGive?: boolean;
+    canCommit?: boolean;
+  }) => {
+    setIsModalOpen(false);
+    setIsSubmitting(true);
+    const formData = getValues();
+    try {
+      const validatedData = MenteeApplicationSchema.parse({
+        ...formData,
+        ...agreedData,
+      });
+      await applyForMentor(validatedData);
+      if (image) {
+        await updateProfile({ profile: null, image });
+      }
+    } catch (error) {
+      console.error('Error submitting application:', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -227,7 +252,7 @@ const MenteeRegistration: React.FC = () => {
               error={errors.email}
             />
             <FormInput
-              type="text"
+              type="number"
               placeholder="+1234567890"
               name="contactNo"
               label="Contact No (Whatsapp)"
@@ -325,24 +350,6 @@ const MenteeRegistration: React.FC = () => {
         {currentStep === 2 && (
           <>
             <div className="text-xl font-medium mb-2">Mentee Application</div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-600">
-                Mentor
-              </label>
-              <select
-                className="mt-1 p-2 w-1/2 border rounded-md"
-                {...register('mentorId')}
-              >
-                {mentors
-                  ?.filter((mentor) => mentor.availability)
-                  .map((mentor) => (
-                    <option key={mentor.uuid} value={mentor.uuid}>
-                      {mentor.application.firstName}{' '}
-                      {mentor.application.lastName}
-                    </option>
-                  ))}
-              </select>
-            </div>
             <FormInput
               type="text"
               placeholder=""
@@ -374,30 +381,14 @@ const MenteeRegistration: React.FC = () => {
               register={register}
               error={errors.submission}
             />
-            <FormCheckbox
-              name="consentGiven"
-              label="I, hereby grant Sustainable Foundation Education permission to use my video submission solely for the internal evaluation of my application 
-                to ScholarX. I understand that this video will not be used for any other purposes without my explicit consent."
-              register={register}
-              error={errors.consentGiven}
-            />
-            <p className="text-md font-semibold">Privacy Statement</p>
-            <p>
-              Sustainable Foundation Education assures that your video
-              submission will be used exclusively for application evaluation
-              purposes. We are committed to protecting your privacy and will not
-              use your video for any other activities, such as general AI
-              training or public distribution. Your personal information and
-              video content will be handled with the utmost confidentiality.
-            </p>
           </>
         )}
-        {mentorsError !== null ? (
+        {status === 'error' ? (
           <div
             className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 "
             role="alert"
           >
-            {mentorsError.message}
+            An error occurred. Please try again later.
           </div>
         ) : null}
         {isApplicationError && applicationError instanceof AxiosError ? (
@@ -444,6 +435,7 @@ const MenteeRegistration: React.FC = () => {
           {currentStep === 2 && !applicationSuccess && (
             <button
               type="submit"
+              disabled={isSubmitting}
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
             >
               {isApplicationPending ? 'Submitting...' : 'Submit'}
@@ -459,6 +451,15 @@ const MenteeRegistration: React.FC = () => {
           )}
         </div>
       </form>
+      <TermsAgreementModal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+        }}
+        onAgree={handleModalAgree}
+        isMentor={false}
+        guideUrl="https://docs.google.com/document/d/1gIYte14FIQtqUhGiMErZRovhNErdUrFdQ0LnCFFnfag/"
+      />
     </div>
   );
 };

@@ -13,6 +13,7 @@ import useProfile from '../../hooks/useProfile';
 import { useLoginModalContext } from '../../contexts/LoginModalContext';
 import useMentor from '../../hooks/useMentor';
 import { Link } from 'react-router-dom';
+import TermsAgreementModalMentor from '../../components/TermsAgreementModal';
 
 const steps = [
   {
@@ -44,6 +45,7 @@ const MentorRegistrationPage: React.FC = () => {
     setError,
     setValue,
     unregister,
+    getValues,
     formState: { errors },
   } = useForm<MentorApplication>({
     resolver: zodResolver(MentorApplicationSchema),
@@ -54,7 +56,13 @@ const MentorRegistrationPage: React.FC = () => {
       profilePic: user?.image_url,
     },
   });
-  const { error: categoryError, data: categories } = useCategories();
+
+  const {
+    data: allCategories,
+    isLoading: categoriesLoading,
+    error: categoriesError,
+  } = useCategories();
+
   const {
     createMentorApplication,
     applicationError,
@@ -62,10 +70,13 @@ const MentorRegistrationPage: React.FC = () => {
     isApplicationError,
     isApplicationSubmitting,
   } = useMentor(null);
+
   const { handleLoginModalOpen } = useLoginModalContext();
   const [image, setImage] = useState<File | null>(null);
   const [profilePic, setProfilePic] = useState(user?.image_url);
   const [currentStep, setCurrentStep] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleNext = async (): Promise<void> => {
     let fields = steps[currentStep].fields;
@@ -108,12 +119,8 @@ const MentorRegistrationPage: React.FC = () => {
     }
   }, [watch('isPastMentor')]);
 
-  const onSubmit: SubmitHandler<MentorApplication> = async (data) => {
-    const { profilePic, ...application } = data;
-    await createMentorApplication(application as MentorApplication);
-    if (image) {
-      await updateProfile({ profile: null, image });
-    }
+  const onSubmit: SubmitHandler<MentorApplication> = async () => {
+    setIsModalOpen(true);
   };
 
   const handleProfilePicChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -136,6 +143,30 @@ const MentorRegistrationPage: React.FC = () => {
 
   const handleImageClick = () => {
     document.getElementById('profilePic')?.click();
+  };
+
+  const handleModalAgree = async (data: {
+    agreed: boolean;
+    canCommit?: boolean;
+    consentGiven?: boolean;
+  }) => {
+    setIsModalOpen(false);
+    setIsSubmitting(true);
+    const formData = getValues();
+    try {
+      const validatedData = MentorApplicationSchema.parse({
+        ...formData,
+        ...data,
+      });
+      await createMentorApplication(validatedData);
+      if (image) {
+        await updateProfile({ profile: null, image });
+      }
+    } catch (error) {
+      console.error('Error submitting application:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -226,7 +257,7 @@ const MentorRegistrationPage: React.FC = () => {
               error={errors.email}
             />
             <FormInput
-              type="text"
+              type="number"
               placeholder="+1234567890"
               name="contactNo"
               label="Contact No (Whatsapp)"
@@ -268,18 +299,20 @@ const MentorRegistrationPage: React.FC = () => {
               <label className="block text-sm font-medium text-gray-600">
                 Category
               </label>
-              <select
-                className="mt-1 p-2 w-1/2 border rounded-md"
-                {...register('category')}
-              >
-                {categories.map(
-                  (category: { uuid: string; category: string }) => (
-                    <option key={category.uuid} value={category.uuid}>
-                      {category.category}
-                    </option>
-                  )
-                )}
-              </select>
+              {!categoriesLoading && (
+                <select
+                  className="mt-1 p-2 w-1/2 border rounded-md"
+                  {...register('category')}
+                >
+                  {allCategories.map(
+                    (category: { uuid: string; category: string }) => (
+                      <option key={category.uuid} value={category.uuid}>
+                        {category.category}
+                      </option>
+                    )
+                  )}
+                </select>
+              )}
             </div>
             <FormTextarea
               placeholder="Engineering, Mechanical Engineering, Mechanical designing"
@@ -395,24 +428,18 @@ const MentorRegistrationPage: React.FC = () => {
                 </span>
               )}
             </div>
-            <FormCheckbox
-              name="canCommit"
-              label="Are you able to commit to a period of 6 months for the
-                program? (We expect a minimum of 6 calls
-                with a mentee in a span of 6 month period)"
-              register={register}
-              error={errors.canCommit}
-            />
           </>
         )}
-        {categoryError !== null ? (
+
+        {categoriesError !== null ? (
           <div
             className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 "
             role="alert"
           >
-            {categoryError.message}
+            {categoriesError.message}
           </div>
         ) : null}
+
         {isApplicationError && applicationError instanceof AxiosError ? (
           <div
             className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 "
@@ -421,6 +448,7 @@ const MentorRegistrationPage: React.FC = () => {
             {applicationError.response?.data.message}
           </div>
         ) : null}
+
         {applicationSuccess ? (
           <div
             className="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50"
@@ -430,6 +458,7 @@ const MentorRegistrationPage: React.FC = () => {
             you!
           </div>
         ) : null}
+
         <hr className="border-t border-gray-300 my-6" />
         <div
           className={`flex ${
@@ -445,6 +474,7 @@ const MentorRegistrationPage: React.FC = () => {
               Previous
             </button>
           )}
+
           {currentStep < 2 && (
             <button
               type="button"
@@ -454,14 +484,17 @@ const MentorRegistrationPage: React.FC = () => {
               Next
             </button>
           )}
+
           {currentStep === 2 && !applicationSuccess && (
             <button
               type="submit"
+              disabled={isSubmitting}
               className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-1 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-small rounded-md text-sm inline-flex items-center px-3 py-1.5 text-center me-2"
             >
               {isApplicationSubmitting ? 'Submitting...' : 'Submit'}
             </button>
           )}
+
           {applicationSuccess && (
             <Link
               to="/"
@@ -472,6 +505,15 @@ const MentorRegistrationPage: React.FC = () => {
           )}
         </div>
       </form>
+      <TermsAgreementModalMentor
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+        }}
+        onAgree={handleModalAgree}
+        isMentor={true}
+        guideUrl="https://docs.google.com/document/d/1uMMcGWJ35nblOj1zZ1XzJuYm-LOi1Lyj02yYRNsaOkY/"
+      />
     </div>
   );
 };
