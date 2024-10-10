@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { format } from 'date-fns';
-import Spinner from '../Spinner/Spinner.component';
 import NoCheckInsIcon from '../../assets/svg/Icons/NoCheckInsIcon';
 import { useMonthlyCheckIns } from '../../hooks/useSubmitCheckIn';
 import { MonthlyCheckIn } from '../../types';
 import NewSubmissionsToggle from '../Toggle/NewSubmissionToggle';
 import HistoryToggle from '../Toggle/HistoryToggle';
 import ArrowIcon from '../../assets/svg/Icons/ArrowIcon';
+import Loading from '../../assets/svg/Loading';
 
 interface MenteeMonthlyCheckingProps {
   menteeId: string;
@@ -118,7 +118,7 @@ const MenteeMonthlyChecking: React.FC<MenteeMonthlyCheckingProps> = ({
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <Spinner />
+        <Loading />
       </div>
     );
   }

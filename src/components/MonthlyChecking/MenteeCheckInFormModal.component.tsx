@@ -5,8 +5,8 @@ import { z } from 'zod';
 import { MenteeCheckInSchema } from '../../schemas';
 import { useSubmitCheckIn } from '../../hooks/useSubmitCheckIn';
 import closeIcon from '../../assets/svg/closeIcon.svg';
-import Spinner from '../Spinner/Spinner.component';
 import CloseIcon from '../../assets/svg/Icons/CloseIcon';
+import Loading from '../../assets/svg/Loading';
 
 type MenteeCheckInForm = z.infer<typeof MenteeCheckInSchema>;
 
@@ -221,11 +221,16 @@ const MonthlyCheckInModal: React.FC<{
               <button
                 type="submit"
                 disabled={loading}
-                className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white ${
-                  loading ? 'bg-gray-400' : 'bg-blue-600 hover:bg-blue-700'
-                } focus:outline-none focus:ring focus:ring-blue-500`}
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700
+                focus:outline-none focus:ring focus:ring-blue-500"
               >
-                {loading ? <Spinner /> : 'Submit Check-In'}
+                {loading ? (
+                  <div className="inline-flex items-center justify-center w-6 h-6">
+                    <Loading />
+                  </div>
+                ) : (
+                  'Submit'
+                )}
               </button>
               <button
                 type="button"

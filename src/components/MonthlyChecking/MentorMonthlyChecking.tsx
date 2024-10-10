@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { format } from 'date-fns';
 import MentorFeedbackForm from './MentorFeedbackForm.component';
-import Spinner from '../Spinner/Spinner.component';
 import NoCheckInsIcon from '../../assets/svg/Icons/NoCheckInsIcon';
 import { MonthlyCheckIn } from '../../types';
 import NewSubmissionsToggle from '../Toggle/NewSubmissionToggle';
 import HistoryToggle from '../Toggle/HistoryToggle';
 import ArrowIcon from '../../assets/svg/Icons/ArrowIcon';
+import Loading from '../../assets/svg/Loading';
 
 interface MentorMonthlyCheckingProps {
   menteeId: string;
@@ -111,7 +111,7 @@ const CheckInItem: React.FC<CheckInItemProps> = ({
               <>
                 {isSubmitting ? (
                   <div className="flex justify-center items-center h-32">
-                    <Spinner />
+                    <Loading />
                   </div>
                 ) : (
                   !isAdmin && (
@@ -155,7 +155,7 @@ const MentorMonthlyChecking: React.FC<MentorMonthlyCheckingProps> = ({
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <Spinner />
+        <Loading />
       </div>
     );
   }

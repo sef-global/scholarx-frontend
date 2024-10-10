@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MentorFeedbackSchema } from '../../schemas';
 import { useMentorFeedback } from '../../hooks/useSubmitCheckIn';
-import Spinner from '../Spinner/Spinner.component';
+import Loading from '../../assets/svg/Loading';
 
 interface MentorFeedbackFormData {
   menteeId: string;
@@ -53,7 +53,10 @@ const MentorFeedbackForm: React.FC<MentorFeedbackFormProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit(handleSubmitFeedback)} className="mt-3">
+    <form
+      onSubmit={handleSubmit(handleSubmitFeedback)}
+      className="mt-3 p-4 bg-gray-100 rounded-md shadow-sm"
+    >
       <input type="hidden" {...register('menteeId')} />
       <input type="hidden" {...register('checkInId')} />
       <textarea
@@ -83,8 +86,7 @@ const MentorFeedbackForm: React.FC<MentorFeedbackFormProps> = ({
         >
           {isSubmitting ? (
             <span className="flex items-center justify-center">
-              <Spinner />
-              <span>Submitting...</span>
+              <Loading />
             </span>
           ) : (
             'Submit Feedback'
