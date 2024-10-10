@@ -86,11 +86,11 @@ const Navbar: React.FC = () => {
               alt="ScholarX Logo"
             />
           </Link>
-          <div className="flex items-center md:items-start">
+          <div className="flex items-center">
             <ul className="items-center hidden md:flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-2 text-nowrap rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
               <li>
                 <Link
-                  className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 cursor-pointer"
+                  className="py-2 lg:px-3 md:text-sm md:px-1 text-gray-900 rounded hover:bg-gray-100 cursor-pointer"
                   to="/mentors"
                 >
                   Find a mentor
@@ -99,7 +99,7 @@ const Navbar: React.FC = () => {
               <li>
                 <a
                   href="https://handbook.sefglobal.org/"
-                  className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 "
+                  className="py-2 lg:px-3 md:text-sm md:px-1 text-gray-900 rounded hover:bg-gray-100 "
                 >
                   About
                 </a>
@@ -107,7 +107,7 @@ const Navbar: React.FC = () => {
               <li>
                 <a
                   href="https://sefglobal.org/#projects"
-                  className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 "
+                  className="py-2 lg:px-3 md:text-sm md:px-1 text-gray-900 rounded hover:bg-gray-100 "
                 >
                   Initiatives
                 </a>
@@ -115,17 +115,17 @@ const Navbar: React.FC = () => {
               <li>
                 <a
                   href="https://sefglobal.org/join-us.html"
-                  className="py-2 px-3 text-gray-900 rounded hover:bg-gray-100 "
+                  className="py-2 lg:px-3 md:text-sm md:px-1 text-gray-900 rounded hover:bg-gray-100 "
                 >
                   Join Us
                 </a>
               </li>
               {!isUserMentor && (
-                <li>
+                <li className='items-center flex justify-center'>
                   <button
                     type="button"
                     onClick={handleMentorRegistration}
-                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 lg:me-2 mb-2"
                   >
                     Become a Mentor
                   </button>
@@ -137,7 +137,7 @@ const Navbar: React.FC = () => {
                   <button
                     type="button"
                     onClick={handleLoginModalOpen}
-                    className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 text-center  dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+                    className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 lg:me-2 mb-2 text-center  dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
                   >
                     Login
                   </button>
@@ -180,9 +180,8 @@ const Navbar: React.FC = () => {
                 </button>
                 {/* Dropdown menu */}
                 <div
-                  className={`z-50 ${
-                    isDropdownOpen ? 'block' : 'hidden'
-                  } my-4 text-base list-none top-5 md:right-5 right-0 bg-white divide-y absolute divide-gray-100 rounded-lg shadow`}
+                  className={`z-50 ${isDropdownOpen ? 'block' : 'hidden'
+                    } my-4 text-base list-none top-5 md:right-5 right-0 bg-white divide-y absolute divide-gray-100 rounded-lg shadow`}
                 >
                   <div className="px-4 py-3">
                     <span className="block text-sm text-gray-900">
