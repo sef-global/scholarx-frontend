@@ -130,3 +130,11 @@ export interface MentorFeedbackForm {
   mentorFeedback: string;
   isCheckedByMentor: boolean;
 }
+
+export interface NotificationProps {
+  iconColor?: string;
+  badgeColor?: string;
+  textColor?: string;
+  count?: number;
+  className?: string;
+}
