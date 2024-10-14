@@ -4,7 +4,11 @@ export const MenteeApplicationSchema = z.object({
   firstName: z.string().min(1, { message: 'First name cannot be empty' }),
   lastName: z.string().min(1, { message: 'Last name cannot be empty' }),
   email: z.string().email({ message: 'Invalid email address' }),
-  contactNo: z.string().min(1, { message: 'Contact number cannot be empty' }),
+  contactNo: z
+    .string()
+    .min(1, { message: 'Contact number cannot be empty' })
+    .startsWith('+', { message: "Must start with '+' for country code" })
+    .regex(/^\+\d{6,14}$/, { message: 'Invalid contact number' }),
   company: z.string().min(1, { message: 'Company cannot be empty' }).optional(),
   profilePic: z
     .string()
@@ -13,19 +17,23 @@ export const MenteeApplicationSchema = z.object({
     .string()
     .min(1, { message: 'Position cannot be empty' })
     .optional(),
-  cv: z.string().min(1, { message: 'CV cannot be empty' }),
+  cv: z
+    .string()
+    .min(1, { message: 'CV cannot be empty' })
+    .url({ message: 'Please enter a valid link' }),
   isUndergrad: z.boolean(),
-  consentGiven: z.boolean().refine((val) => val, {
-    message: 'You must give your consent to proceed.',
-  }),
   graduatedYear: z
     .number({ invalid_type_error: 'Graduated year is required' })
+    .int({ message: 'Graduated year must be an integer' })
     .refine(
       (data) => {
-        return data === undefined || (!isNaN(data) && data >= 1980);
+        return (
+          data === undefined ||
+          (!isNaN(data) && data >= 1980 && data <= new Date().getFullYear())
+        );
       },
       {
-        message: 'Graduated year must be a year',
+        message: 'Graduated year must be a valid year',
       }
     )
     .optional(),
@@ -35,6 +43,7 @@ export const MenteeApplicationSchema = z.object({
     .optional(),
   yearOfStudy: z
     .number({ invalid_type_error: 'Year of study is required' })
+    .int({ message: 'Year of study must be an integer' })
     .gte(1, { message: 'Year must be greater than 0' })
     .lte(4, { message: 'Year must be less than or equal 4' })
     .optional(),
@@ -43,6 +52,7 @@ export const MenteeApplicationSchema = z.object({
   submission: z
     .string()
     .url({ message: 'Please submit a valid video submission' }),
+  consentGiven: z.boolean().optional(),
 });
 
 export const MentorApplicationSchema = z.object({
@@ -75,9 +85,6 @@ export const MentorApplicationSchema = z.object({
   noOfMentees: z.number().min(0, {
     message: 'Number of mentees must be greater than or equal to 0',
   }),
-  canCommit: z.boolean().refine((val) => val, {
-    message: 'You must mention if you can commit',
-  }),
   mentoredYear: z
     .number({ invalid_type_error: 'Mentored year is required' })
     .or(z.number().min(0))
@@ -94,6 +101,7 @@ export const MentorApplicationSchema = z.object({
     .url({ message: 'Invalid website URL' })
     .optional()
     .or(z.literal('')),
+  canCommit: z.boolean().optional(),
 });
 
 export const MenteeCheckInSchema = z.object({
@@ -113,5 +121,23 @@ export const MentorFeedbackSchema = z.object({
   mentorFeedback: z.string().optional(),
   isCheckedByMentor: z.literal(true, {
     errorMap: () => ({ message: 'You must mark this as checked' }),
+  }),
+});
+
+export const mentorTermsAgreementModalSchema = z.object({
+  agreed: z.boolean().refine((val) => val, {
+    message: 'You must agree to the ScholarX Mentor Guide',
+  }),
+  canCommit: z.boolean().refine((val) => val, {
+    message: 'You must mention if you can commit',
+  }),
+});
+
+export const menteeTermsAgreementModalSchema = z.object({
+  agreed: z.boolean().refine((val) => val, {
+    message: 'You must agree to the ScholarX Mentee Guide',
+  }),
+  consentGiven: z.boolean().refine((val) => val, {
+    message: 'You must give consent to proceed',
   }),
 });
