@@ -1,7 +1,7 @@
 import React from 'react';
 import { NotificationProps } from '../../../types';
 
-const NotificationBellSVG: React.FC<NotificationProps> = ({
+const NotificationBell: React.FC<NotificationProps> = ({
   iconColor = 'currentColor',
   badgeColor = '#EF4444',
   textColor = 'white',
@@ -44,4 +44,4 @@ const NotificationBellSVG: React.FC<NotificationProps> = ({
   );
 };
 
-export default NotificationBellSVG;
+export default NotificationBell;

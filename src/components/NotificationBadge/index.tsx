@@ -1,5 +1,5 @@
 import React from 'react';
-import NotificationBellSVG from '../../assets/svg/Icons/NotificationBellSVG';
+import NotificationBell from '../../assets/svg/Icons/NotificationBell';
 import { NotificationProps } from '../../types';
 
 const NotificationBadge: React.FC<NotificationProps> = ({
@@ -11,7 +11,7 @@ const NotificationBadge: React.FC<NotificationProps> = ({
 }) => {
   return (
     <div className={`relative inline-block ${className}`}>
-      <NotificationBellSVG
+      <NotificationBell
         count={count}
         iconColor={iconColor}
         badgeColor={badgeColor}
