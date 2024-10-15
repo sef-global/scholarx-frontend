@@ -105,12 +105,23 @@ export const MentorApplicationSchema = z.object({
 });
 
 export const MenteeCheckInSchema = z.object({
-  generalUpdate: z.string().min(1, 'Please provide general updates'),
-  progressUpdate: z.string().min(1, 'Please summarize your progress'),
-  mediaLink: z
+  title: z.string().min(1, 'Title is required'),
+  generalUpdatesAndFeedback: z
     .string()
-    .url('Please provide a valid URL')
-    .min(1, 'Please provide a media link'),
+    .min(5, 'Please provide general updates'),
+  progressTowardsGoals: z.string().min(5, 'Please summarize your progress'),
+  mediaContentLinks: z
+    .array(z.string().url('Please provide a valid URL'))
+    .min(1, 'Please provide at least 1 media links'),
+});
+
+export const MentorFeedbackSchema = z.object({
+  menteeId: z.string().min(1, 'Mentee ID is required'),
+  checkInId: z.string().min(1, 'Check-in ID is required'),
+  mentorFeedback: z.string().optional(),
+  isCheckedByMentor: z.literal(true, {
+    errorMap: () => ({ message: 'You must mark this as checked' }),
+  }),
 });
 
 export const mentorTermsAgreementModalSchema = z.object({
