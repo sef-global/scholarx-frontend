@@ -25,12 +25,12 @@ const MentorCardHorizontal: React.FC<MentorCardProps> = ({ mentor }) => {
           target="_blank"
           rel="noreferrer"
         >
-          {mentor?.application.firstName}{' '}
+          {mentor?.application.firstName}
           {mentor?.application.lastName}
         </a>
       </h3>
       <p className="line-clamp-2 text-sm text-gray-700">
-        {mentor?.application.position},{' '}
+        {mentor?.application.position},
         {mentor?.application.institution}
       </p>
     </div>
