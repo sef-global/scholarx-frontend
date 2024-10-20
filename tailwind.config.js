@@ -5,7 +5,7 @@ export const theme = {
     colors: {
       'primary-blue': '#1677FF',
       'darkmod-blue': '#3D317C',
-      'light-gray': '#D1D5DB',
+      'bd-gray': '#D1D5DB',
     },
     animation: {
       'skeleton': 'skeleton-loading 1.5s infinite',
