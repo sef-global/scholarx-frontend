@@ -257,7 +257,7 @@ const MentorRegistrationPage: React.FC = () => {
               error={errors.email}
             />
             <FormInput
-              type="number"
+              type="text"
               placeholder="+1234567890"
               name="contactNo"
               label="Contact No (Whatsapp)"
