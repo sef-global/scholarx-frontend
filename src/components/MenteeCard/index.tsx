@@ -38,8 +38,8 @@ const MenteeCard: React.FC<MenteeCardProps> = ({
         </h5>
         {mentee.application.isUndergrad ? (
           <p className="text-sm text-gray-500 flex items-center">
-            <BusinessBag/>
-            <span> {mentee.application.university} </span>
+            <BusinessBag />
+            <span>{mentee.application.university}</span>
           </p>
         ) : (
           <>

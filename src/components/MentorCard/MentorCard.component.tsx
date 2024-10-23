@@ -62,8 +62,8 @@ const MentorCard: React.FC<MentorCardProps> = ({
 
   return (
     <Link
-    className="p-2.5 rounded-md shadow-md max-w-full flex flex-col h-full relative outline outline-2 outline-bd-gray"
-    to={`/mentors/${mentor.uuid}`}    
+      className="p-2.5 rounded-md shadow-md max-w-full flex flex-col h-full relative outline outline-2 outline-bd-gray"
+      to={`/mentors/${mentor.uuid}`}
     >
       <div className="flex flex-col items-center">
         <ProfilePic
@@ -85,9 +85,8 @@ const MentorCard: React.FC<MentorCardProps> = ({
           {mentor.application?.firstName} {mentor.application?.lastName}
         </h5>
         <p className="text-sm text-gray-500 flex items-center p-0">
-          <BusinessBag/>
-          <span className='align-middle'>
-            {' '}
+          <BusinessBag />
+          <span className="align-middle">
             {mentor.application?.position} | {mentor.application?.institution}
           </span>
         </p>
