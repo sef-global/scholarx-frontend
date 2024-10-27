@@ -96,11 +96,13 @@ const MenteeDashboard: React.FC = () => {
           </div>
         </div>
       </div>
-      <MonthlyCheckInModal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        menteeId={menteeId}
-      />
+      {isModalOpen ? (
+        <MonthlyCheckInModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          menteeId={menteeId}
+        />
+      ) : null}
     </>
   );
 };
