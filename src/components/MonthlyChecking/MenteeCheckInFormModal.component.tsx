@@ -213,7 +213,7 @@ const MonthlyCheckInModal: React.FC<{
               </button>
               {errors.mediaContentLinks && (
                 <p className="text-red-500 text-xs mt-1">
-                  {errors.mediaContentLinks.message}
+                  {errors.mediaContentLinks[0]?.message}
                 </p>
               )}
             </div>
