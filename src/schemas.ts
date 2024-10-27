@@ -91,7 +91,7 @@ export const MentorApplicationSchema = z.object({
     .min(1, { message: 'Mentoring philosophy cannot be empty' }),
   noOfMentees: z
     .number({ invalid_type_error: 'Number of mentees is required' })
-    .min(0, { message: 'Number of mentees must be greater than or equal to 0' })
+    .min(1, { message: 'Number of mentees must be greater than or equal to 1' })
     .int({ message: 'Number of mentees must be an integer number' }),
   mentoredYear: z
     .number({ invalid_type_error: 'Mentored year is required' })
@@ -100,7 +100,7 @@ export const MentorApplicationSchema = z.object({
       (data) => {
         return (
           data === undefined ||
-          (!isNaN(data) && data >= 1980 && data <= new Date().getFullYear())
+          (!isNaN(data) && data >= 2018 && data <= new Date().getFullYear())
         );
       },
       {
