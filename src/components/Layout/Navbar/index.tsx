@@ -1,6 +1,5 @@
 import { RefObject, useContext, useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-
 import { useLoginModalContext } from '../../../contexts/LoginModalContext';
 import { UserContext, UserContextType } from '../../../contexts/UserContext';
 import StickyBanner from '../../Banner/StickyBanner';
@@ -84,6 +83,7 @@ const Navbar: React.FC = () => {
               src="/scholarx-logo.png"
               className="md:h-12 h-10"
               alt="ScholarX Logo"
+              referrerPolicy="no-referrer"
             />
           </Link>
           <div className="flex items-center">

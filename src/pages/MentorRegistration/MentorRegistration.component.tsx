@@ -205,6 +205,7 @@ const MentorRegistrationPage: React.FC = () => {
                     src={profilePic}
                     alt="Profile"
                     className="w-[90px] h-[90px] rounded-full object-cover"
+                    referrerPolicy="no-referrer"
                   />
                 ) : (
                   <div className="w-[90px] h-[90px] rounded-full bg-gray-200 flex items-center justify-center">
