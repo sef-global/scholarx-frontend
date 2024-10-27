@@ -143,6 +143,7 @@ const MenteeApplication: React.FC = () => {
                     src={mentee?.mentor.profile.image_url}
                     className="w-14 h-14 rounded-full object-cover"
                     alt=""
+                    referrerPolicy="no-referrer"
                   />
                   <div>
                     <h3 className="font-medium sm:text-lg">
