@@ -205,6 +205,7 @@ const MentorRegistrationPage: React.FC = () => {
                     src={profilePic}
                     alt="Profile"
                     className="w-[90px] h-[90px] rounded-full object-cover"
+                    referrerPolicy="no-referrer"
                   />
                 ) : (
                   <div className="w-[90px] h-[90px] rounded-full bg-gray-200 flex items-center justify-center">
@@ -257,7 +258,7 @@ const MentorRegistrationPage: React.FC = () => {
               error={errors.email}
             />
             <FormInput
-              type="number"
+              type="text"
               placeholder="+1234567890"
               name="contactNo"
               label="Contact No (Whatsapp)"
