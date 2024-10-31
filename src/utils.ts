@@ -1,3 +1,5 @@
+import { format, isValid, parseISO } from 'date-fns';
+
 export const getStateColor = (state: string | undefined) => {
   switch (state) {
     case 'pending':
@@ -11,4 +13,12 @@ export const getStateColor = (state: string | undefined) => {
     default:
       return 'bg-gray-100 text-gray-700';
   }
+};
+
+export const formatDate = (dateString: string | null | undefined): string => {
+  if (!dateString) return 'Date not available';
+  const date = parseISO(dateString);
+  return isValid(date)
+    ? format(date, 'MMMM dd, yyyy, hh:mm a')
+    : 'Invalid date';
 };

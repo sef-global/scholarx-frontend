@@ -2,6 +2,7 @@ import { type z } from 'zod';
 import {
   type MentorApplicationSchema,
   type MenteeApplicationSchema,
+  MenteeCheckInSchema,
 } from './schemas';
 import {
   type StatusUpdatedBy,
@@ -101,4 +102,39 @@ export interface PasswordResetResponse {
 export interface PasswordUpdateData {
   token: string;
   newPassword: string;
+}
+
+export type MenteeCheckInForm = z.infer<typeof MenteeCheckInSchema>;
+
+export interface MonthlyCheckIn {
+  uuid: string;
+  title: string;
+  checkInDate: string;
+  mediaContentLinks: string[];
+  isCheckedByMentor: boolean;
+  mentorCheckedDate: string;
+  mentorFeedback: string;
+  generalUpdatesAndFeedback: string;
+  progressTowardsGoals?: string;
+  mentee: Mentee;
+}
+
+export interface MonthlyCheckingProps {
+  isMentorView: boolean;
+  menteeId: string;
+}
+
+export interface MentorFeedbackForm {
+  checkInId: string;
+  menteeId: string;
+  mentorFeedback: string;
+  isCheckedByMentor: boolean;
+}
+
+export interface NotificationProps {
+  iconColor?: string;
+  badgeColor?: string;
+  textColor?: string;
+  count?: number;
+  className?: string;
 }

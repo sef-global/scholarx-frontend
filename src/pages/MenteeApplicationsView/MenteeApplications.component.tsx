@@ -9,6 +9,7 @@ const MenteeApplications: React.FC = () => {
   const { mentor } = useContext(UserContext) as UserContextType;
   const { data: mentees } = useMyMentees();
   const [isAvailable, setIsAvailable] = useState(mentor?.availability);
+
   const { updateAvailability } = useMentor(mentor?.uuid);
 
   const handleAvailability = async (availability: boolean) => {

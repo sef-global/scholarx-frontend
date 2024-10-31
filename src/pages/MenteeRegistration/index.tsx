@@ -11,6 +11,7 @@ import { API_URL } from '../../constants';
 import useProfile from '../../hooks/useProfile';
 import { MenteeApplicationSchema } from '../../schemas';
 import { MenteeApplication } from '../../types';
+import TermsAgreementModal from '../../components/TermsAgreementModal';
 
 const steps = [
   {
@@ -35,9 +36,11 @@ const MenteeRegistration: React.FC = () => {
     setError,
     clearErrors,
     trigger,
+    getValues,
     formState: { errors },
   } = useForm<MenteeApplication>({
     resolver: zodResolver(MenteeApplicationSchema),
+    mode: 'onChange',
     defaultValues: {
       firstName: user?.first_name,
       lastName: user?.last_name,
@@ -51,6 +54,8 @@ const MenteeRegistration: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [image, setImage] = useState<File | null>(null);
   const [profilePic, setProfilePic] = useState(user?.image_url);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleProfilePicChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files != null) {
@@ -89,7 +94,7 @@ const MenteeRegistration: React.FC = () => {
       }
     }
 
-    const output = await trigger(fields as [keyof MenteeApplication], {
+    const output = await trigger(fields as Array<keyof MenteeApplication>, {
       shouldFocus: true,
     });
 
@@ -101,10 +106,31 @@ const MenteeRegistration: React.FC = () => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
 
-  const onSubmit: SubmitHandler<MenteeApplication> = async (data) => {
-    await applyForMentor(data);
-    if (image) {
-      await updateProfile({ profile: null, image });
+  const onSubmit: SubmitHandler<MenteeApplication> = async () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalAgree = async (agreedData: {
+    agreed: boolean;
+    consentGive?: boolean;
+    canCommit?: boolean;
+  }) => {
+    setIsModalOpen(false);
+    setIsSubmitting(true);
+    const formData = getValues();
+    try {
+      const validatedData = MenteeApplicationSchema.parse({
+        ...formData,
+        ...agreedData,
+      });
+      await applyForMentor(validatedData);
+      if (image) {
+        await updateProfile({ profile: null, image });
+      }
+    } catch (error) {
+      console.error('Error submitting application:', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -175,6 +201,7 @@ const MenteeRegistration: React.FC = () => {
                     src={profilePic}
                     alt="Profile"
                     className="w-[90px] h-[90px] rounded-full object-cover"
+                    referrerPolicy="no-referrer"
                   />
                 ) : (
                   <div className="w-[90px] h-[90px] rounded-full bg-gray-200 flex items-center justify-center">
@@ -355,22 +382,6 @@ const MenteeRegistration: React.FC = () => {
               register={register}
               error={errors.submission}
             />
-            <FormCheckbox
-              name="consentGiven"
-              label="I, hereby grant Sustainable Foundation Education permission to use my video submission solely for the internal evaluation of my application 
-                to ScholarX. I understand that this video will not be used for any other purposes without my explicit consent."
-              register={register}
-              error={errors.consentGiven}
-            />
-            <p className="text-md font-semibold">Privacy Statement</p>
-            <p>
-              Sustainable Foundation Education assures that your video
-              submission will be used exclusively for application evaluation
-              purposes. We are committed to protecting your privacy and will not
-              use your video for any other activities, such as general AI
-              training or public distribution. Your personal information and
-              video content will be handled with the utmost confidentiality.
-            </p>
           </>
         )}
         {status === 'error' ? (
@@ -425,6 +436,7 @@ const MenteeRegistration: React.FC = () => {
           {currentStep === 2 && !applicationSuccess && (
             <button
               type="submit"
+              disabled={isSubmitting}
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
             >
               {isApplicationPending ? 'Submitting...' : 'Submit'}
@@ -440,6 +452,15 @@ const MenteeRegistration: React.FC = () => {
           )}
         </div>
       </form>
+      <TermsAgreementModal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+        }}
+        onAgree={handleModalAgree}
+        isMentor={false}
+        guideUrl="https://docs.google.com/document/d/1gIYte14FIQtqUhGiMErZRovhNErdUrFdQ0LnCFFnfag/"
+      />
     </div>
   );
 };
