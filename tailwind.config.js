@@ -10,6 +10,9 @@ export const theme = {
     animation: {
       'skeleton': 'skeleton-loading 1.5s infinite',
     },
+    fontFamily: {
+      'sf-pro': ['"SF Pro Text"', 'sans-serif'],
+    },
     keyframes: {
       'skeleton-loading': {
         '0%': { backgroundPosition: '100% 0' },

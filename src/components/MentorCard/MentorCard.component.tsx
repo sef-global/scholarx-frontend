@@ -80,23 +80,25 @@ const MentorCard: React.FC<MentorCardProps> = ({
           <span className="text-xs font-semibold">Unavailable</span>
         </div>
       )}
-      <div className="text-left p-0.5 flex-1">
-        <h5 className="text-lg font-bold text-black-600 text-wrap">
+      <div className="text-left p-0.5 flex-1 font-sf-pro ">
+        <h5 className="text-lg font-bold text-black-600 text-wrap pb-1">
           {mentor.application?.firstName} {mentor.application?.lastName}
         </h5>
         <p className="text-sm text-gray-500 flex items-center p-0">
-          <BusinessBag />
-          <span className="align-middle">
+        <span className="self-start"> 
+      <BusinessBag />
+    </span>
+          <span className="align-top leading-snug " style={{ marginTop: '-0.15em' }}>
             {mentor.application?.position} | {mentor.application?.institution}
           </span>
         </p>
       </div>
       <hr className="my-4 border-gray-300" />
 
-      <div className="flex justify-between text-left">
+      <div className="flex justify-between text-left font-sf-pro">
         <div className="text-[10px]">
           <p className="text-gray-500">Available Mentee Slots</p>
-          <p className="text-xs font-bold">
+          <p className="text-xs font-bold text-[12px]">
             {mentor?.application?.noOfMentees && mentor.mentees
               ? availableSlots
               : 0}
@@ -104,7 +106,7 @@ const MentorCard: React.FC<MentorCardProps> = ({
         </div>
         <div className="text-[10px]">
           <p className="text-gray-500">Applications Received</p>
-          <p className="text-xs font-bold">
+          <p className="text-xs font-bold text-[12px]">
             {mentor?.mentees &&
             mentor.mentees.some(
               (mentee) => mentee.state === ApplicationStatus.APPROVED
