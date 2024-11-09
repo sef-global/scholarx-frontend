@@ -59,7 +59,11 @@ export const MentorApplicationSchema = z.object({
   firstName: z.string().min(1, { message: 'First name cannot be empty' }),
   lastName: z.string().min(1, { message: 'Last name cannot be empty' }),
   email: z.string().email({ message: 'Invalid email address' }),
-  contactNo: z.string().min(1, { message: 'Contact number cannot be empty' }),
+  contactNo: z
+    .string()
+    .min(1, { message: 'Contact number cannot be empty' })
+    .startsWith('+', { message: "Must start with '+' for country code" })
+    .regex(/^\+\d{6,14}$/, { message: 'Invalid contact number' }),
   country: z.string().min(1, { message: 'Country cannot be empty' }),
   position: z.string().min(1, { message: 'Position cannot be empty' }),
   expertise: z.string().min(1, { message: 'Expertise cannot be empty' }),
@@ -75,19 +79,34 @@ export const MentorApplicationSchema = z.object({
   profilePic: z
     .string()
     .min(1, { message: 'The profile picture cannot be empty' }),
-  cv: z.string().min(1, { message: 'CV cannot be empty' }),
+  cv: z
+    .string()
+    .min(1, { message: 'CV cannot be empty' })
+    .url({ message: 'Please enter a valid link' }),
   menteeExpectations: z
     .string()
     .min(1, { message: 'Mentee expectations cannot be empty' }),
   mentoringPhilosophy: z
     .string()
     .min(1, { message: 'Mentoring philosophy cannot be empty' }),
-  noOfMentees: z.number().min(0, {
-    message: 'Number of mentees must be greater than or equal to 0',
-  }),
+  noOfMentees: z
+    .number({ invalid_type_error: 'Number of mentees is required' })
+    .min(1, { message: 'Number of mentees must be greater than or equal to 1' })
+    .int({ message: 'Number of mentees must be an integer number' }),
   mentoredYear: z
     .number({ invalid_type_error: 'Mentored year is required' })
-    .or(z.number().min(0))
+    .int({ message: 'Mentored year must be a valid year' })
+    .refine(
+      (data) => {
+        return (
+          data === undefined ||
+          (!isNaN(data) && data >= 2018 && data <= new Date().getFullYear())
+        );
+      },
+      {
+        message: 'Mentored year must be a valid year',
+      }
+    )
     .optional(),
   category: z.string().min(1, { message: 'Category cannot be empty' }),
   institution: z.string().min(1, { message: 'Institution cannot be empty' }),
