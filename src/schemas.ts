@@ -124,7 +124,7 @@ export const MentorApplicationSchema = z.object({
 });
 
 export const MenteeCheckInSchema = z.object({
-  title: z.string().min(1, 'Title is required'),
+  title: z.string().min(1, 'Month is required'),
   generalUpdatesAndFeedback: z
     .string()
     .min(5, 'Please provide general updates'),
