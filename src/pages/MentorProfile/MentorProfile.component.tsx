@@ -193,22 +193,26 @@ const MentorProfile: React.FC = () => {
         </div>
         <div className="flex flex-row md:gap-9 md:m-5 gap-4 mt-4">
           <span className="w-0.5 h-24 bg-gray-300 md:block hidden"></span>
-          <a
-            href={mentor?.application.linkedin}
-            target="_blank"
-            rel="noreferrer"
-            className="text-blue-500 underline"
-          >
-            Linkedin
-          </a>
-          <a
-            href={mentor?.application.website}
-            target="_blank"
-            rel="noreferrer"
-            className="text-blue-500 underline"
-          >
-            Website
-          </a>
+
+          {mentor?.application.linkedin && (
+            <a href={mentor.application.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              className="text-blue-500 underline"
+            >
+              Linkedin
+            </a>
+          )}
+
+          {mentor?.application.website && (
+            <a href={mentor.application.website}
+              target="_blank"
+              rel="noreferrer"
+              className="text-blue-500 underline"
+            >
+              Website
+            </a>
+          )}
         </div>
       </div>
       <div className="pb-4">
