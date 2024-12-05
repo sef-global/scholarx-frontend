@@ -3,6 +3,8 @@ Frontend dashboard of the scholarX platform
 
 ## Setup Development Environment
 
+### **Project setup walkthrough :- https://youtu.be/1STopJMM2nM**
+
 1. Clone your forked repository
     ```
     git clone https://github.com/USERNAME/scholarx-frontend
