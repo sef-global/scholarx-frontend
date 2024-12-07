@@ -195,7 +195,8 @@ const MentorProfile: React.FC = () => {
           <span className="w-0.5 h-24 bg-gray-300 md:block hidden"></span>
 
           {mentor?.application.linkedin && (
-            <a href={mentor.application.linkedin}
+            <a
+              href={mentor.application.linkedin}
               target="_blank"
               rel="noreferrer"
               className="text-blue-500 underline"
@@ -205,7 +206,8 @@ const MentorProfile: React.FC = () => {
           )}
 
           {mentor?.application.website && (
-            <a href={mentor.application.website}
+            <a
+              href={mentor.application.website}
               target="_blank"
               rel="noreferrer"
               className="text-blue-500 underline"
