@@ -1,12 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { API_URL } from '../../constants';
 import closeIcon from '../../assets/svg/closeIcon.svg';
 import useProfile from '../../hooks/useProfile';
 import GoogleLoginButton from '../OAuth/Google';
 import LinkedInLoginButton from '../OAuth/LinkedIn';
-import { useNavigate } from 'react-router';
-import { UserContext, UserContextType } from '../../contexts/UserContext';
 
 interface LoginModalProps {
   handleClose: () => void;
@@ -24,20 +22,6 @@ const LoginModal: React.FC<LoginModalProps> = ({
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { refetch } = useProfile();
-  const navigate = useNavigate();
-  const userContext = useContext(UserContext) as UserContextType;
-
-  useEffect(() => {
-    if (userContext.user) {
-      if (userContext.isUserMentor) {
-        navigate('/mentor/dashboard');
-      } else if (userContext.isUserAdmin) {
-        navigate('/admin/dashboard/mentor-applications');
-      } else if (userContext.isUserMentee) {
-        navigate('/mentee/dashboard');
-      }
-    }
-  }, [userContext, navigate]);
 
   const handleLogin = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
