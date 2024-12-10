@@ -74,6 +74,20 @@ const Navbar: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      if (isUserMentor) {
+        navigate('/mentor/dashboard');
+      } else if (isUserAdmin) {
+        navigate('/admin/dashboard/mentor-applications');
+      } else if (isUserMentee) {
+        navigate('/mentee/dashboard');
+      } else {
+        navigate('/');
+      }
+    }
+  }, [user]);
+
   return (
     <div className="fixed top-0 start-0 flex justify-between w-full z-20">
       <nav className="bg-white border-gray-200 container mx-auto">

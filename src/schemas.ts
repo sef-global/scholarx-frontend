@@ -124,14 +124,14 @@ export const MentorApplicationSchema = z.object({
 });
 
 export const MenteeCheckInSchema = z.object({
-  title: z.string().min(1, 'Title is required'),
+  month: z.string().min(1, 'Month is required'),
   generalUpdatesAndFeedback: z
     .string()
     .min(5, 'Please provide general updates'),
   progressTowardsGoals: z.string().min(5, 'Please summarize your progress'),
   mediaContentLinks: z
     .array(z.string().url('Please provide a valid URL'))
-    .min(1, 'Please provide at least 1 media links'),
+    .optional(),
 });
 
 export const MentorFeedbackSchema = z.object({
