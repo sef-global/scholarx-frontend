@@ -5,15 +5,22 @@ export const theme = {
     colors: {
       'primary-blue': '#1677FF',
       'darkmod-blue': '#3D317C',
+      'bd-gray': '#D1D5DB',
     },
     animation: {
       'skeleton': 'skeleton-loading 1.5s infinite',
+    },
+    fontFamily: {
+      'sf-pro': ['"SF Pro Text"', 'sans-serif'],
     },
     keyframes: {
       'skeleton-loading': {
         '0%': { backgroundPosition: '100% 0' },
         '100%': { backgroundPosition: '-100% 0' },
       },
+    },
+    borderRadius: {
+      'custom-5': '5px',
     },
   },
 };
