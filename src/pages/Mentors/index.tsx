@@ -12,27 +12,18 @@ import Box from '@mui/material/Box';
 const Mentors = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
-  const [selectedAvailableSlots, setSelectedAvailableSlots] = useState<
-    number[]
-  >([0, 10]);
+  const [selectedAvailableSlots, setSelectedAvailableSlots] = useState<number[]>([0, 10]);
   const [sortedMentors, setSortedMentors] = useState<Mentor[]>([]);
   const [uniqueCountries, setUniqueCountries] = useState<string[]>([]);
-  const [uniqueAvailableSlots, setUniqueAvailableSlots] = useState<number[]>(
-    []
-  );
+  const [uniqueAvailableSlots, setUniqueAvailableSlots] = useState<number[]>([]);
   const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
   const [isSlotsDropdownOpen, setIsSlotsDropdownOpen] = useState(false);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const pageSize = 10;
 
   const { ref, inView } = useInView();
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
-    usePublicMentors(selectedCategory, pageSize);
-  const {
-    data: allCategories,
-    isLoading: categoriesLoading,
-    error: categoriesError,
-  } = useCategories();
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = usePublicMentors(selectedCategory, pageSize);
+  const { data: allCategories, isLoading: categoriesLoading, error: categoriesError } = useCategories();
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -43,23 +34,12 @@ const Mentors = () => {
   useEffect(() => {
     if (data) {
       const allMentors = data.pages.flatMap((page) => page.items);
-      const countries = allMentors
-        .map((mentor) => mentor.application?.country)
-        .filter((country) => !!country);
+      const countries = allMentors.map((mentor) => mentor.application?.country).filter((country) => !!country);
       setUniqueCountries([...new Set(countries)]);
-      const availableSlots = allMentors
-        .map((mentor) => {
-          const approvedMenteesCount = mentor?.mentees
-            ? mentor.mentees.filter(
-                (mentee) => mentee.state === ApplicationStatus.APPROVED
-              ).length
-            : 0;
-          return Math.max(
-            0,
-            mentor.application.noOfMentees - approvedMenteesCount
-          );
-        })
-        .filter((slots, index, self) => self.indexOf(slots) === index);
+      const availableSlots = allMentors.map((mentor) => {
+        const approvedMenteesCount = mentor?.mentees ? mentor.mentees.filter((mentee) => mentee.state === ApplicationStatus.APPROVED).length : 0;
+        return Math.max(0, mentor.application.noOfMentees - approvedMenteesCount);
+      }).filter((slots, index, self) => self.indexOf(slots) === index);
       setUniqueAvailableSlots(availableSlots);
     }
   }, [data]);
@@ -68,28 +48,13 @@ const Mentors = () => {
     if (data) {
       let allMentors = data.pages.flatMap((page) => page.items);
       if (selectedCountries.length > 0) {
-        allMentors = allMentors.filter((mentor) =>
-          selectedCountries.includes(mentor.application.country)
-        );
+        allMentors = allMentors.filter((mentor) => selectedCountries.includes(mentor.application.country));
       }
       const [minSlots, maxSlots] = selectedAvailableSlots;
       if (minSlots > 0 || maxSlots < 10) {
         allMentors = allMentors.filter((mentor) => {
-          const approvedMenteesCount = mentor?.mentees
-            ? mentor.mentees.filter(
-                (mentee) => mentee.state === ApplicationStatus.APPROVED
-              ).length
-            : 0;
-          return mentor?.application.noOfMentees
-            ? Math.max(
-                0,
-                mentor.application.noOfMentees - approvedMenteesCount
-              ) >= minSlots &&
-                Math.max(
-                  0,
-                  mentor.application.noOfMentees - approvedMenteesCount
-                ) <= maxSlots
-            : false;
+          const approvedMenteesCount = mentor?.mentees ? mentor.mentees.filter((mentee) => mentee.state === ApplicationStatus.APPROVED).length : 0;
+          return mentor?.application.noOfMentees ? Math.max(0, mentor.application.noOfMentees - approvedMenteesCount) >= minSlots && Math.max(0, mentor.application.noOfMentees - approvedMenteesCount) <= maxSlots : false;
         });
       }
       setSortedMentors(allMentors);
@@ -97,11 +62,7 @@ const Mentors = () => {
   }, [data, selectedCountries, selectedAvailableSlots]);
 
   const handleSortAZ = () => {
-    const sorted = [...sortedMentors].sort((a, b) =>
-      (a.application?.firstName || '').localeCompare(
-        b.application?.firstName || ''
-      )
-    );
+    const sorted = [...sortedMentors].sort((a, b) => (a.application?.firstName || '').localeCompare(b.application?.firstName || ''));
     setSortedMentors(sorted);
   };
 
@@ -119,10 +80,7 @@ const Mentors = () => {
     });
   };
 
-  const handleAvailableSlotsChange = (
-    event: Event,
-    newValue: number | number[]
-  ) => {
+  const handleAvailableSlotsChange = (event: Event, newValue: number | number[]) => {
     if (Array.isArray(newValue)) {
       setSelectedAvailableSlots(newValue);
     }
@@ -155,42 +113,22 @@ const Mentors = () => {
   return (
     <div className="min-h-screen flex flex-col items-center p-6 bg-white">
       <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-8">
-        <button
-          className="lg:hidden bg-blue-500 text-white px-2 py-1 mb-4 rounded"
-          onClick={toggleMobileFilter}
-        >
+        <button className="lg:hidden bg-blue-500 text-white px-2 py-1 mb-4 rounded" onClick={toggleMobileFilter}>
           {isMobileFilterOpen ? 'Hide Filters' : 'Show Filters'}
         </button>
-        <div
-          className={`w-full lg:w-1/4 bg-white rounded-lg p-6 self-start ${
-            isMobileFilterOpen || 'hidden lg:block'
-          }`}
-        >
+        <div className={`w-full lg:w-1/4 bg-white rounded-lg p-6 self-start ${isMobileFilterOpen || 'hidden lg:block'}`}>
           <p className="text-xl font-semibold mb-4 text-gray-800">Filters</p>
 
           <div className="mb-6">
             <p className="font-medium mb-2 text-gray-700">Categories</p>
             <div className="flex flex-col gap-3 text-sm">
               <label className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  checked={selectedCategory === null}
-                  onChange={() => handleCategoryChange(null)}
-                  className="form-checkbox h-4 w-4 text-blue-500"
-                />
+                <input type="checkbox" checked={selectedCategory === null} onChange={() => handleCategoryChange(null)} className="form-checkbox h-4 w-4 text-blue-500" />
                 <span className="text-gray-700">All</span>
               </label>
               {allCategories.map((category: Category) => (
-                <label
-                  key={category.uuid}
-                  className="flex items-center space-x-2"
-                >
-                  <input
-                    type="checkbox"
-                    checked={selectedCategory === category.uuid}
-                    onChange={() => handleCategoryChange(category.uuid)}
-                    className="form-checkbox h-4 w-4 text-blue-500"
-                  />
+                <label key={category.uuid} className="flex items-center space-x-2">
+                  <input type="checkbox" checked={selectedCategory === category.uuid} onChange={() => handleCategoryChange(category.uuid)} className="form-checkbox h-4 w-4 text-blue-500" />
                   <span className="text-gray-700">{category.category}</span>
                 </label>
               ))}
@@ -199,32 +137,19 @@ const Mentors = () => {
 
           <div className="mb-6">
             <p className="font-medium mb-2 text-gray-700 flex items-center">
-              <button
-                className=" text-gray-700 hover:text-blue-500"
-                onClick={toggleCountryDropdown}
-              >
+              <button className=" text-gray-700 hover:text-blue-500" onClick={toggleCountryDropdown}>
                 Countries {isCountryDropdownOpen ? '-' : ' +'}
               </button>
             </p>
             {isCountryDropdownOpen && (
               <div className="flex flex-col gap-3 text-sm">
                 <label className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    checked={selectedCountries.length === 0}
-                    onChange={() => setSelectedCountries([])}
-                    className="form-checkbox h-4 w-4 text-blue-500"
-                  />
+                  <input type="checkbox" checked={selectedCountries.length === 0} onChange={() => setSelectedCountries([])} className="form-checkbox h-4 w-4 text-blue-500" />
                   <span className="text-gray-700">All</span>
                 </label>
                 {uniqueCountries.map((country) => (
                   <label key={country} className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      checked={selectedCountries.includes(country)}
-                      onChange={() => handleCountryChange(country)}
-                      className="form-checkbox h-4 w-4 text-blue-500"
-                    />
+                    <input type="checkbox" checked={selectedCountries.includes(country)} onChange={() => handleCountryChange(country)} className="form-checkbox h-4 w-4 text-blue-500" />
                     <span className="text-gray-700">{country}</span>
                   </label>
                 ))}
@@ -234,10 +159,7 @@ const Mentors = () => {
 
           <div className="mb-6">
             <p className="font-medium mb-2 text-gray-700 flex items-center">
-              <button
-                className=" text-gray-700 hover:text-blue-500"
-                onClick={toggleSlotsDropdown}
-              >
+              <button className=" text-gray-700 hover:text-blue-500" onClick={toggleSlotsDropdown}>
                 Available Slots {isSlotsDropdownOpen ? '-' : ' +'}
               </button>
             </p>
@@ -257,10 +179,7 @@ const Mentors = () => {
           </div>
 
           <div>
-            <button
-              onClick={handleSortAZ}
-              className="bg-blue-500 text-white px-2 py-1 rounded border border-blue-500 text-xs mr-6"
-            >
+            <button onClick={handleSortAZ} className="bg-blue-500 text-white px-2 py-1 rounded border border-blue-500 text-xs mr-6">
               Sort A-Z
             </button>
           </div>
