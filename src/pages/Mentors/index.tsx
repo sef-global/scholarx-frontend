@@ -6,14 +6,20 @@ import { type Mentor, type Category } from '../../types';
 import MentorCard from '../../components/MentorCard/MentorCard.component';
 import Loading from '../../assets/svg/Loading';
 import { ApplicationStatus } from '../../enums';
+import Slider from '@mui/material/Slider';
+import Box from '@mui/material/Box';
 
 const Mentors = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
-  const [selectedAvailableSlots, setSelectedAvailableSlots] = useState<number[]>([]);
+  const [selectedAvailableSlots, setSelectedAvailableSlots] = useState<
+    number[]
+  >([0, 10]);
   const [sortedMentors, setSortedMentors] = useState<Mentor[]>([]);
   const [uniqueCountries, setUniqueCountries] = useState<string[]>([]);
-  const [uniqueAvailableSlots, setUniqueAvailableSlots] = useState<number[]>([]);
+  const [uniqueAvailableSlots, setUniqueAvailableSlots] = useState<number[]>(
+    []
+  );
   const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
   const [isSlotsDropdownOpen, setIsSlotsDropdownOpen] = useState(false);
   const pageSize = 10;
@@ -71,7 +77,8 @@ const Mentors = () => {
         );
       }
 
-      if (selectedAvailableSlots.length > 0) {
+      const [minSlots, maxSlots] = selectedAvailableSlots;
+      if (minSlots > 0 || maxSlots < 10) {
         allMentors = allMentors.filter((mentor) => {
           const approvedMenteesCount = mentor?.mentees
             ? mentor.mentees.filter(
@@ -81,7 +88,7 @@ const Mentors = () => {
           const availableSlots = mentor?.application.noOfMentees
             ? Math.max(0, mentor.application.noOfMentees - approvedMenteesCount)
             : 0;
-          return selectedAvailableSlots.includes(availableSlots);
+          return availableSlots >= minSlots && availableSlots <= maxSlots;
         });
       }
 
@@ -112,14 +119,13 @@ const Mentors = () => {
     });
   };
 
-  const handleAvailableSlotsChange = (slots: number) => {
-    setSelectedAvailableSlots((prevSlots) => {
-      if (prevSlots.includes(slots)) {
-        return prevSlots.filter((s) => s !== slots);
-      } else {
-        return [...prevSlots, slots];
-      }
-    });
+  const handleAvailableSlotsChange = (
+    event: Event,
+    newValue: number | number[]
+  ) => {
+    if (Array.isArray(newValue)) {
+      setSelectedAvailableSlots(newValue);
+    }
   };
 
   const toggleCountryDropdown = () => {
@@ -225,30 +231,17 @@ const Mentors = () => {
             </p>
 
             {isSlotsDropdownOpen && (
-              <div className="flex flex-col gap-3 text-sm">
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    checked={selectedAvailableSlots.length === 0}
-                    onChange={() => setSelectedAvailableSlots([])}
-                    className="form-checkbox h-4 w-4 text-blue-500"
-                  />
-                  <span className="text-gray-700">All</span>
-                </label>
-                {uniqueAvailableSlots.map((slots) => (
-                  <label key={slots} className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      checked={selectedAvailableSlots.includes(slots)}
-                      onChange={() => handleAvailableSlotsChange(slots)}
-                      className="form-checkbox h-4 w-4 text-blue-500"
-                    />
-                    <span className="text-gray-700">
-                      {slots} Slots Available
-                    </span>
-                  </label>
-                ))}
-              </div>
+              <Box sx={{ width: 120 }}>
+                <Slider
+                  value={selectedAvailableSlots}
+                  onChange={handleAvailableSlotsChange}
+                  valueLabelDisplay="auto"
+                  valueLabelFormat={(value) => `${value} slots`}
+                  min={0}
+                  max={10}
+                  step={1}
+                />
+              </Box>
             )}
           </div>
 
