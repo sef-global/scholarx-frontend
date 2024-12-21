@@ -62,8 +62,9 @@ const Mentors = () => {
   }, [data, selectedCountries, selectedAvailableSlots]);
 
   const handleSortAZ = () => {
-    const sorted = [...sortedMentors].sort((a, b) => (a.application?.firstName || '').localeCompare(b.application?.firstName || ''));
-    setSortedMentors(sorted);
+    const sorted = [...sortedMentors].sort((a, b) =>
+      a.application.firstName.localeCompare(b.application.firstName)
+    );setSortedMentors(sorted);
   };
 
   const handleCategoryChange = (category: string | null) => {
