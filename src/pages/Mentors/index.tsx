@@ -22,13 +22,12 @@ const Mentors = () => {
   );
   const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
   const [isSlotsDropdownOpen, setIsSlotsDropdownOpen] = useState(false);
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const pageSize = 10;
 
   const { ref, inView } = useInView();
-
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     usePublicMentors(selectedCategory, pageSize);
-
   const {
     data: allCategories,
     isLoading: categoriesLoading,
@@ -44,12 +43,10 @@ const Mentors = () => {
   useEffect(() => {
     if (data) {
       const allMentors = data.pages.flatMap((page) => page.items);
-
       const countries = allMentors
         .map((mentor) => mentor.application?.country)
-        .filter((country): country is string => !!country);
+        .filter((country) => !!country);
       setUniqueCountries([...new Set(countries)]);
-
       const availableSlots = allMentors
         .map((mentor) => {
           const approvedMenteesCount = mentor?.mentees
@@ -57,10 +54,10 @@ const Mentors = () => {
                 (mentee) => mentee.state === ApplicationStatus.APPROVED
               ).length
             : 0;
-          const availableSlots = mentor?.application.noOfMentees
-            ? Math.max(0, mentor.application.noOfMentees - approvedMenteesCount)
-            : 0;
-          return availableSlots;
+          return Math.max(
+            0,
+            mentor.application.noOfMentees - approvedMenteesCount
+          );
         })
         .filter((slots, index, self) => self.indexOf(slots) === index);
       setUniqueAvailableSlots(availableSlots);
@@ -70,13 +67,11 @@ const Mentors = () => {
   useEffect(() => {
     if (data) {
       let allMentors = data.pages.flatMap((page) => page.items);
-
       if (selectedCountries.length > 0) {
         allMentors = allMentors.filter((mentor) =>
           selectedCountries.includes(mentor.application.country)
         );
       }
-
       const [minSlots, maxSlots] = selectedAvailableSlots;
       if (minSlots > 0 || maxSlots < 10) {
         allMentors = allMentors.filter((mentor) => {
@@ -85,13 +80,18 @@ const Mentors = () => {
                 (mentee) => mentee.state === ApplicationStatus.APPROVED
               ).length
             : 0;
-          const availableSlots = mentor?.application.noOfMentees
-            ? Math.max(0, mentor.application.noOfMentees - approvedMenteesCount)
-            : 0;
-          return availableSlots >= minSlots && availableSlots <= maxSlots;
+          return mentor?.application.noOfMentees
+            ? Math.max(
+                0,
+                mentor.application.noOfMentees - approvedMenteesCount
+              ) >= minSlots &&
+                Math.max(
+                  0,
+                  mentor.application.noOfMentees - approvedMenteesCount
+                ) <= maxSlots
+            : false;
         });
       }
-
       setSortedMentors(allMentors);
     }
   }, [data, selectedCountries, selectedAvailableSlots]);
@@ -136,6 +136,10 @@ const Mentors = () => {
     setIsSlotsDropdownOpen(!isSlotsDropdownOpen);
   };
 
+  const toggleMobileFilter = () => {
+    setIsMobileFilterOpen(!isMobileFilterOpen);
+  };
+
   if (status === 'pending' || categoriesLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -151,7 +155,17 @@ const Mentors = () => {
   return (
     <div className="min-h-screen flex flex-col items-center p-6 bg-white">
       <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-8">
-        <div className="w-full lg:w-1/4 bg-white rounded-lg p-6 self-start">
+        <button
+          className="lg:hidden bg-blue-500 text-white px-2 py-1 mb-4 rounded"
+          onClick={toggleMobileFilter}
+        >
+          {isMobileFilterOpen ? 'Hide Filters' : 'Show Filters'}
+        </button>
+        <div
+          className={`w-full lg:w-1/4 bg-white rounded-lg p-6 self-start ${
+            isMobileFilterOpen || 'hidden lg:block'
+          }`}
+        >
           <p className="text-xl font-semibold mb-4 text-gray-800">Filters</p>
 
           <div className="mb-6">
@@ -166,7 +180,6 @@ const Mentors = () => {
                 />
                 <span className="text-gray-700">All</span>
               </label>
-
               {allCategories.map((category: Category) => (
                 <label
                   key={category.uuid}
@@ -193,7 +206,6 @@ const Mentors = () => {
                 Countries {isCountryDropdownOpen ? '-' : ' +'}
               </button>
             </p>
-
             {isCountryDropdownOpen && (
               <div className="flex flex-col gap-3 text-sm">
                 <label className="flex items-center space-x-2">
@@ -229,7 +241,6 @@ const Mentors = () => {
                 Available Slots {isSlotsDropdownOpen ? '-' : ' +'}
               </button>
             </p>
-
             {isSlotsDropdownOpen && (
               <Box sx={{ width: 120 }}>
                 <Slider
