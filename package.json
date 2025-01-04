@@ -21,7 +21,6 @@
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
     "@hookform/resolvers": "^3.3.4",
-    "@mui/material": "^6.1.10",
     "@tanstack/react-query": "^5.28.4",
     "@tanstack/react-query-devtools": "^5.37.1",
     "axios": "^1.4.0",
