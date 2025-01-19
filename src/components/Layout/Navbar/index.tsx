@@ -128,7 +128,7 @@ const Navbar: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="https://sefglobal.org/join-us.html"
+                  href="https://sefglobal.org/apply"
                   className="py-2 lg:px-3 md:text-sm md:px-1 text-gray-900 rounded hover:bg-gray-100 "
                 >
                   Join Us
