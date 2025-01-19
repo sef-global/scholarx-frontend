@@ -36,10 +36,9 @@ export const usePublicMentors = (categoryId: string | null, pageSize = 10) => {
     queryFn: fetchPublicMentors,
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
-      if (lastPage.items.length < pageSize) {
-        return undefined;
+      if (lastPage.totalItemCount / pageSize > pages.length) {
+        return pages.length + 1;
       }
-      return pages.length + 1;
     },
   });
 };

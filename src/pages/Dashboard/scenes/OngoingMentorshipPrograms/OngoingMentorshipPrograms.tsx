@@ -52,7 +52,7 @@ const OngoingMentorshipPrograms: React.FC = () => {
     <div className="flex flex-col md:flex-row min-h-screen">
       <div className="md:w-1/4 p-4 bg-blue-50">
         <h2 className="text-2xl font-semibold mb-4">Approved Mentees</h2>
-        <div className="h-96 overflow-y-auto md:overflow-y-visible">
+        <div className="h-96 md:h-[32rem] overflow-y-auto md:overflow-y-auto">
           {approvedMentees.map(renderMenteeLink)}
           {approvedMentees.length === 0 && (
             <p className="text-gray-600">No approved mentees available.</p>

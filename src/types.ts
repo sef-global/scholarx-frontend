@@ -108,7 +108,7 @@ export type MenteeCheckInForm = z.infer<typeof MenteeCheckInSchema>;
 
 export interface MonthlyCheckIn {
   uuid: string;
-  title: string;
+  month: string;
   checkInDate: string;
   mediaContentLinks: string[];
   isCheckedByMentor: boolean;

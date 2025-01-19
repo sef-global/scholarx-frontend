@@ -39,7 +39,7 @@ const MonthlyCheckInModal: React.FC<{
   } = useForm<MenteeCheckInForm>({
     resolver: zodResolver(MenteeCheckInSchema),
     defaultValues: {
-      title: '',
+      month: '',
       progressTowardsGoals: '',
       generalUpdatesAndFeedback: '',
       mediaContentLinks: [],
@@ -107,9 +107,9 @@ const MonthlyCheckInModal: React.FC<{
                 Select the month for which you are submitting the progress.
               </p>
               <select
-                {...register('title', { required: 'Month is required' })}
+                {...register('month', { required: 'Month is required' })}
                 className={`mt-1 block w-full border ${
-                  errors.title ? 'border-red-500' : 'border-gray-300'
+                  errors.month ? 'border-red-500' : 'border-gray-300'
                 } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
               >
                 <option value="">Select a month</option>
@@ -119,9 +119,9 @@ const MonthlyCheckInModal: React.FC<{
                   </option>
                 ))}
               </select>
-              {errors.title && (
+              {errors.month && (
                 <p className="text-red-500 text-xs mt-1">
-                  {errors.title.message}
+                  {errors.month.message}
                 </p>
               )}
             </div>

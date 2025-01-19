@@ -45,7 +45,7 @@ const CheckInItem: React.FC<CheckInItemProps> = ({
       >
         <div className="flex justify-between items-center">
           <h4 className="text-lg font-medium text-gray-700 truncate flex-1">
-            {checkIn.title}
+            {checkIn.month}
           </h4>
           <ArrowIcon isExpanded={isExpanded} />
         </div>
