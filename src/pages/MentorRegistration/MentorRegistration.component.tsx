@@ -14,6 +14,7 @@ import { useLoginModalContext } from '../../contexts/LoginModalContext';
 import useMentor from '../../hooks/useMentor';
 import { Link } from 'react-router-dom';
 import TermsAgreementModalMentor from '../../components/TermsAgreementModal';
+import useCountries from '../../hooks/useCountries';
 
 const steps = [
   {
@@ -62,6 +63,8 @@ const MentorRegistrationPage: React.FC = () => {
     isLoading: categoriesLoading,
     error: categoriesError,
   } = useCategories();
+
+  const { data: allCountries, isLoading: countriesLoading } = useCountries();
 
   const {
     createMentorApplication,
@@ -265,14 +268,25 @@ const MentorRegistrationPage: React.FC = () => {
               register={register}
               error={errors.contactNo}
             />
-            <FormInput
-              type="text"
-              placeholder="United States"
-              name="country"
-              label="Country"
-              register={register}
-              error={errors.country}
-            />
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-600">
+                Country
+              </label>
+              {!countriesLoading && (
+                <select
+                  className="mt-1 p-2 w-1/2 border rounded-md"
+                  {...register('country')}
+                >
+                  {allCountries.map(
+                    (country: { uuid: string; name: string }) => (
+                      <option key={country.uuid} value={country.uuid}>
+                        {country.name}
+                      </option>
+                    )
+                  )}
+                </select>
+              )}
+            </div>
           </>
         )}
         {currentStep === 1 && (

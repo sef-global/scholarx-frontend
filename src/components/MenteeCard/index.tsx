@@ -39,7 +39,7 @@ const MenteeCard: React.FC<MenteeCardProps> = ({
           </p>
         ) : (
           <>
-            <p className="text-sm">{mentee.application.position}</p>,
+            <p className="text-sm">{mentee.application.position}</p>
             <p className="text-xs text-gray-500">
               {mentee.application.company}
             </p>
