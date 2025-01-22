@@ -81,7 +81,7 @@ const MentorApplication: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-base font-bold">Country</h3>
-                  <p>{mentor?.application.country}</p>
+                  <p>{mentor?.country?.name ?? mentor?.application.country}</p>
                 </div>
                 <div>
                   <h3 className="text-base font-bold">Expertise</h3>
