@@ -48,6 +48,7 @@ const useMentor = (mentorId: string | null | undefined) => {
         {
           application: data,
           categoryId: data.category,
+          countryId: data.country,
         },
         { withCredentials: true }
       );
