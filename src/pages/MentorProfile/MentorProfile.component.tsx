@@ -188,7 +188,9 @@ const MentorProfile: React.FC = () => {
           </div>
           <div>
             <h2 className="text-lg font-medium  mt-5">Country</h2>
-            <p className="text-sm font-light">{mentor?.application.country}</p>
+            <p className="text-sm font-light">
+              {mentor?.country?.name ?? mentor?.application.country}
+            </p>
           </div>
         </div>
         <div className="flex flex-row md:gap-9 md:m-5 gap-4 mt-4">
