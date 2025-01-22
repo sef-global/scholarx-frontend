@@ -17,6 +17,10 @@ export const mentors: MentorWithoutProfilePic[] = [
       created_at: '2023-10-29T14:20:04.335Z',
       updated_at: '2023-10-29T14:20:04.335Z',
     },
+    country: {
+      name: 'United States',
+      uuid: 'e1e6d0f0-b2d2-4c0b-a0e3-f4f5c1b1f3c4',
+    },
     application: {
       position: 'Software Engineer',
       country: 'United States',
@@ -63,6 +67,10 @@ export const mentors: MentorWithoutProfilePic[] = [
       created_at: '2023-10-29T14:20:04.335Z',
       updated_at: '2023-10-29T14:20:04.335Z',
     },
+    country: {
+      name: 'United States',
+      uuid: 'e1e6d0f0-b2d2-4c0b-a0e3-f4f5c1b1f3c4',
+    },
     application: {
       position: 'Chief Marketing Officer',
       country: 'Canada',
@@ -106,6 +114,10 @@ export const mentors: MentorWithoutProfilePic[] = [
       uuid: 'fef68acb-e710-4d9e-8772-dc4905885088',
       created_at: '2023-10-29T14:20:04.335Z',
       updated_at: '2023-10-29T14:20:04.335Z',
+    },
+    country: {
+      name: 'United States',
+      uuid: 'e1e6d0f0-b2d2-4c0b-a0e3-f4f5c1b1f3c4',
     },
     application: {
       position: 'UI/UX Designer',
