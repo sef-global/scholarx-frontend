@@ -49,6 +49,7 @@ const MyMentees: React.FC = () => {
               src={mentee.profile.image_url}
               alt={`${mentee.application.firstName} ${mentee.application.lastName}`}
               className="w-12 h-12 rounded-full object-cover"
+              referrerPolicy="no-referrer"
             />
           ) : (
             <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
