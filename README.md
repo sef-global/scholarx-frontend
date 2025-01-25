@@ -8,7 +8,7 @@ Frontend dashboard of the scholarX platform
 
 1. Clone your forked repository
    ```
-   git clone https://github.com/sef-global/scholarx-frontend.git
+   git clone https://github.com/YOUR_USERNAME/scholarx-frontend.git
    cd scholarx-frontend
    ```
 2. Install all the dependencies
