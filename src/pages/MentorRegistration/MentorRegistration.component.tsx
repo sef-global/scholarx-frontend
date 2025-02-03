@@ -64,11 +64,7 @@ const MentorRegistrationPage: React.FC = () => {
     error: categoriesError,
   } = useCategories();
 
-  const {
-    data: allCountries,
-    isLoading: countriesLoading,
-    error: countriesError,
-  } = useCountries();
+  const { data: allCountries, isLoading: countriesLoading } = useCountries();
 
   const {
     createMentorApplication,

@@ -128,7 +128,7 @@ const Navbar: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="https://sefglobal.org/join-us.html"
+                  href="https://sefglobal.org/apply"
                   className="py-2 lg:px-3 md:text-sm md:px-1 text-gray-900 rounded hover:bg-gray-100 "
                 >
                   Join Us
@@ -173,6 +173,7 @@ const Navbar: React.FC = () => {
                       className="w-8 md:w-10 h-8 md:h-10 rounded-full"
                       src={user?.image_url}
                       alt="user photo"
+                      referrerPolicy="no-referrer"
                     />
                   ) : (
                     <svg
