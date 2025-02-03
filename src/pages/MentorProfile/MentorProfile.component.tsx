@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
 import useMentor from '../../hooks/useMentor';
 import { useParams } from 'react-router';
-import { Link, useNavigate } from 'react-router-dom';
-import { useLoginModalContext } from '../../contexts/LoginModalContext';
+import { Link } from 'react-router-dom';
 import { UserContext, type UserContextType } from '../../contexts/UserContext';
 import Toast from '../../components/Toast';
 import ShareIcon from '../../assets/svg/Icons/ShareIcon';
@@ -18,23 +17,13 @@ import useMentee from '../../hooks/useMentee';
 
 const MentorProfile: React.FC = () => {
   const { mentorId } = useParams();
-  const navigate = useNavigate();
 
-  const { handleLoginModalOpen } = useLoginModalContext();
-  const { user, isUserMentor, isMenteeApplicationsDisabled, isUserMentee } =
+  const { isUserMentor, isMenteeApplicationsDisabled, isUserMentee } =
     useContext(UserContext) as UserContextType;
   const [isURLCopied, setIsURLCopied] = useState(false);
-  const { isOpen, openModal, closeModal } = useModal();
+  const { isOpen, closeModal } = useModal();
 
   const shareUrl = `${window.location.origin}${location.pathname}`;
-
-  const onApply = () => {
-    if (user) {
-      navigate(`/mentee-application/${mentorId as string}`);
-    } else {
-      handleLoginModalOpen();
-    }
-  };
 
   const { data: mentor, isLoading } = useMentor(mentorId as string);
   const { revokeApplication } = useMentee();
@@ -151,13 +140,8 @@ const MentorProfile: React.FC = () => {
               content="You can apply only for one mentor at a time"
             >
               <button
-                className={`text-white font-medium rounded-lg text-sm px-20 md:px-5 py-2.5
-                            ${
-                              isUserMentee
-                                ? 'bg-gray-400'
-                                : 'bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300'
-                            }`}
-                onClick={isMenteeApplicationsDisabled ? openModal : onApply}
+                disabled
+                className={`text-white font-medium rounded-lg text-sm px-20 md:px-5 py-2.5 bg-gray-400`}
               >
                 {isMenteeApplicationsDisabled
                   ? 'Withdraw application'

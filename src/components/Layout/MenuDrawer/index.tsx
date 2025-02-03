@@ -12,11 +12,7 @@ interface MenuDrawerProps {
   handleMentorRegistration: () => void;
 }
 
-const MenuDrawer: React.FC<MenuDrawerProps> = ({
-  openMenu,
-  setOpenMenu,
-  handleMentorRegistration,
-}) => {
+const MenuDrawer: React.FC<MenuDrawerProps> = ({ openMenu, setOpenMenu }) => {
   const handleOpenMenu = (): boolean => {
     return openMenu;
   };
@@ -58,13 +54,7 @@ const MenuDrawer: React.FC<MenuDrawerProps> = ({
           >
             Join Us
           </a>
-          <button
-            type="button"
-            onClick={handleMentorRegistration}
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-m px-5 py-2.5 me-2 mb-2"
-          >
-            Become a Mentor
-          </button>
+
           <div className="flex space-x-5">
             <a
               href="https://www.facebook.com/sustainableeducationfoundation/"
