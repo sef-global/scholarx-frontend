@@ -134,17 +134,6 @@ const Navbar: React.FC = () => {
                   Join Us
                 </a>
               </li>
-              {!isUserMentor && (
-                <li className="items-center flex justify-center">
-                  <button
-                    type="button"
-                    onClick={handleMentorRegistration}
-                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 lg:me-2 mb-2"
-                  >
-                    Become a Mentor
-                  </button>
-                </li>
-              )}
 
               <li>
                 {user === null && (
@@ -308,6 +297,12 @@ const Navbar: React.FC = () => {
             </button>
           </div>
         </div>
+        <StickyBanner>
+          <p className="flex items-center text-md font-normal text-gray-500">
+            Please not that we will not be processing new applications at this
+            time.
+          </p>
+        </StickyBanner>
         {location.pathname === '/' && !isUserAdmin && (
           <>
             {isUserMentor && (
