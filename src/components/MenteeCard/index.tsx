@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { Mentee } from '../../types.ts';
 import ProfilePic from '../ProfilePic/index.tsx';
+import BusinessBag from '../../assets/svg/BusinessBag.tsx';
 
 interface MenteeCardProps {
   mentee: Mentee;
@@ -15,27 +16,30 @@ const MenteeCard: React.FC<MenteeCardProps> = ({
 }) => {
   return (
     <Link
-      className="border border-gray-200 p-4 rounded-md shadow-sm w-52 flex flex-col h-full"
+      className="border-2 border-light-gray p-2.5 pb-[12px] rounded-md shadow-sm max-w-full flex flex-col h-full"
       to={
         showPublicProfile
           ? `/mentees/${mentee.uuid}`
           : `/mentor/my-mentees/${mentee.uuid}`
       }
     >
-      <div className="mx-auto mb-4">
+      <div className="mx-auto mb-2">
         <ProfilePic
           src={mentee.profile?.image_url}
           alt="Mentee Avatar"
-          size="6rem"
+          size="11.6875rem"
+          width="16.25rem"
+          circular={false}
         />
       </div>
-      <div className="text-center">
+      <div className="text-left p-0.5">
         <h5 className="text-lg font-bold">
           {mentee.application.firstName} {mentee.application.lastName}
         </h5>
         {mentee.application.isUndergrad ? (
-          <p className="text-xs text-gray-500">
-            {mentee.application.university}
+          <p className="text-sm text-gray-500 flex items-center">
+            <BusinessBag />
+            <span>{mentee.application.university}</span>
           </p>
         ) : (
           <>
