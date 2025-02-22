@@ -1,10 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import FAQSection from '../FAQ';
 import menteeFAQs from '../FAQ/MenteeFAQs.json';
 import mentorFAQs from '../FAQ/MentorFAQs.json';
-import { Link, useNavigate } from 'react-router-dom';
-import { useLoginModalContext } from '../../contexts/LoginModalContext';
-import { UserContext, type UserContextType } from '../../contexts/UserContext';
+import { Link } from 'react-router-dom';
 
 const logos = [
   'google.png',
@@ -20,19 +18,6 @@ const logos = [
 ];
 
 const Home: React.FC = () => {
-  const { handleLoginModalOpen } = useLoginModalContext();
-  const navigate = useNavigate();
-
-  const { user } = useContext(UserContext) as UserContextType;
-
-  const handleMentorRegistration = (): void => {
-    if (user === null) {
-      handleLoginModalOpen();
-    } else {
-      navigate('/mentor-registration');
-    }
-  };
-
   return (
     <>
       <section className="flex flex-col md:flex-row items-center justify-between">
@@ -47,13 +32,6 @@ const Home: React.FC = () => {
                   Find a Mentor
                 </button>
               </Link>
-              <button
-                type="button"
-                onClick={handleMentorRegistration}
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-              >
-                Become a Mentor
-              </button>
             </div>
           </div>
         </div>
