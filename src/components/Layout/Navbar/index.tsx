@@ -299,7 +299,7 @@ const Navbar: React.FC = () => {
         </div>
         <StickyBanner>
           <p className="flex items-center text-md font-normal text-gray-500">
-            Please not that we will not be processing new applications at this
+            Please note that we will not be processing new applications at this
             time.
           </p>
         </StickyBanner>
