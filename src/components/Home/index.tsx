@@ -22,7 +22,7 @@ const Home: React.FC = () => {
     <>
       <section className="flex flex-col md:flex-row items-center justify-between">
         <div>
-          <p className="text-3xl md:text-5xl font-bold text-[#32325D] leading-">
+          <p className="text-3xl md:text-5xl font-bold text-[#32325D] leading- pt-20 sm:pt-12 md:pt-12 lg:pt-12 xl:pt-0">
             Unlock Mentorship opportunities with ScholarX
           </p>
           <div className="wrapper mt-[40px]">

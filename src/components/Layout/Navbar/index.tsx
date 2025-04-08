@@ -298,7 +298,7 @@ const Navbar: React.FC = () => {
           </div>
         </div>
         <StickyBanner>
-          <p className="flex items-center text-md font-normal text-gray-500">
+          <p className="flex items-center text-md font-normal text-gray-500 text-center">
             Please not that we will not be processing new applications at this
             time.
           </p>
