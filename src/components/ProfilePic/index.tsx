@@ -5,8 +5,10 @@ const ProfilePic: React.FC<{
   src: string | undefined;
   alt: string;
   size: string;
+  width?: string;
   availability?: boolean;
-}> = ({ src, alt, size, availability = true }) => {
+  circular?: boolean;
+}> = ({ src, alt, size, width, availability = true, circular = true }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
@@ -19,21 +21,27 @@ const ProfilePic: React.FC<{
     setIsLoading(false);
   };
 
+  const appliedWidth = width ?? size;
+
   return (
     <div
       className="relative inline-block"
-      style={{ height: size, width: size }}
+      style={{ height: size, width: appliedWidth }}
     >
       {isLoading && !isError && (
         <div
-          className="absolute inset-0 bg-gray-200 rounded-full animate-skeleton bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%]"
-          style={{ height: size, width: size }}
+          className={`absolute inset-0 bg-gray-200 animate-skeleton bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%] ${
+            circular ? 'rounded-full' : 'rounded-custom-5'
+          }`}
+          style={{ height: size, width: appliedWidth }}
         />
       )}
       {isError ? (
         <div
-          className="inline-block bg-gray-200 rounded-full ring-2 ring-white flex items-center justify-center"
-          style={{ height: size, width: size }}
+          className={`inline-block bg-gray-200 ring-2 ring-white flex items-center justify-center ${
+            circular ? 'rounded-full' : 'rounded-custom-5'
+          }`}
+          style={{ height: size, width: appliedWidth }}
         >
           <UserIcon />
         </div>
@@ -41,10 +49,10 @@ const ProfilePic: React.FC<{
         <img
           src={src}
           alt={alt}
-          className={`inline-block rounded-full ring-2 ring-white object-cover ${
-            !availability ? 'opacity-60' : ''
-          }`}
-          style={{ height: size, width: size }}
+          className={`inline-block ring-2 ring-white object-cover ${
+            circular ? 'rounded-full' : 'rounded-custom-5'
+          } ${!availability ? 'opacity-60' : ''} max-w-full`}
+          style={{ height: size, width: appliedWidth }}
           referrerPolicy="no-referrer"
           onLoad={handleImageLoad}
           onError={handleImageError}
